@@ -7,13 +7,13 @@ import ServicesSection from "@/components/ServicesSection";
 import CasesSection from "@/components/CasesSection";
 import TestimonialsEditorial from "@/components/ui/editorial-testimonial";
 import NewsSection from "@/components/NewsSection";
+import GlassBlogSection from "@/components/GlassBlogSection";
 import StatsSection from "@/components/StatsSection";
 
 import Footer from "@/components/Footer";
 
 
-// Lazy load heavy components (Matter.js ~90KB, tsparticles ~40KB, GSAP cursor)
-const GlassCursor = dynamic(() => import("@/components/GlassCursor"), { ssr: false });
+// Lazy load heavy components (Matter.js ~90KB, tsparticles ~40KB)
 const FloatingContact = dynamic(() => import("@/components/FloatingContact"), { ssr: false });
 const PhysicsPlayground = dynamic(() => import("@/components/PhysicsPlayground"), { ssr: false });
 const SocialProof = dynamic(() => import("@/components/SocialProof"), { ssr: false });
@@ -21,7 +21,6 @@ const SocialProof = dynamic(() => import("@/components/SocialProof"), { ssr: fal
 export default function Home() {
   return (
     <main>
-      <GlassCursor />
       <Navbar />
       <FloatingContact />
 
@@ -35,6 +34,7 @@ export default function Home() {
         <TestimonialsEditorial />
         <SocialProof />
         <NewsSection />
+        <GlassBlogSection />
       </div>
 
       <div className="relative z-0">
