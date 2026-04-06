@@ -1,0 +1,213 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { ContactButton } from "@/components/ContactButton";
+import MobileMenu from "@/components/MobileMenu";
+import { MenuToggleIcon } from "@/components/ui/menu-toggle-icon";
+import { services, marketing, ai, resources } from "@/lib/nav-data";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+
+function ListItem({
+  title,
+  children,
+  href,
+  icon: Icon,
+}: {
+  title: string;
+  children: React.ReactNode;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+}) {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <Link href={href} className="flex-row items-center gap-3">
+          <Icon className="size-4 shrink-0 text-muted" />
+          <div>
+            <div className="text-sm font-medium leading-none">{title}</div>
+            <p className="mt-1 text-xs text-muted line-clamp-1">{children}</p>
+          </div>
+        </Link>
+      </NavigationMenuLink>
+    </li>
+  );
+}
+
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <>
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.8,
+          delay: 0.2,
+          ease: [0.215, 0.61, 0.355, 1],
+        }}
+        data-scrolled={scrolled ? "true" : undefined}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
+          scrolled
+            ? "px-4 py-3 md:px-6 lg:px-8"
+            : "px-6 py-5 md:px-10 lg:px-16"
+        }`}
+      >
+        <div
+          className={`flex items-center justify-between rounded-2xl border transition-all duration-500 ease-out ${
+            scrolled
+              ? "border-foreground/[0.08] bg-background/70 backdrop-blur-xl shadow-xl shadow-black/[0.06] px-6 py-3"
+              : "border-transparent bg-transparent px-0 py-0"
+          }`}
+        >
+          {/* Logo */}
+          <a href="/" className="block shrink-0">
+            <img
+              src="/logo/Horizen-LogoType-Black.svg"
+              alt="Horizen"
+              className="h-5 w-auto md:h-6"
+            />
+          </a>
+
+          {/* Desktop Navigation */}
+          <div className="hidden lg:block">
+            <NavigationMenu viewport={false}>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[420px] gap-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                      {services.map((item) => (
+                        <ListItem
+                          key={item.href}
+                          title={item.title}
+                          href={item.href}
+                          icon={item.icon}
+                        >
+                          {item.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Marketing</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[420px] gap-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                      {marketing.map((item) => (
+                        <ListItem
+                          key={item.href}
+                          title={item.title}
+                          href={item.href}
+                          icon={item.icon}
+                        >
+                          {item.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>AI</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[420px] gap-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                      {ai.map((item) => (
+                        <ListItem
+                          key={item.href}
+                          title={item.title}
+                          href={item.href}
+                          icon={item.icon}
+                        >
+                          {item.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Ressourcer</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <ul className="grid w-[420px] gap-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                      {resources.map((item) => (
+                        <ListItem
+                          key={item.href}
+                          title={item.title}
+                          href={item.href}
+                          icon={item.icon}
+                        >
+                          {item.description}
+                        </ListItem>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    asChild
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    <Link href="/cases">Cases</Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    asChild
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    <Link href="/om-os">Om os</Link>
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
+
+          {/* Desktop: ContactButton / Mobile: Burger */}
+          <div className="shrink-0">
+            <div className="hidden lg:block min-w-[130px]">
+              <ContactButton />
+            </div>
+            <button
+              className="lg:hidden"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Luk menu" : "Åbn menu"}
+            >
+              <MenuToggleIcon
+                open={mobileMenuOpen}
+                className="size-8 text-foreground"
+                strokeWidth={1.8}
+                duration={400}
+              />
+            </button>
+          </div>
+        </div>
+      </motion.header>
+
+      <MobileMenu
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+      />
+    </>
+  );
+}
