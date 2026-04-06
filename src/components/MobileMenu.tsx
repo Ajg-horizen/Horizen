@@ -168,13 +168,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 {/* Direct links */}
                 <div className="border-t border-foreground/[0.06] pt-2">
                   <Link
-                    href="/cases"
-                    onClick={handleLinkClick}
-                    className="flex items-center py-4 text-lg font-semibold tracking-tight"
-                  >
-                    Cases
-                  </Link>
-                  <Link
                     href="/om-os"
                     onClick={handleLinkClick}
                     className="flex items-center py-4 text-lg font-semibold tracking-tight"

@@ -7,7 +7,7 @@ import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 
 const cases = [
   {
-    title: "Malerfirma Seitz",
+    title: "Seitz",
     client: "Seitz",
     category: "Webdesign · Branding",
     image: "/cases/Case-image.webp",
@@ -18,8 +18,8 @@ const cases = [
     ],
   },
   {
-    title: "OD Biler Pro",
-    client: "OD Biler",
+    title: "OD Pro",
+    client: "OD Pro",
     category: "Webdesign · Udvikling",
     image: "/cases/OD-Cases-image-car.webp",
     href: "/cases/od-biler-pro",
@@ -32,7 +32,7 @@ const cases = [
     title: "Tandsundhed Uden Grænser",
     client: "TUDG",
     category: "Webdesign · NGO",
-    image: "/cases/Tand-sundhed.webp",
+    image: "/cases/Tand-sundhed-hero-image.webp",
     href: "/cases/tandsundhed-uden-graenser",
     team: [
       { name: "Johanne", avatar: "/staff/staff-Web-udvikler-designer-Johanne-horizen.avif" },

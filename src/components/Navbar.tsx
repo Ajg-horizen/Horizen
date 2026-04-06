@@ -43,7 +43,7 @@ function ListItem({
   );
 }
 
-export default function Navbar() {
+export default function Navbar({ alwaysVisible = false }: { alwaysVisible?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -63,28 +63,28 @@ export default function Navbar() {
           delay: 0.2,
           ease: [0.215, 0.61, 0.355, 1],
         }}
-        data-scrolled={scrolled ? "true" : undefined}
+        data-scrolled={scrolled || alwaysVisible ? "true" : undefined}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
-          scrolled
+          scrolled || alwaysVisible
             ? "px-4 py-3 md:px-6 lg:px-8"
             : "px-6 py-5 md:px-10 lg:px-16"
         }`}
       >
         <div
           className={`flex items-center justify-between rounded-2xl border transition-all duration-500 ease-out ${
-            scrolled
+            scrolled || alwaysVisible
               ? "border-foreground/[0.08] bg-background/70 backdrop-blur-xl shadow-xl shadow-black/[0.06] px-6 py-3"
               : "border-transparent bg-transparent px-0 py-0"
           }`}
         >
           {/* Logo */}
-          <a href="/" className="block shrink-0">
+          <Link href="/" className="block shrink-0">
             <img
               src="/logo/Horizen-LogoType-Black.svg"
               alt="Horizen"
               className="h-5 w-auto md:h-6"
             />
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:block">
@@ -160,15 +160,6 @@ export default function Navbar() {
                       ))}
                     </ul>
                   </NavigationMenuContent>
-                </NavigationMenuItem>
-
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    asChild
-                    className={navigationMenuTriggerStyle()}
-                  >
-                    <Link href="/cases">Cases</Link>
-                  </NavigationMenuLink>
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
