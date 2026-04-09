@@ -27,7 +27,7 @@ export default function InteractiveHoverButton({
       transition={{ type: 'spring', stiffness: 400, damping: 30 }}
     >
       <div className="flex items-center gap-2">
-        <div className="h-2 w-2 rounded-full bg-foreground transition-all duration-500 group-hover:scale-[40]" />
+        <div className="h-2 w-2 rounded-full bg-emerald-500 transition-all duration-500 group-hover:scale-[40] group-hover:bg-foreground" />
         <span className="inline-block text-sm transition-all duration-500 group-hover:translate-x-20 group-hover:opacity-0">
           {text}
         </span>
