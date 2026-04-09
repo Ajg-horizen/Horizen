@@ -30,7 +30,7 @@ export default function BlogOverview() {
     <>
       <Navbar alwaysVisible />
       <main className="min-h-screen bg-background pt-32">
-        <div className="px-6 md:px-10 lg:px-16">
+        <div className="mx-auto max-w-[2500px] px-6 md:px-10 lg:px-16">
           {/* Header */}
           <motion.div
             initial="hidden"
