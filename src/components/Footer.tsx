@@ -3,6 +3,31 @@
 import Link from "next/link";
 import { ArrowUpRightIcon } from "lucide-react";
 
+const heartGrid = [
+  [0,1,1,0,0,1,1,0],
+  [1,1,1,1,1,1,1,1],
+  [1,1,1,1,1,1,1,1],
+  [1,1,1,1,1,1,1,1],
+  [0,1,1,1,1,1,1,0],
+  [0,0,1,1,1,1,0,0],
+  [0,0,0,1,1,0,0,0],
+];
+
+function PixelHeart() {
+  return (
+    <div className="relative grid grid-cols-8 gap-[1.5px]">
+      {heartGrid.flat().map((on, i) => (
+        <div
+          key={i}
+          className={`h-[2px] w-[2px] rounded-[0.5px] transition-colors ${
+            on ? "bg-emerald-400/80" : "bg-transparent"
+          }`}
+        />
+      ))}
+    </div>
+  );
+}
+
 const navigation = {
   services: [
     { name: "Webdesign", href: "/services/webdesign" },
@@ -132,6 +157,16 @@ export default function Footer() {
               &copy; {new Date().getFullYear()} Horizen. Alle rettigheder
               forbeholdes.
             </p>
+
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <div className="absolute -inset-2 rounded-full bg-emerald-500/20 blur-lg" />
+                <PixelHeart />
+              </div>
+              <span className="text-xs text-background/30">
+                With great guidance, come great results — <span className="text-background/50 font-medium">Horizen</span>
+              </span>
+            </div>
 
             <div className="flex items-center gap-5">
               {socials.map((social) => (
