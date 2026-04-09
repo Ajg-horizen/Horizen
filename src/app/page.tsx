@@ -11,7 +11,6 @@ import TrustpilotSection from "@/components/TrustpilotSection";
 import BentoShowcase from "@/components/BentoShowcase";
 
 import Footer from "@/components/Footer";
-import CtaSection from "@/components/CtaSection";
 
 
 // Lazy load heavy components (Matter.js ~90KB, tsparticles ~40KB)
