@@ -37,7 +37,7 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="sticky top-0 z-0 flex min-h-screen flex-col items-center justify-center px-6 pt-20 overflow-hidden md:px-10 lg:px-16"
+      className="sticky top-0 z-0 flex min-h-screen flex-col items-center justify-center px-6 pt-20 overflow-hidden md:px-10 lg:px-16 mx-auto max-w-[2500px]"
     >
       <div ref={contentRef}>
         {/* Headline */}

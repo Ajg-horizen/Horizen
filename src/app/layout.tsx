@@ -26,9 +26,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <GlobalCursor />
         <ScrollToTop />
-        <div className="mx-auto w-full max-w-[2500px]">
-          {children}
-        </div>
+        {children}
       </body>
     </html>
   );
