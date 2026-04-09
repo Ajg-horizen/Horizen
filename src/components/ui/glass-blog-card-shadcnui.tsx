@@ -54,7 +54,7 @@ function CardInner({
   tags: string[];
 }) {
   return (
-    <Card className="group relative flex h-full flex-col overflow-hidden rounded-2xl border-none bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+    <Card className="group relative flex h-full flex-col overflow-hidden rounded-2xl border-none bg-white shadow-none hover:shadow-[0_1px_3px_rgba(0,0,0,0.04)] transition-shadow duration-300">
       <div className="relative aspect-[16/9] overflow-hidden">
         <motion.img
           src={image}

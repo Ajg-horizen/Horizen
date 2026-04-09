@@ -45,7 +45,7 @@ export const blogPosts: BlogPost[] = [
       name: "José",
       title: "CEO & Designer",
       role: "10+ års erfaring",
-      avatar: "/staff/staff-José-digital-design.jpg",
+      avatar: "/staff/staff-jose-digital-design.jpg",
     },
     date: "15. marts 2026",
     readTime: calcReadTime(AI_WEBDESIGN_WORDS),

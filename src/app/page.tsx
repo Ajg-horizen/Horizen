@@ -5,12 +5,13 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import ServicesSection from "@/components/ServicesSection";
 import CasesSection from "@/components/CasesSection";
-import TestimonialsEditorial from "@/components/ui/editorial-testimonial";
-import NewsSection from "@/components/NewsSection";
 import GlassBlogSection from "@/components/GlassBlogSection";
 import StatsSection from "@/components/StatsSection";
+import TrustpilotSection from "@/components/TrustpilotSection";
+import BentoShowcase from "@/components/BentoShowcase";
 
 import Footer from "@/components/Footer";
+import CtaSection from "@/components/CtaSection";
 
 
 // Lazy load heavy components (Matter.js ~90KB, tsparticles ~40KB)
@@ -26,18 +27,15 @@ export default function Home() {
 
       <Hero />
 
-      <div className="relative z-10 bg-background rounded-t-[2rem] rounded-b-[2rem] -mt-8 shadow-[0_-20px_60px_rgba(0,0,0,0.04),0_20px_60px_rgba(0,0,0,0.06)]">
+      <div className="relative z-10 bg-background rounded-t-[2rem] -mt-8 shadow-[0_-20px_60px_rgba(0,0,0,0.04),0_20px_60px_rgba(0,0,0,0.06)]">
         <CasesSection />
         <StatsSection />
         <PhysicsPlayground />
         <ServicesSection />
-        <TestimonialsEditorial />
+        <BentoShowcase />
+        <TrustpilotSection />
         <SocialProof />
-        <NewsSection />
         <GlassBlogSection />
-      </div>
-
-      <div className="relative z-0">
         <Footer />
       </div>
     </main>

@@ -7,7 +7,7 @@ import { blogPosts } from "@/lib/blog-data";
 
 export default function GlassBlogSection() {
   return (
-    <section className="px-6 py-32 md:px-10 lg:px-16">
+    <section className="px-6 pt-10 pb-32 md:px-10 lg:px-16">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -15,9 +15,9 @@ export default function GlassBlogSection() {
         transition={{ duration: 0.7 }}
         className="mb-10"
       >
-        <ScrambleEyebrow>Artikler & Blog</ScrambleEyebrow>
+        <ScrambleEyebrow>Indsigt & Artikler</ScrambleEyebrow>
         <h2 className="mt-4 text-4xl font-bold tracking-tight md:text-5xl">
-          Glass Blog
+          Fra vores blog
         </h2>
       </motion.div>
 

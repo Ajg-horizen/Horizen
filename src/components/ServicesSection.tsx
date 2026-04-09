@@ -19,37 +19,43 @@ const services = [
     icon: LayoutIcon,
     title: "Webdesign",
     description:
-      "Vi bygger websites der ikke bare ser godt ud — de konverterer besøgende til kunder.",
+      "Websites der er gennemtænkte fra struktur til detalje — med fokus på konvertering og brugeroplevelse.",
+    badge: "bg-[#e8f0e4] text-[#2d4a28]",
   },
   {
     icon: PenToolIcon,
     title: "UI/UX Design",
     description:
       "Interfaces designet med brugeren i centrum. Intuitivt, elegant og funktionelt.",
+    badge: "bg-[#fce8db] text-[#6b3a1f]",
   },
   {
     icon: PaletteIcon,
     title: "Branding",
     description:
-      "Fra logo til komplet visuel identitet. Vi skaber brands der huskes.",
+      "Fra logo til komplet visuel identitet — et sammenhængende udtryk der styrker genkendelighed.",
+    badge: "bg-[#e4e8f0] text-[#2a3550]",
   },
   {
     icon: SparklesIcon,
     title: "Grafisk Design",
     description:
       "Print, digital, social — visuel kommunikation der fanger opmærksomhed.",
+    badge: "bg-[#f0ece4] text-[#5a4a2d]",
   },
   {
     icon: CodeIcon,
     title: "Udvikling",
     description:
       "Next.js, React, WordPress — moderne teknologi tilpasset dit behov.",
+    badge: "bg-[#2a2a2a] text-[#f5f5f0]",
   },
   {
     icon: BarChartIcon,
     title: "SEO & Marketing",
     description:
       "Bliv fundet online. Vi optimerer din synlighed og driver kvalificeret trafik.",
+    badge: "bg-[#e0eeec] text-[#1f4a42]",
   },
 ];
 
@@ -68,7 +74,9 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <service.icon className="size-6 text-foreground/40 transition-colors duration-300 group-hover:text-foreground" />
+      <div className={`inline-flex size-11 items-center justify-center rounded-xl ${service.badge}`}>
+        <service.icon className="size-5" />
+      </div>
       <h3 className="mt-5 text-lg font-semibold">
         <TextScramble
           as="span"

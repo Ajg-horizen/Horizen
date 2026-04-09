@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@hugeicons/core-free-icons": "^4.1.1",
+    "@hugeicons/react": "^1.1.6",
+    "@radix-ui/react-slot": "^1.2.4",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.9.1",
     "class-variance-authority": "^0.7.1",

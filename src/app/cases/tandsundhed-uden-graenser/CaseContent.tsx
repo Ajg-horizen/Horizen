@@ -494,6 +494,38 @@ export default function CaseContent() {
         </div>
       </section>
 
+      {/* Kundecitat */}
+      <section className="px-6 md:px-10 lg:px-16 py-24 border-t border-foreground/[0.06]">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          custom={0}
+          variants={fadeInUp}
+          className="max-w-3xl mx-auto text-center"
+        >
+          <div className="flex justify-center gap-0.5 mb-8">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div
+                key={i}
+                className="flex h-6 w-6 items-center justify-center bg-[#00b67a]"
+              >
+                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-white">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              </div>
+            ))}
+          </div>
+          <blockquote className="text-2xl md:text-3xl font-light leading-relaxed tracking-tight">
+            &ldquo;Horizen gav os en hjemmeside der virkelig afspejler vores mission. Det nye CMS sparer os timer hver uge.&rdquo;
+          </blockquote>
+          <div className="mt-8">
+            <p className="font-semibold">Tandsundhed Uden Grænser</p>
+            <p className="text-sm text-muted">NGO, Danmark</p>
+          </div>
+        </motion.div>
+      </section>
+
       {/* Tools & Teknologier */}
       <section className="px-6 md:px-10 lg:px-16 py-24 border-t border-foreground/[0.06]">
         <div className="grid gap-16 md:grid-cols-2">

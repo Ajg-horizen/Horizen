@@ -13,7 +13,7 @@ const cases = [
     image: "/cases/Case-image.webp",
     href: "/cases/malerfirma-seitz",
     team: [
-      { name: "José", avatar: "/staff/staff-José-digital-design.jpg" },
+      { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
       { name: "Ludvig", avatar: "/staff/staff-kommunikation-og-salg-Ludvig.webp" },
     ],
   },
@@ -25,7 +25,7 @@ const cases = [
     href: "/cases/od-biler-pro",
     team: [
       { name: "Johanne", avatar: "/staff/staff-Web-udvikler-designer-Johanne-horizen.avif" },
-      { name: "José", avatar: "/staff/staff-José-digital-design.jpg" },
+      { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
     ],
   },
   {
@@ -46,7 +46,7 @@ const cases = [
     image: "/cases/NA_Home5_mobile.webp",
     href: "/cases/never-another",
     team: [
-      { name: "José", avatar: "/staff/staff-José-digital-design.jpg" },
+      { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
       { name: "Sebastian", avatar: "/staff/staff-.Sebastian-Meta-facebook.jpg" },
     ],
   },

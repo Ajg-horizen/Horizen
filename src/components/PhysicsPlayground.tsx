@@ -191,13 +191,12 @@ export default function PhysicsPlayground() {
         <div className="mb-10 text-center">
           <ScrambleEyebrow>Det digitale landskab</ScrambleEyebrow>
           <h3 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
-            Der er mange bolde at jonglere
+            Der er mange ting at holde styr på
           </h3>
           <p className="mt-3 mx-auto max-w-lg text-sm leading-relaxed text-muted">
             GDPR, SEO, performance, sikkerhed, AI, optimering — listen
-            er lang. Heldigvis for dig elsker vi at arbejde
-            med præcis de ting. Så du kan fokusere på det,
-            du elsker mest.
+            er lang. Vi tager os af det tekniske, så du kan fokusere
+            på din forretning.
           </p>
         </div>
         <div

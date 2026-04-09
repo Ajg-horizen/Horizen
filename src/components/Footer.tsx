@@ -33,9 +33,9 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="bg-foreground text-background">
-      <div className="px-6 pt-24 pb-10 md:px-10 lg:px-16">
-        <div>
+    <div className="px-4 pb-4 md:px-6 md:pb-6 lg:px-8">
+      <footer className="rounded-2xl bg-gradient-to-b from-[#1e1e1e] via-foreground to-[#080808] text-background border border-white/[0.10] md:rounded-3xl">
+        <div className="px-6 pt-24 pb-10 md:px-10 lg:px-16">
           {/* Top section */}
           <div className="grid gap-16 lg:grid-cols-[1.5fr_1fr_1fr_1fr] lg:gap-8">
             {/* Brand column */}
@@ -57,10 +57,10 @@ export default function Footer() {
                   hej@horizen.dk
                 </a>
                 <a
-                  href="tel:+4500000000"
+                  href="tel:+4528127652"
                   className="block text-sm text-background/50 transition-colors duration-300 hover:text-background"
                 >
-                  +45 00 00 00 00
+                  +45 28 12 76 52
                 </a>
               </div>
             </div>
@@ -149,7 +149,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   );
 }

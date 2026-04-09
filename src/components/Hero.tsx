@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import TextRoll from "@/components/ui/text-roll";
 import { fadeUp } from "@/lib/animations";
+import InteractiveHoverButton from "@/components/ui/interactive-hover-button";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -76,7 +77,7 @@ export default function Hero() {
           <div className="flex flex-col items-center gap-2">
             <div className="flex -space-x-3">
               {[
-                { src: "/staff/staff-José-digital-design.jpg", name: "José" },
+                { src: "/staff/staff-jose-digital-design.jpg", name: "José" },
                 { src: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp", name: "Anne-Sofie" },
                 { src: "/staff/staff-Web-udvikler-designer-Johanne-horizen.avif", name: "Johanne" },
                 { src: "/staff/staff-kommunikation-og-salg-Ludvig.webp", name: "Ludvig" },
@@ -104,12 +105,7 @@ export default function Hero() {
           variants={fadeUp}
           className="mt-8 flex justify-center items-center gap-6"
         >
-          <a
-            href="#contact"
-            className="rounded-full border border-foreground bg-transparent px-8 py-3.5 text-sm font-medium text-foreground transition-all duration-300 hover:bg-[#0f0f0f] hover:text-[#f5f5f0] hover:border-[#0f0f0f]"
-          >
-            Start et projekt
-          </a>
+          <InteractiveHoverButton text="Start et projekt" href="#contact" />
           <a
             href="#cases"
             className="text-sm font-medium text-muted underline underline-offset-4 decoration-border transition-colors duration-300 hover:text-foreground hover:decoration-foreground"
