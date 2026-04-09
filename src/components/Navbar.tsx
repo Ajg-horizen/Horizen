@@ -64,7 +64,7 @@ export default function Navbar({ alwaysVisible = false }: { alwaysVisible?: bool
           ease: [0.215, 0.61, 0.355, 1],
         }}
         data-scrolled={scrolled || alwaysVisible ? "true" : undefined}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
+        className={`fixed top-0 left-0 right-0 z-50 mx-auto max-w-[2200px] transition-all duration-500 ease-out ${
           scrolled || alwaysVisible
             ? "px-4 py-3 md:px-6 lg:px-8"
             : "px-6 py-5 md:px-10 lg:px-16"
