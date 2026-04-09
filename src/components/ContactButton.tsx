@@ -44,22 +44,23 @@ const spiral = [
   [],
 ];
 
-const diamond = [
+const chevron = [
   [],
-  [24],
-  [17, 23, 25, 31],
-  [10, 16, 18, 24, 30, 32, 38],
-  [17, 23, 25, 31],
-  [24],
+  [16, 24, 30],
+  [16, 24, 30],
+  [16, 18, 24, 26, 30, 32],
+  [16, 18, 24, 26, 30, 32],
+  [18, 26, 32],
+  [18, 26, 32],
   [],
 ];
 
 const items: DotFlowProps["items"] = [
   {
     title: "Connect",
-    frames: diamond,
-    duration: 200,
-    repeatCount: 7,
+    frames: chevron,
+    duration: 160,
+    repeatCount: 5,
   },
   {
     title: "Design",

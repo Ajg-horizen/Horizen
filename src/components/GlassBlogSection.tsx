@@ -4,6 +4,7 @@ import { GlassBlogCard } from "@/components/ui/glass-blog-card-shadcnui";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { motion } from "framer-motion";
 import { blogPosts } from "@/lib/blog-data";
+import Link from "next/link";
 
 export default function GlassBlogSection() {
   return (
@@ -15,14 +16,24 @@ export default function GlassBlogSection() {
         transition={{ duration: 0.7 }}
         className="mb-10"
       >
-        <ScrambleEyebrow>Indsigt & Artikler</ScrambleEyebrow>
-        <h2 className="mt-4 text-4xl font-bold tracking-tight md:text-5xl">
-          Fra vores blog
-        </h2>
+        <div className="flex items-end justify-between">
+          <div>
+            <ScrambleEyebrow>Indsigt & Artikler</ScrambleEyebrow>
+            <h2 className="mt-4 text-4xl font-bold tracking-tight md:text-5xl">
+              Fra vores blog
+            </h2>
+          </div>
+          <Link
+            href="/blog"
+            className="text-sm text-muted transition-colors duration-300 hover:text-foreground"
+          >
+            Se alle artikler &rarr;
+          </Link>
+        </div>
       </motion.div>
 
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {blogPosts.map((post, i) => (
+        {blogPosts.slice(0, 3).map((post, i) => (
           <motion.div
             key={post.slug}
             initial={{ opacity: 0, y: 40 }}
@@ -45,6 +56,7 @@ export default function GlassBlogSection() {
           </motion.div>
         ))}
       </div>
+
     </section>
   );
 }
