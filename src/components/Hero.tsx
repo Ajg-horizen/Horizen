@@ -39,8 +39,8 @@ export default function Hero() {
       ref={sectionRef}
       className="sticky top-0 z-0 flex min-h-screen flex-col items-center justify-center px-6 pt-20 overflow-hidden md:px-10 lg:px-16 mx-auto max-w-[2500px] relative"
     >
-      {/* Grid background — full viewport width */}
-      <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-screen -z-10 pointer-events-none opacity-40" aria-hidden="true">
+      {/* Grid background — fixed to viewport */}
+      <div className="fixed inset-0 -z-10 pointer-events-none opacity-40" aria-hidden="true">
         <div
           className="absolute inset-0"
           style={{
