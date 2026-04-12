@@ -467,7 +467,7 @@ export default function WebdesignContent() {
   const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.15, 1.05, 1.15]);
 
   return (
-    <main>
+    <main className="mx-auto max-w-[2500px]">
       <Navbar alwaysVisible />
 
       {/* ═══ Hero — text top, image bottom ═══ */}
