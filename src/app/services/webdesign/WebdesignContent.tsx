@@ -474,7 +474,7 @@ export default function WebdesignContent() {
       <section className="relative pt-32 pb-0">
         {/* Grid background */}
         <div
-          className="absolute inset-0 -z-10 pointer-events-none opacity-30"
+          className="absolute inset-0 -z-10 pointer-events-none opacity-40"
           aria-hidden="true"
         >
           <div
