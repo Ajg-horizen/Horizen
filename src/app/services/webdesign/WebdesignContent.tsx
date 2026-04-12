@@ -467,14 +467,14 @@ export default function WebdesignContent() {
   const imageScale = useTransform(scrollYProgress, [0, 0.5, 1], [1.15, 1.05, 1.15]);
 
   return (
-    <main className="mx-auto max-w-[2500px]">
+    <main>
       <Navbar alwaysVisible />
 
       {/* ═══ Hero — text top, image bottom ═══ */}
       <section className="relative pt-32 pb-0">
-        {/* Grid background */}
+        {/* Grid background — fixed to viewport */}
         <div
-          className="absolute inset-0 -z-10 pointer-events-none opacity-40"
+          className="fixed inset-0 -z-10 pointer-events-none opacity-40"
           aria-hidden="true"
         >
           <div
