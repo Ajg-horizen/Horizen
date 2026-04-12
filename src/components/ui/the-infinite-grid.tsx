@@ -5,6 +5,7 @@ import {
   useMotionValue,
   useMotionTemplate,
   useAnimationFrame,
+  type MotionValue,
 } from "framer-motion";
 
 interface InfiniteGridProps {
@@ -68,8 +69,8 @@ function GridPattern({
   offsetX,
   offsetY,
 }: {
-  offsetX: ReturnType<typeof useMotionValue>;
-  offsetY: ReturnType<typeof useMotionValue>;
+  offsetX: MotionValue<number>;
+  offsetY: MotionValue<number>;
 }) {
   return (
     <svg className="h-full w-full">
