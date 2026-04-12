@@ -584,7 +584,7 @@ export default function WebdesignContent() {
           variants={fadeInUp}
           className="text-center mb-14"
         >
-          <ScrambleEyebrow className="font-mono">
+          <ScrambleEyebrow>
             Teknisk fundament
           </ScrambleEyebrow>
           <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
@@ -743,7 +743,7 @@ export default function WebdesignContent() {
           variants={fadeInUp}
           className="max-w-2xl mx-auto text-center"
         >
-          <ScrambleEyebrow className="font-mono">
+          <ScrambleEyebrow>
             Gratis audit
           </ScrambleEyebrow>
           <h2 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
@@ -785,7 +785,7 @@ export default function WebdesignContent() {
             custom={0}
             variants={fadeInUp}
           >
-            <ScrambleEyebrow className="font-mono text-white/40">
+            <ScrambleEyebrow className="text-white/40">
               Under overfladen
             </ScrambleEyebrow>
             <h2 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
@@ -1031,7 +1031,7 @@ export default function WebdesignContent() {
           variants={fadeInUp}
           className="mb-16"
         >
-          <ScrambleEyebrow className="text-xs font-medium tracking-[0.3em] text-white/40 uppercase">
+          <ScrambleEyebrow className="text-white/40">
             Processen
           </ScrambleEyebrow>
           <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
