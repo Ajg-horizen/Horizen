@@ -468,6 +468,7 @@ export default function WebdesignContent() {
 
   return (
     <main>
+      <div className="mx-auto max-w-[2500px]">
       <Navbar alwaysVisible />
 
       {/* ═══ Hero — text top, image bottom ═══ */}
@@ -1259,6 +1260,7 @@ export default function WebdesignContent() {
       </section>
 
       <Footer />
+      </div>
     </main>
   );
 }
