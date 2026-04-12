@@ -468,12 +468,11 @@ export default function WebdesignContent() {
 
   return (
     <main>
-      <div className="mx-auto max-w-[2500px]">
       <Navbar alwaysVisible />
 
       {/* ═══ Hero — text top, image bottom ═══ */}
       <section className="relative pt-32 pb-0">
-        {/* Grid background — fixed to viewport */}
+        {/* Grid background */}
         <div
           className="fixed inset-0 -z-10 pointer-events-none opacity-40"
           aria-hidden="true"
@@ -1260,7 +1259,6 @@ export default function WebdesignContent() {
       </section>
 
       <Footer />
-      </div>
     </main>
   );
 }
