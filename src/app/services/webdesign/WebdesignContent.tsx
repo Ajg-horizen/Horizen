@@ -562,7 +562,7 @@ export default function WebdesignContent() {
             src="/graphics/Web-hero-image-marketing-google-ads.avif"
             alt="Webdesign af Horizen"
             style={{ y: imageY, scale: imageScale }}
-            className="w-full h-auto object-cover aspect-[21/8]"
+            className="w-full h-auto object-cover aspect-[21/8] 3xl:aspect-[21/6]"
           />
         </motion.div>
       </section>
