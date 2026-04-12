@@ -556,7 +556,7 @@ export default function WebdesignContent() {
           className="relative mt-12 w-full overflow-hidden"
         >
           <motion.img
-            src="/Web-hero-image-marketing-google-ads.avif"
+            src="/graphics/Web-hero-image-marketing-google-ads.avif"
             alt="Webdesign af Horizen"
             style={{ y: imageY, scale: imageScale }}
             className="w-full h-auto object-cover aspect-[21/8]"
