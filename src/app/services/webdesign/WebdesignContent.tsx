@@ -556,13 +556,13 @@ export default function WebdesignContent() {
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="relative mt-12 overflow-hidden"
+          className="relative mt-12 overflow-hidden min-[2200px]:max-h-[400px]"
         >
           <motion.img
             src="/graphics/Web-hero-image-marketing-google-ads.avif"
             alt="Webdesign af Horizen"
             style={{ y: imageY, scale: imageScale }}
-            className="w-full h-auto object-cover aspect-[21/8] min-[2200px]:aspect-[21/3]"
+            className="w-full h-full object-cover"
           />
         </motion.div>
       </section>
