@@ -556,7 +556,7 @@ export default function WebdesignContent() {
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="relative mt-12 overflow-hidden min-[2200px]:max-h-[400px]"
+          className="relative mt-12 overflow-hidden min-[2200px]:max-h-[600px]"
         >
           <motion.img
             src="/graphics/Web-hero-image-marketing-google-ads.avif"
