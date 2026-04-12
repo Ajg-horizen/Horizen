@@ -731,7 +731,10 @@ export default function WebdesignContent() {
       <div className="relative">
 
       {/* ═══ Free audit CTA ═══ */}
-      <section className="sticky top-0 z-10 bg-background px-6 md:px-10 lg:px-16 py-20 md:py-36 lg:py-44">
+      <section
+        className="sticky top-0 z-10 bg-background px-6 md:px-10 lg:px-16 py-20 md:py-36 lg:py-44"
+        style={{ boxShadow: "0 0 0 100vmax var(--background)", clipPath: "inset(0 -100vmax)" }}
+      >
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -770,7 +773,10 @@ export default function WebdesignContent() {
       </section>
 
       {/* ═══ Technical checklist ═══ */}
-      <section className="sticky top-0 z-20 shadow-[0_-8px_30px_rgba(0,0,0,0.15)] px-6 md:px-10 lg:px-16 py-20 md:py-28 lg:py-36 bg-[#0f0f0f] text-[#f5f5f0]">
+      <section
+        className="sticky top-0 z-20 shadow-[0_-8px_30px_rgba(0,0,0,0.15)] px-6 md:px-10 lg:px-16 py-20 md:py-28 lg:py-36 bg-[#0f0f0f] text-[#f5f5f0]"
+        style={{ boxShadow: "0 0 0 100vmax #0f0f0f, 0 -8px 30px rgba(0,0,0,0.15)", clipPath: "inset(0 -100vmax)" }}
+      >
         <div className="grid gap-12 md:grid-cols-[1fr_1.2fr] md:gap-16 items-start">
           <motion.div
             initial="hidden"
@@ -954,7 +960,10 @@ export default function WebdesignContent() {
       </section>
 
       {/* ═══ Positioning statement ═══ */}
-      <section className="sticky top-0 z-30 shadow-[0_-8px_30px_rgba(0,0,0,0.1)] bg-background px-6 md:px-10 lg:px-16 py-24 md:py-36 lg:py-44">
+      <section
+        className="sticky top-0 z-30 shadow-[0_-8px_30px_rgba(0,0,0,0.1)] bg-background px-6 md:px-10 lg:px-16 py-24 md:py-36 lg:py-44"
+        style={{ boxShadow: "0 0 0 100vmax var(--background), 0 -8px 30px rgba(0,0,0,0.1)", clipPath: "inset(0 -100vmax)" }}
+      >
         <div className="grid gap-12 md:grid-cols-2 md:gap-16 items-center">
           <motion.div
             initial="hidden"
@@ -1012,6 +1021,7 @@ export default function WebdesignContent() {
       <section
         id="process"
         className="sticky top-0 z-40 shadow-[0_-8px_30px_rgba(0,0,0,0.15)] px-6 md:px-10 lg:px-16 py-20 md:py-28 lg:py-36 bg-[#0f0f0f] text-[#f5f5f0]"
+        style={{ boxShadow: "0 0 0 100vmax #0f0f0f, 0 -8px 30px rgba(0,0,0,0.15)", clipPath: "inset(0 -100vmax)" }}
       >
         <motion.div
           initial="hidden"
