@@ -470,9 +470,11 @@ export default function WebdesignContent() {
     <main>
       <Navbar alwaysVisible />
 
-      {/* Grid background — fixed to viewport, outside wrapper */}
-      <div
-        className="fixed inset-0 -z-10 pointer-events-none opacity-40"
+      {/* ═══ Hero — standalone, NO wrapper ═══ */}
+      <section className="relative pt-32 pb-0">
+        {/* Grid background — fixed to full viewport */}
+        <div
+          className="fixed inset-0 -z-10 pointer-events-none opacity-40"
           aria-hidden="true"
         >
           <div
@@ -488,75 +490,73 @@ export default function WebdesignContent() {
                 "linear-gradient(to bottom, transparent 0%, black 15%, black 60%, transparent 100%)",
             }}
           />
-      </div>
-
-      {/* Content wrapper — same max-width as frontpage */}
-      <div className="relative z-10 bg-background max-w-[2500px] mx-auto">
-
-      {/* ═══ Hero — text top, image bottom ═══ */}
-      <section className="relative pt-32 pb-0">
-        <div className="max-w-3xl px-6 md:px-10 lg:px-16">
-          <motion.div
-            custom={0.2}
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-          >
-            <span className="inline-flex items-center gap-2 rounded-full border border-foreground/[0.08] bg-accent/50 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-muted">
-              <LayoutIcon className="size-3" />
-              Webdesign
-            </span>
-          </motion.div>
-
-          <motion.h1
-            custom={0.5}
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            className="mt-6 text-2xl font-bold leading-[1.2] tracking-tight sm:text-3xl md:text-4xl"
-          >
-            Hjemmesider er blevet en commodity.{" "}
-            <span className="text-muted">Vi kombinerer erfaring med AI — ikke omvendt.</span>
-          </motion.h1>
-
-          <motion.p
-            custom={1.0}
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            className="mt-4 max-w-lg text-base leading-relaxed text-muted"
-          >
-            Uden forståelse for det tekniske fundament vil enhver
-            hjemmeside fejle. Vi bygger på et fundament af 8+ års
-            teknisk erfaring. Forstærket af AI til din fordel.
-          </motion.p>
-
-          <motion.div
-            custom={1.4}
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
-            className="mt-6"
-          >
-            <a
-              href="/kontakt"
-              className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium transition-opacity hover:opacity-80"
-              style={{ color: "#f5f5f0" }}
-            >
-              Start et projekt
-              <ArrowRightIcon className="size-3.5" />
-            </a>
-          </motion.div>
         </div>
 
-        {/* Hero image — edge-to-edge, compact */}
+        {/* Hero text content — constrained */}
+        <div className="max-w-[2500px] mx-auto">
+          <div className="max-w-3xl px-6 md:px-10 lg:px-16">
+            <motion.div
+              custom={0.2}
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp}
+            >
+              <span className="inline-flex items-center gap-2 rounded-full border border-foreground/[0.08] bg-accent/50 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-muted">
+                <LayoutIcon className="size-3" />
+                Webdesign
+              </span>
+            </motion.div>
+
+            <motion.h1
+              custom={0.5}
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp}
+              className="mt-6 text-2xl font-bold leading-[1.2] tracking-tight sm:text-3xl md:text-4xl"
+            >
+              Hjemmesider er blevet en commodity.{" "}
+              <span className="text-muted">Vi kombinerer erfaring med AI — ikke omvendt.</span>
+            </motion.h1>
+
+            <motion.p
+              custom={1.0}
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp}
+              className="mt-4 max-w-lg text-base leading-relaxed text-muted"
+            >
+              Uden forståelse for det tekniske fundament vil enhver
+              hjemmeside fejle. Vi bygger på et fundament af 8+ års
+              teknisk erfaring. Forstærket af AI til din fordel.
+            </motion.p>
+
+            <motion.div
+              custom={1.4}
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp}
+              className="mt-6"
+            >
+              <a
+                href="/kontakt"
+                className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium transition-opacity hover:opacity-80"
+                style={{ color: "#f5f5f0" }}
+              >
+                Start et projekt
+                <ArrowRightIcon className="size-3.5" />
+              </a>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Hero image — full width, edge to edge, OUTSIDE the max-width */}
         <motion.div
           ref={imageRef}
           custom={1.8}
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="relative mt-12 left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden"
+          className="relative mt-12 overflow-hidden"
         >
           <motion.img
             src="/graphics/Web-hero-image-marketing-google-ads.avif"
@@ -566,6 +566,10 @@ export default function WebdesignContent() {
           />
         </motion.div>
       </section>
+
+      {/* ═══ Everything after hero — wrapped with bg-background + max-width ═══ */}
+      <div className="relative z-10 bg-background">
+        <div className="mx-auto max-w-[2500px]">
 
       {/* ═══ Tech ticker ═══ */}
       <TechTicker />
@@ -1261,10 +1265,10 @@ export default function WebdesignContent() {
         </div>
       </section>
 
-      {/* end content wrapper */}
-      </div>
-
       <Footer />
+
+        </div>{/* end max-w-[2500px] */}
+      </div>{/* end bg-background */}
     </main>
   );
 }
