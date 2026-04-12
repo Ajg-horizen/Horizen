@@ -470,11 +470,9 @@ export default function WebdesignContent() {
     <main>
       <Navbar alwaysVisible />
 
-      {/* ═══ Hero — text top, image bottom ═══ */}
-      <section className="relative pt-32 pb-0">
-        {/* Grid background */}
-        <div
-          className="fixed inset-0 -z-10 pointer-events-none opacity-40"
+      {/* Grid background — fixed to viewport, outside wrapper */}
+      <div
+        className="fixed inset-0 -z-10 pointer-events-none opacity-40"
           aria-hidden="true"
         >
           <div
@@ -490,8 +488,13 @@ export default function WebdesignContent() {
                 "linear-gradient(to bottom, transparent 0%, black 15%, black 60%, transparent 100%)",
             }}
           />
-        </div>
+      </div>
 
+      {/* Content wrapper — same max-width as frontpage */}
+      <div className="relative z-10 bg-background max-w-[2500px] mx-auto">
+
+      {/* ═══ Hero — text top, image bottom ═══ */}
+      <section className="relative pt-32 pb-0">
         <div className="max-w-3xl px-6 md:px-10 lg:px-16">
           <motion.div
             custom={0.2}
@@ -553,7 +556,7 @@ export default function WebdesignContent() {
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="relative mt-12 w-full overflow-hidden"
+          className="relative mt-12 left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden"
         >
           <motion.img
             src="/graphics/Web-hero-image-marketing-google-ads.avif"
@@ -1257,6 +1260,9 @@ export default function WebdesignContent() {
           </div>
         </div>
       </section>
+
+      {/* end content wrapper */}
+      </div>
 
       <Footer />
     </main>
