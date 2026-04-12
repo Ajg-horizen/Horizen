@@ -37,8 +37,22 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="sticky top-0 z-0 flex min-h-screen flex-col items-center justify-center px-6 pt-20 overflow-hidden md:px-10 lg:px-16 mx-auto max-w-[2500px]"
+      className="sticky top-0 z-0 flex min-h-screen flex-col items-center justify-center px-6 pt-20 overflow-hidden md:px-10 lg:px-16 mx-auto max-w-[2500px] relative"
     >
+      {/* Grid background */}
+      <div className="absolute inset-0 -z-10 pointer-events-none opacity-40" aria-hidden="true">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url(/graphics/bg-control.svg)",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+            WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+          }}
+        />
+      </div>
       <div ref={contentRef}>
         {/* Headline */}
         <motion.h1
