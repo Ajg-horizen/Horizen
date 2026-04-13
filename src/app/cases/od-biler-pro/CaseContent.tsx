@@ -109,6 +109,7 @@ export default function CaseContent() {
     <main>
       <Navbar alwaysVisible />
 
+      <Container size="site" noPadding>
       {/* Hero — full-screen image with parallax + text overlay */}
       <section
         ref={heroImageRef}
@@ -209,7 +210,6 @@ export default function CaseContent() {
         </motion.div>
       </section>
 
-      <Container size="site" noPadding>
       <Container as="section" size="site" className="py-12 border-y border-foreground/[0.06]">
         <motion.div
           initial={{ opacity: 0 }}
@@ -690,7 +690,7 @@ export default function CaseContent() {
       </Container>
 
       <Footer />
-      </Container>
+    </Container>
     </main>
   );
 }
