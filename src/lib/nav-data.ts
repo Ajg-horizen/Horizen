@@ -34,7 +34,7 @@ export type NavItem = {
 export const services: NavItem[] = [
   {
     title: "Webdesign",
-    description: "Skræddersyede websites der konverterer",
+    description: "Websites bygget til at konvertere",
     href: "/services/webdesign",
     icon: LayoutIcon,
   },
@@ -130,7 +130,7 @@ export const ai: NavItem[] = [
   },
   {
     title: "AI Assistenter",
-    description: "Skræddersyede AI-assistenter til din virksomhed",
+    description: "AI-assistenter bygget til din virksomhed",
     href: "/ai/assistenter",
     icon: BotIcon,
   },

@@ -24,6 +24,9 @@ export default function RootLayout({
   return (
     <html lang="da" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
+        <a href="#main" className="skip-link">
+          Spring til indhold
+        </a>
         <GlobalCursor />
         <ScrollToTop />
         {children}
