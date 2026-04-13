@@ -10,6 +10,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { fadeInUp } from "@/lib/animations";
+import Container from "@/components/Container";
 
 const allTags = Array.from(new Set(blogPosts.flatMap((p) => p.tags)));
 
@@ -30,7 +31,7 @@ export default function BlogOverview() {
     <>
       <Navbar alwaysVisible />
       <main className="min-h-screen bg-background pt-32">
-        <div className="mx-auto max-w-[2500px] px-6 md:px-10 lg:px-16">
+        <Container size="site">
           {/* Header */}
           <motion.div
             initial="hidden"
@@ -180,7 +181,7 @@ export default function BlogOverview() {
               </button>
             </div>
           )}
-        </div>
+        </Container>
 
         <div className="mt-32" />
       </main>

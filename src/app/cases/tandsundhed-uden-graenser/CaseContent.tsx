@@ -19,6 +19,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { fadeInUp, fadeUp } from "@/lib/animations";
+import Container from "@/components/Container";
 
 const project = {
   title: "Tandsundhed Uden Grænser",
@@ -200,7 +201,7 @@ export default function CaseContent() {
       </section>
 
       {/* Metadata bar */}
-      <section className="px-6 md:px-10 lg:px-16 py-12 border-y border-foreground/[0.06]">
+      <Container as="section" size="site" className="py-12 border-y border-foreground/[0.06]">
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -235,10 +236,10 @@ export default function CaseContent() {
             </div>
           </div>
         </motion.div>
-      </section>
+      </Container>
 
       {/* Udfordringen */}
-      <section className="px-6 md:px-10 lg:px-16 py-24">
+      <Container as="section" size="site" className="py-24">
         <div className="grid gap-12 md:grid-cols-2 md:gap-16">
           <motion.div
             initial="hidden"
@@ -272,10 +273,11 @@ export default function CaseContent() {
             </p>
           </motion.div>
         </div>
-      </section>
+      </Container>
 
       {/* Løsningen */}
-      <section className="px-6 md:px-10 lg:px-16 py-24 bg-accent/50 rounded-3xl mx-4 md:mx-8">
+      <section className="py-24 bg-accent/50 rounded-3xl mx-4 md:mx-8">
+        <Container size="site">
         <div className="grid gap-12 md:grid-cols-2 md:gap-16">
           <motion.div
             initial="hidden"
@@ -309,10 +311,11 @@ export default function CaseContent() {
             </p>
           </motion.div>
         </div>
+        </Container>
       </section>
 
       {/* Resultater */}
-      <section className="px-6 md:px-10 lg:px-16 py-24">
+      <Container as="section" size="site" className="py-24">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -345,10 +348,11 @@ export default function CaseContent() {
             </motion.div>
           ))}
         </div>
-      </section>
+      </Container>
 
       {/* Performance — tid sparet */}
-      <section className="px-6 md:px-10 lg:px-16 py-24 bg-[#0f0f0f] text-[#f5f5f0]">
+      <section className="bg-[#0f0f0f] text-[#f5f5f0]">
+        <Container size="site" className="py-24">
         <div className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-16 items-center">
           <motion.div
             initial="hidden"
@@ -492,10 +496,11 @@ export default function CaseContent() {
             </div>
           </motion.div>
         </div>
+        </Container>
       </section>
 
       {/* Kundecitat */}
-      <section className="px-6 md:px-10 lg:px-16 py-24 border-t border-foreground/[0.06]">
+      <Container as="section" size="site" className="py-24 border-t border-foreground/[0.06]">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -524,10 +529,10 @@ export default function CaseContent() {
             <p className="text-sm text-muted">NGO, Danmark</p>
           </div>
         </motion.div>
-      </section>
+      </Container>
 
       {/* Tools & Teknologier */}
-      <section className="px-6 md:px-10 lg:px-16 py-24 border-t border-foreground/[0.06]">
+      <Container as="section" size="site" className="py-24 border-t border-foreground/[0.06]">
         <div className="grid gap-16 md:grid-cols-2">
           <motion.div
             initial="hidden"
@@ -583,10 +588,10 @@ export default function CaseContent() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </Container>
 
       {/* Andre cases */}
-      <section className="px-6 md:px-10 lg:px-16 py-24 border-t border-foreground/[0.06]">
+      <Container as="section" size="site" className="py-24 border-t border-foreground/[0.06]">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -638,7 +643,7 @@ export default function CaseContent() {
             </motion.div>
           ))}
         </div>
-      </section>
+      </Container>
 
       <Footer />
     </main>

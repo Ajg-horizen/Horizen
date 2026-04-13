@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { TextScramble } from "@/components/ui/text-scramble";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { fadeInUp } from "@/lib/animations";
+import Container from "@/components/Container";
 import {
   LayoutIcon,
   PenToolIcon,
@@ -97,7 +98,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
 
 export default function ServicesSection() {
   return (
-    <section className="px-6 py-32 md:px-10 lg:px-16" id="services">
+    <Container as="section" size="site" className="py-32" id="services">
       <div>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -122,6 +123,6 @@ export default function ServicesSection() {
           ))}
         </div>
       </div>
-    </section>
+    </Container>
   );
 }

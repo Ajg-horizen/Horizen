@@ -4,11 +4,12 @@ import { GlassBlogCard } from "@/components/ui/glass-blog-card-shadcnui";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { motion } from "framer-motion";
 import { blogPosts } from "@/lib/blog-data";
+import Container from "@/components/Container";
 import Link from "next/link";
 
 export default function GlassBlogSection() {
   return (
-    <section className="px-6 pt-10 pb-32 md:px-10 lg:px-16">
+    <Container as="section" size="site" className="pt-10 pb-32">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -57,6 +58,6 @@ export default function GlassBlogSection() {
         ))}
       </div>
 
-    </section>
+    </Container>
   );
 }

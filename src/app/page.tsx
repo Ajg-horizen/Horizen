@@ -20,14 +20,13 @@ const SocialProof = dynamic(() => import("@/components/SocialProof"), { ssr: fal
 
 export default function Home() {
   return (
-    <main>
+    <main id="main" tabIndex={-1}>
       <Navbar />
       <FloatingContact />
 
       <Hero />
 
       <div className="relative z-10 bg-background rounded-t-[2rem] -mt-8 shadow-[0_-20px_60px_rgba(0,0,0,0.04),0_20px_60px_rgba(0,0,0,0.06)]">
-        <div className="mx-auto max-w-[2500px]">
           <CasesSection />
           <StatsSection />
           <PhysicsPlayground />
@@ -36,8 +35,8 @@ export default function Home() {
           <TrustpilotSection />
           <SocialProof />
           <GlassBlogSection />
+
           <Footer />
-        </div>
       </div>
     </main>
   );

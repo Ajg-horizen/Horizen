@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Matter from "matter-js";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
+import Container from "@/components/Container";
 
 const COMPLEXITY_LABELS = [
   "GDPR",
@@ -186,7 +187,7 @@ export default function PhysicsPlayground() {
   }, []);
 
   return (
-    <section className="px-6 py-20 md:px-10 lg:px-16">
+    <Container as="section" size="site" className="py-20">
       <div>
         <div className="mb-10 text-center">
           <ScrambleEyebrow>Det digitale landskab</ScrambleEyebrow>
@@ -205,6 +206,6 @@ export default function PhysicsPlayground() {
           style={{ cursor: "grab" }}
         />
       </div>
-    </section>
+    </Container>
   );
 }

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRightIcon } from "lucide-react";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
+import Container from "@/components/Container";
 
 
 const cases = [
@@ -67,7 +68,7 @@ const fadeInUp = {
 
 export default function CasesSection() {
   return (
-    <section className="px-6 py-32 md:px-10 lg:px-16" id="cases">
+    <Container as="section" size="site" className="py-32" id="cases">
       <div>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -143,6 +144,6 @@ export default function CasesSection() {
           ))}
         </div>
       </div>
-    </section>
+    </Container>
   );
 }

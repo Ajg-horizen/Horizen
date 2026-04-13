@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import DynamicIslandTOC from "@/components/DynamicIslandTOC";
 import { fadeInUp } from "@/lib/animations";
 import { LinkIcon, CheckIcon } from "lucide-react";
+import Container from "@/components/Container";
 
 interface ArticleProps {
   title: string;
@@ -121,8 +122,7 @@ export default function ArticleLayout({
       <Navbar alwaysVisible />
       <DynamicIslandTOC />
 
-      <div className="px-6 pt-32 pb-24 md:px-10 lg:px-16">
-        <div className="mx-auto max-w-6xl">
+      <Container size="article" className="pt-32 pb-24">
           {/* Two-column grid */}
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_320px] lg:gap-16">
 
@@ -235,16 +235,14 @@ export default function ArticleLayout({
               </div>
             </aside>
           </div>
-        </div>
-      </div>
+      </Container>
 
       {/* spacer for mobile before related articles */}
       <div className="h-8 lg:hidden" />
 
       {/* Related articles — full width, 3 columns */}
       {relatedArticles && relatedArticles.length > 0 && (
-        <section className="px-6 py-24 md:px-10 lg:px-16 border-t border-foreground/[0.06]">
-          <div className="mx-auto max-w-6xl">
+        <Container as="section" size="article" className="py-24 border-t border-foreground/[0.06]">
             <motion.div
               initial="hidden"
               whileInView="visible"
@@ -286,8 +284,7 @@ export default function ArticleLayout({
                 </motion.div>
               ))}
             </div>
-          </div>
-        </section>
+        </Container>
       )}
 
       <Footer />

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
+import Container from "@/components/Container";
 import {
   SearchIcon,
   BarChart3Icon,
@@ -593,7 +594,7 @@ const cards = [
 
 export default function BentoShowcase() {
   return (
-    <section className="px-6 py-24 md:px-10 lg:px-16">
+    <Container as="section" size="site" className="py-24">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -649,6 +650,6 @@ export default function BentoShowcase() {
           wide
         />
       </motion.div>
-    </section>
+    </Container>
   );
 }

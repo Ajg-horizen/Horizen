@@ -37,6 +37,7 @@ import { InfiniteGrid } from "@/components/ui/the-infinite-grid";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { TextScramble } from "@/components/ui/text-scramble";
 import { fadeInUp, fadeUp } from "@/lib/animations";
+import Container from "@/components/Container";
 
 /* ─── Data ─── */
 
@@ -493,8 +494,8 @@ export default function WebdesignContent() {
         </div>
 
         {/* Hero text content — constrained */}
-        <div className="max-w-[2500px] mx-auto">
-          <div className="max-w-3xl px-6 md:px-10 lg:px-16">
+        <Container size="site">
+          <div className="max-w-3xl">
             <motion.div
               custom={0.2}
               initial="hidden"
@@ -547,7 +548,7 @@ export default function WebdesignContent() {
               </a>
             </motion.div>
           </div>
-        </div>
+        </Container>
 
         {/* Hero image — full width, edge to edge, OUTSIDE the max-width */}
         <motion.div
@@ -569,13 +570,12 @@ export default function WebdesignContent() {
 
       {/* ═══ Everything after hero — wrapped with bg-background + max-width ═══ */}
       <div className="relative z-10 bg-background">
-        <div className="mx-auto max-w-[2500px]">
 
       {/* ═══ Tech ticker ═══ */}
       <TechTicker />
 
       {/* ═══ Lighthouse metrics + Code window ═══ */}
-      <section className="px-6 md:px-10 lg:px-16 py-20">
+      <Container as="section" size="site" className="py-20">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -725,16 +725,17 @@ export default function WebdesignContent() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </Container>
 
       {/* ═══ Sticky stack ═══ */}
       <div className="relative">
 
       {/* ═══ Free audit CTA ═══ */}
       <section
-        className="sticky top-0 z-10 bg-background px-6 md:px-10 lg:px-16 py-20 md:py-36 lg:py-44"
+        className="sticky top-0 z-10 bg-background"
         style={{ boxShadow: "0 0 0 100vmax var(--background)", clipPath: "inset(0 -100vmax)" }}
       >
+        <Container size="site" className="py-20 md:py-36 lg:py-44">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -770,13 +771,15 @@ export default function WebdesignContent() {
             <ArrowRightIcon className="size-4" />
           </motion.a>
         </motion.div>
+        </Container>
       </section>
 
       {/* ═══ Technical checklist ═══ */}
       <section
-        className="sticky top-0 z-20 shadow-[0_-8px_30px_rgba(0,0,0,0.15)] px-6 md:px-10 lg:px-16 py-20 md:py-28 lg:py-36 bg-[#0f0f0f] text-[#f5f5f0]"
+        className="sticky top-0 z-20 bg-[#0f0f0f] text-[#f5f5f0]"
         style={{ boxShadow: "0 0 0 100vmax #0f0f0f, 0 -8px 30px rgba(0,0,0,0.15)", clipPath: "inset(0 -100vmax)" }}
       >
+        <Container size="site" className="py-20 md:py-28 lg:py-36">
         <div className="grid gap-12 md:grid-cols-[1fr_1.2fr] md:gap-16 items-start">
           <motion.div
             initial="hidden"
@@ -957,13 +960,15 @@ export default function WebdesignContent() {
             ))}
           </div>
         </div>
+        </Container>
       </section>
 
       {/* ═══ Positioning statement ═══ */}
       <section
-        className="sticky top-0 z-30 shadow-[0_-8px_30px_rgba(0,0,0,0.1)] bg-background px-6 md:px-10 lg:px-16 py-24 md:py-36 lg:py-44"
+        className="sticky top-0 z-30 bg-background"
         style={{ boxShadow: "0 0 0 100vmax var(--background), 0 -8px 30px rgba(0,0,0,0.1)", clipPath: "inset(0 -100vmax)" }}
       >
+        <Container size="site" className="py-24 md:py-36 lg:py-44">
         <div className="grid gap-12 md:grid-cols-2 md:gap-16 items-center">
           <motion.div
             initial="hidden"
@@ -1015,14 +1020,16 @@ export default function WebdesignContent() {
             </div>
           </motion.div>
         </div>
+        </Container>
       </section>
 
       {/* ═══ Process — dark section ═══ */}
       <section
         id="process"
-        className="sticky top-0 z-40 shadow-[0_-8px_30px_rgba(0,0,0,0.15)] px-6 md:px-10 lg:px-16 py-20 md:py-28 lg:py-36 bg-[#0f0f0f] text-[#f5f5f0]"
+        className="sticky top-0 z-40 bg-[#0f0f0f] text-[#f5f5f0]"
         style={{ boxShadow: "0 0 0 100vmax #0f0f0f, 0 -8px 30px rgba(0,0,0,0.15)", clipPath: "inset(0 -100vmax)" }}
       >
+        <Container size="site" className="py-20 md:py-28 lg:py-36">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -1048,13 +1055,14 @@ export default function WebdesignContent() {
             <ProcessCard key={item.step} item={item} index={i} />
           ))}
         </div>
+        </Container>
       </section>
 
       {/* end sticky stack */}
       </div>
 
       {/* ═══ What's included ═══ */}
-      <section className="px-6 md:px-10 lg:px-16 py-24">
+      <Container as="section" size="site" className="py-24">
         <div className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-16">
           <motion.div
             initial="hidden"
@@ -1099,10 +1107,11 @@ export default function WebdesignContent() {
             })}
           </div>
         </div>
-      </section>
+      </Container>
 
       {/* ═══ Testimonial ═══ */}
-      <section className="px-6 md:px-10 lg:px-16 py-24 bg-accent/50 rounded-3xl mx-4 md:mx-8">
+      <section className="py-24 bg-accent/50 rounded-3xl mx-4 md:mx-8">
+        <Container size="site">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -1142,10 +1151,11 @@ export default function WebdesignContent() {
             </div>
           </div>
         </motion.div>
+        </Container>
       </section>
 
       {/* ═══ Cases ═══ */}
-      <section className="px-6 md:px-10 lg:px-16 py-24">
+      <Container as="section" size="site" className="py-24">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -1203,7 +1213,7 @@ export default function WebdesignContent() {
             </motion.div>
           ))}
         </div>
-      </section>
+      </Container>
 
       {/* ═══ CTA ═══ */}
       <section className="px-4 py-16 md:px-6 lg:px-8">
@@ -1241,7 +1251,7 @@ export default function WebdesignContent() {
       </section>
 
       {/* ═══ FAQ ═══ */}
-      <section className="px-6 md:px-10 lg:px-16 py-24 border-t border-foreground/[0.06]">
+      <Container as="section" size="site" className="py-24 border-t border-foreground/[0.06]">
         <div className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-16">
           <motion.div
             initial="hidden"
@@ -1273,11 +1283,10 @@ export default function WebdesignContent() {
             ))}
           </div>
         </div>
-      </section>
+      </Container>
 
       <Footer />
 
-        </div>{/* end max-w-[2500px] */}
       </div>{/* end bg-background */}
     </main>
   );

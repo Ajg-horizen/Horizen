@@ -4,6 +4,7 @@ import { Sparkles } from "@/components/ui/sparkles";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
+import Container from "@/components/Container";
 
 const clientLogos = [
   { name: "Novo Nordisk", src: "/logo/Horizen_Branding_Novo_Nordisk.svg" },
@@ -19,7 +20,7 @@ const clientLogos = [
 
 export default function SocialProof() {
   return (
-    <section className="relative overflow-hidden px-6 py-24 md:px-10 lg:px-16">
+    <Container as="section" size="site" className="relative overflow-hidden py-24">
       <div>
         {/* Heading */}
         <div>
@@ -78,6 +79,6 @@ export default function SocialProof() {
           opacity={0.3}
         />
       </div>
-    </section>
+    </Container>
   );
 }

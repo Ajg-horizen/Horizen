@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import TextRoll from "@/components/ui/text-roll";
 import { fadeUp } from "@/lib/animations";
 import InteractiveHoverButton from "@/components/ui/interactive-hover-button";
+import Container from "@/components/Container";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -37,8 +38,9 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="sticky top-0 z-0 flex min-h-screen flex-col items-center justify-center px-6 pt-20 overflow-hidden md:px-10 lg:px-16 mx-auto max-w-[2500px] relative"
+      className="sticky top-0 z-0 min-h-screen overflow-hidden relative"
     >
+    <Container size="site" className="flex min-h-screen flex-col items-center justify-center pt-20 relative">
       {/* Grid background — fixed to viewport */}
       <div className="fixed inset-0 -z-10 pointer-events-none opacity-40" aria-hidden="true">
         <div
@@ -166,6 +168,7 @@ export default function Hero() {
           />
         </svg>
       </motion.div>
+    </Container>
     </section>
   );
 }

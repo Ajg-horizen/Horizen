@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Container from "@/components/Container";
 
 const stats = [
   { value: "150+", label: "Projekter leveret" },
@@ -11,7 +12,7 @@ const stats = [
 
 export default function StatsSection() {
   return (
-    <section className="px-6 pt-8 pb-24 md:px-10 lg:px-16">
+    <Container as="section" size="site" className="pt-8 pb-24">
       <div>
         <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
           {stats.map((stat, i) => (
@@ -31,6 +32,6 @@ export default function StatsSection() {
           ))}
         </div>
       </div>
-    </section>
+    </Container>
   );
 }
