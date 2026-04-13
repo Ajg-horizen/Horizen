@@ -513,7 +513,7 @@ export default function WebdesignContent() {
               initial="hidden"
               animate="visible"
               variants={fadeUp}
-              className="mt-6 text-2xl font-bold leading-[1.2] tracking-tight sm:text-3xl md:text-4xl"
+              className="mt-6 text-3xl font-bold leading-[1.2] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl"
             >
               Hjemmesider er blevet en commodity.{" "}
               <span className="text-muted">Vi kombinerer erfaring med AI — ikke omvendt.</span>
