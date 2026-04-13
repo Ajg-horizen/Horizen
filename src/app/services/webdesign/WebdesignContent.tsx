@@ -331,7 +331,7 @@ function TechTicker() {
         {doubled.map((term, i) => (
           <span
             key={i}
-            className="inline-flex items-center gap-2 rounded-full border border-foreground/[0.08] px-4 py-1.5 text-xs font-mono tracking-wide text-muted/70 shrink-0"
+            className="inline-flex items-center gap-2 rounded-full border border-foreground/[0.08] px-4 py-1.5 text-xs font-mono tracking-wide text-muted shrink-0"
           >
             <span className="h-1 w-1 rounded-full bg-foreground/20" />
             {term}

@@ -145,7 +145,7 @@ export default function ArticleLayout({
                     <span className="text-xs font-medium">{author.name}</span>
                     <span className="text-foreground/15">·</span>
                   </div>
-                  <span className="font-medium text-foreground/80">
+                  <span className="font-medium text-muted">
                     {tags.join(" · ")}
                   </span>
                   <span className="text-foreground/20">|</span>
