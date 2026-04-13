@@ -1073,12 +1073,12 @@ export default function WebdesignContent() {
           >
             <ScrambleEyebrow>Under overfladen</ScrambleEyebrow>
             <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
-              Det der adskiller
+              Fra udgift
               <br />
-              en investering fra en udgift
+              til investering
             </h2>
             <p className="mt-4 text-base text-muted leading-relaxed">
-              De fleste ser designet. Vi ser det der ligger under — loadtid,
+              De fleste ser kun overfladen. Vi ser det der ligger under — loadtid,
               sikkerhed, SEO-struktur, tilgængelighed. Det er de ting der afgør
               om din hjemmeside arbejder for dig, eller bare står der.
             </p>
@@ -1134,9 +1134,11 @@ export default function WebdesignContent() {
             ))}
           </div>
           <blockquote className="text-2xl md:text-3xl font-light leading-relaxed tracking-tight">
-            &ldquo;Vi har fået en hjemmeside der faktisk arbejder for os. Flere
-            henvendelser, bedre kunder, og en platform vi selv kan opdatere.
-            Det er præcis det vi havde brug for.&rdquo;
+            &ldquo;Vi havde forsøgt os med en AI-løsning. Den så okay ud,
+            men vi fik ingen henvendelser. Horizen lavede en audit og fandt
+            flere kritiske fejl. Vi valgte at få bygget en
+            ny side fra bunden — og nu har vi faktisk fået en side der giver
+            os henvendelser.&rdquo;
           </blockquote>
           <div className="mt-8 flex items-center justify-center gap-3">
             <img
