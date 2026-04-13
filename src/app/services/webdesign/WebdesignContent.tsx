@@ -1216,7 +1216,7 @@ export default function WebdesignContent() {
       </Container>
 
       {/* ═══ CTA ═══ */}
-      <section className="px-4 py-16 md:px-6 lg:px-8">
+      <Container as="section" size="site" noPadding className="px-4 py-16 md:px-6 lg:px-8">
         <InfiniteGrid className="rounded-2xl border border-white/[0.10] bg-gradient-to-b from-[#1e1e1e] via-foreground to-[#080808] md:rounded-3xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -1248,7 +1248,7 @@ export default function WebdesignContent() {
             </div>
           </motion.div>
         </InfiniteGrid>
-      </section>
+      </Container>
 
       {/* ═══ FAQ ═══ */}
       <Container as="section" size="site" className="py-24 border-t border-foreground/[0.06]">
