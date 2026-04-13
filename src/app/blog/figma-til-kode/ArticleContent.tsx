@@ -112,7 +112,7 @@ function Content() {
             <span className="text-2xl shrink-0">{step.icon}</span>
             <div>
               <h3 className="font-semibold">{step.title}</h3>
-              <p className="mt-2 text-sm text-muted leading-relaxed">
+              <p className="mt-2 text-base text-muted leading-relaxed">
                 {step.description}
               </p>
             </div>

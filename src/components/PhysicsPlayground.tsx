@@ -194,7 +194,7 @@ export default function PhysicsPlayground() {
           <h3 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
             Der er mange ting at holde styr på
           </h3>
-          <p className="mt-3 mx-auto max-w-lg text-sm leading-relaxed text-muted">
+          <p className="mt-3 mx-auto max-w-lg text-base leading-relaxed text-muted">
             GDPR, SEO, performance, sikkerhed, AI, optimering — listen
             er lang. Vi tager os af det tekniske, så du kan fokusere
             på din forretning.

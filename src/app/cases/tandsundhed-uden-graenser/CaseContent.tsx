@@ -261,13 +261,13 @@ export default function CaseContent() {
             custom={1}
             variants={fadeInUp}
           >
-            <p className="text-sm text-muted leading-relaxed">
+            <p className="text-base text-muted leading-relaxed">
               Tandsundhed Uden Grænser stod med en hjemmeside bygget i WPBakery
               der var stærkt forældet, visuelt utiltalende og nærmest umulig at
               vedligeholde. Teamet brugte op til 3 timer dagligt på helt basale
               redigeringer — tid der burde bruges på deres kerneopgave.
             </p>
-            <p className="mt-4 text-sm text-muted leading-relaxed">
+            <p className="mt-4 text-base text-muted leading-relaxed">
               Den eksisterende løsning manglede responsivt design, havde langsom
               loadtid, og den visuelle identitet afspejlede slet ikke
               organisationens professionelle arbejde med global tandsundhed.
@@ -299,13 +299,13 @@ export default function CaseContent() {
             custom={1}
             variants={fadeInUp}
           >
-            <p className="text-sm text-muted leading-relaxed">
+            <p className="text-base text-muted leading-relaxed">
               Vi designede en helt ny visuel identitet og byggede sitet fra bunden
               med et skræddersyet CMS der er tilpasset organisationens daglige
               behov. Redigeringstiden gik fra 3 timer til under 30 minutter om
               dagen — en reduktion på over 83%.
             </p>
-            <p className="mt-4 text-sm text-muted leading-relaxed">
+            <p className="mt-4 text-base text-muted leading-relaxed">
               Komplet UI/UX redesign med fokus på storytelling, donationer og
               frivillig-rekruttering. Mobil-først tilgang og hurtig loadtid sikrer
               at budskabet når ud til alle platforme.

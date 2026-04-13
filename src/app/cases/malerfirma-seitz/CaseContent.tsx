@@ -260,13 +260,13 @@ export default function CaseContent() {
             custom={1}
             variants={fadeInUp}
           >
-            <p className="text-sm text-muted leading-relaxed">
+            <p className="text-base text-muted leading-relaxed">
               Seitz havde i flere år været bundet til en eksisterende
               leverandør med en løsning der ikke længere matchede virksomhedens
               ambitioner. Hjemmesiden var forældet, omkostningerne høje, og den
               digitale tilstedeværelse genererede kun 1-2 henvendelser ugentligt.
             </p>
-            <p className="mt-4 text-sm text-muted leading-relaxed">
+            <p className="mt-4 text-base text-muted leading-relaxed">
               Ved skiftet blev den eksisterende hjemmeside desværre fjernet af
               den tidligere leverandør, hvilket betød at vi skulle bygge alt op
               fra bunden — en udfordring vi tog imod med åbne arme.
@@ -298,13 +298,13 @@ export default function CaseContent() {
             custom={1}
             variants={fadeInUp}
           >
-            <p className="text-sm text-muted leading-relaxed">
+            <p className="text-base text-muted leading-relaxed">
               Vi udviklede en komplet ny visuel identitet og byggede en moderne
               hjemmeside i et system kunden selv ejer og har fuld kontrol over.
               Løsningen er hurtigere, mere fleksibel og væsentligt mere
               omkostningseffektiv end den tidligere.
             </p>
-            <p className="mt-4 text-sm text-muted leading-relaxed">
+            <p className="mt-4 text-base text-muted leading-relaxed">
               Vi tilrettelagde en målrettet Google Ads-strategi og redesignede
               brugeroplevelsen med fokus på konvertering og troværdighed.
               Målet var at give Seitz den professionelle digitale

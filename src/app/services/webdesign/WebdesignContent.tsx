@@ -378,7 +378,7 @@ function FaqItem({ item, index }: { item: (typeof faqs)[0]; index: number }) {
             transition={{ duration: 0.3, ease: [0.215, 0.61, 0.355, 1] }}
             className="overflow-hidden"
           >
-            <p className="pb-6 text-sm leading-relaxed text-muted max-w-2xl">
+            <p className="pb-6 text-base leading-relaxed text-muted max-w-2xl">
               {item.a}
             </p>
           </motion.div>
@@ -590,7 +590,7 @@ export default function WebdesignContent() {
           <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
             Det du ikke ser — men vi ser
           </h2>
-          <p className="mt-3 text-sm text-muted max-w-lg mx-auto">
+          <p className="mt-3 text-base text-muted max-w-lg mx-auto">
             Vi går ned i det tekniske fundament — og det er dér, forskellen
             mellem en god og en dårlig hjemmeside afsløres. 98% af alle
             hjemmesideejere ser det aldrig. Det er også derfor så mange
@@ -750,7 +750,7 @@ export default function WebdesignContent() {
           <h2 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
             Er din hjemmeside bygget til at holde?
           </h2>
-          <p className="mt-4 text-sm text-muted leading-relaxed max-w-lg mx-auto">
+          <p className="mt-4 text-base text-muted leading-relaxed max-w-lg mx-auto">
             Vi ser det oftere og oftere efter AI er kommet — løsninger der
             ser fine ud på overfladen, men som teknisk ikke holder. Bygget
             med alt for få timer, uden nogen reel teknisk forståelse for

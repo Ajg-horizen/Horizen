@@ -277,7 +277,7 @@ export default function CaseContent() {
             custom={1}
             variants={fadeInUp}
           >
-            <p className="text-sm text-muted leading-relaxed">
+            <p className="text-base text-muted leading-relaxed">
               OD Pro havde brug for en professionel online tilstedeværelse der
               afspejlede kvaliteten af deres arbejde. Den eksisterende løsning var
               forældet og ikke mobilvenlig, hvilket betød tabte kunder i en branche
@@ -310,7 +310,7 @@ export default function CaseContent() {
             custom={1}
             variants={fadeInUp}
           >
-            <p className="text-sm text-muted leading-relaxed">
+            <p className="text-base text-muted leading-relaxed">
               Vi designede og udviklede en moderne, hurtig hjemmeside med fokus på
               mobil-først oplevelse og konvertering. Sitet blev bygget med React og
               Tailwind CSS for at sikre hurtig loadtid og en smooth brugeroplevelse.

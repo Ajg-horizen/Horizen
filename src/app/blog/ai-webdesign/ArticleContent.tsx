@@ -78,7 +78,7 @@ function Content() {
         <div className="mt-8 space-y-6">
           <div className="rounded-2xl bg-accent/50 p-6">
             <h3 className="font-semibold">1. Research & Analyse</h3>
-            <p className="mt-2 text-sm text-muted leading-relaxed">
+            <p className="mt-2 text-base text-muted leading-relaxed">
               Vi bruger AI til at analysere konkurrenternes digitale
               tilstedeværelse, identificere trends i branchen og forstå
               målgruppens præferencer.
@@ -86,7 +86,7 @@ function Content() {
           </div>
           <div className="rounded-2xl bg-accent/50 p-6">
             <h3 className="font-semibold">2. Design Exploration</h3>
-            <p className="mt-2 text-sm text-muted leading-relaxed">
+            <p className="mt-2 text-base text-muted leading-relaxed">
               AI-assisteret generering af layout-koncepter, farvepaletter og
               typografi-kombinationer giver os et bredt fundament at arbejde ud
               fra.
@@ -94,14 +94,14 @@ function Content() {
           </div>
           <div className="rounded-2xl bg-accent/50 p-6">
             <h3 className="font-semibold">3. Prototyping & Iteration</h3>
-            <p className="mt-2 text-sm text-muted leading-relaxed">
+            <p className="mt-2 text-base text-muted leading-relaxed">
               Hurtigere prototyping med AI-genereret kode og komponenter.
               Det giver mere tid til det der virkelig tæller: brugeroplevelsen.
             </p>
           </div>
           <div className="rounded-2xl bg-accent/50 p-6">
             <h3 className="font-semibold">4. Kvalitetssikring</h3>
-            <p className="mt-2 text-sm text-muted leading-relaxed">
+            <p className="mt-2 text-base text-muted leading-relaxed">
               AI hjælper os med at teste tilgængelighed, performance og
               cross-browser kompatibilitet — så vi leverer fejlfrie produkter.
             </p>

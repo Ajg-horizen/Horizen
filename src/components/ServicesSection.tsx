@@ -89,7 +89,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
           {service.title}
         </TextScramble>
       </h3>
-      <p className="mt-2 text-sm leading-relaxed text-muted">
+      <p className="mt-2 text-base leading-relaxed text-muted">
         {service.description}
       </p>
     </motion.div>
