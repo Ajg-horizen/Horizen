@@ -101,7 +101,7 @@ const faqs = [
   },
   {
     q: "Ejer jeg koden bagefter?",
-    a: "Ja. 100%. Alt kode, alle assets, alle designs — det hele er dit. Vi hoster typisk via Vercel, men du kan flytte det hvornår du vil. Vi binder dig ikke til noget.",
+    a: "Ja. 100%. Alt kode, alle assets, alle designs — det hele er dit. Vi står for hosting som en del af vores løsning, men du kan altid få det hele overdraget hvis du ønsker det. Vi binder dig aldrig til noget.",
   },
   {
     q: "Hvad med vedligeholdelse efter launch?",
@@ -151,7 +151,7 @@ const techChecklist = [
   "Struktureret data (Schema.org) til rich snippets",
   "Code splitting — kun det nødvendige kode loades",
   "WCAG 2.1 AA tilgængelighed som standard",
-  "Edge caching via Vercel for global hastighed",
+  "Edge caching for global hastighed",
   "Responsivt design testet på 12+ enheder",
   "TypeScript for færre fejl og bedre vedligeholdelse",
 ];
@@ -1071,15 +1071,16 @@ export default function WebdesignContent() {
             custom={0}
             variants={fadeInUp}
           >
-            <ScrambleEyebrow>Inkluderet</ScrambleEyebrow>
+            <ScrambleEyebrow>Under overfladen</ScrambleEyebrow>
             <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
-              Alt hvad din
+              Det der adskiller
               <br />
-              hjemmeside har brug for
+              en investering fra en udgift
             </h2>
-            <p className="mt-4 text-muted leading-relaxed">
-              Vi leverer ikke halvfærdige løsninger. Hver hjemmeside fra
-              Horizen er komplet — fra performance til tilgængelighed.
+            <p className="mt-4 text-base text-muted leading-relaxed">
+              De fleste ser designet. Vi ser det der ligger under — loadtid,
+              sikkerhed, SEO-struktur, tilgængelighed. Det er de ting der afgør
+              om din hjemmeside arbejder for dig, eller bare står der.
             </p>
           </motion.div>
 
