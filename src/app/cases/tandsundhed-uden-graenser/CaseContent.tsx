@@ -200,7 +200,7 @@ export default function CaseContent() {
         </motion.div>
       </section>
 
-      {/* Metadata bar */}
+      <Container size="site" noPadding>
       <Container as="section" size="site" className="py-12 border-y border-foreground/[0.06]">
         <motion.div
           initial={{ opacity: 0 }}
@@ -646,6 +646,7 @@ export default function CaseContent() {
       </Container>
 
       <Footer />
+      </Container>
     </main>
   );
 }
