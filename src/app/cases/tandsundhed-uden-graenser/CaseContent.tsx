@@ -353,7 +353,10 @@ export default function CaseContent() {
       </Container>
 
       {/* Performance — tid sparet */}
-      <section className="bg-[#0f0f0f] text-[#f5f5f0]">
+      <section
+        className="bg-[#0f0f0f] text-[#f5f5f0]"
+        style={{ boxShadow: "0 0 0 100vmax #0f0f0f", clipPath: "inset(0 -100vmax)" }}
+      >
         <Container size="site" className="py-24">
         <div className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-16 items-center">
           <motion.div
