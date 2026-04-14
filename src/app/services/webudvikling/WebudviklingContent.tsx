@@ -125,25 +125,6 @@ const lighthouseMetrics = [
   { label: "SEO", value: 100, icon: SearchCheckIcon, color: "#00b67a" },
 ];
 
-const techTerms = [
-  "Server-Side Rendering",
-  "Core Web Vitals",
-  "Code Splitting",
-  "Structured Data",
-  "Edge Caching",
-  "WCAG 2.1 AA",
-  "Lighthouse 95+",
-  "Semantic HTML",
-  "Tree Shaking",
-  "Lazy Loading",
-  "Schema Markup",
-  "Progressive Enhancement",
-  "Responsive Breakpoints",
-  "Image Optimization",
-  "TypeScript",
-  "CI/CD Pipeline",
-];
-
 const techChecklist = [
   "Fremtidssikret arkitektur med Next.js & React",
   "Server-side rendering for hurtigere loadtid",
@@ -313,33 +294,33 @@ function TypingCodeLine() {
   );
 }
 
-/* ─── Tech Ticker ─── */
+/* ─── Section Table of Contents ─── */
 
-function TechTicker() {
-  const doubled = [...techTerms, ...techTerms];
+const tocItems = [
+  { label: "Fundament", href: "#fundament" },
+  { label: "Proces", href: "#proces" },
+  { label: "Cases", href: "#cases" },
+  { label: "FAQ", href: "#faq" },
+];
 
+function SectionTOC() {
   return (
-    <div className="relative overflow-hidden py-6">
-      <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
-      <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
-      <motion.div
-        className="flex gap-6 whitespace-nowrap"
-        animate={{ x: [0, -50 * techTerms.length] }}
-        transition={{
-          x: { repeat: Infinity, repeatType: "loop", duration: 40, ease: "linear" },
-        }}
-      >
-        {doubled.map((term, i) => (
-          <span
-            key={i}
-            className="inline-flex items-center gap-2 rounded-full border border-foreground/[0.08] px-4 py-1.5 text-xs font-mono tracking-wide text-muted shrink-0"
-          >
-            <span className="h-1 w-1 rounded-full bg-foreground/20" />
-            {term}
-          </span>
+    <Container as="nav" size="site" aria-label="Sektioner på siden" className="py-8">
+      <ul className="flex flex-wrap items-center justify-start gap-2 md:gap-3">
+        {tocItems.map((item) => (
+          <li key={item.href}>
+            <a
+              href={item.href}
+              className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-xs font-medium transition-opacity duration-300 hover:opacity-80 md:text-sm"
+              style={{ color: "#f5f5f0" }}
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-[#00b67a]" />
+              {item.label}
+            </a>
+          </li>
         ))}
-      </motion.div>
-    </div>
+      </ul>
+    </Container>
   );
 }
 
@@ -572,11 +553,11 @@ export default function WebudviklingContent() {
       {/* ═══ Everything after hero — wrapped with bg-background + max-width ═══ */}
       <div className="relative z-10 bg-background">
 
-      {/* ═══ Tech ticker ═══ */}
-      <TechTicker />
+      {/* ═══ Table of contents ═══ */}
+      <SectionTOC />
 
       {/* ═══ Lighthouse metrics + Code window ═══ */}
-      <Container as="section" size="site" className="py-20">
+      <Container as="section" id="fundament" size="site" className="py-20 scroll-mt-24">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -1025,8 +1006,8 @@ export default function WebudviklingContent() {
 
       {/* ═══ Process — dark section ═══ */}
       <section
-        id="process"
-        className="relative lg:sticky lg:top-0 lg:z-40 bg-[#0f0f0f] text-[#f5f5f0]"
+        id="proces"
+        className="relative lg:sticky lg:top-0 lg:z-40 bg-[#0f0f0f] text-[#f5f5f0] scroll-mt-24"
         style={{ boxShadow: "0 0 0 100vmax #0f0f0f, 0 -8px 30px rgba(0,0,0,0.15)", clipPath: "inset(0 -100vmax)" }}
       >
         <Container size="site" className="py-20 md:py-28 lg:py-36">
@@ -1114,7 +1095,7 @@ export default function WebudviklingContent() {
       <FeaturedTestimonial />
 
       {/* ═══ Cases ═══ */}
-      <Container as="section" size="site" className="py-24">
+      <Container as="section" id="cases" size="site" className="py-24 scroll-mt-24">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -1210,7 +1191,7 @@ export default function WebudviklingContent() {
       </Container>
 
       {/* ═══ FAQ ═══ */}
-      <Container as="section" size="site" className="py-24 border-t border-foreground/[0.06]">
+      <Container as="section" id="faq" size="site" className="py-24 border-t border-foreground/[0.06] scroll-mt-24">
         <div className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-16">
           <motion.div
             initial="hidden"
