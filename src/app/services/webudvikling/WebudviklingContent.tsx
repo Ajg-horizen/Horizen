@@ -456,7 +456,7 @@ export default function WebudviklingContent() {
       <section className="relative pt-32 pb-0">
         {/* Grid background — fixed to full viewport */}
         <div
-          className="fixed inset-0 -z-10 pointer-events-none opacity-50"
+          className="fixed inset-0 -z-10 pointer-events-none opacity-[0.45]"
           aria-hidden="true"
         >
           <div
