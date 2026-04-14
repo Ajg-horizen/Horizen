@@ -885,10 +885,9 @@ export default function WebudviklingContent() {
                   stroke="rgba(201, 162, 39, 0.6)"
                   strokeWidth="1.5"
                   strokeLinecap="round"
-                  strokeDasharray="4 4"
+                  pathLength={1}
                   initial={{ pathLength: 0 }}
-                  whileInView={{ pathLength: 1 }}
-                  viewport={{ once: true }}
+                  animate={{ pathLength: 1 }}
                   transition={{ duration: 1.5, delay: 0.3, ease: "easeOut" }}
                 />
 
@@ -921,9 +920,9 @@ export default function WebudviklingContent() {
                   stroke="rgb(0, 182, 122)"
                   strokeWidth="2"
                   strokeLinecap="round"
+                  pathLength={1}
                   initial={{ pathLength: 0 }}
-                  whileInView={{ pathLength: 1 }}
-                  viewport={{ once: true }}
+                  animate={{ pathLength: 1 }}
                   transition={{ duration: 1.5, delay: 0.4, ease: "easeOut" }}
                 />
 

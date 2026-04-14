@@ -491,9 +491,9 @@ export default function CaseContent() {
                   stroke="rgb(52, 211, 153)"
                   strokeWidth="2.5"
                   strokeLinecap="round"
+                  pathLength={1}
                   initial={{ pathLength: 0 }}
-                  whileInView={{ pathLength: 1 }}
-                  viewport={{ once: true }}
+                  animate={{ pathLength: 1 }}
                   transition={{ duration: 1.5, delay: 0.3, ease: "easeOut" }}
                 />
 
