@@ -732,7 +732,7 @@ export default function WebudviklingContent() {
 
       {/* ═══ Free audit CTA ═══ */}
       <section
-        className="sticky top-0 z-10 bg-background"
+        className="relative lg:sticky lg:top-0 lg:z-10 bg-background"
         style={{ boxShadow: "0 0 0 100vmax var(--background)", clipPath: "inset(0 -100vmax)" }}
       >
         <Container size="site" className="py-20 md:py-36 lg:py-44">
@@ -776,7 +776,7 @@ export default function WebudviklingContent() {
 
       {/* ═══ Technical checklist ═══ */}
       <section
-        className="sticky top-0 z-20 bg-[#0f0f0f] text-[#f5f5f0]"
+        className="relative lg:sticky lg:top-0 lg:z-20 bg-[#0f0f0f] text-[#f5f5f0]"
         style={{ boxShadow: "0 0 0 100vmax #0f0f0f, 0 -8px 30px rgba(0,0,0,0.15)", clipPath: "inset(0 -100vmax)" }}
       >
         <Container size="site" className="py-20 md:py-28 lg:py-36">
@@ -965,7 +965,7 @@ export default function WebudviklingContent() {
 
       {/* ═══ Positioning statement ═══ */}
       <section
-        className="sticky top-0 z-30 bg-background"
+        className="relative lg:sticky lg:top-0 lg:z-30 bg-background"
         style={{ boxShadow: "0 0 0 100vmax var(--background), 0 -8px 30px rgba(0,0,0,0.1)", clipPath: "inset(0 -100vmax)" }}
       >
         <Container size="site" className="py-24 md:py-36 lg:py-44">
@@ -1026,7 +1026,7 @@ export default function WebudviklingContent() {
       {/* ═══ Process — dark section ═══ */}
       <section
         id="process"
-        className="sticky top-0 z-40 bg-[#0f0f0f] text-[#f5f5f0]"
+        className="relative lg:sticky lg:top-0 lg:z-40 bg-[#0f0f0f] text-[#f5f5f0]"
         style={{ boxShadow: "0 0 0 100vmax #0f0f0f, 0 -8px 30px rgba(0,0,0,0.15)", clipPath: "inset(0 -100vmax)" }}
       >
         <Container size="site" className="py-20 md:py-28 lg:py-36">
