@@ -91,5 +91,5 @@ export function Sparkles({
     detectRetina: true,
   }
 
-  return isReady && <Particles id={id} options={{ ...defaultOptions, ...options } as any} className={className} />
+  return isReady && <Particles id={id} options={{ ...defaultOptions, ...options } as React.ComponentProps<typeof Particles>["options"]} className={className} />
 }

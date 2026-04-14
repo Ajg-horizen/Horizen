@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Matter from "matter-js";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import Container from "@/components/Container";
@@ -111,8 +111,12 @@ export default function PhysicsPlayground() {
     render.mouse = mouse;
 
     // Remove Matter.js scroll capture so page scrolls normally
-    mouse.element.removeEventListener("wheel", (mouse as any).mousewheel);
-    mouse.element.removeEventListener("DOMMouseScroll", (mouse as any).mousewheel);
+    // matter-js attaches these listeners internally but the types don't expose them
+    const mouseWithWheel = mouse as unknown as {
+      mousewheel: EventListener;
+    };
+    mouse.element.removeEventListener("wheel", mouseWithWheel.mousewheel);
+    mouse.element.removeEventListener("DOMMouseScroll", mouseWithWheel.mousewheel);
 
     const canvas = render.canvas;
     canvas.style.touchAction = "pan-y";

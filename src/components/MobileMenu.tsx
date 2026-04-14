@@ -87,13 +87,13 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           >
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-foreground/[0.06]">
-              <a href="/" onClick={handleLinkClick}>
+              <Link href="/" onClick={handleLinkClick}>
                 <img
                   src="/logo/Horizen-LogoType-Black.svg"
                   alt="Horizen"
                   className="h-5 w-auto"
                 />
-              </a>
+              </Link>
               <button
                 onClick={onClose}
                 className="relative w-6 h-6 flex items-center justify-center"

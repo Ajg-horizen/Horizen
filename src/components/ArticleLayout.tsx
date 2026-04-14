@@ -37,11 +37,6 @@ const iconClass = "flex h-9 w-9 items-center justify-center rounded-full border 
 
 function ShareButtons({ title }: { title: string }) {
   const [copied, setCopied] = useState(false);
-  const [url, setUrl] = useState("");
-
-  useEffect(() => {
-    setUrl(window.location.href);
-  }, []);
 
   const handleCopy = async () => {
     try {
