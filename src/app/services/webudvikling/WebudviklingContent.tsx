@@ -37,6 +37,7 @@ import { InfiniteGrid } from "@/components/ui/the-infinite-grid";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { TextScramble } from "@/components/ui/text-scramble";
 import { fadeInUp, fadeUp } from "@/lib/animations";
+import FeaturedTestimonial from "@/components/FeaturedTestimonial";
 import Container from "@/components/Container";
 
 /* ─── Data ─── */
@@ -582,7 +583,7 @@ export default function WebudviklingContent() {
           viewport={{ once: true, margin: "-100px" }}
           custom={0}
           variants={fadeInUp}
-          className="text-center mb-14"
+          className="text-left lg:text-center mb-14"
         >
           <ScrambleEyebrow>
             Teknisk fundament
@@ -590,7 +591,7 @@ export default function WebudviklingContent() {
           <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
             Det du ikke ser — men vi ser
           </h2>
-          <p className="mt-3 text-base text-muted max-w-lg mx-auto">
+          <p className="mt-3 text-base text-muted max-w-lg lg:mx-auto">
             Vi går ned i det tekniske fundament — og det er dér, forskellen
             mellem en god og en dårlig hjemmeside afsløres. 98% af alle
             hjemmesideejere ser det aldrig. Det er også derfor så mange
@@ -742,7 +743,7 @@ export default function WebudviklingContent() {
           viewport={{ once: true, margin: "-100px" }}
           custom={0}
           variants={fadeInUp}
-          className="max-w-2xl mx-auto text-center"
+          className="max-w-2xl lg:mx-auto text-left lg:text-center"
         >
           <ScrambleEyebrow>
             Gratis audit
@@ -750,7 +751,7 @@ export default function WebudviklingContent() {
           <h2 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
             Er din hjemmeside bygget til at holde?
           </h2>
-          <p className="mt-4 text-base text-muted leading-relaxed max-w-lg mx-auto">
+          <p className="mt-4 text-base text-muted leading-relaxed max-w-lg lg:mx-auto">
             Vi ser det oftere og oftere efter AI er kommet — løsninger der
             ser fine ud på overfladen, men som teknisk ikke holder. Bygget
             med alt for få timer, uden nogen reel teknisk forståelse for
@@ -1111,51 +1112,7 @@ export default function WebudviklingContent() {
       </Container>
 
       {/* ═══ Testimonial ═══ */}
-      <section className="py-24 bg-accent/50 rounded-3xl mx-4 md:mx-8">
-        <Container size="site">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          custom={0}
-          variants={fadeInUp}
-          className="max-w-3xl mx-auto text-center"
-        >
-          <div className="flex justify-center gap-0.5 mb-8">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div
-                key={i}
-                className="flex h-6 w-6 items-center justify-center bg-[#00b67a]"
-              >
-                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-white">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-              </div>
-            ))}
-          </div>
-          <blockquote className="text-2xl md:text-3xl font-light leading-relaxed tracking-tight">
-            &ldquo;Vi havde forsøgt os med en AI-løsning. Den så okay ud,
-            men vi fik ingen henvendelser. Horizen lavede en audit og fandt
-            flere kritiske fejl. Vi valgte at få bygget en
-            ny side fra bunden — og nu har vi rent faktisk fået en side med
-            aktivitet.&rdquo;
-          </blockquote>
-          <div className="mt-8 flex items-center justify-center gap-3">
-            <img
-              src="/staff/staff-jose-digital-design.jpg"
-              alt=""
-              className="h-10 w-10 rounded-full object-cover"
-            />
-            <div className="text-left">
-              <p className="font-semibold text-sm">Seitz</p>
-              <p className="text-xs text-muted">
-                Malerfirma, København
-              </p>
-            </div>
-          </div>
-        </motion.div>
-        </Container>
-      </section>
+      <FeaturedTestimonial />
 
       {/* ═══ Cases ═══ */}
       <Container as="section" size="site" className="py-24">

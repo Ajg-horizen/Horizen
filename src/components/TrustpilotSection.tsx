@@ -2,46 +2,9 @@
 
 import { motion } from "framer-motion";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
+import TestimonialAvatar from "@/components/TestimonialAvatar";
 import { fadeInUp } from "@/lib/animations";
-
-const reviews = [
-  {
-    stars: 5,
-    text: "Horizen leverede langt over forventning. Vores nye site konverterer markant bedre end det gamle.",
-    author: "Mikkel A.",
-    location: "DK",
-  },
-  {
-    stars: 5,
-    text: "Professionelt, hurtigt og med en ægte forståelse for vores brand. Vi er mere end tilfredse.",
-    author: "Line K.",
-    location: "DK",
-  },
-  {
-    stars: 5,
-    text: "De forstår at kombinere design med teknisk kvalitet. Vores loadtid blev halveret efter relanceringen.",
-    author: "Thomas B.",
-    location: "DK",
-  },
-  {
-    stars: 5,
-    text: "Et bureau der faktisk lytter og eksekverer. Samarbejdet har været fantastisk fra start til slut.",
-    author: "Sofie H.",
-    location: "DK",
-  },
-  {
-    stars: 5,
-    text: "Vi havde forsøgt os med en AI-løsning. Den så okay ud, men vi fik ingen henvendelser. Horizen lavede en audit og fandt flere kritiske fejl. Vi valgte at få bygget en ny side fra bunden — og nu har vi rent faktisk fået en side med aktivitet.",
-    author: "Jonas M.",
-    location: "DK",
-  },
-  {
-    stars: 5,
-    text: "Responsivt, gennemtænkt og smukt. Vores kunder kommenterer konstant på hvor godt sitet ser ud.",
-    author: "Camilla R.",
-    location: "DK",
-  },
-];
+import { testimonials } from "@/lib/testimonials";
 
 function TrustpilotStars({ count, bare = false }: { count: number; bare?: boolean }) {
   if (bare) {
@@ -91,23 +54,35 @@ export default function TrustpilotSection() {
       </motion.div>
 
       <InfiniteSlider gap={24} duration={65} durationOnHover={130}>
-        {reviews.map((review, i) => (
-          <div
-            key={i}
-            className="w-[340px] shrink-0 rounded-2xl border border-foreground/[0.06] bg-background p-8 flex flex-col justify-between"
-          >
-            <div>
-              <TrustpilotStars count={review.stars} />
-              <p className="mt-5 text-sm leading-relaxed text-foreground/80">
-                &ldquo;{review.text}&rdquo;
-              </p>
+        {testimonials.map((t) => {
+          const displayName = t.author.company ?? t.author.name;
+          const displayLocation =
+            t.author.company && t.author.name !== t.author.company
+              ? [t.author.location].filter(Boolean).join(", ")
+              : t.author.location ?? "";
+          return (
+            <div
+              key={t.id}
+              className="w-[340px] shrink-0 rounded-2xl border border-foreground/[0.06] bg-background p-8 flex flex-col justify-between"
+            >
+              <div>
+                <TrustpilotStars count={t.rating} />
+                <p className="mt-5 text-sm leading-relaxed text-foreground/80">
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+              </div>
+              <div className="mt-8 flex items-center gap-3">
+                <TestimonialAvatar author={t.author} />
+                <div>
+                  <p className="text-sm font-semibold">{displayName}</p>
+                  {displayLocation && (
+                    <p className="text-xs text-muted">{displayLocation}</p>
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="mt-8">
-              <p className="text-sm font-semibold">{review.author}</p>
-              <p className="text-xs text-muted">{review.location}</p>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </InfiniteSlider>
     </section>
   );
