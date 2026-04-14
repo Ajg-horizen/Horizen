@@ -42,7 +42,7 @@ export default function Hero() {
     >
     <Container size="site" className="flex min-h-screen flex-col items-center justify-center pt-20 relative">
       {/* Grid background — fixed to viewport */}
-      <div className="fixed inset-0 -z-10 pointer-events-none opacity-[0.45]" aria-hidden="true">
+      <div className="fixed inset-0 -z-10 pointer-events-none opacity-[0.55] lg:opacity-[0.45]" aria-hidden="true">
         <div
           className="absolute inset-0"
           style={{
