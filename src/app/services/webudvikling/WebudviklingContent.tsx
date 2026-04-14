@@ -458,7 +458,7 @@ function ProcessCard({
 
 /* ─── Page ─── */
 
-export default function WebdesignContent() {
+export default function WebudviklingContent() {
   const imageRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: imageRef,
@@ -475,7 +475,7 @@ export default function WebdesignContent() {
       <section className="relative pt-32 pb-0">
         {/* Grid background — fixed to full viewport */}
         <div
-          className="fixed inset-0 -z-10 pointer-events-none opacity-40"
+          className="fixed inset-0 -z-10 pointer-events-none opacity-[0.55]"
           aria-hidden="true"
         >
           <div
@@ -504,7 +504,7 @@ export default function WebdesignContent() {
             >
               <span className="inline-flex items-center gap-2 rounded-full border border-foreground/[0.08] bg-accent/50 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] text-muted">
                 <LayoutIcon className="size-3" />
-                Webdesign
+                Webudvikling
               </span>
             </motion.div>
 
@@ -561,7 +561,7 @@ export default function WebdesignContent() {
         >
           <motion.img
             src="/graphics/Web-hero-image-marketing-google-ads.avif"
-            alt="Webdesign af Horizen"
+            alt="Webudvikling af Horizen"
             style={{ y: imageY, scale: imageScale }}
             className="w-full h-auto object-cover aspect-[21/8]"
           />

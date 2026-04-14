@@ -33,10 +33,10 @@ export type NavItem = {
 
 export const services: NavItem[] = [
   {
-    title: "Webdesign",
-    description: "Websites bygget til at konvertere",
-    href: "/services/webdesign",
-    icon: LayoutIcon,
+    title: "Webudvikling",
+    description: "Performant kode og teknisk eksekvering",
+    href: "/services/webudvikling",
+    icon: CodeIcon,
   },
   {
     title: "UI/UX Design",
@@ -63,10 +63,10 @@ export const services: NavItem[] = [
     icon: ShoppingCartIcon,
   },
   {
-    title: "WordPress / Next.js",
-    description: "CMS-løsninger og moderne webapps",
-    href: "/services/udvikling",
-    icon: CodeIcon,
+    title: "WordPress",
+    description: "Fleksible CMS-løsninger du selv kan redigere",
+    href: "/services/wordpress",
+    icon: LayoutIcon,
   },
 ];
 
@@ -188,7 +188,7 @@ export const resources: NavItem[] = [
 ];
 
 export const navCategories = [
-  { label: "Services", items: services },
+  { label: "Web & Design", items: services },
   { label: "Marketing", items: marketing },
   { label: "AI", items: ai },
   { label: "Ressourcer", items: resources },

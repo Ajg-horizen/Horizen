@@ -91,7 +91,7 @@ export default function Navbar({ alwaysVisible = false }: { alwaysVisible?: bool
             <NavigationMenu viewport={false}>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+                  <NavigationMenuTrigger>Web & Design</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid w-[420px] gap-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                       {services.map((item) => (

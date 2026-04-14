@@ -31,10 +31,10 @@ function PixelHeart() {
 
 const navigation = {
   services: [
-    { name: "Webdesign", href: "/services/webdesign" },
+    { name: "Webudvikling", href: "/services/webudvikling" },
     { name: "UI/UX Design", href: "/services/ui-ux-design" },
     { name: "Branding", href: "/services/branding" },
-    { name: "Udvikling", href: "/services/udvikling" },
+    { name: "WordPress", href: "/services/wordpress" },
   ],
   marketing: [
     { name: "SEO", href: "/marketing/seo" },
@@ -91,10 +91,10 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* Services */}
+            {/* Web & Design */}
             <div>
               <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-background/30">
-                Services
+                Web & Design
               </h4>
               <ul className="mt-5 space-y-3">
                 {navigation.services.map((item) => (
