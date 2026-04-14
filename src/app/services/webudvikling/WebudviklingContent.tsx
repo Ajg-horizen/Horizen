@@ -311,8 +311,7 @@ function SectionTOC() {
           <li key={item.href}>
             <a
               href={item.href}
-              className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-xs font-medium transition-opacity duration-300 hover:opacity-80 md:text-sm"
-              style={{ color: "#f5f5f0" }}
+              className="inline-flex items-center gap-2 rounded-full border border-foreground/15 px-4 py-2 text-xs font-medium text-foreground/70 transition-colors duration-300 hover:border-foreground/40 hover:text-foreground md:text-sm"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-[#00b67a]" />
               {item.label}
@@ -1166,18 +1165,18 @@ export default function WebudviklingContent() {
             className="px-6 py-14 text-center md:px-10 md:py-18"
           >
             <h2 className="text-3xl font-bold tracking-tight text-background md:text-4xl lg:text-5xl">
-              Klar til at skabe noget stærkt?
+              Det hele kunne starte her.
             </h2>
             <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-background/50 md:text-lg">
-              Fortæl os om dit projekt — vi vender tilbage inden for 24 timer
-              med en uforpligtende vurdering.
+              Vi hører altid gerne om jeres visioner — og hvordan vi i
+              fællesskab kan bygge dem.
             </p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4">
               <a
                 href="/kontakt"
                 className="rounded-full border border-background bg-background px-8 py-3.5 text-sm font-medium text-foreground transition-all duration-300 hover:bg-transparent hover:text-background"
               >
-                Start et projekt
+                Tag en snak
               </a>
               <a
                 href="mailto:hej@horizen.dk"

@@ -34,9 +34,8 @@ export default function BackToTopButton() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.25 }}
-          className="fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-foreground shadow-lg shadow-black/10 transition-opacity duration-300 hover:opacity-80 md:bottom-8 md:right-8"
+          className="fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/40 text-foreground backdrop-blur-xl shadow-lg shadow-black/5 transition-all duration-300 hover:bg-white/60 hover:border-white/50 hover:shadow-black/10 md:bottom-8 md:right-8"
           style={{
-            color: "#f5f5f0",
             paddingBottom: "env(safe-area-inset-bottom, 0)",
           }}
         >
