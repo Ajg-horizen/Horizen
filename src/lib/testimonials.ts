@@ -34,8 +34,9 @@ export const testimonials: Testimonial[] = [
       "Vi havde forsøgt os med en AI-løsning. Den så okay ud, men vi fik ingen henvendelser. Horizen lavede en audit og fandt flere kritiske fejl. Vi valgte at få bygget en ny side fra bunden — og nu har vi rent faktisk fået en side med aktivitet.",
     rating: 5,
     author: {
-      name: "Oliver",
-      company: "OD Biler",
+      name: "Oliver Dethlefsen",
+      role: "Indehaver",
+      company: "OD Pro",
       location: "Aabenraa",
       photo: "/Clients/oliver-profile.png",
     },

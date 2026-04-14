@@ -55,11 +55,9 @@ export default function TrustpilotSection() {
 
       <InfiniteSlider gap={24} duration={65} durationOnHover={130}>
         {testimonials.map((t) => {
-          const displayName = t.author.company ?? t.author.name;
-          const displayLocation =
-            t.author.company && t.author.name !== t.author.company
-              ? [t.author.location].filter(Boolean).join(", ")
-              : t.author.location ?? "";
+          const displayName = t.author.name;
+          // Sekundær linje: firma foretrækkes, ellers location
+          const displaySub = t.author.company ?? t.author.location ?? "";
           return (
             <div
               key={t.id}
@@ -75,8 +73,8 @@ export default function TrustpilotSection() {
                 <TestimonialAvatar author={t.author} />
                 <div>
                   <p className="text-sm font-semibold">{displayName}</p>
-                  {displayLocation && (
-                    <p className="text-xs text-muted">{displayLocation}</p>
+                  {displaySub && (
+                    <p className="text-xs text-muted">{displaySub}</p>
                   )}
                 </div>
               </div>

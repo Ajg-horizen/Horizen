@@ -24,9 +24,69 @@ function TrustpilotStars({ count }: { count: number }) {
 }
 
 /**
- * Hero-testimonial fra single-source testimonials.ts.
- * Brug optional `testimonial` prop for at override — ellers hentes
- * den via `featured: true` flaget.
+ * Selve testimonial-indholdet (stjerner + citat + forfatter).
+ * Eksporteret uden wrapper så forskellige sider kan ombryde den
+ * med deres egen sektion-styling (card, bordered, plain osv.)
+ */
+export function TestimonialBody({
+  testimonial,
+  align = "responsive",
+}: {
+  testimonial: Testimonial;
+  /** "responsive" = venstre på mobil, center på desktop. "center" = altid center. "left" = altid venstre. */
+  align?: "responsive" | "center" | "left";
+}) {
+  const { quote, rating, author } = testimonial;
+  // Label-hierarki: navn som hovedlinje, role/company/location som subtitle.
+  // Fallback til company hvis navn ikke findes (undgå tom hovedlinje).
+  const mainLabel = author.name || author.company || "";
+  const subtitleParts = author.name
+    ? [author.role, author.company, author.location]
+    : [author.role, author.location];
+  const subtitle = subtitleParts.filter(Boolean).join(", ");
+
+  const outerAlign =
+    align === "center"
+      ? "text-center"
+      : align === "left"
+        ? "text-left"
+        : "text-left lg:text-center";
+  const flexAlign =
+    align === "center"
+      ? "justify-center"
+      : align === "left"
+        ? "justify-start"
+        : "justify-start lg:justify-center";
+
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      custom={0}
+      variants={fadeInUp}
+      className={`max-w-3xl mx-auto ${outerAlign}`}
+    >
+      <div className={`mb-8 flex ${flexAlign}`}>
+        <TrustpilotStars count={rating} />
+      </div>
+      <blockquote className="text-2xl md:text-3xl font-light leading-relaxed tracking-tight">
+        &ldquo;{quote}&rdquo;
+      </blockquote>
+      <div className={`mt-8 flex items-center gap-3 ${flexAlign}`}>
+        <TestimonialAvatar author={author} />
+        <div className="text-left">
+          <p className="text-sm font-semibold">{mainLabel}</p>
+          {subtitle && <p className="text-xs text-muted">{subtitle}</p>}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/**
+ * Hero-testimonial i accent-card på webudvikling-siden.
+ * Henter featured-testimonial hvis ingen prop sendes.
  */
 export default function FeaturedTestimonial({
   testimonial,
@@ -34,41 +94,10 @@ export default function FeaturedTestimonial({
   testimonial?: Testimonial;
 }) {
   const t = testimonial ?? getFeaturedTestimonial();
-  const { quote, rating, author } = t;
-  const mainLabel = author.company ?? author.name;
-  // Undgå duplikat: hvis company vises som mainLabel, skal den ikke med i subtitle
-  const subtitleParts = author.company
-    ? [author.role, author.location]
-    : [author.role, author.company, author.location];
-  const subtitle = subtitleParts.filter(Boolean).join(", ");
-
   return (
     <section className="py-24 bg-accent/50 rounded-3xl mx-4 md:mx-8">
       <Container size="site">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          custom={0}
-          variants={fadeInUp}
-          className="max-w-3xl mx-auto text-left lg:text-center"
-        >
-          <div className="mb-8 flex justify-start lg:justify-center">
-            <TrustpilotStars count={rating} />
-          </div>
-          <blockquote className="text-2xl md:text-3xl font-light leading-relaxed tracking-tight">
-            &ldquo;{quote}&rdquo;
-          </blockquote>
-          <div className="mt-8 flex items-center justify-start gap-3 lg:justify-center">
-            <TestimonialAvatar author={author} />
-            <div className="text-left">
-              <p className="text-sm font-semibold">{mainLabel}</p>
-              {subtitle && (
-                <p className="text-xs text-muted">{subtitle}</p>
-              )}
-            </div>
-          </div>
-        </motion.div>
+        <TestimonialBody testimonial={t} />
       </Container>
     </section>
   );
