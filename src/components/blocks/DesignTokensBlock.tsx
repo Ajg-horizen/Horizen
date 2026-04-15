@@ -152,6 +152,23 @@ export default function DesignTokensBlock({
   data: DesignTokensBlockData;
   id?: string;
 }) {
+  const headingNode =
+    typeof data.heading === "string" ? (
+      data.heading
+    ) : (
+      <>
+        {data.heading.lead}
+        {data.heading.mutedTail && (
+          <>
+            {" "}
+            <span className="text-muted">{data.heading.mutedTail}</span>
+          </>
+        )}
+      </>
+    );
+
+  const bodyParagraphs = Array.isArray(data.body) ? data.body : [data.body];
+
   return (
     <Container as="section" id={id} size="site" className="py-20 scroll-mt-24">
       <motion.div
@@ -160,13 +177,19 @@ export default function DesignTokensBlock({
         viewport={{ once: true, margin: "-100px" }}
         custom={0}
         variants={fadeInUp}
-        className="text-left lg:text-center mb-14"
+        className="mb-14 max-w-3xl"
       >
         <ScrambleEyebrow>{data.eyebrow}</ScrambleEyebrow>
         <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
-          {data.heading}
+          {headingNode}
         </h2>
-        <p className="mt-3 text-base text-muted max-w-lg lg:mx-auto">{data.body}</p>
+        <div className="mt-4 space-y-4">
+          {bodyParagraphs.map((p, i) => (
+            <p key={i} className="text-base leading-relaxed text-muted">
+              {p}
+            </p>
+          ))}
+        </div>
       </motion.div>
 
       <div className="grid gap-10 md:grid-cols-2 items-center max-w-5xl mx-auto">

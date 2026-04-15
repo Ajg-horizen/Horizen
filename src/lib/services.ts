@@ -171,10 +171,25 @@ export type DesignMaturityScore = {
 export type DesignTokensBlock = {
   type: "designTokens";
   eyebrow: string;
-  heading: string;
-  body: string;
+  /** Heading med valgfri muted-del. */
+  heading: string | { lead: string; mutedTail?: string };
+  /** Brødtekst — string for ét afsnit, array for flere. */
+  body: string | string[];
   /** Animerede scores der vises ved siden af tokens-vinduet. */
   maturityScores: DesignMaturityScore[];
+};
+
+export type UxVsUiBlock = {
+  type: "uxVsUi";
+  eyebrow: string;
+  heading: string | { lead: string; mutedTail?: string };
+  body: string | string[];
+  /** Labels til de to mockups. Default: "UX" og "UI". */
+  uxLabel?: string;
+  uiLabel?: string;
+  /** Korte forklaringer under hver mockup. */
+  uxCaption: string;
+  uiCaption: string;
 };
 
 export type UxLaw = {
@@ -216,6 +231,7 @@ export type ServiceBlock =
   | TechFoundationBlock
   | TechChecklistBlock
   | DesignTokensBlock
+  | UxVsUiBlock
   | UxLawsBlock;
 
 /* ─── Service page ────────────────────────────────────────── */

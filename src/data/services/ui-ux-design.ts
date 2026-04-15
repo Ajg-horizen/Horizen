@@ -49,17 +49,15 @@ export const uiUxDesign: ServicePage = {
       ],
     },
     {
-      type: "designTokens",
+      type: "uxVsUi",
       id: "system",
       eyebrow: "Designsystem",
       heading: "Det der gør designet konsistent",
-      body: "Et godt interface er ikke ét godt skærmbillede — det er hundrede skærmbilleder der hænger sammen. Tokens, typografi, spacing og komponenter skaber den konsistens som brugere kan stole på, og som udviklere kan bygge videre på.",
-      maturityScores: [
-        { label: "Token-coverage", value: 100, icon: PaletteIcon, color: "#00b67a" },
-        { label: "Komponenter", value: 96, icon: ComponentIcon, color: "#6b8aed" },
-        { label: "Typografi", value: 100, icon: TypeIcon, color: "#e8915a" },
-        { label: "Tilgængelighed", value: 100, icon: AccessibilityIcon, color: "#00b67a" },
-      ],
+      body: "Research viser, at korrekt UX kan forbedre konverteringen med op til 400%. Alligevel er det fortsat sjældent at løsninger bliver bygget på egentlig research — selv når professionelle er sat på opgaven. Resultatet bliver designet på subjektive holdninger og oftest til virksomheden selv fremfor slutbrugeren. Det er den mest kritiske fejl vi ser gang på gang — og AI har kun gjort den hyppigere.",
+      uxCaption:
+        "Strukturen under designet. UX'en bestemmer flow, hierarki og hvad brugeren møder hvornår — før én eneste farve er valgt.",
+      uiCaption:
+        "Udtrykket oven på strukturen. UI'en er typografi, farver, komponenter og mikrointeraktioner — det brugeren faktisk mærker.",
     },
     {
       type: "centeredCta",
@@ -167,55 +165,6 @@ export const uiUxDesign: ServicePage = {
         { icon: ContrastIcon, text: "Tilgængeligheds-noter (WCAG 2.1 AA)", bg: "bg-[#e4e8f0]", fg: "text-[#2a3550]" },
         { icon: FileTextIcon, text: "Dev-handoff dokumentation", bg: "bg-[#2a2a2a]", fg: "text-[#f5f5f0]" },
       ],
-    },
-    {
-      type: "uxLaws",
-      eyebrow: "Evidensbaseret design",
-      heading: {
-        lead: "Principper,",
-        mutedTail: "ikke fornemmelser.",
-      },
-      body: "Vi arbejder efter veldokumenterede love om kognition og adfærd — ikke efter hvad der lige føles rigtigt. Her er fire af dem vi bruger hver dag, og hvordan de oversætter til konkrete designvalg.",
-      laws: [
-        {
-          abbr: "Hick",
-          name: "Hick's Law",
-          definition:
-            "Jo flere valgmuligheder du giver, jo længere tid tager brugeren om at beslutte sig — eller lader være.",
-          application:
-            "Vi reducerer valg i navigation, formularer og CTA-områder. Progressive disclosure frem for at proppe alt på én skærm.",
-          accent: "#00b67a",
-        },
-        {
-          abbr: "Fitts",
-          name: "Fitts's Law",
-          definition:
-            "Tiden det tager at ramme et mål afhænger af dets størrelse og afstand. Små, fjerne knapper koster klik.",
-          application:
-            "Minimum 44×44px touch targets. Primære CTA'er får plads. Vigtige handlinger ligger tæt på hvor øjet i forvejen er.",
-          accent: "#6b8aed",
-        },
-        {
-          abbr: "Jakob",
-          name: "Jakob's Law",
-          definition:
-            "Brugere bruger mere tid på andre sites end dit. De forventer at dit virker på samme måde.",
-          application:
-            "Vi genopfinder ikke hjulet. Konventioner der virker bliver brugt — innovation sker hvor det skaber reel værdi, ikke for showets skyld.",
-          accent: "#e8915a",
-        },
-        {
-          abbr: "Miller",
-          name: "Miller's Law",
-          definition:
-            "Den gennemsnitlige bruger kan holde cirka 7 (±2) ting i arbejdshukommelsen ad gangen.",
-          application:
-            "Vi chunker information, begrænser felter i formularer, og grupperer relateret indhold så brugeren ikke skal bære hele skærmen i hovedet.",
-          accent: "#c9a227",
-        },
-      ],
-      sourceNote:
-        "Inspireret af lawsofux.com og Nielsen Norman Group. Anvendt i praksis, ikke citeret i PDF'er.",
     },
     {
       type: "featuredTestimonial",

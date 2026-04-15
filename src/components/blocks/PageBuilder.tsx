@@ -11,6 +11,7 @@ import FeaturedTestimonialBlock from "./FeaturedTestimonialBlock";
 import TechFoundationBlock from "./TechFoundationBlock";
 import TechChecklistBlock from "./TechChecklistBlock";
 import DesignTokensBlock from "./DesignTokensBlock";
+import UxVsUiBlock from "./UxVsUiBlock";
 import UxLawsBlock from "./UxLawsBlock";
 import type { ServicePage } from "@/lib/services";
 
@@ -79,6 +80,8 @@ function renderBlock(
       );
     case "designTokens":
       return <DesignTokensBlock key={key} id={block.id} data={block} />;
+    case "uxVsUi":
+      return <UxVsUiBlock key={key} id={block.id} data={block} />;
     case "uxLaws":
       return <UxLawsBlock key={key} id={block.id} data={block} />;
     default: {
