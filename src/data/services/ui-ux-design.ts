@@ -51,20 +51,28 @@ export const uiUxDesign: ServicePage = {
     {
       type: "uxVsUi",
       id: "system",
-      eyebrow: "Designsystem",
-      heading: "Det der gør designet konsistent",
+      eyebrow: "Under overfladen",
+      heading: { lead: "Godt design er bygget på to lag.", mutedTail: "Det\u00A0ene\u00A0ser\u00A0du\u00A0aldrig." },
       body: "Research viser, at korrekt UX kan forbedre konverteringen med op til 400%. Alligevel er det fortsat sjældent at løsninger bliver bygget på egentlig research — selv når professionelle er sat på opgaven. Resultatet bliver designet på subjektive holdninger og oftest til virksomheden selv fremfor slutbrugeren. Det er den mest kritiske fejl vi ser gang på gang — og AI har kun gjort den hyppigere.",
       uxCaption:
-        "Strukturen under designet. UX'en bestemmer flow, hierarki og hvad brugeren møder hvornår — før én eneste farve er valgt.",
+        "UX er der, hvor flowet dikteres og hierarkiet bestemmes — hvad brugeren møder hvornår, og om brugerrejsen overhovedet holder. UX'en er afgørende for en struktureret proces og succes.",
       uiCaption:
         "Udtrykket oven på strukturen. UI'en er typografi, farver, komponenter og mikrointeraktioner — det brugeren faktisk mærker.",
+      uxReadMoreLink: {
+        href: "/blog/hvad-er-ux-design",
+        label: "Lær mere om UX",
+      },
+      uiReadMoreLink: {
+        href: "/blog/hvad-er-ui-design",
+        label: "Lær mere om UI",
+      },
     },
     {
       type: "centeredCta",
       stickyGroup: "designStack",
       eyebrow: "Gratis design-audit",
-      heading: "Hvor meget taber du på et middelmådigt interface?",
-      body: "De fleste interfaces er ikke decideret dårlige — de er bare ligegyldige. Det er ofte værre. Vi gennemgår dit nuværende design, peger på hvor brugere falder fra, og viser hvad der konkret kan ændres for at flytte tallene.",
+      heading: "Er din side bygget på rigtige designprincipper, eller er den bare bygget?",
+      body: "AI har gjort det muligt for alle at bygge en standardside. Men det betyder også, at standarden er hævet — og at det er blevet langt sværere for den almindelige virksomhed at skelne det professionelle fra det, der bare ligner. Derfor tilbyder vi altid en gratis audit, hvor vi vurderer din nuværende løsning: om den er bygget på de rette UI/UX-principper, og om det tekniske fundament faktisk holder — eller om du har fået en skal uden et solidt fundament indeni.",
       cta: { label: "Book en gratis design-audit", href: "/kontakt" },
     },
     {

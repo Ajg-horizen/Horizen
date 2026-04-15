@@ -51,14 +51,22 @@ function ProcessCard({ item, index }: { item: ProcessStep; index: number }) {
       </h3>
       <p className="mt-3 text-sm leading-relaxed text-white/50">{item.description}</p>
       {item.link && (
-        <Link
-          href={item.link.href}
-          className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium tracking-wide opacity-0 transition-all duration-500 group-hover:opacity-100"
-          style={{ color: item.accent }}
-        >
-          {item.link.label}
-          <ArrowRightIcon className="size-3 transition-transform duration-300 group-hover:translate-x-0.5" />
-        </Link>
+        <>
+          <Link
+            href={item.link.href}
+            className="absolute inset-0 rounded-2xl"
+            aria-label={item.link.label}
+            tabIndex={-1}
+          />
+          <Link
+            href={item.link.href}
+            className="relative mt-5 inline-flex items-center gap-1.5 text-xs font-medium tracking-wide opacity-0 transition-all duration-500 group-hover:opacity-100"
+            style={{ color: item.accent }}
+          >
+            {item.link.label}
+            <ArrowRightIcon className="size-3 transition-transform duration-300 group-hover:translate-x-0.5" />
+          </Link>
+        </>
       )}
       <div
         className="absolute bottom-0 left-8 right-8 h-px opacity-0 transition-opacity duration-500 group-hover:opacity-100"

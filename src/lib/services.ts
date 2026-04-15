@@ -190,6 +190,9 @@ export type UxVsUiBlock = {
   /** Korte forklaringer under hver mockup. */
   uxCaption: string;
   uiCaption: string;
+  /** Valgfrie "Læs mere"-links i bunden af hvert card. */
+  uxReadMoreLink?: { href: string; label: string };
+  uiReadMoreLink?: { href: string; label: string };
 };
 
 export type UxLaw = {

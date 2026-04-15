@@ -7,6 +7,7 @@
  */
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { fadeInUp } from "@/lib/animations";
@@ -162,7 +163,7 @@ export default function UxVsUiBlock({
         viewport={{ once: true, margin: "-100px" }}
         custom={0}
         variants={fadeInUp}
-        className="mb-14 max-w-3xl"
+        className="mb-14 max-w-2xl"
       >
         <ScrambleEyebrow>{data.eyebrow}</ScrambleEyebrow>
         <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
@@ -200,6 +201,15 @@ export default function UxVsUiBlock({
             <WireframeMockup />
           </div>
           <p className="text-sm leading-relaxed text-muted">{data.uxCaption}</p>
+          {data.uxReadMoreLink && (
+            <Link
+              href={data.uxReadMoreLink.href}
+              className="mt-auto inline-flex items-center gap-1 text-xs text-muted/60 transition-colors hover:text-muted"
+            >
+              {data.uxReadMoreLink.label}
+              <span aria-hidden>→</span>
+            </Link>
+          )}
         </motion.div>
 
         {/* UI mockup card */}
@@ -224,6 +234,15 @@ export default function UxVsUiBlock({
             <UiMockup />
           </div>
           <p className="text-sm leading-relaxed text-muted">{data.uiCaption}</p>
+          {data.uiReadMoreLink && (
+            <Link
+              href={data.uiReadMoreLink.href}
+              className="mt-auto inline-flex items-center gap-1 text-xs text-muted/60 transition-colors hover:text-muted"
+            >
+              {data.uiReadMoreLink.label}
+              <span aria-hidden>→</span>
+            </Link>
+          )}
         </motion.div>
       </div>
     </Container>
