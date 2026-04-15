@@ -8,10 +8,90 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRef, useState, useEffect } from "react";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { fadeInUp } from "@/lib/animations";
 import type { UxVsUiBlock as UxVsUiBlockData } from "@/lib/services";
+
+const LENS_SIZE = 80;
+const ZOOM = 2.5;
+
+function MagnifierWrapper({ children }: { children: React.ReactNode }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      setContainerSize({
+        width: entry.contentRect.width,
+        height: entry.contentRect.height,
+      });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const tx = LENS_SIZE / 2 - mousePos.x * ZOOM;
+  const ty = LENS_SIZE / 2 - mousePos.y * ZOOM;
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative overflow-hidden rounded-lg"
+      style={{ cursor: isHovering ? "none" : "default" }}
+      onMouseEnter={() => {
+        setIsHovering(true);
+        window.dispatchEvent(new CustomEvent("magnifier:enter"));
+      }}
+      onMouseLeave={() => {
+        setIsHovering(false);
+        window.dispatchEvent(new CustomEvent("magnifier:leave"));
+      }}
+      onMouseMove={(e) => {
+        const rect = containerRef.current!.getBoundingClientRect();
+        setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+      }}
+    >
+      {children}
+      {isHovering && (
+        <div
+          style={{
+            position: "absolute",
+            left: mousePos.x - LENS_SIZE / 2,
+            top: mousePos.y - LENS_SIZE / 2,
+            width: LENS_SIZE,
+            height: LENS_SIZE,
+            borderRadius: "50%",
+            overflow: "hidden",
+            pointerEvents: "none",
+            zIndex: 10,
+            boxShadow:
+              "0 0 0 2px rgba(255,255,255,0.65), 0 0 0 3.5px rgba(0,0,0,0.1), 0 8px 30px rgba(0,0,0,0.2)",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: containerSize.width,
+              height: containerSize.height,
+              transform: `translate(${tx}px, ${ty}px) scale(${ZOOM})`,
+              transformOrigin: "0 0",
+            }}
+          >
+            {children}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 /* ─── Wireframe (UX) mockup ──────────────────────────────── */
 /* Layout 1:1 matcher "We are experts elevating lives" UI-eksemplet:
@@ -197,9 +277,9 @@ export default function UxVsUiBlock({
               Struktur
             </span>
           </div>
-          <div className="overflow-hidden rounded-lg">
+          <MagnifierWrapper>
             <WireframeMockup />
-          </div>
+          </MagnifierWrapper>
           <p className="text-sm leading-relaxed text-muted">{data.uxCaption}</p>
           {data.uxReadMoreLink && (
             <Link
@@ -230,9 +310,9 @@ export default function UxVsUiBlock({
               Udtryk
             </span>
           </div>
-          <div className="overflow-hidden rounded-lg">
+          <MagnifierWrapper>
             <UiMockup />
-          </div>
+          </MagnifierWrapper>
           <p className="text-sm leading-relaxed text-muted">{data.uiCaption}</p>
           {data.uiReadMoreLink && (
             <Link

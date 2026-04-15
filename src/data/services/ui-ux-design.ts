@@ -72,7 +72,7 @@ export const uiUxDesign: ServicePage = {
       stickyGroup: "designStack",
       eyebrow: "Gratis design-audit",
       heading: "Er din side bygget på rigtige designprincipper, eller er den bare bygget?",
-      body: "AI har gjort det muligt for alle at bygge en standardside. Men det betyder også, at standarden er hævet — og at det er blevet langt sværere for den almindelige virksomhed at skelne det professionelle fra det, der bare ligner. Derfor tilbyder vi altid en gratis audit, hvor vi vurderer din nuværende løsning: om den er bygget på de rette UI/UX-principper, og om det tekniske fundament faktisk holder — eller om du har fået en skal uden et solidt fundament indeni.",
+      body: "AI har gjort det muligt for alle at bygge en standardside — og det har hævet barren for hvad 'professionelt' overhovedet betyder. Det er svære end nogensinde at skelne det gennemtænkte fra det der bare ligner. Derfor tilbyder vi altid en gratis audit: vi vurderer om din løsning er bygget på de rette UI/UX-principper — eller om du har fået en skal uden fundament.",
       cta: { label: "Book en gratis design-audit", href: "/kontakt" },
     },
     {

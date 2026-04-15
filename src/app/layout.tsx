@@ -28,7 +28,6 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           Spring til indhold
         </a>
-        <GlobalCursor />
         <ScrollToTop />
         {children}
         <BackToTopButton />

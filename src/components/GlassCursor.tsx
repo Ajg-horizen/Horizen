@@ -93,9 +93,14 @@ export default function GlassCursor() {
       });
     };
 
+    const handleMagnifierEnter = () => { cursor.style.display = "none"; };
+    const handleMagnifierLeave = () => { cursor.style.display = "block"; };
+
     window.addEventListener("mousemove", moveCursor);
     window.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("magnifier:enter", handleMagnifierEnter);
+    window.addEventListener("magnifier:leave", handleMagnifierLeave);
     document.documentElement.addEventListener("mouseleave", handleMouseLeave);
     document.documentElement.addEventListener("mouseenter", handleMouseEnter);
 
@@ -105,6 +110,8 @@ export default function GlassCursor() {
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("magnifier:enter", handleMagnifierEnter);
+      window.removeEventListener("magnifier:leave", handleMagnifierLeave);
       document.documentElement.removeEventListener("mouseleave", handleMouseLeave);
       document.documentElement.removeEventListener("mouseenter", handleMouseEnter);
       gsap.ticker.remove(tick);
