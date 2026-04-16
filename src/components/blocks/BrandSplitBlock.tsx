@@ -7,7 +7,7 @@ import { fadeInUp } from "@/lib/animations";
 import type { BrandSplitBlock as BrandSplitBlockData } from "@/lib/services";
 import dynamic from "next/dynamic";
 
-const BrandDonut = dynamic(() => import("@/components/ui/brand-donut"), {
+const BrandFigure = dynamic(() => import("@/components/ui/brand-figure"), {
   ssr: false,
 });
 
@@ -46,7 +46,7 @@ export default function BrandSplitBlock({
         </motion.div>
 
         <div className="flex items-center justify-center">
-          <BrandDonut />
+          <BrandFigure />
         </div>
       </div>
     </Container>

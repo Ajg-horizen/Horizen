@@ -159,3 +159,53 @@ footer *:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+/* ── Brand slider (BrandFigure) ──────────────────────────────────── */
+.brand-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+  cursor: pointer;
+}
+.brand-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--slider-color, var(--foreground));
+  border: 2px solid var(--background);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease;
+}
+.brand-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+.brand-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--slider-color, var(--foreground));
+  border: 2px solid var(--background);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  transition: transform 0.15s ease;
+}
+.brand-slider::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+/* Elastic pop-in when reaching perfect balance */
+@keyframes brand-bounce {
+  0%   { transform: scale(0.6); opacity: 0.4; }
+  40%  { transform: scale(1.12); }
+  65%  { transform: scale(0.95); }
+  82%  { transform: scale(1.04); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.brand-figure-bounce {
+  animation: brand-bounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}

@@ -48,10 +48,10 @@ export const brandingLogo: ServicePage = {
       type: "brandSplit",
       id: "identitet",
       eyebrow: "Under overfladen",
-      heading: { lead: "Kun 25% af dit brand er synligt.", mutedTail: "Resten er det der gør forskellen." },
+      heading: { lead: "Udseendet er det overfladiske.", mutedTail: "Det er det indre der bærer." },
       paragraphs: [
-        "De stærkeste brands i verden er ikke dem med det flotteste logo. Det er dem der har en klar position, en genkendelig stemme og en intern kultur der bærer hele vejen ud. Logoet er bare indgangen — fundamentet er det folk mærker.",
-        "Når det indre er klart — værdier, løfte, retning — skinner det igennem i alt det ydre. Uden den kobling bliver selv den flotteste identitet til pynt.",
+        "De fleste starter med logoet. De stærkeste brands starter med fundamentet — værdier, kultur og en klar strategi. Det visuelle bør kun fylde 25%. Resten er det folk mærker, men ikke kan pege på.",
+        "Når balancen tipper og det visuelle overtager, mister brandet substans. Prøv selv — juster fordelingen og se forskellen.",
       ],
     },
     {
