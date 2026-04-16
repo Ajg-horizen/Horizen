@@ -69,7 +69,7 @@ function RiveEmotion({
   useEffect(() => {
     if (!crop || !rive) return;
     try {
-      const ab = rive.artboard;
+      const ab = (rive as any).artboard;
       for (let i = 0; i < ab.textValueRunCount(); i++) {
         ab.textValueRunByIndex(i).text = " ";
       }
