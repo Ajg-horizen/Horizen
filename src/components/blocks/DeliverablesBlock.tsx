@@ -42,14 +42,14 @@ export default function DeliverablesBlock({ data }: { data: DeliverablesBlockDat
                 whileInView="visible"
                 viewport={{ once: true, margin: "-30px" }}
                 variants={fadeInUp}
-                className="flex items-start gap-4 rounded-xl border border-foreground/[0.06] p-4 transition-all duration-300 hover:border-foreground/[0.12] hover:bg-foreground/[0.02]"
+                className="flex items-start gap-4 overflow-hidden rounded-xl border border-foreground/[0.06] p-4 transition-all duration-300 hover:border-foreground/[0.12] hover:bg-foreground/[0.02]"
               >
                 <div
                   className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${item.bg}`}
                 >
                   <Icon className={`size-4 ${item.fg}`} />
                 </div>
-                <p className="text-sm font-medium leading-snug pt-1.5">{item.text}</p>
+                <p className="text-sm font-medium leading-snug break-words min-w-0">{item.text}</p>
               </motion.div>
             );
           })}
