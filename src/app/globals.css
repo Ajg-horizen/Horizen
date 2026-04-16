@@ -75,6 +75,15 @@ a {
   }
 }
 
+@keyframes orbit-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ============================================================
    TILGÆNGELIGHED (a11y)
    Alle tilgængeligheds-regler er samlet her så de er nemme

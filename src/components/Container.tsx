@@ -28,7 +28,7 @@ export default function Container({
       className={cn(
         "mx-auto",
         maxWidthMap[size],
-        !noPadding && "px-6 md:px-10 lg:px-16",
+        !noPadding && "px-6 sm:px-8 md:px-10 lg:px-16",
         className,
       )}
       {...rest}
