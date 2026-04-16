@@ -239,7 +239,16 @@ export type ServiceBlock =
   | TechChecklistBlock
   | DesignTokensBlock
   | UxVsUiBlock
-  | UxLawsBlock;
+  | UxLawsBlock
+  | BrandSplitBlock;
+
+export type BrandSplitBlock = {
+  type: "brandSplit";
+  id?: string;
+  eyebrow: string;
+  heading: { lead: string; mutedTail?: string };
+  paragraphs: string[];
+};
 
 /* ─── Service page ────────────────────────────────────────── */
 

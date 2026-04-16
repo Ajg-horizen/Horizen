@@ -14,22 +14,22 @@ import type { ServicePage } from "@/lib/services";
 export const brandingLogo: ServicePage = {
   slug: "branding-logo",
   metadata: {
-    title: "Branding & Logo — Horizen",
+    title: "Branding — Horizen",
     description:
       "Holdbar visuel identitet bygget på strategi og fundament. Logo, farver, typografi, tone of voice og brandguide — design der holder.",
   },
   blocks: [
     {
       type: "hero",
-      eyebrow: { label: "Branding & Logo", icon: BrushIcon },
+      eyebrow: { label: "Branding", icon: BrushIcon },
       heading: {
-        lead: "Dit brand er det folk husker.",
-        mutedTail: "Ikke din hjemmeside.",
+        lead: "Branding starter ikke med et logo.",
+        mutedTail: "Det starter med hvem I er.",
       },
-      body: "Farver, former og skrifttyper er ikke tilfældige valg — de er signaler. Hvert element i din visuelle identitet fortæller en historie om hvem I er, hvad I står for, og hvorfor nogen skal vælge jer. Vi sørger for at den historie er bevidst.",
+      body: "Den visuelle identitet — farver, former, skrifttyper — udgør kun omkring 25% af et brand. Resten er fundament: virksomhedens værdier, kultur, løfte og retning. Når det indre er klart, skinner det igennem i alt det ydre. Vi bygger brands der starter indefra.",
       cta: { label: "Start et brandingprojekt", href: "/kontakt" },
       image: {
-        src: "/graphics/Hero-image-branding-services.avif",
+        src: "/graphics/Hero-image-branding-services.webp",
         alt: "Branding & Logo af Horizen",
       },
     },
@@ -45,17 +45,14 @@ export const brandingLogo: ServicePage = {
       ],
     },
     {
-      type: "uxVsUi",
+      type: "brandSplit",
       id: "identitet",
       eyebrow: "Under overfladen",
-      heading: { lead: "Et brand er mere end et logo.", mutedTail: "Det\u00A0er\u00A0en\u00A0aftale\u00A0med\u00A0din\u00A0målgruppe." },
-      body: "De stærkeste brands i verden er ikke dem med det flotteste logo. Det er dem der har en klar position, en genkendelig stemme og en visuel konsistens der aldrig vakler. Logoet er bare indgangen.",
-      uxLabel: "Strategi",
-      uiLabel: "Identitet",
-      uxCaption:
-        "Positionering, værdier og stemme. Det er de beslutninger der afgør hvad brandet føles som — længe før nogen ser logoet. Uden strategi designer man i blinde.",
-      uiCaption:
-        "Logo, farver, typografi, billedstil. Det er det verden møder. Og det skal ramme præcist — fordi førsteindtrykket kun kommer én gang.",
+      heading: { lead: "Kun 25% af dit brand er synligt.", mutedTail: "Resten er det der gør forskellen." },
+      paragraphs: [
+        "De stærkeste brands i verden er ikke dem med det flotteste logo. Det er dem der har en klar position, en genkendelig stemme og en intern kultur der bærer hele vejen ud. Logoet er bare indgangen — fundamentet er det folk mærker.",
+        "Når det indre er klart — værdier, løfte, retning — skinner det igennem i alt det ydre. Uden den kobling bliver selv den flotteste identitet til pynt.",
+      ],
     },
     {
       type: "centeredCta",

@@ -45,8 +45,8 @@ export const services: NavItem[] = [
     icon: PenToolIcon,
   },
   {
-    title: "Branding & Logo",
-    description: "Komplet visuel identitet med karakter",
+    title: "Branding",
+    description: "Strategi, positionering og identitet der holder",
     href: "/services/branding-logo",
     icon: BrushIcon,
   },

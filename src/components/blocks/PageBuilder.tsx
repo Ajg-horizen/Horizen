@@ -13,6 +13,7 @@ import TechChecklistBlock from "./TechChecklistBlock";
 import DesignTokensBlock from "./DesignTokensBlock";
 import UxVsUiBlock from "./UxVsUiBlock";
 import UxLawsBlock from "./UxLawsBlock";
+import BrandSplitBlock from "./BrandSplitBlock";
 import type { ServicePage } from "@/lib/services";
 
 type Block = ServicePage["blocks"][number];
@@ -85,6 +86,8 @@ function renderBlock(
       return <UxVsUiBlock key={key} id={block.id} data={block} />;
     case "uxLaws":
       return <UxLawsBlock key={key} id={block.id} data={block} />;
+    case "brandSplit":
+      return <BrandSplitBlock key={key} id={block.id} data={block} />;
     default: {
       // Eksaustiv tjek — TypeScript fanger glemte block-typer
       const _exhaustive: never = block;
