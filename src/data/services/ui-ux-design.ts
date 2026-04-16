@@ -89,7 +89,7 @@ export const uiUxDesign: ServicePage = {
       id: "tilgang",
       stickyGroup: "designStack",
       eyebrow: "Vores tilgang",
-      heading: { lead: "UX er strategi.", mutedTail: "UI er håndværk. Vi gør begge dele." },
+      heading: { lead: "UX er strategien.", mutedTail: "UI er håndværket. Vi gør begge dele." },
       paragraphs: [
         "UI og UX er to sider af samme mønt — men de bliver sjældent behandlet sådan. Vi insisterer på at strategi og æstetik arbejder sammen fra dag ét. Det er den kobling der gør et projekt holdbart og fremtidssikret.",
         "En grundig designfase kan nemt løbe op i 60–150 timer alene — det er den mængde research og iteration større projekter kræver for at ramme rigtigt. Omfanget tilpasses altid projekt og budget, men princippet er det samme: jo stærkere fundamentet er, jo bedre performer løsningen.",
