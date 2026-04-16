@@ -1,10 +1,10 @@
 "use client";
 
 /**
- * Signatur-block for webudvikling-siden.
- * Indeholder synlighedsvækst-chart (SVG) + checklist med grønne flueben.
- * Hvis denne block skal genbruges på andre services, generaliser ved at
- * tage chart-data og linje-tekster som data.
+ * Delt block for service-sider.
+ * Webudvikling: graf + checklist (original).
+ * UI/UX: orbit-animation med designværktøjer.
+ * Skelner via data.checklist — hvis den findes, vises graf + checklist.
  */
 
 import { motion } from "framer-motion";
@@ -19,6 +19,24 @@ const OrbitAnimation = dynamic(() => import("@/components/ui/orbit-animation"), 
   ssr: false,
 });
 
+const orbitPills = [
+  { label: "Wireframes", dot: "#4ECDC4" },
+  { label: "Prototyping", dot: "#FF6B6B" },
+  { label: "Journey Mapping", dot: "#2EC4B6" },
+  { label: "Design Tokens", dot: "#FFD93D" },
+  { label: "Atomic Design", dot: "#6BCB77" },
+  { label: "Hierarki", dot: "#4D96FF" },
+  { label: "Typografi", dot: "#FF8C42" },
+  { label: "Scrum", dot: "#845EC2" },
+  { label: "Color Theory", dot: "#F9F871" },
+  { label: "WCAG 2.1", dot: "#00B67A" },
+  { label: "User Research", dot: "#FF6F91" },
+  { label: "Figma", dot: "#A259FF" },
+  { label: "Cognitive Load", dot: "#67C6E3" },
+  { label: "Micro UX", dot: "#FFC75F" },
+  { label: "Responsivt", dot: "#D65DB1" },
+];
+
 export default function TechChecklistBlock({
   data,
   inStickyStack,
@@ -29,6 +47,7 @@ export default function TechChecklistBlock({
   stickyIndex?: number;
 }) {
   const stickyClass = inStickyStack ? stickyClasses(stickyIndex) : "";
+  const hasChecklist = data.checklist && data.checklist.length > 0;
 
   return (
     <section
@@ -40,8 +59,8 @@ export default function TechChecklistBlock({
         clipPath: "inset(0 -100vmax)",
       }}
     >
-      <Container size="site" className="py-24 md:py-32 lg:py-40">
-        <div className="grid gap-12 md:grid-cols-[1fr_1.2fr] md:gap-16 items-center">
+      <Container size="site" className={hasChecklist ? "py-20 md:py-28 lg:py-36" : "py-24 md:py-32 lg:py-40"}>
+        <div className={`grid gap-12 md:grid-cols-[1fr_1.2fr] md:gap-16 ${hasChecklist ? "items-start" : "items-center"}`}>
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -62,42 +81,178 @@ export default function TechChecklistBlock({
             <p className="mt-4 text-sm text-white/50 leading-relaxed max-w-md">
               {data.body}
             </p>
+
+            {/* Visibility growth chart — only for checklist variant */}
+            {hasChecklist && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="mt-8 rounded-xl border border-white/[0.06] bg-white/[0.03] p-5"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-mono uppercase tracking-[0.2em] text-white/30">
+                    {data.chartLabel ?? "Synlighed over tid"}
+                  </span>
+                  <div className="flex items-center gap-4">
+                    <span className="flex items-center gap-1.5 text-[10px] text-white/40">
+                      <span className="h-[2px] w-3 rounded-full bg-[#c9a227]" />
+                      {data.chartLegend.weak}
+                    </span>
+                    <span className="flex items-center gap-1.5 text-[10px] text-[#00b67a]">
+                      <span className="h-[2px] w-3 rounded-full bg-[#00b67a]" />
+                      {data.chartLegend.strong}
+                    </span>
+                  </div>
+                </div>
+                <svg viewBox="0 0 500 160" className="w-full h-auto">
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <line
+                      key={i}
+                      x1="0"
+                      y1={i * 40}
+                      x2="500"
+                      y2={i * 40}
+                      stroke="rgba(255,255,255,0.04)"
+                      strokeWidth="1"
+                    />
+                  ))}
+
+                  {["Jan", "Feb", "Mar", "Apr", "Maj", "Jun"].map((m, i) => (
+                    <text
+                      key={m}
+                      x={i * 90 + 30}
+                      y="155"
+                      fill="rgba(255,255,255,0.25)"
+                      fontSize="10"
+                      fontFamily="monospace"
+                      textAnchor="middle"
+                    >
+                      {m}
+                    </text>
+                  ))}
+
+                  <defs>
+                    <linearGradient id="visGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="rgb(0, 182, 122)" stopOpacity="0.25" />
+                      <stop offset="100%" stopColor="rgb(0, 182, 122)" stopOpacity="0" />
+                    </linearGradient>
+                    <linearGradient id="flatGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="rgb(201, 162, 39)" stopOpacity="0.12" />
+                      <stop offset="100%" stopColor="rgb(201, 162, 39)" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+
+                  <motion.path
+                    d="M30,130 C70,129 100,128 140,126 C180,124 210,123 250,124 C290,126 320,128 360,130 C400,132 430,134 480,136 L480,140 L30,140 Z"
+                    fill="url(#flatGradient)"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, delay: 0.4 }}
+                  />
+
+                  <motion.path
+                    d="M30,130 C70,129 100,128 140,126 C180,124 210,123 250,124 C290,126 320,128 360,130 C400,132 430,134 480,136"
+                    fill="none"
+                    stroke="rgba(201, 162, 39, 0.6)"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    pathLength={1}
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 1.5, delay: 0.3, ease: "easeOut" }}
+                  />
+
+                  <motion.circle
+                    cx="480"
+                    cy="136"
+                    r="3"
+                    fill="rgba(201, 162, 39, 0.6)"
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: 1.7 }}
+                  />
+
+                  <motion.path
+                    d="M30,130 C70,128 100,125 140,118 C180,110 210,95 250,78 C290,60 320,45 360,32 C400,20 430,12 480,8 L480,140 L30,140 Z"
+                    fill="url(#visGradient)"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, delay: 0.6 }}
+                  />
+
+                  <motion.path
+                    d="M30,130 C70,128 100,125 140,118 C180,110 210,95 250,78 C290,60 320,45 360,32 C400,20 430,12 480,8"
+                    fill="none"
+                    stroke="rgb(0, 182, 122)"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    pathLength={1}
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 1.5, delay: 0.4, ease: "easeOut" }}
+                  />
+
+                  <motion.circle
+                    cx="480"
+                    cy="8"
+                    r="4"
+                    fill="rgb(0, 182, 122)"
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: 1.8 }}
+                  />
+                </svg>
+              </motion.div>
+            )}
           </motion.div>
 
-          {/* Label pills on mobile, animated orbit on desktop */}
-          <div className="flex md:hidden flex-wrap gap-2 mt-6">
-            {[
-              { label: "Wireframes", dot: "#4ECDC4" },
-              { label: "Prototyping", dot: "#FF6B6B" },
-              { label: "Journey Mapping", dot: "#2EC4B6" },
-              { label: "Design Tokens", dot: "#FFD93D" },
-              { label: "Atomic Design", dot: "#6BCB77" },
-              { label: "Hierarki", dot: "#4D96FF" },
-              { label: "Typografi", dot: "#FF8C42" },
-              { label: "Scrum", dot: "#845EC2" },
-              { label: "Color Theory", dot: "#F9F871" },
-              { label: "WCAG 2.1", dot: "#00B67A" },
-              { label: "User Research", dot: "#FF6F91" },
-              { label: "Figma", dot: "#A259FF" },
-              { label: "Cognitive Load", dot: "#67C6E3" },
-              { label: "Micro UX", dot: "#FFC75F" },
-              { label: "Responsivt", dot: "#D65DB1" },
-            ].map((item) => (
-              <span
-                key={item.label}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-[11px] font-medium text-white/60"
-              >
-                <span
-                  className="h-1.5 w-1.5 shrink-0 rounded-full"
-                  style={{ backgroundColor: item.dot }}
-                />
-                {item.label}
-              </span>
-            ))}
-          </div>
-          <div className="hidden md:flex items-center justify-center md:scale-[0.85] lg:scale-100 origin-center">
-            <OrbitAnimation />
-          </div>
+          {/* Right side — checklist (webudvikling) or orbit (UI/UX) */}
+          {hasChecklist ? (
+            <div className="grid gap-0">
+              {data.checklist.map((item, i) => (
+                <motion.div
+                  key={i}
+                  custom={i}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-20px" }}
+                  variants={fadeInUp}
+                  className="flex items-center gap-3 py-3 border-b border-white/[0.06] last:border-0"
+                >
+                  <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#00b67a]/20">
+                    <CheckIcon className="size-3 text-[#00b67a]" />
+                  </div>
+                  <span className="text-sm text-white/70">{item}</span>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <>
+              <div className="flex md:hidden flex-wrap gap-2 mt-6">
+                {orbitPills.map((item) => (
+                  <span
+                    key={item.label}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-[11px] font-medium text-white/60"
+                  >
+                    <span
+                      className="h-1.5 w-1.5 shrink-0 rounded-full"
+                      style={{ backgroundColor: item.dot }}
+                    />
+                    {item.label}
+                  </span>
+                ))}
+              </div>
+              <div className="hidden md:flex items-center justify-center md:scale-[0.85] lg:scale-100 origin-center">
+                <OrbitAnimation />
+              </div>
+            </>
+          )}
         </div>
       </Container>
     </section>
