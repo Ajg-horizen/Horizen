@@ -37,7 +37,7 @@ export default function BrandDonut() {
           cy={center}
           r={radius}
           fill="none"
-          stroke="rgba(255,255,255,0.04)"
+          stroke="rgba(0,0,0,0.06)"
           strokeWidth={strokeWidth}
         />
 
@@ -67,7 +67,7 @@ export default function BrandDonut() {
           x={center}
           y={center - 6}
           textAnchor="middle"
-          className="fill-white/90 text-lg font-bold"
+          className="fill-foreground text-lg font-bold"
           fontSize="18"
         >
           Brand
@@ -76,7 +76,7 @@ export default function BrandDonut() {
           x={center}
           y={center + 14}
           textAnchor="middle"
-          className="fill-white/40 text-[10px]"
+          className="fill-muted text-[10px]"
           fontSize="10"
         >
           fordeling
@@ -91,7 +91,7 @@ export default function BrandDonut() {
               className="h-2.5 w-2.5 shrink-0 rounded-full"
               style={{ backgroundColor: seg.color }}
             />
-            <span className="text-xs text-white/50">
+            <span className="text-xs text-muted">
               {seg.value}% — {seg.label}
             </span>
           </div>
