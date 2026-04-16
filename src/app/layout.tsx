@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import ScrollToTop from "@/components/ScrollToTop";
+import SmoothScroll from "@/components/SmoothScroll";
 import GlobalCursor from "@/components/GlobalCursor";
 import BackToTopButton from "@/components/BackToTopButton";
 import "./globals.css";
@@ -28,6 +29,7 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           Spring til indhold
         </a>
+        <SmoothScroll />
         <ScrollToTop />
         {children}
         <BackToTopButton />
