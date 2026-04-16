@@ -1,12 +1,5 @@
 "use client";
 
-/**
- * Delt block for service-sider.
- * Webudvikling: graf + checklist (original).
- * UI/UX: orbit-animation med designværktøjer.
- * Skelner via data.checklist — hvis den findes, vises graf + checklist.
- */
-
 import { motion } from "framer-motion";
 import { CheckIcon } from "lucide-react";
 import Container from "@/components/Container";
@@ -14,28 +7,13 @@ import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { fadeInUp } from "@/lib/animations";
 import { stickyClasses, type TechChecklistBlock as TechChecklistBlockData } from "@/lib/services";
 import dynamic from "next/dynamic";
+import { orbits } from "@/components/ui/orbit-animation";
 
 const OrbitAnimation = dynamic(() => import("@/components/ui/orbit-animation"), {
   ssr: false,
 });
 
-const orbitPills = [
-  { label: "Wireframes", dot: "#4ECDC4" },
-  { label: "Prototyping", dot: "#FF6B6B" },
-  { label: "Journey Mapping", dot: "#2EC4B6" },
-  { label: "Design Tokens", dot: "#FFD93D" },
-  { label: "Atomic Design", dot: "#6BCB77" },
-  { label: "Hierarki", dot: "#4D96FF" },
-  { label: "Typografi", dot: "#FF8C42" },
-  { label: "Scrum", dot: "#845EC2" },
-  { label: "Color Theory", dot: "#F9F871" },
-  { label: "WCAG 2.1", dot: "#00B67A" },
-  { label: "User Research", dot: "#FF6F91" },
-  { label: "Figma", dot: "#A259FF" },
-  { label: "Cognitive Load", dot: "#67C6E3" },
-  { label: "Micro UX", dot: "#FFC75F" },
-  { label: "Responsivt", dot: "#D65DB1" },
-];
+const orbitPills = orbits.flat();
 
 export default function TechChecklistBlock({
   data,
@@ -47,7 +25,7 @@ export default function TechChecklistBlock({
   stickyIndex?: number;
 }) {
   const stickyClass = inStickyStack ? stickyClasses(stickyIndex) : "";
-  const hasChecklist = data.checklist && data.checklist.length > 0;
+  const hasChecklist = !!data.checklist?.length;
 
   return (
     <section
@@ -98,11 +76,11 @@ export default function TechChecklistBlock({
                   <div className="flex items-center gap-4">
                     <span className="flex items-center gap-1.5 text-[10px] text-white/40">
                       <span className="h-[2px] w-3 rounded-full bg-[#c9a227]" />
-                      {data.chartLegend.weak}
+                      {data.chartLegend?.weak}
                     </span>
                     <span className="flex items-center gap-1.5 text-[10px] text-[#00b67a]">
                       <span className="h-[2px] w-3 rounded-full bg-[#00b67a]" />
-                      {data.chartLegend.strong}
+                      {data.chartLegend?.strong}
                     </span>
                   </div>
                 </div>
@@ -215,7 +193,7 @@ export default function TechChecklistBlock({
           {/* Right side — checklist (webudvikling) or orbit (UI/UX) */}
           {hasChecklist ? (
             <div className="grid gap-0">
-              {data.checklist.map((item, i) => (
+              {data.checklist?.map((item, i) => (
                 <motion.div
                   key={i}
                   custom={i}

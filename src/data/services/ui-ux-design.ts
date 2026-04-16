@@ -79,11 +79,8 @@ export const uiUxDesign: ServicePage = {
       type: "techChecklist",
       stickyGroup: "designStack",
       eyebrow: "Fundamentet for succes",
-      heading: { lead: "God UX/UI skaber", mutedTail: "engagement" },
+      heading: { lead: "Strukturerede processer for UI/UX", mutedTail: "skaber engagement" },
       body: "Det meste af det arbejde der adskiller et professionelt produkt fra et tilfældigt, sker før den første pixel tegnes. Research, informationsarkitektur, brugerflows, hierarki — det er de beslutninger der fjerner friktion fra både processen og brugerrejsen. Vi tager de skridt, fordi vi ved det er dem der flytter resultatet.",
-      chartLabel: "",
-      chartLegend: { weak: "", strong: "" },
-      checklist: [],
     },
     {
       type: "positioning",
@@ -91,13 +88,13 @@ export const uiUxDesign: ServicePage = {
       eyebrow: "Vores tilgang",
       heading: { lead: "UX er strategi.", mutedTail: "UI er håndværk. Vi gør begge dele." },
       paragraphs: [
-        "Mange bureauer leverer det ene eller det andet — enten flow-diagrammer uden visuel sans, eller flotte mockups uden forretningstanke. Vi behandler UI og UX som to sider af samme mønt: research informerer pixels, og pixels respekterer research.",
-        "Vi bruger 60–150 timer på designfasen alene, alt efter omfang. Det lyder af meget. Det er det også. Men det er den investering der gør forskellen mellem et design der ser fint ud i pitch-decket og et design der bliver brugt hver dag uden friktion.",
+        "UI og UX er to sider af samme mønt — men de bliver sjældent behandlet sådan. Vi insisterer på at strategi og æstetik arbejder sammen fra dag ét. Det er den kobling der gør et projekt holdbart og fremtidssikret.",
+        "En grundig designfase kan nemt løbe op i 60–150 timer alene — det er den mængde research og iteration større projekter kræver for at ramme rigtigt. Omfanget tilpasses altid projekt og budget, men princippet er det samme: jo stærkere fundamentet er, jo bedre performer løsningen.",
       ],
       stats: [
-        { value: "120+", label: "Designs leveret" },
-        { value: "44px", label: "Min. touch target" },
-        { value: "WCAG", label: "2.1 AA standard" },
+        { value: "8+", label: "Års erfaring" },
+        { value: "21", label: "UI/UX-principper i fundamentet" },
+        { value: "100%", label: "Research-baseret" },
       ],
     },
     {
@@ -121,7 +118,7 @@ export const uiUxDesign: ServicePage = {
           step: "02",
           title: "Wireframes & arkitektur",
           description:
-            "Informationshierarki, navigation, brugerflow. Først når strukturen står, begynder vi at tale om visuel form. Mange spring direkte til UI — det er typisk her det går galt.",
+            "Informationshierarki, navigation, brugerflow. Først når strukturen står, begynder vi at tale om visuel form. Det er en bevidst rækkefølge — fordi struktur er det UI'en skal bære.",
           icon: LayoutIcon,
           accent: "#e8915a",
         },
@@ -137,7 +134,7 @@ export const uiUxDesign: ServicePage = {
           step: "04",
           title: "Prototype & handoff",
           description:
-            "Interaktive Figma-prototyper, dokumenterede tokens, tilgængeligheds-noter. Udviklerne får alt de skal bruge for at bygge det vi har designet — ikke en fortolkning.",
+            "Interaktive Figma-prototyper, dokumenterede tokens, tilgængeligheds-noter. Udviklerne får alt de skal bruge for at bygge præcis det vi har designet.",
           icon: GitBranchIcon,
           accent: "#00b67a",
           link: { href: "/services/webudvikling", label: "Webudvikling" },

@@ -155,8 +155,8 @@ export type TechChecklistBlock = {
   body: string;
   /** Tekst over chart, fx "Synlighed over tid" eller "Engagement over tid". Default: "Synlighed over tid". */
   chartLabel?: string;
-  chartLegend: { weak: string; strong: string };
-  checklist: string[];
+  chartLegend?: { weak: string; strong: string };
+  checklist?: string[];
 };
 
 /* ─── Signatur-blocks for UI/UX ────────────────────────────── */

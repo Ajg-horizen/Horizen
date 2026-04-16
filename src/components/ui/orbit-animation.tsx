@@ -7,7 +7,7 @@ interface OrbitItem {
   dot: string;
 }
 
-const orbits: OrbitItem[][] = [
+export const orbits: OrbitItem[][] = [
   // Inner orbit — core tools
   [
     { label: "Figma", dot: "#A259FF" },
