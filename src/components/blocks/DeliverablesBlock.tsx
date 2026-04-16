@@ -6,11 +6,11 @@ import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { fadeInUp } from "@/lib/animations";
 import type { DeliverablesBlock as DeliverablesBlockData } from "@/lib/services";
 
-export default function DeliverablesBlock({ data }: { data: DeliverablesBlockData }) {
+export default function DeliverablesBlock({ id, data }: { id?: string; data: DeliverablesBlockData }) {
   const headingLines = Array.isArray(data.heading) ? data.heading : [data.heading];
 
   return (
-    <Container as="section" size="site" className="py-24">
+    <Container as="section" id={id} size="site" className="py-24">
       <div className="grid gap-12 md:grid-cols-[1fr_1.5fr] md:gap-16">
         <motion.div
           initial="hidden"

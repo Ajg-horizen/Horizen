@@ -7,10 +7,12 @@ import { fadeInUp } from "@/lib/animations";
 import { stickyClasses, type PositioningBlock as PositioningBlockData } from "@/lib/services";
 
 export default function PositioningBlock({
+  id,
   data,
   inStickyStack,
   stickyIndex = 0,
 }: {
+  id?: string;
   data: PositioningBlockData;
   inStickyStack?: boolean;
   stickyIndex?: number;
@@ -19,6 +21,7 @@ export default function PositioningBlock({
 
   return (
     <section
+      id={id}
       className={`relative ${stickyClass} bg-background`.trim()}
       style={{
         boxShadow: `0 0 0 100vmax var(--background)${

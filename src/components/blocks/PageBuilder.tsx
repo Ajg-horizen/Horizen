@@ -49,11 +49,12 @@ function renderBlock(
         />
       );
     case "deliverables":
-      return <DeliverablesBlock key={key} data={block} />;
+      return <DeliverablesBlock key={key} id={block.id} data={block} />;
     case "positioning":
       return (
         <PositioningBlock
           key={key}
+          id={block.id}
           data={block}
           inStickyStack={inStickyStack}
           stickyIndex={stickyIndex}

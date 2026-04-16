@@ -70,6 +70,7 @@ export type DeliverableItem = {
 
 export type DeliverablesBlock = {
   type: "deliverables";
+  id?: string;
   eyebrow: string;
   /** Heading med valgfri linjebrud — brug array for multi-line. */
   heading: string | string[];
@@ -81,6 +82,7 @@ export type PositioningStat = { value: string; label: string };
 
 export type PositioningBlock = {
   type: "positioning";
+  id?: string;
   eyebrow: string;
   heading: { lead: string; mutedTail?: string };
   paragraphs: string[];

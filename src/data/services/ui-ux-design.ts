@@ -43,7 +43,9 @@ export const uiUxDesign: ServicePage = {
       type: "sectionTOC",
       items: [
         { label: "Designsystem", href: "#system" },
+        { label: "Tilgang", href: "#tilgang" },
         { label: "Proces", href: "#proces" },
+        { label: "Leverancer", href: "#leverancer" },
         { label: "Cases", href: "#cases" },
         { label: "FAQ", href: "#faq" },
       ],
@@ -84,6 +86,7 @@ export const uiUxDesign: ServicePage = {
     },
     {
       type: "positioning",
+      id: "tilgang",
       stickyGroup: "designStack",
       eyebrow: "Vores tilgang",
       heading: { lead: "UX er strategi.", mutedTail: "UI er håndværk. Vi gør begge dele." },
@@ -143,6 +146,7 @@ export const uiUxDesign: ServicePage = {
     },
     {
       type: "deliverables",
+      id: "leverancer",
       eyebrow: "Hvad du får",
       heading: ["Fra første sketch", "til siste handoff"],
       body: "UI/UX er ikke ét leverance — det er en kæde af artefakter der bygger på hinanden. Vi leverer hele kæden, ikke kun de pæne mockups til sidst.",
