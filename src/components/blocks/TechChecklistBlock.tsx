@@ -13,8 +13,6 @@ const OrbitAnimation = dynamic(() => import("@/components/ui/orbit-animation"), 
   ssr: false,
 });
 
-const orbitPills = orbits.flat();
-
 export default function TechChecklistBlock({
   data,
   inStickyStack,
@@ -26,6 +24,8 @@ export default function TechChecklistBlock({
 }) {
   const stickyClass = inStickyStack ? stickyClasses(stickyIndex) : "";
   const hasChecklist = !!data.checklist?.length;
+  const orbitData = data.orbitItems ?? orbits;
+  const orbitPills = orbitData.flat();
 
   return (
     <section
@@ -227,7 +227,7 @@ export default function TechChecklistBlock({
                 ))}
               </div>
               <div className="hidden md:flex items-center justify-center md:scale-[0.85] lg:scale-100 origin-center">
-                <OrbitAnimation />
+                <OrbitAnimation items={data.orbitItems} centerLabel={data.orbitCenterLabel} />
               </div>
             </>
           )}

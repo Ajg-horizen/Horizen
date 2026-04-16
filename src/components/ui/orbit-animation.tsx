@@ -62,7 +62,19 @@ function Label({ item }: { item: OrbitItem }) {
   );
 }
 
-export default function OrbitAnimation({ isStatic = false }: { isStatic?: boolean }) {
+export default function OrbitAnimation({
+  isStatic = false,
+  items: customItems,
+  centerLabel = "UX/UI",
+}: {
+  isStatic?: boolean;
+  items?: OrbitItem[][];
+  centerLabel?: string;
+}) {
+  const data = customItems ?? orbits;
+  const positions = customItems
+    ? data.map((ring) => computePositions(ring.length))
+    : precomputed;
   const sizes = isStatic ? mobileOrbitSizes : orbitSizes;
   const containerSize = isStatic ? "17rem" : "32rem";
 
@@ -78,16 +90,16 @@ export default function OrbitAnimation({ isStatic = false }: { isStatic?: boolea
       {/* Center element */}
       <div className="absolute z-10 flex h-14 w-14 md:h-20 md:w-20 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] backdrop-blur-sm">
         <span className="text-xs md:text-sm font-semibold tracking-tight text-white/90">
-          UX/UI
+          {centerLabel}
         </span>
       </div>
 
       {/* Orbit rings + items */}
-      {orbits.map((items, orbitIdx) => {
+      {data.map((items, orbitIdx) => {
         const size = sizes[orbitIdx];
         const duration = orbitDurations[orbitIdx];
         const reverse = orbitIdx % 2 === 1;
-        const positions = precomputed[orbitIdx];
+        const ringPositions = positions[orbitIdx];
 
         return (
           <div
@@ -106,8 +118,8 @@ export default function OrbitAnimation({ isStatic = false }: { isStatic?: boolea
                 key={itemIdx}
                 className="absolute"
                 style={{
-                  left: positions[itemIdx].x,
-                  top: positions[itemIdx].y,
+                  left: ringPositions[itemIdx].x,
+                  top: ringPositions[itemIdx].y,
                   transform: "translate(-50%, -50%)",
                   ...(isStatic
                     ? {}

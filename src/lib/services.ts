@@ -159,6 +159,8 @@ export type TechChecklistBlock = {
   chartLabel?: string;
   chartLegend?: { weak: string; strong: string };
   checklist?: string[];
+  orbitItems?: { label: string; dot: string }[][];
+  orbitCenterLabel?: string;
 };
 
 /* ─── Signatur-blocks for UI/UX ────────────────────────────── */
@@ -280,8 +282,9 @@ export function stickyClasses(index?: number): string {
 
 import { webudvikling } from "@/data/services/webudvikling";
 import { uiUxDesign } from "@/data/services/ui-ux-design";
+import { brandingLogo } from "@/data/services/branding-logo";
 
-export const services: ServicePage[] = [webudvikling, uiUxDesign];
+export const services: ServicePage[] = [webudvikling, uiUxDesign, brandingLogo];
 
 export const servicesBySlug: Record<string, ServicePage> = Object.fromEntries(
   services.map((s) => [s.slug, s])
