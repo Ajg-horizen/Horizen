@@ -191,8 +191,8 @@ export const uiUxDesign: ServicePage = {
     },
     {
       type: "gradientCta",
-      heading: "Skal vi tegne det sammen?",
-      body: "Vi laver ikke kun design der ser godt ud i en presentation. Vi laver design der bliver brugt. Lad os tale om hvad du har brug for.",
+      heading: "Det hele kunne starte her.",
+      body: "Vi hører altid gerne om jeres visioner — og hvordan vi i fællesskab kan bygge dem.",
       primaryCta: { label: "Tag en snak", href: "/kontakt" },
       secondaryCta: { label: "hej@horizen.dk", href: "mailto:hej@horizen.dk" },
     },
