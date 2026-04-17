@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Star } from "lucide-react";
+import Image from "next/image";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { fadeInUp } from "@/lib/animations";
@@ -63,7 +65,22 @@ export default function PositioningBlock({
                 {p}
               </p>
             ))}
-            {data.stats && data.stats.length > 0 && (
+            {data.reviews ? (
+              <div className="flex items-center gap-4 pt-4">
+                <span className="inline-flex -space-x-3">
+                  {data.reviews.avatars.map((av, i) => (
+                    <Image
+                      key={i}
+                      src={av.src}
+                      alt={av.alt}
+                      width={44}
+                      height={44}
+                      className="h-11 w-11 rounded-full border-2 border-background object-cover"
+                    />
+                  ))}
+                </span>
+              </div>
+            ) : data.stats && data.stats.length > 0 ? (
               <div className="flex gap-12 pt-4">
                 {data.stats.map((s) => (
                   <div key={s.label}>
@@ -72,7 +89,7 @@ export default function PositioningBlock({
                   </div>
                 ))}
               </div>
-            )}
+            ) : null}
           </motion.div>
         </div>
       </Container>

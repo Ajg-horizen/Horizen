@@ -80,6 +80,11 @@ export type DeliverablesBlock = {
 
 export type PositioningStat = { value: string; label: string };
 
+export type PositioningReviews = {
+  count: number;
+  avatars: { src: string; alt: string }[];
+};
+
 export type PositioningBlock = {
   type: "positioning";
   id?: string;
@@ -87,6 +92,7 @@ export type PositioningBlock = {
   heading: { lead: string; mutedTail?: string };
   paragraphs: string[];
   stats?: PositioningStat[];
+  reviews?: PositioningReviews;
 };
 
 export type CaseItem = {

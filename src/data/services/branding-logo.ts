@@ -105,11 +105,17 @@ export const brandingLogo: ServicePage = {
         "De bedste resultater opstår når mennesker har tilliden, friheden og ejerskabet. Det er ikke noget vi siger — det er noget vi tror på. Det er kernefundamentet hos Horizen.",
         "Vi tror ikke på micromanagement. Vi tror på at løfte i fællesskab og belønne nysgerrighed. Det mærkes i vores arbejde — fordi hvert projekt bærer præg af mennesker der fik plads til at være mennesker og eksperimentere.",
       ],
-      stats: [
-        { value: "8+", label: "Års erfaring" },
-        { value: "50+", label: "Brands udviklet" },
-        { value: "40–120t", label: "Pr. brandforløb" },
-      ],
+      reviews: {
+        count: 200,
+        avatars: [
+          { src: "/staff/staff-jose-digital-design.jpg", alt: "José" },
+          { src: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp", alt: "Anne-Sofie" },
+          { src: "/staff/staff-Web-udvikler-designer-Johanne-horizen.avif", alt: "Johanne" },
+          { src: "/staff/staff-kommunikation-og-salg-Ludvig.webp", alt: "Ludvig" },
+          { src: "/staff/staff-.Sebastian-Meta-facebook.jpg", alt: "Sebastian" },
+          { src: "/staff/Kontor-Hund-Gurli-Web-udvikler.webp", alt: "Gurli" },
+        ],
+      },
     },
     {
       type: "process",
