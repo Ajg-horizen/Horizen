@@ -8,11 +8,11 @@ import { useRive, useStateMachineInput, Layout, Fit, Alignment } from "@rive-app
 // Each artboard has 4 state machines: Emo-Happy, Emo-Ok, Emo-Meh, Emo-Sad
 // We use the artboard that matches the desired emotion so its default SM plays
 const EMOTIONS = [
-  { artboard: "Emotions-02", stateMachine: "Emotions", label: "Perfekt balance" },
-  { artboard: "Content",     stateMachine: "Emo-Ok",    label: "God balance" },
-  { artboard: "Ok",          stateMachine: "Emo-Ok",    label: "Acceptabel" },
-  { artboard: "Meh",         stateMachine: "Emo-Meh",   label: "Ude af balance" },
-  { artboard: "Sad",         stateMachine: "Emo-Sad",   label: "Dårlig balance" },
+  { artboard: "Emotions-02", stateMachine: "Emotions", label: "Brand i balance" },
+  { artboard: "Content",     stateMachine: "Emo-Ok",    label: "Brand i god balance" },
+  { artboard: "Ok",          stateMachine: "Emo-Ok",    label: "Brand i okay balance" },
+  { artboard: "Meh",         stateMachine: "Emo-Meh",   label: "Brand i ubalance" },
+  { artboard: "Sad",         stateMachine: "Emo-Sad",   label: "Brand uden fundament" },
 ] as const;
 
 type Emotion = (typeof EMOTIONS)[number];
