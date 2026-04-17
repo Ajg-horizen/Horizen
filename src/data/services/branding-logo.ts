@@ -99,16 +99,16 @@ export const brandingLogo: ServicePage = {
       type: "positioning",
       id: "tilgang",
       stickyGroup: "brandStack",
-      eyebrow: "Vores tilgang",
-      heading: { lead: "Vi starter aldrig med logoet.", mutedTail: "Vi starter med jer." },
+      eyebrow: "Det vi tror på",
+      heading: { lead: "Vi har kigget indad.", mutedTail: "Til fordel for jer." },
       paragraphs: [
-        "Før vi åbner Illustrator, bruger vi tid på at forstå jeres marked, jeres målgruppe og det der gør jer anderledes. Det er ikke et ekstra skridt — det er hele fundamentet. Et logo uden den forståelse er bare en pæn form.",
-        "Processen tager tid — fra 40 til 120+ timer for en komplet brandplatform. Men det er den investering der gør forskellen mellem et brand folk glemmer og et de opsøger.",
+        "De bedste resultater opstår når mennesker har tilliden, friheden og ejerskabet. Det er ikke noget vi siger — det er noget vi tror på. Det er kernefundamentet hos Horizen.",
+        "Vi tror ikke på micromanagement. Vi tror på at løfte i fællesskab og belønne nysgerrighed. Det mærkes i vores arbejde — fordi hvert projekt bærer præg af mennesker der fik plads til at være mennesker og eksperimentere.",
       ],
       stats: [
         { value: "8+", label: "Års erfaring" },
         { value: "50+", label: "Brands udviklet" },
-        { value: "100%", label: "Strategisk forankret" },
+        { value: "40–120t", label: "Pr. brandforløb" },
       ],
     },
     {
