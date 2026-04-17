@@ -19,7 +19,7 @@ export default function BrandSplitBlock({
   data: BrandSplitBlockData;
 }) {
   return (
-    <Container as="section" id={id} size="site" className="pt-24 pb-12 md:pt-32 md:pb-16 lg:pt-40 lg:pb-20">
+    <Container as="section" id={id} size="site" className="pt-24 pb-4 md:pt-32 md:pb-6 lg:pt-40 lg:pb-8">
       <div className="grid gap-12 md:grid-cols-[1fr_1fr] md:gap-16 items-center">
         <motion.div
           initial="hidden"

@@ -91,7 +91,7 @@ export const brandingLogo: ServicePage = {
           { label: "Konkurrentanalyse", dot: "#2EC4B6" },
         ],
       ],
-      orbitCenterLabel: "Brand",
+      orbitCenterLabel: "smiley",
     },
     {
       type: "positioning",

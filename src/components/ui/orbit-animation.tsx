@@ -36,7 +36,7 @@ export const orbits: OrbitItem[][] = [
 
 const orbitSizes = ["12rem", "21rem", "30rem"];
 const mobileOrbitSizes = ["6rem", "11rem", "16rem"];
-const orbitDurations = [30, 45, 60];
+const orbitDurations = [60, 90, 120];
 
 function computePositions(count: number): { x: string; y: string }[] {
   return Array.from({ length: count }, (_, i) => {
@@ -88,10 +88,22 @@ export default function OrbitAnimation({
       style={{ width: containerSize, height: containerSize }}
     >
       {/* Center element */}
-      <div className="absolute z-10 flex h-14 w-14 md:h-20 md:w-20 items-center justify-center rounded-full border border-white/10 bg-white/[0.05] backdrop-blur-sm">
-        <span className="text-xs md:text-sm font-semibold tracking-tight text-white/90">
-          {centerLabel}
-        </span>
+      <div className={`absolute z-10 flex h-14 w-14 md:h-20 md:w-20 items-center justify-center rounded-full ${centerLabel === "smiley" ? "" : "border border-white/10 bg-white/[0.05] backdrop-blur-sm"}`}>
+        {centerLabel === "smiley" ? (
+          <svg viewBox="0 0 64 64" className="w-11 h-11 md:w-16 md:h-16 orbit-smiley-glow rounded-full" style={{ background: "#5a9fd4" }}>
+            {/* Flat circle */}
+            <circle cx="32" cy="32" r="30" fill="#5a9fd4" />
+            {/* Closed eyes — relaxed arcs */}
+            <path d="M21 28 Q24 24 27 28" stroke="#0f0f0f" strokeWidth="2.2" strokeLinecap="round" fill="none" />
+            <path d="M37 28 Q40 24 43 28" stroke="#0f0f0f" strokeWidth="2.2" strokeLinecap="round" fill="none" />
+            {/* Gentle smile */}
+            <path d="M22 38 Q32 46 42 38" stroke="#0f0f0f" strokeWidth="2.2" strokeLinecap="round" fill="none" />
+          </svg>
+        ) : (
+          <span className="text-xs md:text-sm font-semibold tracking-tight text-white/90">
+            {centerLabel}
+          </span>
+        )}
       </div>
 
       {/* Orbit rings + items */}
