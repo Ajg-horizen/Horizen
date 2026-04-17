@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useRive, useStateMachineInput, Layout, Fit, Alignment } from "@rive-app/react-canvas";
+import { useRive, Layout, Fit, Alignment } from "@rive-app/react-canvas";
 
 /* ── Emotion mapping ─────────────────────────────────────────────── */
 
@@ -69,7 +69,10 @@ function RiveEmotion({
   useEffect(() => {
     if (!crop || !rive) return;
     try {
-      const ab = (rive as any).artboard;
+      const ab = (rive as unknown as { artboard: {
+        textValueRunCount: () => number;
+        textValueRunByIndex: (i: number) => { text: string };
+      } }).artboard;
       for (let i = 0; i < ab.textValueRunCount(); i++) {
         ab.textValueRunByIndex(i).text = " ";
       }
@@ -125,7 +128,10 @@ export default function BrandFigure() {
       return () => { clearTimeout(fadeOut); clearTimeout(bounceEnd); };
     }
     if (!isPerfect) {
-      setDelayedPerfect(false);
+      // Defer to next tick to avoid cascading renders
+      const t = setTimeout(() => setDelayedPerfect(false), 0);
+      prevPerfectRef.current = isPerfect;
+      return () => clearTimeout(t);
     }
     prevPerfectRef.current = isPerfect;
   }, [isPerfect]);

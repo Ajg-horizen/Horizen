@@ -123,7 +123,7 @@ export const brandingLogo: ServicePage = {
       stickyGroup: "brandStack",
       eyebrow: "Processen",
       heading: "Fra indsigt til identitet",
-      body: "Vi bygger ikke brands ud fra mavefornemmelse. Hvert valg er forankret i research, markedsforståelse og en klar strategi.",
+      body: "Vi tager jer igennem fire trin. Hvert trin bygger på det forrige, og I er med hele vejen — så det endelige resultat føles lige så meget jeres som vores.",
       steps: [
         {
           step: "01",
@@ -151,9 +151,9 @@ export const brandingLogo: ServicePage = {
         },
         {
           step: "04",
-          title: "Brandguide & aktivering",
+          title: "Aktivering & implementering",
           description:
-            "Alt samlet i en dokumenteret guide med regler, eksempler og templates. Klar til at blive brugt — af jer, jeres team eller jeres samarbejdspartnere.",
+            "Et brand lever ikke i en PDF. Vi sikrer at identiteten tages i brug — internt i teamet og eksternt på alle touchpoints. I får alt værktøjet I skal bruge: brandguide, templates, eksempler. Men vigtigst: en fælles forståelse af hvorfor brandet er som det er.",
           icon: FileTextIcon,
           accent: "#00b67a",
         },
@@ -164,15 +164,15 @@ export const brandingLogo: ServicePage = {
       id: "leverancer",
       eyebrow: "Hvad du får",
       heading: ["Alt fra strategi", "til færdigt brand"],
-      body: "Et brand er et system — ikke en enkelt fil. Vi leverer alle de dele der skal til for at identiteten fungerer i virkeligheden, ikke kun i en præsentation.",
+      body: "Et brand er mere end en fil, en guide eller et logo. Vi leverer både det synlige — og det der får brandet til at leve internt. Fra strategi og værdier til håndgribelige værktøjer I kan bruge fra dag ét.",
       items: [
-        { icon: SearchIcon, text: "Konkurrentanalyse & positionering", bg: "bg-[#e4e8f0]", fg: "text-[#2a3550]" },
+        { icon: SearchIcon, text: "Brandløfte & positionering", bg: "bg-[#e4e8f0]", fg: "text-[#2a3550]" },
         { icon: TargetIcon, text: "Brandstrategi & værdier", bg: "bg-[#fce8db]", fg: "text-[#6b3a1f]" },
         { icon: PenToolIcon, text: "Logodesign — primær + varianter", bg: "bg-[#e0eeec]", fg: "text-[#1f4a42]" },
         { icon: PaletteIcon, text: "Farvepalet & typografisystem", bg: "bg-[#f0ece4]", fg: "text-[#5a4a2d]" },
         { icon: TypeIcon, text: "Tone of voice & sprogretningslinjer", bg: "bg-[#e8f0e4]", fg: "text-[#2d4a28]" },
         { icon: GridIcon, text: "Ikonografi & billedstil", bg: "bg-[#ebe4f0]", fg: "text-[#3d2a50]" },
-        { icon: LayoutIcon, text: "Templates til print & digital", bg: "bg-[#e4e8f0]", fg: "text-[#2a3550]" },
+        { icon: LayoutIcon, text: "Intern brand-workshop & onboarding", bg: "bg-[#e4e8f0]", fg: "text-[#2a3550]" },
         { icon: FileTextIcon, text: "Komplet brandguide (PDF + Figma)", bg: "bg-[#2a2a2a]", fg: "text-[#f5f5f0]" },
       ],
     },
