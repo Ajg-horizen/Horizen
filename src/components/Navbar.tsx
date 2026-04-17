@@ -22,23 +22,43 @@ function ListItem({
   children,
   href,
   icon: Icon,
+  badge,
 }: {
   title: string;
   children: React.ReactNode;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
+  badge?: string;
 }) {
+  const content = (
+    <>
+      <Icon className="size-4 shrink-0 text-muted" />
+      <div>
+        <div className="text-sm font-medium leading-none">{title}</div>
+        {badge ? (
+          <span className="mt-1.5 inline-flex items-center rounded-full border border-foreground/15 px-2 py-0.5 text-[10px] font-medium text-muted">
+            {badge}
+          </span>
+        ) : (
+          <p className="mt-1 text-xs text-muted line-clamp-1">{children}</p>
+        )}
+      </div>
+    </>
+  );
+
   return (
     <li>
-      <NavigationMenuLink asChild>
-        <Link href={href} className="flex-row items-center gap-3">
-          <Icon className="size-4 shrink-0 text-muted" />
-          <div>
-            <div className="text-sm font-medium leading-none">{title}</div>
-            <p className="mt-1 text-xs text-muted line-clamp-1">{children}</p>
-          </div>
-        </Link>
-      </NavigationMenuLink>
+      {badge ? (
+        <div className="flex flex-row items-center gap-3 rounded-md p-3 cursor-not-allowed opacity-60 select-none" aria-disabled="true">
+          {content}
+        </div>
+      ) : (
+        <NavigationMenuLink asChild>
+          <Link href={href} className="flex-row items-center gap-3">
+            {content}
+          </Link>
+        </NavigationMenuLink>
+      )}
     </li>
   );
 }
@@ -100,6 +120,7 @@ export default function Navbar({ alwaysVisible = false }: { alwaysVisible?: bool
                           title={item.title}
                           href={item.href}
                           icon={item.icon}
+                          badge={item.badge}
                         >
                           {item.description}
                         </ListItem>
@@ -118,6 +139,7 @@ export default function Navbar({ alwaysVisible = false }: { alwaysVisible?: bool
                           title={item.title}
                           href={item.href}
                           icon={item.icon}
+                          badge={item.badge}
                         >
                           {item.description}
                         </ListItem>
@@ -129,13 +151,14 @@ export default function Navbar({ alwaysVisible = false }: { alwaysVisible?: bool
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>AI</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[420px] gap-1 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    <ul className="grid w-[260px] gap-1">
                       {ai.map((item) => (
                         <ListItem
                           key={item.href}
                           title={item.title}
                           href={item.href}
                           icon={item.icon}
+                          badge={item.badge}
                         >
                           {item.description}
                         </ListItem>
@@ -154,6 +177,7 @@ export default function Navbar({ alwaysVisible = false }: { alwaysVisible?: bool
                           title={item.title}
                           href={item.href}
                           icon={item.icon}
+                          badge={item.badge}
                         >
                           {item.description}
                         </ListItem>

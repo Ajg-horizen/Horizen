@@ -12,16 +12,12 @@ import {
   BarChartIcon,
   BotIcon,
   CpuIcon,
-  MessageSquareIcon,
   WorkflowIcon,
-  ZapIcon,
-  BrainCircuitIcon,
   SearchCheckIcon,
   GraduationCapIcon,
   PlayCircleIcon,
   NewspaperIcon,
   LightbulbIcon,
-  RssIcon,
 } from "lucide-react";
 
 export type NavItem = {
@@ -29,6 +25,7 @@ export type NavItem = {
   description: string;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
+  badge?: string;
 };
 
 export const services: NavItem[] = [
@@ -111,12 +108,6 @@ export const marketing: NavItem[] = [
 
 export const ai: NavItem[] = [
   {
-    title: "AI Chatbots",
-    description: "Intelligente chatbots til kundeservice og salg",
-    href: "/ai/chatbots",
-    icon: MessageSquareIcon,
-  },
-  {
     title: "AI Automatisering",
     description: "Automatiser workflows og processer",
     href: "/ai/automatisering",
@@ -134,18 +125,6 @@ export const ai: NavItem[] = [
     href: "/ai/assistenter",
     icon: BotIcon,
   },
-  {
-    title: "AI Strategi",
-    description: "Rådgivning og roadmap for AI-adoption",
-    href: "/ai/strategi",
-    icon: BrainCircuitIcon,
-  },
-  {
-    title: "AI-drevet Indhold",
-    description: "Skalér content-produktion med AI",
-    href: "/ai/indhold",
-    icon: ZapIcon,
-  },
 ];
 
 export const resources: NavItem[] = [
@@ -154,12 +133,7 @@ export const resources: NavItem[] = [
     description: "Lær webdesign, SEO og branding",
     href: "/ressourcer/kurser",
     icon: GraduationCapIcon,
-  },
-  {
-    title: "AI for Virksomheder",
-    description: "Forstå og udnyt AI i din forretning",
-    href: "/ressourcer/ai-kursus",
-    icon: BrainCircuitIcon,
+    badge: "Kommer snart",
   },
   {
     title: "Blog & Nyheder",
@@ -170,20 +144,16 @@ export const resources: NavItem[] = [
   {
     title: "Tips & Tricks",
     description: "Praktiske råd til din digitale strategi",
-    href: "/blog/tips-og-tricks",
+    href: "/ressourcer/tips-og-tricks",
     icon: LightbulbIcon,
+    badge: "Kommer snart",
   },
   {
     title: "Video Tutorials",
     description: "On-demand guides og walkthroughs",
     href: "/ressourcer/video-tutorials",
     icon: PlayCircleIcon,
-  },
-  {
-    title: "Nyhedsbrev",
-    description: "Få inspiration direkte i indbakken",
-    href: "/nyhedsbrev",
-    icon: RssIcon,
+    badge: "Kommer snart",
   },
 ];
 
