@@ -112,18 +112,21 @@ export const ai: NavItem[] = [
     description: "Automatiser workflows og processer",
     href: "/ai/automatisering",
     icon: WorkflowIcon,
+    badge: "Kommer snart",
   },
   {
     title: "AI Integration",
     description: "Integrer AI i dine eksisterende systemer",
     href: "/ai/integration",
     icon: CpuIcon,
+    badge: "Kommer snart",
   },
   {
     title: "AI Assistenter",
     description: "AI-assistenter bygget til din virksomhed",
     href: "/ai/assistenter",
     icon: BotIcon,
+    badge: "Kommer snart",
   },
 ];
 
