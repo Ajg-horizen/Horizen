@@ -187,12 +187,12 @@ export default function Navbar({ alwaysVisible = false }: { alwaysVisible?: bool
                 </NavigationMenuItem>
 
                 <NavigationMenuItem>
-                  <NavigationMenuLink
-                    asChild
-                    className={navigationMenuTriggerStyle()}
+                  <span
+                    className={`${navigationMenuTriggerStyle()} cursor-not-allowed opacity-50 select-none`}
+                    aria-disabled="true"
                   >
-                    <Link href="/om-os">Om os</Link>
-                  </NavigationMenuLink>
+                    Om os
+                  </span>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>

@@ -147,16 +147,31 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                         >
                           {category.items.map((item: NavItem) => (
                             <motion.div key={item.href} variants={itemVariants}>
-                              <Link
-                                href={item.href}
-                                onClick={handleLinkClick}
-                                className="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-200 hover:bg-foreground/[0.03]"
-                              >
-                                <item.icon className="size-4 shrink-0 text-muted" />
-                                <span className="text-sm font-medium">
-                                  {item.title}
-                                </span>
-                              </Link>
+                              {item.badge ? (
+                                <div
+                                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 cursor-not-allowed opacity-60 select-none"
+                                  aria-disabled="true"
+                                >
+                                  <item.icon className="size-4 shrink-0 text-muted" />
+                                  <span className="text-sm font-medium">
+                                    {item.title}
+                                  </span>
+                                  <span className="ml-auto inline-flex items-center rounded-full border border-foreground/15 px-2 py-0.5 text-[10px] font-medium text-muted">
+                                    {item.badge}
+                                  </span>
+                                </div>
+                              ) : (
+                                <Link
+                                  href={item.href}
+                                  onClick={handleLinkClick}
+                                  className="flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors duration-200 hover:bg-foreground/[0.03]"
+                                >
+                                  <item.icon className="size-4 shrink-0 text-muted" />
+                                  <span className="text-sm font-medium">
+                                    {item.title}
+                                  </span>
+                                </Link>
+                              )}
                             </motion.div>
                           ))}
                         </motion.div>
@@ -167,13 +182,12 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
 
                 {/* Direct links */}
                 <div className="border-t border-foreground/[0.06] pt-2">
-                  <Link
-                    href="/om-os"
-                    onClick={handleLinkClick}
-                    className="flex items-center py-4 text-lg font-semibold tracking-tight"
+                  <div
+                    className="flex items-center py-4 text-lg font-semibold tracking-tight cursor-not-allowed opacity-50 select-none"
+                    aria-disabled="true"
                   >
                     Om os
-                  </Link>
+                  </div>
                 </div>
               </nav>
             </div>

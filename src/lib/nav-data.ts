@@ -52,18 +52,21 @@ export const services: NavItem[] = [
     description: "Print, digital og social kommunikation",
     href: "/services/grafisk-design",
     icon: PaletteIcon,
+    badge: "Kommer snart",
   },
   {
     title: "Webshop",
     description: "Online butikker der sælger",
     href: "/services/webshop",
     icon: ShoppingCartIcon,
+    badge: "Kommer snart",
   },
   {
     title: "WordPress",
     description: "Fleksible CMS-løsninger du selv kan redigere",
     href: "/services/wordpress",
     icon: LayoutIcon,
+    badge: "Kommer snart",
   },
 ];
 
@@ -73,36 +76,42 @@ export const marketing: NavItem[] = [
     description: "Målrettet annoncering der rammer",
     href: "/marketing/google-ads",
     icon: TargetIcon,
+    badge: "Kommer snart",
   },
   {
     title: "SEO",
     description: "Synlighed i søgeresultater",
     href: "/marketing/seo",
     icon: SearchIcon,
+    badge: "Kommer snart",
   },
   {
     title: "AI Search (GEO/AIO)",
     description: "Optimering til AI-drevne søgemaskiner",
     href: "/marketing/ai-search-optimization",
     icon: SearchCheckIcon,
+    badge: "Kommer snart",
   },
   {
     title: "Social Media",
     description: "Strategi og indhold til sociale medier",
     href: "/marketing/social-media",
     icon: ShareIcon,
+    badge: "Kommer snart",
   },
   {
     title: "Email Marketing",
     description: "Nyhedsbreve der konverterer",
     href: "/marketing/email-marketing",
     icon: MailIcon,
+    badge: "Kommer snart",
   },
   {
     title: "Analytics & Tracking",
     description: "Data-drevet optimering",
     href: "/marketing/analytics",
     icon: BarChartIcon,
+    badge: "Kommer snart",
   },
 ];
 
