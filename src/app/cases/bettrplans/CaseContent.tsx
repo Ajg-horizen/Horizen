@@ -12,6 +12,7 @@ import {
   BrushIcon,
   PaletteIcon,
   TargetIcon,
+  CheckIcon,
 } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -19,15 +20,17 @@ import Footer from "@/components/Footer";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { fadeInUp, fadeUp } from "@/lib/animations";
 import Container from "@/components/Container";
+import { TestimonialBody } from "@/components/FeaturedTestimonial";
+import { getTestimonial } from "@/lib/testimonials";
 
 const project = {
-  title: "Seitz",
-  category: "Branding · Webdesign · Google Ads",
-  year: "2024",
-  client: "Seitz",
-  image: "/cases/Case-image.webp",
+  title: "BettrPlans",
+  category: "Branding · Webdesign · Interiør",
+  year: "2023",
+  client: "BettrPlans",
+  image: "/cases/BettrPlans-Case-Image-02.webp",
   description:
-    "En komplet digital transformation — ny visuel identitet, moderne hjemmeside og en målrettet digital strategi der har tredoblet kundeengagementet.",
+    "Et nyt brand og en platform, der gør indretning af hjemmet mere overskueligt — fra første idé til konkret beslutning.",
   team: [
     {
       name: "José",
@@ -58,11 +61,13 @@ const project = {
     { name: "Analytics", icon: BarChart3Icon },
     { name: "Branding", icon: PaletteIcon },
   ],
-  stats: [
-    { label: "Konverteringer før", value: "1-2/uge" },
-    { label: "Konverteringer nu", value: "3x mere" },
-    { label: "Omkostning", value: "-40%" },
-    { label: "Leveringstid", value: "5 uger" },
+  deliverables: [
+    "Brugerresearch & målgruppeanalyse",
+    "Brand & visuel identitet",
+    "Logo & ikonsystem",
+    "Webdesign",
+    "Webudvikling",
+    "CMS-opsætning",
   ],
   otherCases: [
     {
@@ -250,7 +255,7 @@ export default function CaseContent() {
           >
             <ScrambleEyebrow>Udfordringen</ScrambleEyebrow>
             <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
-              Tid til en ny retning
+              Fra koncept til konkret produkt
             </h2>
           </motion.div>
           <motion.div
@@ -261,15 +266,15 @@ export default function CaseContent() {
             variants={fadeInUp}
           >
             <p className="text-base text-muted leading-relaxed">
-              Seitz havde i flere år været bundet til en eksisterende
-              leverandør med en løsning der ikke længere matchede virksomhedens
-              ambitioner. Hjemmesiden var forældet, omkostningerne høje, og den
-              digitale tilstedeværelse genererede kun 1-2 henvendelser ugentligt.
+              Stifteren henvendte sig med en klar ambition: at gøre
+              indretning af hjemmet mere overskueligt for almindelige
+              mennesker. Idéen og retningen var på plads — men hverken
+              brand, visuel identitet eller platform eksisterede endnu.
             </p>
             <p className="mt-4 text-base text-muted leading-relaxed">
-              Ved skiftet blev den eksisterende hjemmeside desværre fjernet af
-              den tidligere leverandør, hvilket betød at vi skulle bygge alt op
-              fra bunden — en udfordring vi tog imod med åbne arme.
+              Opgaven blev at oversætte konceptet til et konkret produkt
+              — fra grundig brugerforståelse til en lanceret platform,
+              klar til brug fra dag ét.
             </p>
           </motion.div>
         </div>
@@ -288,7 +293,7 @@ export default function CaseContent() {
           >
             <ScrambleEyebrow>{"Løsningen"}</ScrambleEyebrow>
             <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
-              En helt ny digital identitet
+              Hele paletten i én leverance
             </h2>
           </motion.div>
           <motion.div
@@ -299,59 +304,22 @@ export default function CaseContent() {
             variants={fadeInUp}
           >
             <p className="text-base text-muted leading-relaxed">
-              Vi udviklede en komplet ny visuel identitet og byggede en moderne
-              hjemmeside i et system kunden selv ejer og har fuld kontrol over.
-              Løsningen er hurtigere, mere fleksibel og væsentligt mere
-              omkostningseffektiv end den tidligere.
+              Vi indledte med at kortlægge målgruppen og kerneopgaven,
+              og udviklede derfra et komplet brand: navnunivers, logo,
+              visuel identitet og tone — forankret i en fælles vision om
+              et roligere og mere overskueligt indretningsforløb.
             </p>
             <p className="mt-4 text-base text-muted leading-relaxed">
-              Vi tilrettelagde en målrettet Google Ads-strategi og redesignede
-              brugeroplevelsen med fokus på konvertering og troværdighed.
-              Målet var at give Seitz den professionelle digitale
-              tilstedeværelse som kvaliteten af deres håndværk fortjener.
+              Herefter byggede vi platformen — webdesign, udvikling og et
+              CMS, kunden selv kunne arbejde i. End-to-end, uden eksterne
+              mellemled.
             </p>
           </motion.div>
         </div>
         </Container>
       </section>
 
-      {/* Resultater */}
-      <Container as="section" size="site" className="py-24">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          custom={0}
-          variants={fadeInUp}
-          className="text-center mb-16"
-        >
-          <ScrambleEyebrow>Resultater</ScrambleEyebrow>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
-            Tal der taler
-          </h2>
-        </motion.div>
-
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          {project.stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              custom={i}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              variants={fadeInUp}
-              className="text-center"
-            >
-              <p className="text-3xl font-bold tracking-tight md:text-4xl">
-                {stat.value}
-              </p>
-              <p className="mt-2 text-sm text-muted">{stat.label}</p>
-            </motion.div>
-          ))}
-        </div>
-      </Container>
-
-      {/* Performance */}
+      {/* Leverancer */}
       <section
         className="bg-[#0f0f0f] text-[#f5f5f0]"
         style={{ boxShadow: "0 0 0 100vmax #0f0f0f", clipPath: "inset(0 -100vmax)" }}
@@ -366,31 +334,16 @@ export default function CaseContent() {
             variants={fadeInUp}
           >
             <ScrambleEyebrow className="text-xs font-medium tracking-[0.3em] text-white/40 uppercase">
-              Performance
+              Leverancer
             </ScrambleEyebrow>
             <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
-              3x engagement
+              Fra idé til lanceret platform
             </h2>
             <p className="mt-4 text-white/60 leading-relaxed">
-              Med en moderne hjemmeside og en velstruktureret digital
-              strategi gik Seitz fra et par ugentlige
-              henvendelser til et stabilt og voksende kundeflow — med
-              lavere omkostninger end tidligere.
+              Kunden bragte idéen og ambitionen. Vi leverede alt det
+              øvrige — fra indledende brugerinterviews til en lanceret
+              platform. End-to-end, uden eksterne mellemled.
             </p>
-            <div className="mt-8 flex gap-8">
-              <div>
-                <p className="text-2xl font-bold">3x</p>
-                <p className="text-xs text-white/40 mt-1">Mere engagement</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold">-40%</p>
-                <p className="text-xs text-white/40 mt-1">Lavere omkostning</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold">1.4s</p>
-                <p className="text-xs text-white/40 mt-1">Load time</p>
-              </div>
-            </div>
 
             <motion.div
               custom={1.2}
@@ -420,99 +373,43 @@ export default function CaseContent() {
             <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] p-6 md:p-8">
               <div className="flex items-center justify-between mb-8">
                 <div>
-                  <p className="text-xs text-white/40 uppercase tracking-wider">Henvendelser / uge</p>
-                  <p className="text-xl font-bold mt-1">Konverteringer</p>
+                  <p className="text-xs text-white/40 uppercase tracking-wider">Komplet leverance</p>
+                  <p className="text-xl font-bold mt-1">Det vi byggede</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="h-2 w-2 rounded-full bg-emerald-400" />
-                  <span className="text-xs text-white/40">3x stigning</span>
+                  <span className="text-xs text-white/40">End-to-end</span>
                 </div>
               </div>
 
-              {/* Before/After bars */}
-              <div className="space-y-6">
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-white/40">{"Før — Tidligere løsning"}</span>
-                    <span className="text-sm font-bold text-white/60">1-2 / uge</span>
-                  </div>
-                  <div className="h-10 w-full rounded-lg bg-white/[0.06] overflow-hidden">
-                    <motion.div
-                      className="h-full rounded-lg bg-white/20"
-                      initial={{ width: 0 }}
-                      whileInView={{ width: "33%" }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-white/40">{"Efter — Horizen"}</span>
-                    <span className="text-sm font-bold text-emerald-400">6-8 / uge</span>
-                  </div>
-                  <div className="h-10 w-full rounded-lg bg-white/[0.06] overflow-hidden">
-                    <motion.div
-                      className="h-full rounded-lg bg-emerald-400"
-                      initial={{ width: 0 }}
-                      whileInView={{ width: "100%" }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-                    />
-                  </div>
-                </div>
-
-                {/* Summary */}
-                <motion.div
-                  className="flex items-center justify-between pt-4 border-t border-white/[0.06]"
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 1.8, duration: 0.6 }}
-                >
-                  <p className="text-sm text-white/60">
-                    <span className="font-bold text-emerald-400">3x flere henvendelser</span> med lavere omkostning
-                  </p>
-                  <p className="text-sm font-bold text-emerald-400">-40% pris</p>
-                </motion.div>
-              </div>
+              <ul className="space-y-3">
+                {project.deliverables.map((item, i) => (
+                  <motion.li
+                    key={item}
+                    initial={{ opacity: 0, x: -12 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 + i * 0.08, duration: 0.5, ease: "easeOut" }}
+                    className="flex items-center gap-3 rounded-lg border border-white/[0.04] bg-white/[0.02] px-4 py-3"
+                  >
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-400/15">
+                      <CheckIcon className="h-3.5 w-3.5 text-emerald-400" />
+                    </span>
+                    <span className="text-sm text-white/80">{item}</span>
+                  </motion.li>
+                ))}
+              </ul>
             </div>
           </motion.div>
         </div>
         </Container>
       </section>
 
-      {/* Kundecitat */}
+      {/* Kundecitat — single source fra testimonials.ts */}
       <Container as="section" size="site" className="py-24 border-t border-foreground/[0.06]">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          custom={0}
-          variants={fadeInUp}
-          className="max-w-3xl mx-auto text-center"
-        >
-          <div className="flex justify-center gap-0.5 mb-8">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div
-                key={i}
-                className="flex h-6 w-6 items-center justify-center bg-[#00b67a]"
-              >
-                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-white">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-              </div>
-            ))}
-          </div>
-          <blockquote className="text-2xl md:text-3xl font-light leading-relaxed tracking-tight">
-            &ldquo;Vi har fået et helt nyt udtryk der matcher den kvalitet vi leverer. Kunderne bemærker det med det samme.&rdquo;
-          </blockquote>
-          <div className="mt-8">
-            <p className="font-semibold">Seitz</p>
-            <p className="text-sm text-muted">Malerfirma, København</p>
-          </div>
-        </motion.div>
+        <TestimonialBody
+          testimonial={getTestimonial("saxo-bettrplans")}
+        />
       </Container>
 
       {/* Tools & Teknologier */}

@@ -65,7 +65,9 @@ export default function Hero() {
           className="max-w-4xl text-left text-4xl font-black uppercase leading-[1.1] tracking-tight sm:text-center sm:text-5xl md:text-6xl lg:text-7xl"
         >
           SOLUTIONS CRAFTED{" "}
-          WITH REAL <TextRoll className="cursor-pointer">EXPERIENCE</TextRoll>
+          WITH REAL{" "}
+          <span className="lg:hidden">EXPERIENCE</span>
+          <TextRoll className="hidden lg:inline-block cursor-pointer">EXPERIENCE</TextRoll>
         </motion.h1>
 
         {/* Body copy */}

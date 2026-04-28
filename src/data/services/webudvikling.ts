@@ -178,11 +178,11 @@ export const webudvikling: ServicePage = {
       heading: "Se det i praksis",
       cases: [
         {
-          title: "Seitz",
-          href: "/cases/malerfirma-seitz",
-          image: "/cases/Case-image.webp",
-          category: "Branding · Webdesign",
-          result: "3x flere henvendelser",
+          title: "BettrPlans",
+          href: "/cases/bettrplans",
+          image: "/cases/BettrPlans-Case-Image-01.webp",
+          category: "Webdesign · Interiør",
+          result: "End-to-end leverance",
         },
         {
           title: "OD Pro",

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import CaseContent from "./CaseContent";
 
 export const metadata: Metadata = {
-  title: "Seitz — Branding & Webdesign | Horizen",
+  title: "BettrPlans — Webdesign & Interiør | Horizen",
   description:
-    "Komplet rebranding og ny hjemmeside for Seitz. 3x engagement og lavere omkostninger.",
+    "Ny hjemmeside for BettrPlans — overblik der hjælper folk med at designe bedre interiører.",
 };
 
 export default function Page() {

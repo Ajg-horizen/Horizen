@@ -171,10 +171,10 @@ export const uiUxDesign: ServicePage = {
       heading: "Designet i praksis",
       cases: [
         {
-          title: "Seitz",
-          href: "/cases/malerfirma-seitz",
-          image: "/cases/Case-image.webp",
-          category: "Branding · UI Design",
+          title: "BettrPlans",
+          href: "/cases/bettrplans",
+          image: "/cases/BettrPlans-Case-Image-01.webp",
+          category: "Webdesign · Interiør",
           result: "Klart visuelt sprog",
         },
         {

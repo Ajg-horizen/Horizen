@@ -73,10 +73,10 @@ const project = {
       category: "Webdesign · Udvikling",
     },
     {
-      title: "Seitz",
-      href: "/cases/malerfirma-seitz",
-      image: "/cases/Case-image.webp",
-      category: "Webdesign · Branding",
+      title: "BettrPlans",
+      href: "/cases/bettrplans",
+      image: "/cases/BettrPlans-Case-Image-01.webp",
+      category: "Webdesign · Interiør",
     },
     {
       title: "Never Another",

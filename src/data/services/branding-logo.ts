@@ -186,10 +186,10 @@ export const brandingLogo: ServicePage = {
       heading: "Identitet i praksis",
       cases: [
         {
-          title: "Seitz",
-          href: "/cases/malerfirma-seitz",
-          image: "/cases/Case-image.webp",
-          category: "Branding · Visuel Identitet",
+          title: "BettrPlans",
+          href: "/cases/bettrplans",
+          image: "/cases/BettrPlans-Case-Image-01.webp",
+          category: "Webdesign · Interiør",
           result: "Klart visuelt sprog",
         },
         {

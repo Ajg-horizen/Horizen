@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { ArrowRightIcon } from "lucide-react";
 import { TextScramble } from "@/components/ui/text-scramble";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { fadeInUp } from "@/lib/animations";
@@ -15,13 +17,22 @@ import {
   BarChartIcon,
 } from "lucide-react";
 
-const services = [
+type Service = {
+  icon: typeof LayoutIcon;
+  title: string;
+  description: string;
+  badge: string;
+  href?: string;
+};
+
+const services: Service[] = [
   {
     icon: LayoutIcon,
     title: "Webdesign",
     description:
       "Websites der er gennemtænkte fra struktur til detalje — med fokus på konvertering og brugeroplevelse.",
     badge: "bg-[#e8f0e4] text-[#2d4a28]",
+    href: "/services/webudvikling",
   },
   {
     icon: PenToolIcon,
@@ -29,6 +40,7 @@ const services = [
     description:
       "Interfaces designet med brugeren i centrum. Intuitivt, elegant og funktionelt.",
     badge: "bg-[#fce8db] text-[#6b3a1f]",
+    href: "/services/ui-ux-design",
   },
   {
     icon: PaletteIcon,
@@ -36,6 +48,7 @@ const services = [
     description:
       "Fra logo til komplet visuel identitet — et sammenhængende udtryk der styrker genkendelighed.",
     badge: "bg-[#e4e8f0] text-[#2a3550]",
+    href: "/services/branding-logo",
   },
   {
     icon: SparklesIcon,
@@ -50,6 +63,7 @@ const services = [
     description:
       "Next.js, React, WordPress — moderne teknologi tilpasset dit behov.",
     badge: "bg-[#2a2a2a] text-[#f5f5f0]",
+    href: "/services/webudvikling",
   },
   {
     icon: BarChartIcon,
@@ -61,7 +75,7 @@ const services = [
 ];
 
 
-function ServiceCard({ service, index }: { service: typeof services[0]; index: number }) {
+function ServiceCard({ service, index }: { service: Service; index: number }) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -71,7 +85,7 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
       variants={fadeInUp}
-      className="group rounded-2xl border border-foreground/[0.06] p-8 transition-all duration-300 hover:border-foreground/[0.12] hover:bg-foreground/[0.02]"
+      className="group flex flex-col rounded-2xl border border-foreground/[0.06] p-8 transition-all duration-300 hover:border-foreground/[0.12] hover:bg-foreground/[0.02]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -92,6 +106,22 @@ function ServiceCard({ service, index }: { service: typeof services[0]; index: n
       <p className="mt-2 text-base leading-relaxed text-muted">
         {service.description}
       </p>
+
+      <div className="mt-6 pt-2">
+        {service.href ? (
+          <Link
+            href={service.href}
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/80 transition-colors duration-300 hover:text-foreground"
+          >
+            Læs mere
+            <ArrowRightIcon className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+          </Link>
+        ) : (
+          <span className="inline-flex items-center rounded-full border border-foreground/[0.08] bg-foreground/[0.02] px-3 py-1 text-xs font-medium text-muted">
+            Kommer snart
+          </span>
+        )}
+      </div>
     </motion.div>
   );
 }

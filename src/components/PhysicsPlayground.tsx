@@ -97,29 +97,37 @@ export default function PhysicsPlayground() {
       });
     });
 
-    // Mouse interaction
-    const mouse = Mouse.create(render.canvas);
-    const mouseConstraint = MouseConstraint.create(engine, {
-      mouse,
-      constraint: {
-        stiffness: 0.2,
-        render: { visible: false },
-      },
-    });
-
-    Composite.add(engine.world, mouseConstraint);
-    render.mouse = mouse;
-
-    // Remove Matter.js scroll capture so page scrolls normally
-    // matter-js attaches these listeners internally but the types don't expose them
-    const mouseWithWheel = mouse as unknown as {
-      mousewheel: EventListener;
-    };
-    mouse.element.removeEventListener("wheel", mouseWithWheel.mousewheel);
-    mouse.element.removeEventListener("DOMMouseScroll", mouseWithWheel.mousewheel);
-
+    // Mouse interaction — kun på desktop (lg+).
+    // På tablet/mobil ville drag-konstrainten fange touch og blokere
+    // sidens scroll, samt give "udstrukne" elementer når en finger
+    // holder fast mens kroppen forsøger at falde.
     const canvas = render.canvas;
     canvas.style.touchAction = "pan-y";
+
+    const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    if (isDesktop) {
+      const mouse = Mouse.create(render.canvas);
+      const mouseConstraint = MouseConstraint.create(engine, {
+        mouse,
+        constraint: {
+          stiffness: 0.2,
+          render: { visible: false },
+        },
+      });
+
+      Composite.add(engine.world, mouseConstraint);
+      render.mouse = mouse;
+
+      // Remove Matter.js scroll capture so page scrolls normally
+      // matter-js attaches these listeners internally but the types don't expose them
+      const mouseWithWheel = mouse as unknown as {
+        mousewheel: EventListener;
+      };
+      mouse.element.removeEventListener("wheel", mouseWithWheel.mousewheel);
+      mouse.element.removeEventListener("DOMMouseScroll", mouseWithWheel.mousewheel);
+    } else {
+      canvas.style.pointerEvents = "none";
+    }
 
     // Custom text rendering
     Events.on(render, "afterRender", () => {

@@ -44,6 +44,18 @@ export const testimonials: Testimonial[] = [
     featured: true,
   },
   {
+    id: "saxo-bettrplans",
+    quote:
+      "Jeg har haft en fantastisk oplevelse med teamet hos Horizen! Dette var min første hjemmeside, men de formåede at guide mig trygt gennem hele processen. Resultatet blev en flot og velfungerende hjemmeside.",
+    rating: 5,
+    author: {
+      name: "Saxo",
+      role: "Stifter",
+      company: "BettrPlans",
+    },
+    source: "trustpilot",
+  },
+  {
     id: "mikkel-a",
     quote:
       "Horizen leverede langt over forventning. Vores nye site konverterer markant bedre end det gamle.",
@@ -73,14 +85,6 @@ export const testimonials: Testimonial[] = [
       "Et bureau der faktisk lytter og eksekverer. Samarbejdet har været fantastisk fra start til slut.",
     rating: 5,
     author: { name: "Sofie H.", location: "DK" },
-    source: "trustpilot",
-  },
-  {
-    id: "camilla-r",
-    quote:
-      "Responsivt, gennemtænkt og smukt. Vores kunder kommenterer konstant på hvor godt sitet ser ud.",
-    rating: 5,
-    author: { name: "Camilla R.", location: "DK" },
     source: "trustpilot",
   },
 ];
