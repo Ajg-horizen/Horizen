@@ -31,7 +31,7 @@ export default function IkkeWordPressPage() {
             foretrækker værktøjer, der kræver en højere teknisk forståelse at
             arbejde i. Men til gengæld giver det os den frihed, en opinionated
             builder og dårlig CMS-struktur aldrig nogensinde ville kunne give
-            os — friheden til at bygge præcis, hvad vi har lyst til.
+            os — friheden til at bygge præcis, hvad du har brug for.
           </p>
           <p>
             Har du fået bygget en løsning i en af ovenstående og er træt af
