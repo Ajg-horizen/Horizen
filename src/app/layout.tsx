@@ -5,6 +5,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import GlobalCursor from "@/components/GlobalCursor";
 import BackToTopButton from "@/components/BackToTopButton";
 import CalEmbed from "@/components/CalEmbed";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -26,6 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="da" className={`${inter.variable} h-full antialiased`}>
+      <GoogleTagManager gtmId="GTM-WFZ26CS4" />
       <body className="min-h-full flex flex-col">
         <a href="#main" className="skip-link">
           Spring til indhold
@@ -35,6 +37,7 @@ export default function RootLayout({
         {children}
         <BackToTopButton />
         <CalEmbed />
+        <GoogleAnalytics gaId="G-HC4NR97H1P" />
       </body>
     </html>
   );
