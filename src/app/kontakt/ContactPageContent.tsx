@@ -188,10 +188,6 @@ export default function ContactPageContent() {
                   <p className="text-sm text-muted-foreground">
                     Digital Designer & Founder
                   </p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Skriv et par linjer — jeg vender tilbage inden for én
-                    arbejdsdag.
-                  </p>
                 </div>
               </div>
 
