@@ -134,7 +134,7 @@ export default function CaseContent() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="absolute bottom-12 left-[calc(1.25rem+1.5rem)] right-[calc(1.25rem+1.5rem)] md:left-[calc(1.25rem+2.5rem)] md:right-auto lg:left-[calc(1.25rem+4rem)] max-w-2xl"
+            className="absolute bottom-32 md:bottom-12 left-[calc(1.25rem+1.5rem)] right-[calc(1.25rem+1.5rem)] md:left-[calc(1.25rem+2.5rem)] md:right-auto lg:left-[calc(1.25rem+4rem)] max-w-2xl"
           >
             <div className="rounded-2xl border border-white/[0.15] bg-white/[0.08] backdrop-blur-2xl backdrop-saturate-150 p-8 shadow-2xl">
               <ScrambleEyebrow className="text-xs font-medium tracking-[0.3em] text-white/60 uppercase">
