@@ -37,8 +37,9 @@ export default function IkkeWordPressPage() {
             begrænsninger.
           </p>
           <p>
-            Sidder du i en lignende situation og kan genkende dig selv, er du
-            altid velkommen til at kontakte os.
+            Har du fået bygget en løsning i en af ovenstående og er træt af
+            begrænsningerne? Vi kigger gerne på den og viser hvordan en
+            moderne React-baseret stack kan løfte den videre.
           </p>
         </div>
 
