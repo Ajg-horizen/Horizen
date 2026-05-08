@@ -56,35 +56,53 @@ export const testimonials: Testimonial[] = [
     source: "trustpilot",
   },
   {
-    id: "mikkel-a",
+    id: "michael-seitz-malerfirma",
     quote:
-      "Horizen leverede langt over forventning. Vores nye site konverterer markant bedre end det gamle.",
+      "Jeg er mega tilfreds med den hjemmeside, jeg har fået lavet af Horizen. Den er blevet super god, jeg har fået designet et unikt logo, og samarbejdet og kommunikationen har været en enestående oplevelse. Vil 100% anbefale Horizen videre.",
     rating: 5,
-    author: { name: "Mikkel A.", location: "DK" },
+    author: {
+      name: "Michael Seitz",
+      role: "Malermester",
+      company: "Malerfirma Seitz",
+    },
     source: "trustpilot",
   },
   {
-    id: "line-k",
+    id: "ana-fajardo",
     quote:
-      "Professionelt, hurtigt og med en ægte forståelse for vores brand. Vi er mere end tilfredse.",
+      "Som en der går op i detaljer og kvalitet, har jeg sat stor pris på samarbejdet med Horizen. De kombinerer faglighed med en afslappet tilgang, hvor tingene bliver gjort ordentligt — uden unødvendig hast. Kan varmt anbefale Horizen til dem, der værdsætter ægte kvalitet.",
     rating: 5,
-    author: { name: "Line K.", location: "DK" },
+    author: { name: "Ana Fajardo" },
     source: "trustpilot",
   },
   {
-    id: "thomas-b",
+    id: "anne-sofie-nordic-influence",
     quote:
-      "De forstår at kombinere design med teknisk kvalitet. Vores loadtid blev halveret efter relanceringen.",
+      "Komplet visuel identitet til min virksomhed hos Horizen — fra første kontakt til færdigt resultat var oplevelsen i top. Ærlig rådgivning, fleksibel og lydhør, professionelt håndværk og fair prissætning. Jeg kommer helt sikkert tilbage med næste projekt.",
     rating: 5,
-    author: { name: "Thomas B.", location: "DK" },
+    author: {
+      name: "Anne Sofie Pedersen",
+      company: "Nordic Influence",
+    },
     source: "trustpilot",
   },
   {
-    id: "sofie-h",
+    id: "ditte-never-another",
     quote:
-      "Et bureau der faktisk lytter og eksekverer. Samarbejdet har været fantastisk fra start til slut.",
+      "Horizen har hjulpet os i NEVER ANOTHER med at skabe vores visuelle udtryk og logo. Engagementet har været tydeligt, og vi har altid kunnet regne med god sparring og vejledning. Hvis du ønsker et bureau, der brænder for det de laver, så anbefaler jeg klart Horizen.",
     rating: 5,
-    author: { name: "Sofie H.", location: "DK" },
+    author: {
+      name: "Ditte Gade Jakobsen",
+      company: "NEVER ANOTHER",
+    },
+    source: "trustpilot",
+  },
+  {
+    id: "nikolaj-lippert",
+    quote:
+      "Rigtig god service! Igennem hele forløbet var José både åben og transparent og havde et rigtig højt niveau af kommunikation. Stor anbefaling herfra!",
+    rating: 5,
+    author: { name: "Nikolaj Dybdal Lippert", location: "DK" },
     source: "trustpilot",
   },
 ];
