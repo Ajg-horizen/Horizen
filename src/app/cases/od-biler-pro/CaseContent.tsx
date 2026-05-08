@@ -143,7 +143,7 @@ export default function CaseContent() {
             initial="hidden"
             animate="visible"
             variants={fadeUp}
-            className="absolute bottom-12 left-6 right-6 md:left-10 md:right-auto lg:left-16 max-w-2xl"
+            className="absolute bottom-12 left-[calc(1.25rem+1.5rem)] right-[calc(1.25rem+1.5rem)] md:left-[calc(1.25rem+2.5rem)] md:right-auto lg:left-[calc(1.25rem+4rem)] max-w-2xl"
           >
             <div className="rounded-2xl border border-white/[0.15] bg-white/[0.08] backdrop-blur-2xl backdrop-saturate-150 p-8 shadow-2xl">
               <ScrambleEyebrow className="text-xs font-medium tracking-[0.3em] text-white/60 uppercase">
@@ -177,7 +177,7 @@ export default function CaseContent() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2.0, duration: 1 }}
-            className="absolute bottom-16 right-8 hidden sm:flex items-center gap-2 md:right-12 lg:right-20"
+            className="absolute bottom-16 right-[calc(1.25rem+1.5rem)] hidden sm:flex items-center gap-2 md:right-[calc(1.25rem+2.5rem)] lg:right-[calc(1.25rem+4rem)]"
           >
           <span
             className="text-xs font-bold tracking-[0.2em] uppercase"
