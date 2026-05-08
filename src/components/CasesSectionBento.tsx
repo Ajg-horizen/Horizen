@@ -59,6 +59,13 @@ const cases = [
 
 // 3-col bento: 2+1 / 1+2 — store og små kasser flettes så rækkerne fyldes uden huller.
 const SPANS = ["md:col-span-2", "md:col-span-1", "md:col-span-1", "md:col-span-2"];
+// Hver 2-col card har 2:1 ratio og hver 1-col har 1:1 — så alle kort i en række har samme højde.
+const ASPECTS = [
+  "md:aspect-[2/1]",
+  "md:aspect-square",
+  "md:aspect-square",
+  "md:aspect-[2/1]",
+];
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -94,7 +101,7 @@ export default function CasesSectionBento() {
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
         {cases.map((c, i) => {
-          const cardClassName = `group relative block h-full min-h-[340px] overflow-hidden rounded-2xl bg-foreground/[0.04] md:min-h-[420px] xl:min-h-[520px] 2xl:min-h-[620px] ${c.comingSoon ? "cursor-default" : ""}`;
+          const cardClassName = `group relative block h-full min-h-[340px] overflow-hidden rounded-2xl bg-foreground/[0.04] ${ASPECTS[i]} md:min-h-0 ${c.comingSoon ? "cursor-default" : ""}`;
           const cardInner = (
             <>
               <img
