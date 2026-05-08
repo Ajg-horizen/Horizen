@@ -24,6 +24,7 @@ const clientLogos = [
   { src: "/logo/Horizen_Branding_Komunikado.svg", alt: "Komunikado" },
   { src: "/logo/Horizen_Branding_AAEL.svg", alt: "AAEL" },
   { src: "/logo/BettrPlans-logo-01.svg", alt: "BettrPlans" },
+  { src: "/Bomærker/TUG-Bomærke-hvid.svg", alt: "Tandsundhed Uden Grænser" },
 ];
 
 
