@@ -13,11 +13,7 @@ export default function IkkeWordPressPage() {
   return (
     <main className="flex min-h-screen items-center justify-center px-6 py-16">
       <div className="w-full max-w-2xl rounded-3xl border border-foreground/10 bg-foreground/[0.03] p-8 shadow-sm md:p-14">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">
-          wp-admin · 200 OK
-        </p>
-
-        <h1 className="mt-5 text-3xl font-bold tracking-tight md:text-5xl">
+        <h1 className="text-3xl font-bold tracking-tight md:text-5xl">
           Hov, der er vist en der er nysgerrig på, hvordan vi har bygget vores side.
         </h1>
 
