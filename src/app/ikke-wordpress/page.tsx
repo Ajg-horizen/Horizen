@@ -6,9 +6,9 @@ import Container from "@/components/Container";
 import { ArrowRightIcon } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Ikke WordPress — Horizen",
+  title: "Hov! — Horizen",
   description:
-    "Du leder efter WordPress. Den her side er bygget fra bunden i kode.",
+    "Prøv at se, om vi har lavet siden i WordPress eller ej. Vi afslører lidt om vores stack.",
   robots: { index: false, follow: false },
 };
 
@@ -17,39 +17,46 @@ export default function IkkeWordPressPage() {
     <main>
       <Navbar alwaysVisible />
 
-      <Container as="section" size="site" className="py-32 md:py-40">
-        <div className="mx-auto max-w-3xl">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted">
+      <Container as="section" size="site" className="py-24 md:py-32">
+        <div className="mx-auto max-w-2xl rounded-3xl border border-foreground/10 bg-foreground/[0.03] p-8 shadow-sm md:p-14">
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">
             wp-admin · 200 OK
           </p>
 
-          <h1 className="mt-6 text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl">
-            Du leder efter WordPress.
+          <h1 className="mt-5 text-3xl font-bold tracking-tight md:text-5xl">
+            Hov! Prøv at se, om vi har lavet den i WordPress — eller ej?
           </h1>
 
-          <div className="mt-10 space-y-6 text-lg leading-relaxed text-muted-foreground md:text-xl">
+          <div className="mt-8 space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg">
             <p>
-              Tæt på. Siden her er ikke bygget på WordPress, og vi bruger
-              heller ikke YooTheme, WPBakery eller andre page-buildere som
-              mange bureauer læner sig op ad.
+              Vi kan afsløre, at vi muligvis har lavet vores løsning i
+              WordPress. Og måske ikke.
             </p>
             <p>
-              Vi bygger fra bunden i kode, så siden er hurtigere, sikrere og
-              uden et plugin-bundt der trækker den ned. Det er en bevidst
-              beslutning — ikke en mode.
+              Det vi i hvert fald kan afsløre, er at vi hverken har brugt{" "}
+              <strong className="text-foreground">WPBakery</strong>,{" "}
+              <strong className="text-foreground">Divi</strong> eller{" "}
+              <strong className="text-foreground">YooTheme</strong> — fordi vi
+              foretrækker stærkere og mere moderne værktøjer, der ikke er
+              bundet af opinionated design og dårlige strukturer.
             </p>
             <p>
-              Vil du vide hvordan vi har bygget den? Vi sætter gerne en gratis
-              konsultation op og fortæller om det.
+              Vi bygger alle vores løsninger i et moderne stack, så de er
+              fremtidssikrede.
+            </p>
+            <p>
+              Har du brug for en konsulent eller bare en snak, tager vi altid
+              et uforpligtende møde, så du kan lære hvordan du får et bedre
+              stack end de gamle webløsninger, vi lige har nævnt.
             </p>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center gap-4">
+          <div className="mt-10 flex flex-wrap items-center gap-4">
             <Link
               href="/#contact"
               className="group inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-transform duration-300 hover:-translate-y-0.5"
             >
-              Book en samtale
+              Book et uforpligtende møde
               <ArrowRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
             <a
