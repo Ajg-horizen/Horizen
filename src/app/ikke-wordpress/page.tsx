@@ -32,8 +32,8 @@ export default function IkkeWordPressPage() {
             <strong className="text-foreground">Divi</strong>,{" "}
             <strong className="text-foreground">WPBakery</strong> eller{" "}
             <strong className="text-foreground">YooTheme</strong>, da vi
-            foretrækker stærke, moderne stacks bygget på et stærkere fundament
-            — frem for opinionated design og dårlige CMS-strukturer fyldt med
+            foretrækker værktøjer man faktisk kan bygge med — frem for
+            opinionated design og dårlige CMS-strukturer fyldt med
             begrænsninger.
           </p>
           <p>
