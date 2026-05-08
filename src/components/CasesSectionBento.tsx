@@ -11,6 +11,7 @@ const cases = [
     title: "BettrPlans",
     subtitle: "Webdesign · Branding · Visuel identitet",
     image: "/cases/BettrPlans-Case-Image-01.webp",
+    logo: "/Bomærker/BettrPlans-Bomærke-hvid.svg",
     href: "/cases/bettrplans",
     team: [
       { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
@@ -22,6 +23,7 @@ const cases = [
     title: "OD Pro",
     subtitle: "Webdesign · Udvikling",
     image: "/cases/OD-Cases-image-car.webp",
+    logo: "/Bomærker/Bomærke-OD-biler.svg",
     href: "/cases/od-biler-pro",
     team: [
       { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
@@ -33,6 +35,7 @@ const cases = [
     title: "Tandsundhed Uden Grænser",
     subtitle: "Webdesign · CMS · Udvikling",
     image: "/cases/Tand-sundhed-hero-image.webp",
+    logo: "/Bomærker/TUG-Bomærke-hvid.svg",
     href: "/cases/tandsundhed-uden-graenser",
     team: [
       { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
@@ -142,9 +145,18 @@ export default function CasesSectionBento() {
                 <div className="flex min-w-0 items-center gap-3">
                   {/* Logo placeholder — fyldes med kundens bogmærke senere */}
                   <div className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/10 backdrop-blur-md">
-                    <span className="text-xs font-semibold text-white/80">
-                      {c.title.charAt(0)}
-                    </span>
+                    {c.logo ? (
+                      <img
+                        src={c.logo}
+                        alt={`${c.title} bomærke`}
+                        loading="lazy"
+                        className="size-7 object-contain"
+                      />
+                    ) : (
+                      <span className="text-xs font-semibold text-white/80">
+                        {c.title.charAt(0)}
+                      </span>
+                    )}
                   </div>
                   <div className="min-w-0">
                     <h3 className="truncate text-base font-semibold text-white md:text-lg">
