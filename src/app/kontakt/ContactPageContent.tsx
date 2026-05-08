@@ -151,6 +151,28 @@ export default function ContactPageContent() {
             className="lg:col-span-2"
           >
             <div className="rounded-3xl border border-foreground/10 bg-foreground/[0.02] p-8 md:p-10">
+              <div className="mb-8 flex flex-col items-start gap-2">
+                <div className="flex -space-x-3">
+                  {[
+                    { src: "/staff/staff-jose-digital-design.jpg", name: "José" },
+                    { src: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp", name: "Anne-Sofie" },
+                    { src: "/staff/staff-Web-udvikler-designer-Johanne-horizen.avif", name: "Johanne" },
+                    { src: "/staff/staff-kommunikation-og-salg-Ludvig.webp", name: "Ludvig" },
+                    { src: "/staff/staff-.Sebastian-Meta-facebook.jpg", name: "Sebastian" },
+                    { src: "/staff/Kontor-Hund-Gurli-Web-udvikler.webp", name: "Gurli" },
+                  ].map((member) => (
+                    <img
+                      key={member.name}
+                      src={member.src}
+                      alt={member.name}
+                      loading="lazy"
+                      className="h-10 w-10 rounded-full border-2 border-background object-cover"
+                    />
+                  ))}
+                </div>
+                <span className="text-xs text-muted">Teamet bag Horizen</span>
+              </div>
+
               <h2 className="text-xl font-semibold">Eller skriv direkte</h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 Ingen formular nødvendig — du kan også fange os her.
