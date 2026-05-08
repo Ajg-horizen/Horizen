@@ -45,14 +45,14 @@ const cases = [
     ],
   },
   {
-    title: "Never Another",
-    subtitle: "Branding · Webdesign",
-    image: "/cases/NA_Home5_mobile.webp",
-    href: "/cases/never-another",
+    title: "Ensemble Hermes",
+    subtitle: "Webdesign · UI/UX · Redesign",
+    image: "/cases/Case-Hermes.webp",
+    href: "/cases/ensemble-hermes",
     comingSoon: true,
     team: [
       { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
-      { name: "Sebastian", avatar: "/staff/staff-.Sebastian-Meta-facebook.jpg" },
+      { name: "Anne-Sofie", avatar: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp" },
     ],
   },
 ];
