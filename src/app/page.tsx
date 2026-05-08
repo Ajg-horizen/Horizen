@@ -10,6 +10,7 @@ import TrustpilotSection from "@/components/TrustpilotSection";
 import BentoShowcase from "@/components/BentoShowcase";
 import Container from "@/components/Container";
 import { LogoCloud } from "@/components/ui/logo-cloud-2";
+import { LogoMarquee } from "@/components/ui/logo-marquee";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 
 import Footer from "@/components/Footer";
@@ -39,6 +40,13 @@ export default function Home() {
       <Hero />
 
       <div className="relative z-10 bg-background rounded-t-[2rem] -mt-8 shadow-[0_-20px_60px_rgba(0,0,0,0.04),0_20px_60px_rgba(0,0,0,0.06)]">
+          <Container as="section" size="site" className="pt-20 pb-6">
+            <p className="mb-6 text-center text-xs font-medium uppercase tracking-[0.2em] text-muted">
+              Vores team har arbejdet med
+            </p>
+            <LogoMarquee logos={clientLogos} />
+          </Container>
+
           <CasesSectionBento />
           <PhysicsPlayground />
           <ServicesSection />
