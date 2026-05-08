@@ -71,17 +71,13 @@ export default function BrandBlobs() {
           initial={{ opacity: 0, scale: 0.6 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{
-            duration: 0.6,
-            delay: 0.3 + blob.delay,
-            ease: "easeOut",
-          }}
           animate={{
             x: blob.x,
             y: blob.y,
           }}
-          // @ts-expect-error -- framer-motion transition override for animate
           transition={{
+            opacity: { duration: 0.6, delay: 0.3 + blob.delay, ease: "easeOut" },
+            scale: { duration: 0.6, delay: 0.3 + blob.delay, ease: "easeOut" },
             x: {
               duration: 8 + i * 2,
               repeat: Infinity,
@@ -92,8 +88,6 @@ export default function BrandBlobs() {
               repeat: Infinity,
               ease: "easeInOut",
             },
-            opacity: { duration: 0.6, delay: 0.3 + blob.delay },
-            scale: { duration: 0.6, delay: 0.3 + blob.delay, ease: "easeOut" },
           }}
         >
           <span className="text-white font-bold text-lg md:text-xl drop-shadow-sm">

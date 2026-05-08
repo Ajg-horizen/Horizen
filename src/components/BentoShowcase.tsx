@@ -9,8 +9,6 @@ import {
   SearchIcon,
   BarChart3Icon,
   CheckCircle2Icon,
-  UsersIcon,
-  LayersIcon,
   MousePointerClickIcon,
   PenToolIcon,
   EyeIcon,

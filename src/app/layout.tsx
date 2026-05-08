@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import ScrollToTop from "@/components/ScrollToTop";
 import SmoothScroll from "@/components/SmoothScroll";
-import GlobalCursor from "@/components/GlobalCursor";
 import BackToTopButton from "@/components/BackToTopButton";
 import CalEmbed from "@/components/CalEmbed";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
