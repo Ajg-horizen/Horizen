@@ -23,14 +23,17 @@ export default function IkkeWordPressPage() {
             vores løsning i WordPress.
           </p>
           <p>
-            Men hvad vi i hvert fald kan afsløre, er at vi ikke har brugt
+            Men det vi i hvert fald kan afsløre, er at vi ikke har brugt
             buildere som{" "}
             <strong className="text-foreground">Divi</strong>,{" "}
             <strong className="text-foreground">WPBakery</strong> eller{" "}
-            <strong className="text-foreground">YooTheme</strong>, da vi
-            foretrækker værktøjer man faktisk kan bygge med — frem for
-            opinionated design og dårlige CMS-strukturer fyldt med
-            begrænsninger.
+            <strong className="text-foreground">YooTheme</strong>. Vi
+            foretrækker værktøjer der er teknisk tungere at arbejde i — men
+            til gengæld giver os den frihed, opinionated buildere og dårlige
+            CMS-strukturer aldrig kan.
+          </p>
+          <p>
+            Det kræver et højere teknisk niveau. Det er det værd.
           </p>
           <p>
             Har du fået bygget en løsning i en af ovenstående og er træt af
