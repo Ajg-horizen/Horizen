@@ -6,18 +6,7 @@ import { ArrowRightIcon } from "lucide-react";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import Container from "@/components/Container";
 
-type Case = {
-  title: string;
-  subtitle: string;
-  image?: string;
-  logo?: string;
-  fullLogo?: string;
-  href: string;
-  comingSoon?: boolean;
-  team: { name: string; avatar: string }[];
-};
-
-const cases: Case[] = [
+const cases = [
   {
     title: "BettrPlans",
     subtitle: "Webdesign · Branding · Visuel identitet",
@@ -66,58 +55,10 @@ const cases: Case[] = [
       { name: "Sebastian", avatar: "/staff/staff-.Sebastian-Meta-facebook.jpg" },
     ],
   },
-  {
-    title: "AAEL",
-    subtitle: "Branding · Webdesign",
-    fullLogo: "/logo/Horizen_Branding_AAEL.svg",
-    href: "/cases/aael",
-    comingSoon: true,
-    team: [
-      { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
-    ],
-  },
-  {
-    title: "Komunikado",
-    subtitle: "Branding · Webdesign",
-    fullLogo: "/logo/Horizen_Branding_Komunikado.svg",
-    href: "/cases/komunikado",
-    comingSoon: true,
-    team: [
-      { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
-    ],
-  },
-  {
-    title: "Nordic Influence",
-    subtitle: "Branding · Visuel identitet",
-    fullLogo: "/logo/Horizen_Branding_Nordic.svg",
-    href: "/cases/nordic-influence",
-    comingSoon: true,
-    team: [
-      { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
-      { name: "Anne-Sofie", avatar: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp" },
-    ],
-  },
 ];
 
-// 3-col bento: 1+1+1 / 2+1 / 1+2 — flettes så rækker er fulde uden huller.
-const SPANS = [
-  "md:col-span-1",
-  "md:col-span-1",
-  "md:col-span-1",
-  "md:col-span-2",
-  "md:col-span-1",
-  "md:col-span-1",
-  "md:col-span-2",
-];
-const ASPECTS = [
-  "md:aspect-square",
-  "md:aspect-square",
-  "md:aspect-square",
-  "md:aspect-[2/1]",
-  "md:aspect-square",
-  "md:aspect-square",
-  "md:aspect-[2/1]",
-];
+// 12-col bento "Z"-pattern: 7+5 / 5+7 — visuelt vægtskifte mellem rækkerne.
+const SPANS = ["md:col-span-7", "md:col-span-5", "md:col-span-5", "md:col-span-7"];
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -151,30 +92,17 @@ export default function CasesSectionBento() {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-12">
         {cases.map((c, i) => {
-          const cardClassName = `group relative block h-full min-h-[340px] overflow-hidden rounded-2xl bg-foreground/[0.04] ${ASPECTS[i]} md:min-h-0 ${c.comingSoon ? "cursor-default" : ""}`;
+          const cardClassName = `group relative block h-full min-h-[340px] overflow-hidden rounded-2xl bg-foreground/[0.04] md:min-h-[420px] xl:min-h-[520px] 2xl:min-h-[620px] ${c.comingSoon ? "cursor-default" : ""}`;
           const cardInner = (
             <>
-              {c.image ? (
-                <img
-                  src={c.image}
-                  alt={c.title}
-                  loading="lazy"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-                />
-              ) : (
-                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-foreground/[0.06] via-foreground/[0.04] to-foreground/[0.10]">
-                  {c.fullLogo && (
-                    <img
-                      src={c.fullLogo}
-                      alt={c.title}
-                      loading="lazy"
-                      className="max-h-[40%] max-w-[55%] object-contain opacity-30 brightness-0 transition-all duration-500 group-hover:opacity-60"
-                    />
-                  )}
-                </div>
-              )}
+              <img
+                src={c.image}
+                alt={c.title}
+                loading="lazy"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              />
 
               <div
                 aria-hidden="true"
