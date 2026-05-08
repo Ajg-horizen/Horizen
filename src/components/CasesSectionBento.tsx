@@ -107,7 +107,7 @@ export default function CasesSectionBento() {
           >
             <Link
               href={c.href}
-              className="group relative block h-full min-h-[340px] overflow-hidden rounded-2xl bg-foreground/[0.04] md:min-h-[420px]"
+              className="group relative block h-full min-h-[340px] overflow-hidden rounded-2xl bg-foreground/[0.04] md:min-h-[420px] xl:min-h-[520px] 2xl:min-h-[620px]"
             >
               {/* Image */}
               <img
