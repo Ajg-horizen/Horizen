@@ -144,7 +144,7 @@ export default function CasesSectionBento() {
               <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 md:p-6">
                 <div className="flex min-w-0 items-center gap-3">
                   {/* Logo placeholder — fyldes med kundens bogmærke senere */}
-                  <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-black">
+                  <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-foreground">
                     {c.logo ? (
                       <img
                         src={c.logo}
