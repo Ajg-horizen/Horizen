@@ -22,7 +22,7 @@ export function LogoMarquee({ logos, speed = 40 }: LogoMarqueeProps) {
       }}
     >
       <div
-        className="flex w-max items-center"
+        className="flex w-max items-center gap-16 md:gap-24"
         style={{
           animation: `logo-marquee ${speed}s linear infinite`,
         }}
