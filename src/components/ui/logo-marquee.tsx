@@ -22,19 +22,23 @@ export function LogoMarquee({ logos, speed = 40 }: LogoMarqueeProps) {
       }}
     >
       <div
-        className="flex w-max items-center gap-12 md:gap-16"
+        className="flex w-max items-center"
         style={{
           animation: `logo-marquee ${speed}s linear infinite`,
         }}
       >
         {items.map((logo, i) => (
-          <img
+          <div
             key={`${logo.src}-${i}`}
-            src={logo.src}
-            alt={logo.alt}
-            loading="lazy"
-            className="h-8 w-auto shrink-0 object-contain opacity-40 brightness-0 transition-all duration-300 hover:opacity-80 md:h-10"
-          />
+            className="flex w-32 shrink-0 items-center justify-center md:w-40"
+          >
+            <img
+              src={logo.src}
+              alt={logo.alt}
+              loading="lazy"
+              className="max-h-6 w-auto max-w-full object-contain opacity-40 brightness-0 transition-all duration-300 hover:opacity-80 md:max-h-7"
+            />
+          </div>
         ))}
       </div>
 
