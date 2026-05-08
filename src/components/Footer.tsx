@@ -47,7 +47,6 @@ const navigation: Record<string, FooterLink[]> = {
   ],
   virksomhed: [
     { name: "Cases", href: "/cases", disabled: true },
-    { name: "Om os", href: "/om-os", disabled: true },
     { name: "Blog", href: "/blog" },
     { name: "Kontakt", href: "/kontakt" },
   ],
