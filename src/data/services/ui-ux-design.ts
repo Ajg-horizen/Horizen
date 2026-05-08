@@ -60,14 +60,6 @@ export const uiUxDesign: ServicePage = {
         "UX er der, hvor flowet dikteres og hierarkiet bestemmes — hvad brugeren møder hvornår, og om brugerrejsen overhovedet holder. UX'en er afgørende for en struktureret proces og succes.",
       uiCaption:
         "Udtrykket oven på strukturen. UI'en er typografi, farver, komponenter og mikrointeraktioner — det brugeren faktisk mærker.",
-      uxReadMoreLink: {
-        href: "/blog/hvad-er-ux-design",
-        label: "Lær mere om UX",
-      },
-      uiReadMoreLink: {
-        href: "/blog/hvad-er-ui-design",
-        label: "Lær mere om UI",
-      },
     },
     {
       type: "centeredCta",

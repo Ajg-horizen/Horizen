@@ -29,32 +29,34 @@ function PixelHeart() {
   );
 }
 
-const navigation = {
+type FooterLink = { name: string; href: string; disabled?: boolean };
+
+const navigation: Record<string, FooterLink[]> = {
   services: [
     { name: "Webudvikling", href: "/services/webudvikling" },
     { name: "UI/UX Design", href: "/services/ui-ux-design" },
-    { name: "Branding", href: "/services/branding" },
-    { name: "WordPress", href: "/services/wordpress" },
+    { name: "Branding", href: "/services/branding-logo" },
+    { name: "WordPress", href: "/services/wordpress", disabled: true },
   ],
   marketing: [
-    { name: "SEO", href: "/marketing/seo" },
-    { name: "GEO", href: "/marketing/ai-search-optimization" },
-    { name: "Google Ads", href: "/marketing/google-ads" },
-    { name: "Social Media", href: "/marketing/social-media" },
-    { name: "AI Search", href: "/marketing/ai-search-optimization" },
+    { name: "SEO", href: "/marketing/seo", disabled: true },
+    { name: "GEO", href: "/marketing/ai-search-optimization", disabled: true },
+    { name: "Google Ads", href: "/marketing/google-ads", disabled: true },
+    { name: "Social Media", href: "/marketing/social-media", disabled: true },
+    { name: "AI Search", href: "/marketing/ai-search-optimization", disabled: true },
   ],
   virksomhed: [
-    { name: "Cases", href: "/cases" },
-    { name: "Om os", href: "/om-os" },
+    { name: "Cases", href: "/cases", disabled: true },
+    { name: "Om os", href: "/om-os", disabled: true },
     { name: "Blog", href: "/blog" },
     { name: "Kontakt", href: "/kontakt" },
   ],
 };
 
-const socials = [
-  { name: "LinkedIn", href: "https://linkedin.com" },
-  { name: "Instagram", href: "https://instagram.com" },
-  { name: "Facebook", href: "https://facebook.com" },
+const socials: FooterLink[] = [
+  { name: "LinkedIn", href: "https://linkedin.com", disabled: true },
+  { name: "Instagram", href: "https://instagram.com", disabled: true },
+  { name: "Facebook", href: "https://facebook.com", disabled: true },
 ];
 
 export default function Footer() {
@@ -99,12 +101,21 @@ export default function Footer() {
               <ul className="mt-5 space-y-3">
                 {navigation.services.map((item) => (
                   <li key={item.name}>
-                    <Link
-                      href={item.href}
-                      className="text-sm text-background/50 transition-colors duration-300 hover:text-background"
-                    >
-                      {item.name}
-                    </Link>
+                    {item.disabled ? (
+                      <span
+                        aria-disabled="true"
+                        className="cursor-not-allowed text-sm text-background/30 select-none"
+                      >
+                        {item.name}
+                      </span>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="text-sm text-background/50 transition-colors duration-300 hover:text-background"
+                      >
+                        {item.name}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -118,12 +129,21 @@ export default function Footer() {
               <ul className="mt-5 space-y-3">
                 {navigation.marketing.map((item) => (
                   <li key={item.name}>
-                    <Link
-                      href={item.href}
-                      className="text-sm text-background/50 transition-colors duration-300 hover:text-background"
-                    >
-                      {item.name}
-                    </Link>
+                    {item.disabled ? (
+                      <span
+                        aria-disabled="true"
+                        className="cursor-not-allowed text-sm text-background/30 select-none"
+                      >
+                        {item.name}
+                      </span>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="text-sm text-background/50 transition-colors duration-300 hover:text-background"
+                      >
+                        {item.name}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -137,12 +157,21 @@ export default function Footer() {
               <ul className="mt-5 space-y-3">
                 {navigation.virksomhed.map((item) => (
                   <li key={item.name}>
-                    <Link
-                      href={item.href}
-                      className="text-sm text-background/50 transition-colors duration-300 hover:text-background"
-                    >
-                      {item.name}
-                    </Link>
+                    {item.disabled ? (
+                      <span
+                        aria-disabled="true"
+                        className="cursor-not-allowed text-sm text-background/30 select-none"
+                      >
+                        {item.name}
+                      </span>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="text-sm text-background/50 transition-colors duration-300 hover:text-background"
+                      >
+                        {item.name}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -171,16 +200,26 @@ export default function Footer() {
 
             <div className="flex items-center gap-5">
               {socials.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center gap-1 text-xs text-background/30 transition-colors duration-300 hover:text-background"
-                >
-                  {social.name}
-                  <ArrowUpRightIcon className="size-3 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                </a>
+                social.disabled ? (
+                  <span
+                    key={social.name}
+                    aria-disabled="true"
+                    className="flex items-center gap-1 text-xs text-background/20 cursor-not-allowed select-none"
+                  >
+                    {social.name}
+                  </span>
+                ) : (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-1 text-xs text-background/30 transition-colors duration-300 hover:text-background"
+                  >
+                    {social.name}
+                    <ArrowUpRightIcon className="size-3 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </a>
+                )
               ))}
             </div>
           </div>

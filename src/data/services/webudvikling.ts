@@ -122,7 +122,6 @@ export const webudvikling: ServicePage = {
             "Vi starter aldrig med design. Vi starter med at forstå — din forretning, dine kunder, dine konkurrenter. Det er her fundamentet lægges.",
           icon: SearchIcon,
           accent: "#00b67a",
-          link: { href: "/marketing/seo", label: "SEO & synlighed" },
         },
         {
           step: "02",
@@ -148,7 +147,6 @@ export const webudvikling: ServicePage = {
             "Vi launcher ikke bare — vi overvåger, optimerer og sikrer at din side konverterer. SEO, hastighed, brugeradfærd. Vi slipper ikke før det virker.",
           icon: RocketIcon,
           accent: "#00b67a",
-          link: { href: "/marketing/google-ads", label: "Google Ads" },
         },
       ],
     },
