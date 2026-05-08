@@ -178,14 +178,16 @@ export default function ContactPageContent() {
             <div className="rounded-3xl border border-foreground/10 bg-foreground/[0.02] p-8 md:p-10">
               <div className="mb-8 flex items-center gap-4">
                 <img
-                  src="/staff/staff-kommunikation-og-salg-Ludvig.webp"
-                  alt="Ludvig"
+                  src="/staff/staff-jose-digital-design.jpg"
+                  alt="José"
                   loading="lazy"
                   className="h-20 w-20 rounded-full object-cover"
                 />
                 <div>
-                  <p className="text-base font-semibold">Ludvig</p>
-                  <p className="text-sm text-muted-foreground">Kommunikation</p>
+                  <p className="text-base font-semibold">José</p>
+                  <p className="text-sm text-muted-foreground">
+                    Digital Designer & Founder
+                  </p>
                   <p className="mt-1 text-xs text-muted-foreground">
                     Skriv et par linjer — jeg vender tilbage inden for én
                     arbejdsdag.
