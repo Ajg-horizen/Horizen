@@ -49,6 +49,7 @@ const cases = [
     subtitle: "Branding · Webdesign",
     image: "/cases/NA_Home5_mobile.webp",
     href: "/cases/never-another",
+    comingSoon: true,
     team: [
       { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
       { name: "Sebastian", avatar: "/staff/staff-.Sebastian-Meta-facebook.jpg" },
@@ -87,32 +88,15 @@ export default function CasesSectionBento() {
           <h2 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
             Cases
           </h2>
-          <Link
-            href="#cases"
-            className="group hidden items-center gap-1.5 text-sm font-medium text-muted transition-colors duration-300 hover:text-foreground md:flex"
-          >
-            Se alle cases
-            <ArrowRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
-          </Link>
+          {/* "Se alle cases" — skjult indtil cases-oversigtsside er klar */}
         </div>
       </motion.div>
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-12">
-        {cases.map((c, i) => (
-          <motion.div
-            key={c.href}
-            custom={i}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={fadeInUp}
-            className={SPANS[i]}
-          >
-            <Link
-              href={c.href}
-              className="group relative block h-full min-h-[340px] overflow-hidden rounded-2xl bg-foreground/[0.04] md:min-h-[420px] xl:min-h-[520px] 2xl:min-h-[620px]"
-            >
-              {/* Image */}
+        {cases.map((c, i) => {
+          const cardClassName = `group relative block h-full min-h-[340px] overflow-hidden rounded-2xl bg-foreground/[0.04] md:min-h-[420px] xl:min-h-[520px] 2xl:min-h-[620px] ${c.comingSoon ? "cursor-default" : ""}`;
+          const cardInner = (
+            <>
               <img
                 src={c.image}
                 alt={c.title}
@@ -120,13 +104,17 @@ export default function CasesSectionBento() {
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               />
 
-              {/* Bund-gradient for tekstlæsbarhed — diskret, kun til kontrast under tekst */}
               <div
                 aria-hidden="true"
                 className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black/55 via-black/15 to-transparent"
               />
 
-              {/* Team — diskret, top-højre */}
+              {c.comingSoon && (
+                <div className="absolute top-4 left-4 z-10 rounded-full bg-foreground/90 px-3 py-1 text-[11px] font-medium tracking-wide text-white backdrop-blur-sm md:top-5 md:left-5">
+                  Kommer snart
+                </div>
+              )}
+
               <div className="absolute top-4 right-4 flex -space-x-1.5 md:top-5 md:right-5">
                 {c.team.map((m) => (
                   <img
@@ -140,10 +128,8 @@ export default function CasesSectionBento() {
                 ))}
               </div>
 
-              {/* Bottom-row: logo + titel/subtitel — venstre · CTA — højre */}
               <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 md:p-6">
                 <div className="flex min-w-0 items-center gap-3">
-                  {/* Logo placeholder — fyldes med kundens bogmærke senere */}
                   <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-foreground">
                     {c.logo ? (
                       <img
@@ -168,15 +154,38 @@ export default function CasesSectionBento() {
                   </div>
                 </div>
 
-                {/* Hover-CTA — bund højre */}
-                <div className="flex shrink-0 translate-x-2 items-center gap-1.5 text-sm font-medium text-white opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100">
-                  Se case
-                  <ArrowRightIcon className="size-4" />
-                </div>
+                {!c.comingSoon && (
+                  <div className="flex shrink-0 translate-x-2 items-center gap-1.5 text-sm font-medium text-white opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100">
+                    Se case
+                    <ArrowRightIcon className="size-4" />
+                  </div>
+                )}
               </div>
-            </Link>
-          </motion.div>
-        ))}
+            </>
+          );
+
+          return (
+            <motion.div
+              key={c.href}
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={fadeInUp}
+              className={SPANS[i]}
+            >
+              {c.comingSoon ? (
+                <div className={cardClassName} aria-disabled="true">
+                  {cardInner}
+                </div>
+              ) : (
+                <Link href={c.href} className={cardClassName}>
+                  {cardInner}
+                </Link>
+              )}
+            </motion.div>
+          );
+        })}
       </div>
     </Container>
   );
