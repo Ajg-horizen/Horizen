@@ -36,7 +36,7 @@ export default function BackToTopButton() {
           transition={{ duration: 0.25 }}
           className="fixed bottom-20 right-4 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-white/30 bg-white/40 text-foreground backdrop-blur-xl shadow-lg shadow-black/5 transition-all duration-300 hover:bg-white/60 hover:border-white/50 hover:shadow-black/10 sm:bottom-24 sm:right-8 lg:bottom-8"
           style={{
-            paddingBottom: "env(safe-area-inset-bottom, 0)",
+            marginBottom: "env(safe-area-inset-bottom, 0)",
           }}
         >
           <ArrowUpIcon className="size-4" />

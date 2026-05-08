@@ -161,7 +161,7 @@ export default function ContactPageContent() {
               {status === "error" && (
                 <p className="mt-4 text-sm text-red-600">
                   Noget gik galt. Prøv igen eller skriv direkte til
-                  hej@horizen.dk.
+                  ajg@horizen.dk.
                 </p>
               )}
             </form>
@@ -200,14 +200,14 @@ export default function ContactPageContent() {
                 <InfoRow
                   icon={<MailIcon className="size-5" />}
                   label="E-mail"
-                  value="hej@horizen.dk"
-                  href="mailto:hej@horizen.dk"
+                  value="ajg@horizen.dk"
+                  href="mailto:ajg@horizen.dk"
                 />
                 <InfoRow
                   icon={<PhoneIcon className="size-5" />}
                   label="Telefon"
-                  value="+45 28 60 32 13"
-                  href="tel:+4528603213"
+                  value="+45 28 12 76 52"
+                  href="tel:+4528127652"
                 />
                 <InfoRow
                   icon={<MapPinIcon className="size-5" />}
