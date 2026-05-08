@@ -28,12 +28,10 @@ export default function IkkeWordPressPage() {
             <strong className="text-foreground">Divi</strong>,{" "}
             <strong className="text-foreground">WPBakery</strong> eller{" "}
             <strong className="text-foreground">YooTheme</strong>. Vi
-            foretrækker værktøjer der kræver en vis professionel forståelse
-            at arbejde i — men til gengæld giver os den frihed, opinionated
-            buildere og dårlige CMS-strukturer aldrig kan.
-          </p>
-          <p>
-            Det kræver et højere teknisk niveau. Det er det værd.
+            foretrækker værktøjer, der kræver en højere teknisk forståelse at
+            arbejde i. Men til gengæld giver det os den frihed, en opinionated
+            builder og dårlig CMS-struktur aldrig nogensinde ville kunne give
+            os — friheden til at bygge præcis, hvad vi har lyst til.
           </p>
           <p>
             Har du fået bygget en løsning i en af ovenstående og er træt af
