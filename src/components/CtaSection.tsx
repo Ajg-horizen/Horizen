@@ -21,7 +21,7 @@ export default function CtaSection() {
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <a
-            href="#contact"
+            href="/kontakt"
             className="rounded-full border border-background bg-background px-8 py-3.5 text-sm font-medium text-foreground transition-all duration-300 hover:bg-transparent hover:text-background"
           >
             Start et projekt

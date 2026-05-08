@@ -195,7 +195,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             {/* Bottom CTA */}
             <div className="px-6 py-6 border-t border-foreground/[0.06]">
               <a
-                href="#contact"
+                href="/kontakt"
                 onClick={handleLinkClick}
                 className="flex items-center justify-center w-full rounded-full bg-foreground px-8 py-3.5 text-sm font-semibold text-background transition-colors duration-300 hover:bg-foreground/90"
               >

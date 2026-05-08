@@ -47,7 +47,7 @@ const navigation = {
     { name: "Cases", href: "/cases" },
     { name: "Om os", href: "/om-os" },
     { name: "Blog", href: "/blog" },
-    { name: "Kontakt", href: "#contact" },
+    { name: "Kontakt", href: "/kontakt" },
   ],
 };
 

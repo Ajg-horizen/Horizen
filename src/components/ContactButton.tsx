@@ -84,7 +84,7 @@ const items: DotFlowProps["items"] = [
 
 export function ContactButton() {
   return (
-    <a href="#contact" className="cursor-pointer block min-w-[130px]">
+    <a href="/kontakt" className="cursor-pointer block min-w-[130px]">
       <DotFlow items={items} />
     </a>
   );

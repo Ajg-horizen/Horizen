@@ -407,7 +407,7 @@ export default function CaseContent() {
               className="mt-10"
             >
               <a
-                href="#contact"
+                href="/kontakt"
                 className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white px-8 py-3.5 text-sm font-medium transition-all duration-300 hover:bg-white/90"
                 style={{ color: "#0f0f0f" }}
               >
