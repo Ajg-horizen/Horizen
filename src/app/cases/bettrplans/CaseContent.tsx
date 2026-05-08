@@ -114,7 +114,7 @@ export default function CaseContent() {
       {/* Hero */}
       <section
         ref={heroImageRef}
-        className="relative h-screen w-full overflow-hidden"
+        className="relative h-screen w-full overflow-hidden -mt-3 -mx-5"
         style={{ boxShadow: "0 0 0 100vmax #000", clipPath: "inset(0 -100vmax)" }}
       >
         <motion.img
