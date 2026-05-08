@@ -5,29 +5,36 @@ import { ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
-interface InteractiveHoverButtonProps
-  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'className'> {
+interface InteractiveHoverButtonProps {
   text?: string
   href?: string
   classes?: string
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
+  'data-cal-link'?: string
+  'data-cal-namespace'?: string
+  'data-cal-config'?: string
 }
 
 export default function InteractiveHoverButton({
   text = 'Button',
   href = '#',
   classes,
+  onClick,
   ...rest
 }: InteractiveHoverButtonProps) {
   return (
     <motion.a
       href={href}
+      onClick={onClick}
       className={cn(
         'group relative flex min-w-40 items-center justify-center overflow-hidden rounded-full border border-foreground bg-background p-2 px-6 font-semibold',
         classes
       )}
       layout
       transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-      {...rest}
+      data-cal-link={rest['data-cal-link']}
+      data-cal-namespace={rest['data-cal-namespace']}
+      data-cal-config={rest['data-cal-config']}
     >
       <div className="flex items-center gap-2">
         <div className="h-2 w-2 rounded-full bg-emerald-500 transition-all duration-500 group-hover:scale-[40] group-hover:bg-foreground" />
