@@ -5,7 +5,8 @@ import { ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
-interface InteractiveHoverButtonProps {
+interface InteractiveHoverButtonProps
+  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'className'> {
   text?: string
   href?: string
   classes?: string
@@ -15,6 +16,7 @@ export default function InteractiveHoverButton({
   text = 'Button',
   href = '#',
   classes,
+  ...rest
 }: InteractiveHoverButtonProps) {
   return (
     <motion.a
@@ -25,6 +27,7 @@ export default function InteractiveHoverButton({
       )}
       layout
       transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+      {...rest}
     >
       <div className="flex items-center gap-2">
         <div className="h-2 w-2 rounded-full bg-emerald-500 transition-all duration-500 group-hover:scale-[40] group-hover:bg-foreground" />

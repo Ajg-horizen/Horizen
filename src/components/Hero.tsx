@@ -123,7 +123,14 @@ export default function Hero() {
           variants={fadeUp}
           className="mt-8 flex justify-center items-center gap-6"
         >
-          <InteractiveHoverButton text="Start et projekt" href="/kontakt" />
+          <InteractiveHoverButton
+            text="Book tid"
+            href="#"
+            data-cal-link="horizen-glarbjerg-d5urcd/15min"
+            data-cal-namespace="15min"
+            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+            onClick={(e) => e.preventDefault()}
+          />
           <a
             href="#cases"
             className="text-sm font-medium text-muted underline underline-offset-4 decoration-border transition-colors duration-300 hover:text-foreground hover:decoration-foreground"

@@ -4,6 +4,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import SmoothScroll from "@/components/SmoothScroll";
 import GlobalCursor from "@/components/GlobalCursor";
 import BackToTopButton from "@/components/BackToTopButton";
+import CalEmbed from "@/components/CalEmbed";
 import "./globals.css";
 
 const inter = Inter({
@@ -33,6 +34,7 @@ export default function RootLayout({
         <ScrollToTop />
         {children}
         <BackToTopButton />
+        <CalEmbed />
       </body>
     </html>
   );
