@@ -18,11 +18,30 @@ type Status = "idle" | "sending" | "sent" | "error";
 export default function ContactPageContent() {
   const [status, setStatus] = useState<Status>("idle");
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("sending");
-    // TODO: wire op til Resend / formspree / API-rute. Indtil videre simulerer vi flow.
-    setTimeout(() => setStatus("sent"), 700);
+
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      company: formData.get("company"),
+      topic: formData.get("topic"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("Send fejlede");
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -139,6 +158,12 @@ export default function ContactPageContent() {
                   ingen tracking.
                 </p>
               </div>
+              {status === "error" && (
+                <p className="mt-4 text-sm text-red-600">
+                  Noget gik galt. Prøv igen eller skriv direkte til
+                  hej@horizen.dk.
+                </p>
+              )}
             </form>
           </motion.div>
 
