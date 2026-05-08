@@ -9,9 +9,7 @@ import GlassBlogSection from "@/components/GlassBlogSection";
 import TrustpilotSection from "@/components/TrustpilotSection";
 import BentoShowcase from "@/components/BentoShowcase";
 import Container from "@/components/Container";
-import { LogoCloud } from "@/components/ui/logo-cloud-2";
 import { LogoMarquee } from "@/components/ui/logo-marquee";
-import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 
 import Footer from "@/components/Footer";
 
@@ -54,16 +52,6 @@ export default function Home() {
           <ServicesSection />
           <BentoShowcase />
           <TrustpilotSection />
-
-          <Container as="section" size="site" className="py-24">
-            <div className="mb-10">
-              <ScrambleEyebrow>Social proof</ScrambleEyebrow>
-              <h3 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
-                Virksomheder der stoler på os
-              </h3>
-            </div>
-            <LogoCloud logos={clientLogos} />
-          </Container>
 
           <GlassBlogSection />
 
