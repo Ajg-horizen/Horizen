@@ -186,14 +186,6 @@ export default function Navbar({ alwaysVisible = false }: { alwaysVisible?: bool
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                <NavigationMenuItem>
-                  <span
-                    className={`${navigationMenuTriggerStyle()} cursor-not-allowed opacity-50 select-none`}
-                    aria-disabled="true"
-                  >
-                    Om os
-                  </span>
-                </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
           </div>

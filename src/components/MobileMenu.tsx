@@ -180,15 +180,6 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   </div>
                 ))}
 
-                {/* Direct links */}
-                <div className="border-t border-foreground/[0.06] pt-2">
-                  <div
-                    className="flex items-center py-4 text-lg font-semibold tracking-tight cursor-not-allowed opacity-50 select-none"
-                    aria-disabled="true"
-                  >
-                    Om os
-                  </div>
-                </div>
               </nav>
             </div>
 
