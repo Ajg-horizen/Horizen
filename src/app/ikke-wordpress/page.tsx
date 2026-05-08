@@ -45,7 +45,8 @@ export default function IkkeWordPressPage() {
         <div className="mt-10">
           <Link
             href="/#contact"
-            className="group inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-white transition-transform duration-300 hover:-translate-y-0.5"
+            style={{ color: "#ffffff" }}
+            className="group inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium transition-transform duration-300 hover:-translate-y-0.5"
           >
             Kontakt os
             <ArrowRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
