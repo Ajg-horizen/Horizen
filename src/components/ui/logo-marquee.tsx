@@ -33,7 +33,7 @@ export function LogoMarquee({ logos, speed = 40 }: LogoMarqueeProps) {
             src={logo.src}
             alt={logo.alt}
             loading="lazy"
-            className="h-8 w-auto shrink-0 object-contain opacity-60 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0 md:h-10"
+            className="h-8 w-auto shrink-0 object-contain opacity-70 brightness-0 transition-all duration-300 hover:opacity-100 md:h-10"
           />
         ))}
       </div>
