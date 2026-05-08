@@ -57,8 +57,8 @@ const cases = [
   },
 ];
 
-// 12-col bento "Z"-pattern: 7+5 / 5+7 — visuelt vægtskifte mellem rækkerne.
-const SPANS = ["md:col-span-7", "md:col-span-5", "md:col-span-5", "md:col-span-7"];
+// 3-col bento: 2+1 / 1+2 — store og små kasser flettes så rækkerne fyldes uden huller.
+const SPANS = ["md:col-span-2", "md:col-span-1", "md:col-span-1", "md:col-span-2"];
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -92,7 +92,7 @@ export default function CasesSectionBento() {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-12">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
         {cases.map((c, i) => {
           const cardClassName = `group relative block h-full min-h-[340px] overflow-hidden rounded-2xl bg-foreground/[0.04] md:min-h-[420px] xl:min-h-[520px] 2xl:min-h-[620px] ${c.comingSoon ? "cursor-default" : ""}`;
           const cardInner = (
