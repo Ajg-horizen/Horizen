@@ -38,7 +38,7 @@ export const testimonials: Testimonial[] = [
       role: "Indehaver",
       company: "OD Pro",
       location: "Aabenraa",
-      photo: "/Clients/oliver-profile.png",
+      photo: "/Clients/oliver-profile-OD-biler.webp",
     },
     source: "trustpilot",
     featured: true,
@@ -64,6 +64,7 @@ export const testimonials: Testimonial[] = [
       name: "Michael Seitz",
       role: "Malermester",
       company: "Malerfirma Seitz",
+      photo: "/Clients/seitz-profil.webp",
     },
     source: "trustpilot",
   },
@@ -94,6 +95,7 @@ export const testimonials: Testimonial[] = [
     author: {
       name: "Ditte Gade Jakobsen",
       company: "NEVER ANOTHER",
+      photo: "/Clients/Ditte-never-another.webp",
     },
     source: "trustpilot",
   },
@@ -102,7 +104,11 @@ export const testimonials: Testimonial[] = [
     quote:
       "Rigtig god service! Igennem hele forløbet var José både åben og transparent og havde et rigtig højt niveau af kommunikation. Stor anbefaling herfra!",
     rating: 5,
-    author: { name: "Nikolaj Dybdal Lippert", location: "DK" },
+    author: {
+      name: "Nikolaj Dybdal Lippert",
+      location: "DK",
+      photo: "/Clients/Nikolaj-LipsMusic.webp",
+    },
     source: "trustpilot",
   },
 ];
