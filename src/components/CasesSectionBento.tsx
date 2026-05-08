@@ -151,7 +151,7 @@ export default function CasesSectionBento() {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
         {cases.map((c, i) => {
           const cardClassName = `group relative block h-full min-h-[340px] overflow-hidden rounded-2xl bg-foreground/[0.04] ${ASPECTS[i]} md:min-h-0 ${c.comingSoon ? "cursor-default" : ""}`;
           const cardInner = (
