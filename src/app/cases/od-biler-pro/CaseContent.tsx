@@ -115,7 +115,7 @@ export default function CaseContent() {
       {/* Hero — full-screen image with parallax + text overlay */}
       <section
         ref={heroImageRef}
-        className="relative h-screen w-full overflow-hidden -mt-3 -mx-5"
+        className="relative h-screen w-[calc(100%+2.5rem)] overflow-hidden -mt-3 -mx-5"
         style={{ boxShadow: "0 0 0 100vmax #000", clipPath: "inset(0 -100vmax)" }}
       >
         {/* Parallax background image — scales up on scroll */}
