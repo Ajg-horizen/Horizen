@@ -83,14 +83,29 @@ export default function HeroBlock({ data }: { data: HeroBlockData }) {
             variants={fadeUp}
             className="mt-6"
           >
-            <a
-              href={data.cta.href}
-              className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium transition-opacity hover:opacity-80"
-              style={{ color: "#f5f5f0" }}
-            >
-              {data.cta.label}
-              <ArrowRightIcon className="size-3.5" />
-            </a>
+            {data.cta.calLink ? (
+              <a
+                href="#"
+                onClick={(e) => e.preventDefault()}
+                data-cal-link={data.cta.calLink}
+                data-cal-namespace="15min"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium transition-opacity hover:opacity-80"
+                style={{ color: "#f5f5f0" }}
+              >
+                {data.cta.label}
+                <ArrowRightIcon className="size-3.5" />
+              </a>
+            ) : (
+              <a
+                href={data.cta.href}
+                className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium transition-opacity hover:opacity-80"
+                style={{ color: "#f5f5f0" }}
+              >
+                {data.cta.label}
+                <ArrowRightIcon className="size-3.5" />
+              </a>
+            )}
           </motion.div>
         </div>
       </Container>

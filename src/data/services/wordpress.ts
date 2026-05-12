@@ -28,7 +28,11 @@ export const wordpress: ServicePage = {
         mutedTail: "De færreste får det fulde potentiale ud.",
       },
       body: "WordPress er fleksibel og kraftfuld, men også kompleks. Selv etablerede virksomheder bruger den forkert: tunge billeder, langsom opsætning, plugins der hober sig op. Vi vurderer hver case for sig og leverer rådgivning, support eller en helt ny løsning hvis det er det rigtige.",
-      cta: { label: "Få et gratis WordPress-tjek", href: "/kontakt" },
+      cta: {
+        label: "Få et gratis WordPress-tjek",
+        href: "/kontakt",
+        calLink: "horizen-glarbjerg-d5urcd/15min",
+      },
       image: {
         src: "/graphics/Hero-image-wordpress-service.webp",
         alt: "WordPress support og vedligehold af Horizen",

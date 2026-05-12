@@ -24,7 +24,8 @@ export type HeroBlock = {
   /** Heading med valgfri muted-del. Brug `mutedTail` til den grå anden-del. */
   heading: { lead: string; mutedTail?: string };
   body: string;
-  cta: { label: string; href: string };
+  /** Hvis `calLink` er sat, åbner CTA Cal.com booking-widget i stedet for at navigere til `href`. */
+  cta: { label: string; href: string; calLink?: string };
   /** Full-width parallax billede under hero-tekst. */
   image: { src: string; alt: string };
 };
