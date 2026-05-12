@@ -52,7 +52,6 @@ export const services: NavItem[] = [
     description: "Print, digital og social kommunikation",
     href: "/services/grafisk-design",
     icon: PaletteIcon,
-    badge: "Under opbygning",
   },
   {
     title: "Webshop",
