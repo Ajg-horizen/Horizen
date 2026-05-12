@@ -177,11 +177,25 @@ export default function PhysicsPlayground() {
 
     observer.observe(container);
 
-    // Resize handler
+    // Resize handler — bevar devicePixelRatio så canvas ikke bliver
+    // udstrukket/pixeleret når mobile browsers viser/skjuler adressebar.
+    let lastWidth = width;
     const handleResize = () => {
       const newWidth = container.offsetWidth;
-      render.canvas.width = newWidth;
+      if (newWidth === lastWidth) return;
+      lastWidth = newWidth;
+
+      const dpr = Math.min(window.devicePixelRatio, 2);
+      render.canvas.width = newWidth * dpr;
+      render.canvas.height = height * dpr;
+      render.canvas.style.width = `${newWidth}px`;
+      render.canvas.style.height = `${height}px`;
       render.options.width = newWidth;
+      render.options.height = height;
+      render.bounds.max.x = newWidth;
+      render.bounds.max.y = height;
+      render.context.scale(dpr, dpr);
+
       Matter.Body.setPosition(floor, { x: newWidth / 2, y: height + 25 });
       Matter.Body.setPosition(rightWall, { x: newWidth + 25, y: height / 2 });
     };
