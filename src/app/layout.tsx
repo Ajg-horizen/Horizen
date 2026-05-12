@@ -14,6 +14,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://horizen.dk"),
   title: "Horizen | Web, Design & Branding",
   description:
     "Vi skaber digitale oplevelser der konverterer. Web, logo, grafisk design og branding.",

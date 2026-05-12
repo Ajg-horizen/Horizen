@@ -11,6 +11,12 @@ const BrandFigure = dynamic(() => import("@/components/ui/brand-figure"), {
   ssr: false,
 });
 
+const ColorBlindTest = dynamic(
+  () =>
+    import("@/components/ui/color-blind-test").then((m) => m.ColorBlindTest),
+  { ssr: false },
+);
+
 export default function BrandSplitBlock({
   id,
   data,
@@ -46,7 +52,7 @@ export default function BrandSplitBlock({
         </motion.div>
 
         <div className="flex items-center justify-center">
-          <BrandFigure />
+          {data.visual === "colorBlindTest" ? <ColorBlindTest /> : <BrandFigure />}
         </div>
       </div>
     </Container>

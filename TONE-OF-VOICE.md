@@ -1,19 +1,19 @@
-# Horizen — Tone of Voice
+# Horizen Tone of Voice
 
 > Dette dokument beskriver hvordan Horizen skriver, tænker og kommunikerer.
 > Læs det før du skriver copy til enhver side på horizen.dk.
 
 ---
 
-## 1. Kernebudskab — hvad Horizen står for
+## 1. Kernebudskab. Hvad Horizen står for
 
-**Horizen bygger ting der holder — fordi fundamentet er på plads.**
+**Horizen bygger ting der holder, fordi fundamentet er på plads.**
 
-Vi er et dansk bureau der kombinerer **erfaring** med **AI** — ikke omvendt.
+Vi er et dansk bureau der kombinerer **erfaring** med **AI**, ikke omvendt.
 Vi bruger AI til at levere *mere værdi*, ikke til at *arbejde mindre*.
 
 Vi tror på:
-- **Kvalitet frem for hastighed.** Andre reducerer timer, vi bruger de frigjorte timer på at levere eksemplarisk.
+- **Kvalitet frem for hastighed.** Andre reducerer timer. Vi bruger de frigjorte timer på at levere eksemplarisk.
 - **Fundamentet kommer først.** Det synlige fylder 25%, resten er strategi, kultur og værdier.
 - **Tillid, frihed og ejerskab.** Vi tror på at glade, betroede mennesker laver det bedste arbejde.
 - **Vi micromanager ikke.** Vi løfter i fællesskab og belønner nysgerrighed.
@@ -21,12 +21,12 @@ Vi tror på:
 
 ---
 
-## 2. Stemme — sådan lyder vi
+## 2. Stemme. Sådan lyder vi
 
 ### Kort, direkte, selvsikkert
 Ingen fyldord. Ingen corporate-fluff. Vi siger tingene som de er.
 
-✅ *"Hjemmesider er blevet en commodity. Vi kombinerer erfaring med AI — ikke omvendt."*
+✅ *"Hjemmesider er blevet en commodity. Vi kombinerer erfaring med AI, ikke omvendt."*
 ❌ *"I en verden der konstant udvikler sig, tilbyder vi skræddersyede løsninger..."*
 
 ### Ærlig og stillingtagende
@@ -35,14 +35,14 @@ Vi siger hvad vi *ikke* gør, ikke kun hvad vi gør. Vi undgår vag "samarbejde"
 ✅ *"Vi tror ikke på micromanagement. Vi tror på at løfte i fællesskab."*
 ✅ *"Vi starter aldrig med logoet. Vi starter med jer."*
 
-### Dansk — ikke oversat amerikansk
+### Dansk, ikke oversat amerikansk
 Naturligt, dansk tonefald. Korte sætninger. Undgå direkte oversatte floskler.
 
 ✅ *"Det folk mærker, men ikke kan pege på."*
 ✅ *"Hver intern beslutning påvirker jeres brand over tid."*
 
 ### To-delt overskriftsstruktur (signatur)
-Næsten alle sektioner bruger en **lead + muted tail**-struktur — et statement, en modsætning eller en udvidelse:
+Næsten alle sektioner bruger en **lead + muted tail**-struktur. Et statement, en modsætning eller en udvidelse:
 
 ```
 "Branding starter ikke med et logo."
@@ -55,7 +55,7 @@ Næsten alle sektioner bruger en **lead + muted tail**-struktur — et statement
 "Til fordel for jer."
 
 "Hjemmesider er blevet en commodity."
-"Vi kombinerer erfaring med AI — ikke omvendt."
+"Vi kombinerer erfaring med AI, ikke omvendt."
 
 "UX er strategien."
 "UI er håndværket. Vi gør begge dele."
@@ -69,52 +69,52 @@ Næsten alle sektioner bruger en **lead + muted tail**-struktur — et statement
 
 ---
 
-## 3. Filosofi — det vi insisterer på
+## 3. Filosofi. Det vi insisterer på
 
 ### Erfaring > AI
 AI er forstærkeren. Erfaring er fundamentet. Vi siger det direkte:
 
 - *"Drevet af erfaring. Forstærket af AI."*
 - *"Vi bygger på et fundament af 8+ års teknisk erfaring. Forstærket af AI til din fordel."*
-- *"AI har ændret forudsætningerne. Vi har tilpasset vores proces — ikke vores ambitionsniveau."*
+- *"AI har ændret forudsætningerne. Vi har tilpasset vores proces, ikke vores ambitionsniveau."*
 
 ### Under overfladen
 Et tilbagevendende metafor på tværs af sider: det synlige er kun toppen. Fundamentet er det der afgør kvalitet.
 
-- Webudvikling: *"Det du ikke ser — men vi ser"* (teknisk fundament)
+- Webudvikling: *"Det du ikke ser, men vi ser"* (teknisk fundament)
 - UI/UX: *"Godt design er bygget på to lag. Det ene ser du aldrig."*
 - Branding: *"Kun 25% af dit brand er synligt"* / *"Under overfladen"*
 
 ### Kultur smitter
 Horizens interne kultur er brandløftet. Vi tror på at tillid, frihed og ejerskab hos teamet oversættes direkte til bedre resultater for kunden.
 
-*"Vi tror ikke på micromanagement. Vi tror på at løfte i fællesskab og belønne nysgerrighed. Det mærkes i vores arbejde — fordi hvert projekt bærer præg af mennesker der fik plads til at være mennesker og eksperimentere."*
+*"Vi tror ikke på micromanagement. Vi tror på at løfte i fællesskab og belønne nysgerrighed. Det mærkes i vores arbejde, fordi hvert projekt bærer præg af mennesker der fik plads til at være mennesker og eksperimentere."*
 
 ---
 
-## 4. Struktur — sådan opbygges en service-side
+## 4. Struktur. Sådan opbygges en service-side
 
 Alle service-sider følger samme grundskabelon:
 
-1. **Hero** — kort eyebrow + to-delt overskrift + direkte body + CTA
-2. **Section TOC** — navigation til sidens sektioner
-3. **Signatur-blok** (unik pr. service) — visualiserer kerneidéen:
+1. **Hero.** Kort eyebrow + to-delt overskrift + direkte body + CTA
+2. **Section TOC.** Navigation til sidens sektioner
+3. **Signatur-blok** (unik pr. service). Visualiserer kerneidéen:
    - Webudvikling: Lighthouse-metrics ("Det du ikke ser")
    - UI/UX: UX vs. UI-split
    - Branding: Interaktiv Rive-figur + sliders
-4. **Centered CTA** — gratis audit/tjek/samtale
-5. **Dyk ned-blok** — techChecklist eller orbit-animation med elementer
-6. **Positioning ("Det vi tror på")** — filosofi + team-avatarer
-7. **Process** — 4 konkrete trin
-8. **Deliverables** — 8 leverancer i grid
+4. **Centered CTA.** Gratis audit/tjek/samtale
+5. **Dyk ned-blok.** TechChecklist eller orbit-animation med elementer
+6. **Positioning ("Det vi tror på").** Filosofi + team-avatarer
+7. **Process.** 4 konkrete trin
+8. **Deliverables.** 8 leverancer i grid
 9. **Featured Testimonial**
-10. **Cases** — 3 udvalgte cases
-11. **Gradient CTA** — "Det hele kunne starte her"
-12. **FAQ** — 6 konkrete spørgsmål
+10. **Cases.** 3 udvalgte cases
+11. **Gradient CTA.** "Det hele kunne starte her"
+12. **FAQ.** 6 konkrete spørgsmål
 
 ---
 
-## 5. Overskrifter — mønstre der virker
+## 5. Overskrifter. Mønstre der virker
 
 ### Eyebrow-typer
 Korte, specifikke, aldrig generiske:
@@ -127,17 +127,17 @@ Korte, specifikke, aldrig generiske:
 - *"Alt det der tager tid"*
 
 ### Overskrifts-mønstre
-- **Konstatering + vending:** *"Hjemmesider er blevet en commodity. Vi kombinerer erfaring med AI — ikke omvendt."*
+- **Konstatering + vending:** *"Hjemmesider er blevet en commodity. Vi kombinerer erfaring med AI, ikke omvendt."*
 - **Metafor:** *"Fra indsigt til identitet"* / *"Fra research til pixels"* / *"Fra udgift til investering"*
 - **Insistering:** *"Vi starter aldrig med logoet. Vi starter med jer."*
-- **Spørgsmål der lander:** *"Er din hjemmeside bygget til at holde?"* / *"Genkender folk dit brand — eller forveksler de det med alle andres?"*
+- **Spørgsmål der lander:** *"Er din hjemmeside bygget til at holde?"* / *"Genkender folk dit brand, eller forveksler de det med alle andres?"*
 
 ---
 
-## 6. Ord og vendinger — brug & undgå
+## 6. Ord og vendinger. Brug & undgå
 
 ### ✅ Brug
-- *"Fundament"* (tilbagevendende — bindende metafor)
+- *"Fundament"* (tilbagevendende, bindende metafor)
 - *"Under overfladen"*
 - *"Det du ikke ser"*
 - *"Holdbar"* / *"holdbart"*
@@ -153,8 +153,9 @@ Korte, specifikke, aldrig generiske:
 - *"Fra dag ét"*
 - *"Drevet af X. Forstærket af Y."*
 
-### ❌ Undgå (BANDLYSTE ORD)
-- **"Skræddersyet"** — ABSOLUT BANDLYST. Andreas hader ordet. Brug aldrig.
+### ❌ Undgå (BANDLYSTE ORD og tegn)
+- **Em-dash (—).** ABSOLUT BANDLYST. Det er et AI-tell og virker uprofessionelt. Brug punktum, komma eller kolon i stedet. Gælder også en-dash (–) i prosa.
+- **"Skræddersyet"**. ABSOLUT BANDLYST. Andreas hader ordet. Brug aldrig.
 - *"I en verden der..."*, *"I dag hvor..."* og lignende opbygninger
 - *"Unik løsning"* (for generisk)
 - *"Passion"* / *"passioneret"* uden konkret kontekst
@@ -165,7 +166,7 @@ Korte, specifikke, aldrig generiske:
 
 ---
 
-## 7. Brødtekst — skriveregler
+## 7. Brødtekst. Skriveregler
 
 ### Længde
 - **Hero body:** 2-3 sætninger, max. 40 ord.
@@ -173,15 +174,15 @@ Korte, specifikke, aldrig generiske:
 - **Process/deliverables beskrivelser:** 1-2 korte sætninger.
 
 ### Tone
-- Skriv som om du taler med kunden over kaffe — ikke i en pitch-deck.
+- Skriv som om du taler med kunden over kaffe, ikke i en pitch-deck.
 - Brug **"I"** (formelt, men ikke stift) eller **"du"** (direkte, afhængigt af kontekst).
 - Brug **"vi"** om Horizen.
-- Brug **tankestreger** (—) til at skabe rytme og pause.
+- Brug **punktum og komma** til at skabe rytme. **Ingen em-dash (—)**, da det er et AI-tell.
 
 ### Struktur
 Mange afsnit følger:
 1. **Konstatering** (*"De bedste resultater opstår når..."*)
-2. **Begrundelse** (*"Det er ikke noget vi siger — det er noget vi tror på..."*)
+2. **Begrundelse** (*"Det er ikke noget vi siger. Det er noget vi tror på..."*)
 3. **Konsekvens for kunden** (*"Det mærkes i vores arbejde..."*)
 
 ---
@@ -201,7 +202,7 @@ Korte, handlingsorienterede, aldrig "Klik her":
 ### Gradient CTA-block (bunden af hver side)
 Fast formel:
 - Heading: *"Det hele kunne starte her."*
-- Body: *"Vi hører altid gerne om jeres visioner — og hvordan vi i fællesskab kan bygge dem."*
+- Body: *"Vi hører altid gerne om jeres visioner, og hvordan vi i fællesskab kan bygge dem."*
 - Primary: *"Tag en snak"* → `/kontakt`
 - Secondary: *"hej@horizen.dk"* → `mailto:hej@horizen.dk`
 
@@ -217,16 +218,16 @@ Fast formel:
 
 ### Eksempler
 **Q:** *"Ejer jeg koden bagefter?"*
-**A:** *"Ja. 100%. Alt kode, alle assets, alle designs — det hele er dit. ... Vi binder dig aldrig til noget."*
+**A:** *"Ja. 100%. Alt kode, alle assets, alle designs. Det hele er dit. Vi binder dig aldrig til noget."*
 
 **Q:** *"Kan vi nøjes med et logo?"*
-**A:** *"Ja — men vi anbefaler altid minimum en farvepalet og typografivalg, så logoet har en kontekst at leve i."*
+**A:** *"Ja, men vi anbefaler altid minimum en farvepalet og typografivalg, så logoet har en kontekst at leve i."*
 
 Bemærk: Vi siger *"Ja"* eller *"Nej"* først. Derefter nuance.
 
 ---
 
-## 10. Tilbagevendende fakta — data og tal
+## 10. Tilbagevendende fakta. Data og tal
 
 Brug disse når de er relevante:
 - **8+** års teknisk erfaring
@@ -234,9 +235,9 @@ Brug disse når de er relevante:
 - **150+** projekter leveret
 - **50+** brands udviklet
 - **98%** tilfredse kunder
-- **100–300 timer** pr. webprojekt (vi reducerer ikke)
-- **40–120 timer** pr. brandforløb
-- **60–150 timer** i designfase alene
+- **100 til 300 timer** pr. webprojekt (vi reducerer ikke)
+- **40 til 120 timer** pr. brandforløb
+- **60 til 150 timer** i designfase alene
 
 ---
 
@@ -256,6 +257,7 @@ Copy og visual skal altid understøtte hinanden. Hvis et visual taler om "fundam
 
 Før en ny side går live, tjek:
 
+- [ ] Ingen em-dashes (—) nogen steder. Brug punktum, komma eller kolon.
 - [ ] Ingen *"skræddersyet"* nogen steder
 - [ ] Hero har to-delt overskrift (lead + muted tail)
 - [ ] Mindst ét tilbagevendende mønster: *fundament / under overfladen / ejerskab*
@@ -264,9 +266,9 @@ Før en ny side går live, tjek:
 - [ ] Filosofi-sektion refererer til team/kultur
 - [ ] FAQ starter svar med *Ja* eller *Nej*
 - [ ] Gradient CTA-block i bunden er fast formel
-- [ ] Mindst én stillingtagen — noget vi *ikke* gør
-- [ ] Dansk — ikke oversat amerikansk
+- [ ] Mindst én stillingtagen. Noget vi *ikke* gør
+- [ ] Dansk, ikke oversat amerikansk
 
 ---
 
-*Sidst opdateret: 2026-04-17 — efter branding-sidens færdiggørelse.*
+*Sidst opdateret: 2026-05-12. Em-dash blev tilføjet til bandlystelisten.*

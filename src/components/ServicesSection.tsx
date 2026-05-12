@@ -55,6 +55,7 @@ const services: Service[] = [
     description:
       "Print, digital, social. Visuel kommunikation der fanger opmærksomhed.",
     badge: "bg-[#f0ece4] text-[#5a4a2d]",
+    href: "/services/grafisk-design",
   },
   {
     icon: CodeIcon,

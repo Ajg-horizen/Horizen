@@ -3,7 +3,7 @@ import CaseContent from "./CaseContent";
 
 export const metadata: Metadata = {
   title: "Never Another | Branding & Webdesign | Horizen",
-  description: "Case study kommer snart.",
+  description: "Never Another. Branding og webdesign der balancerer det visuelle udtryk med en stærk teknisk grundstruktur.",
 };
 
 export default function Page() {

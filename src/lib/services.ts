@@ -254,6 +254,7 @@ export type BrandSplitBlock = {
   eyebrow: string;
   heading: { lead: string; mutedTail?: string };
   paragraphs: string[];
+  visual?: "smiley" | "colorBlindTest";
 };
 
 /* ─── Service page ────────────────────────────────────────── */
@@ -298,8 +299,9 @@ export function stickyClasses(index?: number): string {
 import { webudvikling } from "@/data/services/webudvikling";
 import { uiUxDesign } from "@/data/services/ui-ux-design";
 import { brandingLogo } from "@/data/services/branding-logo";
+import { grafiskDesign } from "@/data/services/grafisk-design";
 
-export const services: ServicePage[] = [webudvikling, uiUxDesign, brandingLogo];
+export const services: ServicePage[] = [webudvikling, uiUxDesign, brandingLogo, grafiskDesign];
 
 export const servicesBySlug: Record<string, ServicePage> = Object.fromEntries(
   services.map((s) => [s.slug, s])

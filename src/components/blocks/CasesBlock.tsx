@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRightIcon, CheckIcon } from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { fadeInUp } from "@/lib/animations";
@@ -58,12 +58,6 @@ export default function CasesBlock({
                   alt={item.title}
                   className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 />
-                <div className="absolute bottom-3 left-3">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 backdrop-blur-sm px-3 py-1 text-xs font-medium">
-                    <CheckIcon className="size-3 text-[#00b67a]" />
-                    {item.result}
-                  </span>
-                </div>
               </div>
               <div className="mt-4">
                 <h3 className="text-lg font-semibold tracking-tight">{item.title}</h3>
