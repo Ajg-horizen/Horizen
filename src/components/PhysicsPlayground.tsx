@@ -26,9 +26,6 @@ const COMPLEXITY_LABELS = [
 
 export default function PhysicsPlayground() {
   const sceneRef = useRef<HTMLDivElement>(null);
-  const engineRef = useRef<Matter.Engine | null>(null);
-  const renderRef = useRef<Matter.Render | null>(null);
-  const runnerRef = useRef<Matter.Runner | null>(null);
   const hasDropped = useRef(false);
 
   useEffect(() => {
@@ -52,7 +49,6 @@ export default function PhysicsPlayground() {
     const engine = Engine.create({
       gravity: { x: 0, y: 1, scale: 0.001 },
     });
-    engineRef.current = engine;
 
     const render = Render.create({
       element: container,
@@ -65,7 +61,6 @@ export default function PhysicsPlayground() {
         pixelRatio: Math.min(window.devicePixelRatio, 2),
       },
     });
-    renderRef.current = render;
 
     // Walls
     const wallOptions = {
@@ -105,6 +100,7 @@ export default function PhysicsPlayground() {
     canvas.style.touchAction = "pan-y";
 
     const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+    container.style.cursor = isDesktop ? "grab" : "default";
     if (isDesktop) {
       const mouse = Mouse.create(render.canvas);
       const mouseConstraint = MouseConstraint.create(engine, {
@@ -151,12 +147,11 @@ export default function PhysicsPlayground() {
     });
 
     const runner = Runner.create();
-    runnerRef.current = runner;
-
     Runner.run(runner, engine);
     Render.run(render);
 
     // Intersection Observer — add blocks when section enters viewport
+    const dropTimers: ReturnType<typeof setTimeout>[] = [];
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !hasDropped.current) {
@@ -164,9 +159,11 @@ export default function PhysicsPlayground() {
 
           // Add blocks with stagger so they rain in
           blocks.forEach((block, i) => {
-            setTimeout(() => {
-              Composite.add(engine.world, block);
-            }, i * 80);
+            dropTimers.push(
+              setTimeout(() => {
+                Composite.add(engine.world, block);
+              }, i * 80)
+            );
           });
 
           observer.disconnect();
@@ -205,6 +202,7 @@ export default function PhysicsPlayground() {
     return () => {
       window.removeEventListener("resize", handleResize);
       observer.disconnect();
+      dropTimers.forEach(clearTimeout);
       Render.stop(render);
       Runner.stop(runner);
       Engine.clear(engine);
@@ -215,12 +213,12 @@ export default function PhysicsPlayground() {
   return (
     <Container as="section" size="site" className="py-20">
       <div>
-        <div className="mb-10 text-center">
+        <div className="mb-10 text-left md:text-center">
           <ScrambleEyebrow>Det digitale landskab</ScrambleEyebrow>
           <h3 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
-            Der er mange ting at holde styr på
+            Der er mange ting at holde styr&nbsp;på
           </h3>
-          <p className="mt-3 mx-auto max-w-lg text-base leading-relaxed text-muted">
+          <p className="mt-3 max-w-lg text-base leading-relaxed text-muted md:mx-auto">
             GDPR, SEO, performance, sikkerhed, AI, optimering — listen
             er lang. Vi tager os af det tekniske, så du kan fokusere
             på din forretning.
@@ -229,7 +227,6 @@ export default function PhysicsPlayground() {
         <div
           ref={sceneRef}
           className="relative h-[270px] w-full overflow-hidden rounded-2xl border border-foreground/[0.06]"
-          style={{ cursor: "grab" }}
         />
       </div>
     </Container>
