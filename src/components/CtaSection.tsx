@@ -16,7 +16,7 @@ export default function CtaSection() {
           Klar til at tage næste skridt?
         </h2>
         <p className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-background/50 md:text-lg">
-          Fortæl os om jeres projekt — vi vender tilbage inden for 24 timer med
+          Fortæl os om jeres projekt. Vi vender tilbage inden for 24 timer med
           en uforpligtende vurdering.
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">

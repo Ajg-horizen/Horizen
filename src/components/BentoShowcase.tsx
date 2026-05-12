@@ -397,7 +397,7 @@ const designWireframeContent = (
       <div className="h-3 w-20 bg-sky-300/25 rounded-full mx-auto" />
     </div>
     <span className="text-[8px] text-white/50 text-center">
-      Wireframe — forside v2
+      Wireframe, forside v2
     </span>
   </div>
 );
@@ -560,7 +560,7 @@ const cards = [
   },
   {
     eyebrow: "Design & UX",
-    title: "Vi designer ud fra brugeradfærd og struktureret data — ikke subjektive holdninger og intuition.",
+    title: "Vi designer ud fra brugeradfærd og struktureret data, ikke subjektive holdninger og intuition.",
     accentColor: "#e8915a",
     tabs: [
       { id: "wire", label: "Wireframes", icon: PenToolIcon, content: designWireframeContent },
@@ -570,7 +570,7 @@ const cards = [
   },
   {
     eyebrow: "Udvikling & CMS",
-    title: "UI/UX forankret i data og brugeradfærd — fordi gode interfaces gør hverdagen lettere for alle.",
+    title: "UI/UX forankret i data og brugeradfærd, fordi gode interfaces gør hverdagen lettere for alle.",
     accentColor: "#6b8aed",
     tabs: [
       { id: "tech", label: "Tech stack", icon: CodeIcon, content: devTechContent },
@@ -580,7 +580,7 @@ const cards = [
   },
   {
     eyebrow: "Vækst & Fremtidssikring",
-    title: "Lancering er kun begyndelsen. Vi er med dig hele vejen — fra onboarding og dataindsigt til løbende optimering.",
+    title: "Lancering er kun begyndelsen. Vi er med dig hele vejen, fra onboarding og dataindsigt til løbende optimering.",
     accentColor: "#00b67a",
     tabs: [
       { id: "analytics", label: "Analytics", icon: TrendingUpIcon, content: vaekstAnalyticsContent },
@@ -607,7 +607,7 @@ export default function BentoShowcase() {
         <p className="mt-4 max-w-2xl text-base text-muted leading-relaxed">
           I en digital branche hvor tingene går hurtigt, er det altafgørende
           at fundamentet er baseret på struktur og forståelse. Data er guld
-          — og den rigtige struktur er grundstenen til vækst på sigt.
+          og den rigtige struktur er grundstenen til vækst på sigt.
         </p>
       </motion.div>
 

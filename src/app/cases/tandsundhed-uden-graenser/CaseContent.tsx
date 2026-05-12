@@ -28,7 +28,7 @@ const project = {
   client: "Tandsundhed Uden Grænser",
   image: "/cases/smilende_kvinde_fra_Mongoliet.webp",
   description:
-    "Komplet redesign og ny visuel identitet for en NGO der kæmper for bedre tandsundhed globalt — fra forældet WPBakery-site til et skræddersyet CMS der sparer timer hver dag.",
+    "Komplet redesign og ny visuel identitet for en NGO der kæmper for bedre tandsundhed globalt. Fra forældet WPBakery-site til et skræddersyet CMS der sparer timer hver dag.",
   team: [
     {
       name: "Johanne",
@@ -230,7 +230,7 @@ export default function CaseContent() {
                   key={member.name}
                   src={member.avatar}
                   alt={member.name}
-                  title={`${member.name} — ${member.role}`}
+                  title={`${member.name}, ${member.role}`}
                   className="h-7 w-7 rounded-full border-2 border-background object-cover"
                 />
               ))}
@@ -265,7 +265,7 @@ export default function CaseContent() {
               Tandsundhed Uden Grænser stod med en hjemmeside bygget i WPBakery
               der var stærkt forældet, visuelt utiltalende og nærmest umulig at
               vedligeholde. Teamet brugte op til 3 timer dagligt på helt basale
-              redigeringer — tid der burde bruges på deres kerneopgave.
+              redigeringer. Tid der burde bruges på deres kerneopgave.
             </p>
             <p className="mt-4 text-base text-muted leading-relaxed">
               Den eksisterende løsning manglede responsivt design, havde langsom
@@ -303,7 +303,7 @@ export default function CaseContent() {
               Vi designede en helt ny visuel identitet og byggede sitet fra bunden
               med et skræddersyet CMS der er tilpasset organisationens daglige
               behov. Redigeringstiden gik fra 3 timer til under 30 minutter om
-              dagen — en reduktion på over 83%.
+              dagen. En reduktion på over 83%.
             </p>
             <p className="mt-4 text-base text-muted leading-relaxed">
               Komplet UI/UX redesign med fokus på storytelling, donationer og
@@ -373,7 +373,7 @@ export default function CaseContent() {
             </h2>
             <p className="mt-4 text-white/60 leading-relaxed">
               Det nye CMS transformerede teamets hverdag. Opgaver der før tog
-              timer klares nu på minutter — og kvaliteten af indholdet er
+              timer klares nu på minutter, og kvaliteten af indholdet er
               steget markant med intuitive redigeringsværktøjer.
             </p>
             <div className="mt-8 flex gap-8">
@@ -433,7 +433,7 @@ export default function CaseContent() {
                 {/* Before */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-white/40">Før — WPBakery</span>
+                    <span className="text-xs text-white/40">Før (WPBakery)</span>
                     <span className="text-sm font-bold text-white/60">3 timer</span>
                   </div>
                   <div className="h-10 w-full rounded-lg bg-white/[0.06] overflow-hidden">
@@ -450,7 +450,7 @@ export default function CaseContent() {
                 {/* After */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-white/40">Efter — Custom CMS</span>
+                    <span className="text-xs text-white/40">Efter (Custom CMS)</span>
                     <span className="text-sm font-bold text-emerald-400">30 min</span>
                   </div>
                   <div className="h-10 w-full rounded-lg bg-white/[0.06] overflow-hidden">

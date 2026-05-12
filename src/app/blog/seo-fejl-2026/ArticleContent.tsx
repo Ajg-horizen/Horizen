@@ -10,7 +10,7 @@ function Content() {
     {
       number: "01",
       title: "Ignorerer Core Web Vitals",
-      text: "Google prioriterer brugeroplevelse højere end nogensinde. Hvis din side er langsom, hopper brugerne — og Google straffer dig i søgeresultaterne. LCP, FID og CLS er ikke bare forkortelser, de er dit fundament.",
+      text: "Google prioriterer brugeroplevelse højere end nogensinde. Hvis din side er langsom, hopper brugerne, og Google straffer dig i søgeresultaterne. LCP, FID og CLS er ikke bare forkortelser, de er dit fundament.",
     },
     {
       number: "02",
@@ -20,7 +20,7 @@ function Content() {
     {
       number: "03",
       title: "Tyndt indhold uden søgeintention",
-      text: "At skrive 300 ord om alt og ingenting hjælper ingen. Google belønner dybdegående, relevant indhold der rent faktisk besvarer brugerens spørgsmål. Kvalitet slår kvantitet — hver gang.",
+      text: "At skrive 300 ord om alt og ingenting hjælper ingen. Google belønner dybdegående, relevant indhold der rent faktisk besvarer brugerens spørgsmål. Kvalitet slår kvantitet, hver gang.",
     },
     {
       number: "04",
@@ -45,7 +45,7 @@ function Content() {
       >
         <p className="text-lg leading-relaxed text-muted-foreground">
           SEO ændrer sig konstant, men nogle fejl er tidløse. Vi ser dem igen og
-          igen hos virksomheder der ellers gør alt rigtigt — men mister kunder
+          igen hos virksomheder der ellers gør alt rigtigt, men mister kunder
           på grund af simple, undgåelige fejl i deres digitale strategi.
         </p>
       </motion.div>
@@ -89,10 +89,10 @@ function Content() {
       >
         <p className="text-xl font-medium leading-snug tracking-tight md:text-2xl">
           &ldquo;Den bedste SEO-strategi er den du faktisk implementerer. Start
-          med grundlaget — resten følger.&rdquo;
+          med grundlaget, resten følger.&rdquo;
         </p>
         <cite className="mt-4 block text-sm text-muted not-italic">
-          — Anne-Sofie, Marketing Lead hos Horizen
+          Anne-Sofie, Marketing Lead hos Horizen
         </cite>
       </motion.blockquote>
 
@@ -108,7 +108,7 @@ function Content() {
         </h2>
         <p className="mt-4 text-muted leading-relaxed">
           Hvis du genkender en eller flere af disse fejl, er du ikke alene.
-          De gode nyheder er at de alle kan fikses — og resultaterne viser sig
+          De gode nyheder er at de alle kan fikses, og resultaterne viser sig
           ofte hurtigere end du tror. En struktureret SEO-indsats er en af de
           mest rentable investeringer en virksomhed kan foretage.
         </p>

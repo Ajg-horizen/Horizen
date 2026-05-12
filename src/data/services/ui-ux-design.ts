@@ -15,9 +15,9 @@ import type { ServicePage } from "@/lib/services";
 export const uiUxDesign: ServicePage = {
   slug: "ui-ux-design",
   metadata: {
-    title: "UI/UX Design — Horizen",
+    title: "UI/UX Design | Horizen",
     description:
-      "Strategisk UX og håndværksbåret UI. Brugerflow, hierarki, typografi og mikrointeraktioner — design der både virker og ser rigtigt ud.",
+      "Strategisk UX og håndværksbåret UI. Brugerflow, hierarki, typografi og mikrointeraktioner. Design der både virker og ser rigtigt ud.",
   },
   blocks: [
     {
@@ -27,7 +27,7 @@ export const uiUxDesign: ServicePage = {
         lead: "UI/UX baseret på brugeradfærd og data.",
         mutedTail: "Ikke subjektive holdninger.",
       },
-      body: "Brugerflow, hierarki, typografi, mikrointeraktioner — vi bygger det hele på research og adfærdsdata, ikke på fornemmelser. Det er forskellen mellem et design der ser godt ud, og et der rent faktisk virker.",
+      body: "Brugerflow, hierarki, typografi, mikrointeraktioner. Vi bygger det hele på research og adfærdsdata, ikke på fornemmelser. Det er forskellen mellem et design der ser godt ud, og et der rent faktisk virker.",
       cta: { label: "Start et designprojekt", href: "/kontakt" },
       image: {
         src: "/graphics/Hero-image-UI-UX-servies-hands.webp",
@@ -50,18 +50,18 @@ export const uiUxDesign: ServicePage = {
       id: "system",
       eyebrow: "Under overfladen",
       heading: { lead: "Godt design er bygget på to lag.", mutedTail: "Det\u00A0ene\u00A0ser\u00A0du\u00A0aldrig." },
-      body: "Research viser, at korrekt UX kan forbedre konverteringen med op til 400%. Alligevel er det fortsat sjældent at løsninger bliver bygget på egentlig research — selv når professionelle er sat på opgaven. Resultatet bliver designet på subjektive holdninger og oftest til virksomheden selv fremfor slutbrugeren. Det er den mest kritiske fejl vi ser gang på gang — og AI har kun gjort den hyppigere.",
+      body: "Research viser, at korrekt UX kan forbedre konverteringen med op til 400%. Alligevel er det fortsat sjældent at løsninger bliver bygget på egentlig research, selv når professionelle er sat på opgaven. Resultatet bliver designet på subjektive holdninger og oftest til virksomheden selv fremfor slutbrugeren. Det er den mest kritiske fejl vi ser gang på gang, og AI har kun gjort den hyppigere.",
       uxCaption:
-        "UX er der, hvor flowet dikteres og hierarkiet bestemmes — hvad brugeren møder hvornår, og om brugerrejsen overhovedet holder. UX'en er afgørende for en struktureret proces og succes.",
+        "UX er der, hvor flowet dikteres og hierarkiet bestemmes. Hvad brugeren møder hvornår, og om brugerrejsen overhovedet holder. UX'en er afgørende for en struktureret proces og succes.",
       uiCaption:
-        "Udtrykket oven på strukturen. UI'en er typografi, farver, komponenter og mikrointeraktioner — det brugeren faktisk mærker.",
+        "Udtrykket oven på strukturen. UI'en er typografi, farver, komponenter og mikrointeraktioner. Det brugeren faktisk mærker.",
     },
     {
       type: "centeredCta",
       stickyGroup: "designStack",
       eyebrow: "Gratis design-audit",
       heading: "Er din side bygget på rigtige designprincipper, eller er den bare bygget?",
-      body: "AI har gjort det muligt for alle at bygge en standardside — og hermed hævet barren for, hvad professionelt betyder. Det er blevet sværere end nogensinde at skelne mellem professionelt og AI-slup.\n\nDerfor tilbyder vi en gratis audit, hvor vi vurderer om din side er bygget på de rette UI/UX-principper, og om det tekniske fundament er holdbart.",
+      body: "AI har gjort det muligt for alle at bygge en standardside, og hermed hævet barren for, hvad professionelt betyder. Det er blevet sværere end nogensinde at skelne mellem professionelt og AI-slup.\n\nDerfor tilbyder vi en gratis audit, hvor vi vurderer om din side er bygget på de rette UI/UX-principper, og om det tekniske fundament er holdbart.",
       cta: { label: "Book en gratis design-audit", href: "/kontakt" },
     },
     {
@@ -69,7 +69,7 @@ export const uiUxDesign: ServicePage = {
       stickyGroup: "designStack",
       eyebrow: "Fundamentet for succes",
       heading: { lead: "Strukturerede processer for UI/UX", mutedTail: "skaber engagement" },
-      body: "Det meste af det arbejde der adskiller et professionelt produkt fra et tilfældigt, sker før den første pixel tegnes. Research, informationsarkitektur, brugerflows, hierarki — det er de beslutninger der fjerner friktion fra både processen og brugerrejsen. Vi tager de skridt, fordi vi ved det er dem der flytter resultatet.",
+      body: "Det meste af det arbejde der adskiller et professionelt produkt fra et tilfældigt, sker før den første pixel tegnes. Research, informationsarkitektur, brugerflows, hierarki. Det er de beslutninger der fjerner friktion fra både processen og brugerrejsen. Vi tager de skridt, fordi vi ved det er dem der flytter resultatet.",
     },
     {
       type: "positioning",
@@ -78,8 +78,8 @@ export const uiUxDesign: ServicePage = {
       eyebrow: "Vores tilgang",
       heading: { lead: "UX er strategien.", mutedTail: "UI er håndværket. Vi gør begge dele." },
       paragraphs: [
-        "UI og UX er to sider af samme mønt — men de bliver sjældent behandlet sådan. Vi insisterer på at strategi og æstetik arbejder sammen fra dag ét. Det er den kobling der gør et projekt holdbart og fremtidssikret.",
-        "En grundig designfase kan nemt løbe op i 60–150 timer alene — det er den mængde research og iteration større projekter kræver for at ramme rigtigt. Omfanget tilpasses altid projekt og budget, men princippet er det samme: jo stærkere fundamentet er, jo bedre performer løsningen.",
+        "UI og UX er to sider af samme mønt, men de bliver sjældent behandlet sådan. Vi insisterer på at strategi og æstetik arbejder sammen fra dag ét. Det er den kobling der gør et projekt holdbart og fremtidssikret.",
+        "En grundig designfase kan nemt løbe op i 60–150 timer alene. Det er den mængde research og iteration større projekter kræver for at ramme rigtigt. Omfanget tilpasses altid projekt og budget, men princippet er det samme: jo stærkere fundamentet er, jo bedre performer løsningen.",
       ],
       stats: [
         { value: "8+", label: "Års erfaring" },
@@ -99,7 +99,7 @@ export const uiUxDesign: ServicePage = {
           step: "01",
           title: "Research & UX-strategi",
           description:
-            "Bruger-interviews, konkurrentanalyse, eksisterende data. Vi finder ud af hvem brugeren er, hvad de prøver at opnå — og hvor de bliver bremset i dag.",
+            "Bruger-interviews, konkurrentanalyse, eksisterende data. Vi finder ud af hvem brugeren er, hvad de prøver at opnå, og hvor de bliver bremset i dag.",
           icon: SearchIcon,
           accent: "#00b67a",
           link: { href: "/marketing/seo", label: "Bruger-research" },
@@ -108,7 +108,7 @@ export const uiUxDesign: ServicePage = {
           step: "02",
           title: "Wireframes & arkitektur",
           description:
-            "Informationshierarki, navigation, brugerflow. Først når strukturen står, begynder vi at tale om visuel form. Det er en bevidst rækkefølge — fordi struktur er det UI'en skal bære.",
+            "Informationshierarki, navigation, brugerflow. Først når strukturen står, begynder vi at tale om visuel form. Det er en bevidst rækkefølge, fordi struktur er det UI'en skal bære.",
           icon: LayoutIcon,
           accent: "#e8915a",
         },
@@ -116,7 +116,7 @@ export const uiUxDesign: ServicePage = {
           step: "03",
           title: "UI design & system",
           description:
-            "Typografi, farver, komponenter, mikrointeraktioner. Vi bygger ikke skærme — vi bygger et system som skærmene rendres ud fra. Konsistens by design, ikke by ulykke.",
+            "Typografi, farver, komponenter, mikrointeraktioner. Vi bygger ikke skærme. Vi bygger et system som skærmene rendres ud fra. Konsistens by design, ikke by ulykke.",
           icon: PenToolIcon,
           accent: "#6b8aed",
         },
@@ -136,13 +136,13 @@ export const uiUxDesign: ServicePage = {
       id: "leverancer",
       eyebrow: "Hvad du får",
       heading: ["Fra første sketch", "til siste handoff"],
-      body: "UI/UX er ikke ét leverance — det er en kæde af artefakter der bygger på hinanden. Vi leverer hele kæden, ikke kun de pæne mockups til sidst.",
+      body: "UI/UX er ikke ét leverance. Det er en kæde af artefakter der bygger på hinanden. Vi leverer hele kæden, ikke kun de pæne mockups til sidst.",
       items: [
         { icon: UsersIcon, text: "Bruger-research & personas", bg: "bg-[#e4e8f0]", fg: "text-[#2a3550]" },
         { icon: GridIcon, text: "Informationsarkitektur & flows", bg: "bg-[#fce8db]", fg: "text-[#6b3a1f]" },
-        { icon: LayoutIcon, text: "Wireframes — low til mid fidelity", bg: "bg-[#e0eeec]", fg: "text-[#1f4a42]" },
+        { icon: LayoutIcon, text: "Wireframes, low til mid fidelity", bg: "bg-[#e0eeec]", fg: "text-[#1f4a42]" },
         { icon: PenToolIcon, text: "Hi-fi UI design i Figma", bg: "bg-[#f0ece4]", fg: "text-[#5a4a2d]" },
-        { icon: ComponentIcon, text: "Designsystem — tokens, komponenter, varianter", bg: "bg-[#e8f0e4]", fg: "text-[#2d4a28]" },
+        { icon: ComponentIcon, text: "Designsystem: tokens, komponenter, varianter", bg: "bg-[#e8f0e4]", fg: "text-[#2d4a28]" },
         { icon: MousePointerClickIcon, text: "Interaktiv prototype til test", bg: "bg-[#ebe4f0]", fg: "text-[#3d2a50]" },
         { icon: ContrastIcon, text: "Tilgængeligheds-noter (WCAG 2.1 AA)", bg: "bg-[#e4e8f0]", fg: "text-[#2a3550]" },
         { icon: FileTextIcon, text: "Dev-handoff dokumentation", bg: "bg-[#2a2a2a]", fg: "text-[#f5f5f0]" },
@@ -183,7 +183,7 @@ export const uiUxDesign: ServicePage = {
     {
       type: "gradientCta",
       heading: "Det hele kunne starte her.",
-      body: "Vi hører altid gerne om jeres visioner — og hvordan vi i fællesskab kan bygge dem.",
+      body: "Vi hører altid gerne om jeres visioner, og hvordan vi i fællesskab kan bygge dem.",
       primaryCta: { label: "Tag en snak", href: "/kontakt" },
       secondaryCta: { label: "hej@horizen.dk", href: "mailto:hej@horizen.dk" },
     },
@@ -197,7 +197,7 @@ export const uiUxDesign: ServicePage = {
       faqs: [
         {
           q: "Hvad er forskellen på UX og UI?",
-          a: "UX (user experience) handler om hvordan noget fungerer — flow, struktur, beslutninger brugeren skal træffe. UI (user interface) handler om hvordan det ser ud — typografi, farver, komponenter. UX uden UI bliver kedeligt og overset. UI uden UX bliver flot og ubrugeligt. Vi laver begge dele, fordi de afhænger af hinanden.",
+          a: "UX (user experience) handler om hvordan noget fungerer: flow, struktur, beslutninger brugeren skal træffe. UI (user interface) handler om hvordan det ser ud: typografi, farver, komponenter. UX uden UI bliver kedeligt og overset. UI uden UX bliver flot og ubrugeligt. Vi laver begge dele, fordi de afhænger af hinanden.",
         },
         {
           q: "Hvor lang tid tager designfasen?",
@@ -213,11 +213,11 @@ export const uiUxDesign: ServicePage = {
         },
         {
           q: "Bygger I et designsystem fra bunden hver gang?",
-          a: "Vi bygger altid med et systematisk udgangspunkt — tokens, komponenter, varianter. Hvor avanceret systemet bliver afhænger af projektet. En simpel landingsside får et let system. Et SaaS-produkt får et fuldt design system med dokumentation.",
+          a: "Vi bygger altid med et systematisk udgangspunkt: tokens, komponenter, varianter. Hvor avanceret systemet bliver afhænger af projektet. En simpel landingsside får et let system. Et SaaS-produkt får et fuldt design system med dokumentation.",
         },
         {
           q: "Tester I designet med rigtige brugere?",
-          a: "Når det giver mening, ja — usability tests, A/B-tests, eller bare uformelle samtaler med relevante brugere. Vi anbefaler det især på produkter med komplekse flows. På mindre projekter er det ofte unødvendigt.",
+          a: "Når det giver mening, ja. Usability tests, A/B-tests, eller bare uformelle samtaler med relevante brugere. Vi anbefaler det især på produkter med komplekse flows. På mindre projekter er det ofte unødvendigt.",
         },
       ],
     },

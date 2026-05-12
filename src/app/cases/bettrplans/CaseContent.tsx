@@ -30,7 +30,7 @@ const project = {
   client: "BettrPlans",
   image: "/cases/BettrPlans-Case-Image-02.webp",
   description:
-    "Et nyt brand og en platform, der gør indretning af hjemmet mere overskueligt — fra første idé til konkret beslutning.",
+    "Et nyt brand og en platform, der gør indretning af hjemmet mere overskueligt. Fra første idé til konkret beslutning.",
   team: [
     {
       name: "José",
@@ -234,7 +234,7 @@ export default function CaseContent() {
                   key={member.name}
                   src={member.avatar}
                   alt={member.name}
-                  title={`${member.name} — ${member.role}`}
+                  title={`${member.name}, ${member.role}`}
                   className="h-7 w-7 rounded-full border-2 border-background object-cover"
                 />
               ))}
@@ -268,12 +268,12 @@ export default function CaseContent() {
             <p className="text-base text-muted leading-relaxed">
               Stifteren henvendte sig med en klar ambition: at gøre
               indretning af hjemmet mere overskueligt for almindelige
-              mennesker. Idéen og retningen var på plads — men hverken
+              mennesker. Idéen og retningen var på plads, men hverken
               brand, visuel identitet eller platform eksisterede endnu.
             </p>
             <p className="mt-4 text-base text-muted leading-relaxed">
-              Opgaven blev at oversætte konceptet til et konkret produkt
-              — fra grundig brugerforståelse til en lanceret platform,
+              Opgaven blev at oversætte konceptet til et konkret produkt,
+              fra grundig brugerforståelse til en lanceret platform,
               klar til brug fra dag ét.
             </p>
           </motion.div>
@@ -306,11 +306,11 @@ export default function CaseContent() {
             <p className="text-base text-muted leading-relaxed">
               Vi indledte med at kortlægge målgruppen og kerneopgaven,
               og udviklede derfra et komplet brand: navnunivers, logo,
-              visuel identitet og tone — forankret i en fælles vision om
+              visuel identitet og tone, forankret i en fælles vision om
               et roligere og mere overskueligt indretningsforløb.
             </p>
             <p className="mt-4 text-base text-muted leading-relaxed">
-              Herefter byggede vi platformen — webdesign, udvikling og et
+              Herefter byggede vi platformen: webdesign, udvikling og et
               CMS, kunden selv kunne arbejde i. End-to-end, uden eksterne
               mellemled.
             </p>
@@ -341,7 +341,7 @@ export default function CaseContent() {
             </h2>
             <p className="mt-4 text-white/60 leading-relaxed">
               Kunden bragte idéen og ambitionen. Vi leverede alt det
-              øvrige — fra indledende brugerinterviews til en lanceret
+              øvrige, fra indledende brugerinterviews til en lanceret
               platform. End-to-end, uden eksterne mellemled.
             </p>
 

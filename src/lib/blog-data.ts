@@ -38,7 +38,7 @@ export const blogPosts: BlogPost[] = [
     slug: "ai-webdesign",
     title: "Sådan bruger vi AI til at levere bedre webdesign",
     excerpt:
-      "Vi dykker ned i hvordan kunstig intelligens ændrer vores designproces — og hvad det betyder for dig som kunde.",
+      "Vi dykker ned i hvordan kunstig intelligens ændrer vores designproces, og hvad det betyder for dig som kunde.",
     image:
       "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=500&fit=crop&q=80",
     author: {
@@ -56,7 +56,7 @@ export const blogPosts: BlogPost[] = [
     slug: "seo-fejl-2026",
     title: "5 SEO-fejl der koster dig kunder i 2026",
     excerpt:
-      "De fleste virksomheder begår stadig grundlæggende SEO-fejl. Her er de fem mest kritiske — og hvordan du fikser dem.",
+      "De fleste virksomheder begår stadig grundlæggende SEO-fejl. Her er de fem mest kritiske, og hvordan du fikser dem.",
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop&q=80",
     author: {

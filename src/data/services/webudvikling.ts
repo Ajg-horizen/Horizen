@@ -20,7 +20,7 @@ import type { ServicePage } from "@/lib/services";
 export const webudvikling: ServicePage = {
   slug: "webudvikling",
   metadata: {
-    title: "Webudvikling — Horizen",
+    title: "Webudvikling | Horizen",
     description:
       "Custom webudvikling med fokus på performance, skalerbarhed og teknisk eksekvering. Next.js, React og moderne web-arkitektur bygget fra bunden.",
   },
@@ -30,7 +30,7 @@ export const webudvikling: ServicePage = {
       eyebrow: { label: "Webudvikling", icon: LayoutIcon },
       heading: {
         lead: "Hjemmesider er blevet en commodity.",
-        mutedTail: "Vi kombinerer erfaring med AI — ikke omvendt.",
+        mutedTail: "Vi kombinerer erfaring med AI, ikke omvendt.",
       },
       body: "Uden forståelse for det tekniske fundament vil enhver hjemmeside fejle. Vi bygger på et fundament af 8+ års teknisk erfaring. Forstærket af AI til din fordel.",
       cta: { label: "Start et projekt", href: "/kontakt" },
@@ -52,8 +52,8 @@ export const webudvikling: ServicePage = {
       type: "techFoundation",
       id: "fundament",
       eyebrow: "Teknisk fundament",
-      heading: "Det du ikke ser — men vi ser",
-      body: "Vi går ned i det tekniske fundament — og det er dér, forskellen mellem en god og en dårlig hjemmeside afsløres. 98% af alle hjemmesideejere ser det aldrig. Det er også derfor så mange hjemmesider ikke performer som de burde.",
+      heading: "Det du ikke ser, men vi ser",
+      body: "Vi går ned i det tekniske fundament. Det er dér, forskellen mellem en god og en dårlig hjemmeside afsløres. 98% af alle hjemmesideejere ser det aldrig. Det er også derfor så mange hjemmesider ikke performer som de burde.",
       lighthouseMetrics: [
         { label: "Performance", value: 98, icon: GaugeIcon, color: "#00b67a" },
         { label: "Accessibility", value: 100, icon: EyeIcon, color: "#6b8aed" },
@@ -66,7 +66,7 @@ export const webudvikling: ServicePage = {
       stickyGroup: "techStack",
       eyebrow: "Gratis audit",
       heading: "Er din hjemmeside bygget til at holde?",
-      body: "Vi ser det oftere og oftere efter AI er kommet — løsninger der ser fine ud på overfladen, men som teknisk ikke holder. Bygget med alt for få timer, uden nogen reel teknisk forståelse for fundamentet. Vi gennemgår din nuværende hjemmeside helt gratis og giver dig en professionel vurdering.",
+      body: "Vi ser det oftere og oftere efter AI er kommet: løsninger der ser fine ud på overfladen, men som teknisk ikke holder. Bygget med alt for få timer, uden nogen reel teknisk forståelse for fundamentet. Vi gennemgår din nuværende hjemmeside helt gratis og giver dig en professionel vurdering.",
       cta: { label: "Book en gratis audit", href: "/kontakt" },
     },
     {
@@ -74,7 +74,7 @@ export const webudvikling: ServicePage = {
       stickyGroup: "techStack",
       eyebrow: "Under overfladen",
       heading: { lead: "Teknisk struktur", mutedTail: "skaber synlighed" },
-      body: "WCAG-compliance, ren arkitektur, en kodebase der stadig virker om to år. Når de rigtige tiltag er taget fra dag ét, performer din side bedre — det er den erfaring AI ikke har.",
+      body: "WCAG-compliance, ren arkitektur, en kodebase der stadig virker om to år. Når de rigtige tiltag er taget fra dag ét, performer din side bedre. Det er den erfaring AI ikke har.",
       chartLegend: {
         weak: "Svagt teknisk fundament",
         strong: "Stærkt teknisk fundament",
@@ -85,7 +85,7 @@ export const webudvikling: ServicePage = {
         "Automatisk billedoptimering & lazy loading",
         "Semantisk HTML for bedre søgemaskinesynlighed",
         "Struktureret data (Schema.org) til rich snippets",
-        "Code splitting — kun det nødvendige kode loades",
+        "Code splitting, kun det nødvendige kode loades",
         "WCAG 2.1 AA tilgængelighed som standard",
         "Edge caching for global hastighed",
         "Responsivt design testet på 12+ enheder",
@@ -98,8 +98,8 @@ export const webudvikling: ServicePage = {
       eyebrow: "Vores tilgang",
       heading: { lead: "Standarden er hævet.", mutedTail: "Vi har hævet vores." },
       paragraphs: [
-        "AI har ændret forudsætningerne. Vi har tilpasset vores proces — ikke vores ambitionsniveau. Vi investerer stadig 100–300 timer pr. projekt. Samme fundament som altid. Forskellen er hvad de timer producerer i dag.",
-        "Hvor andre reducerer til 2–5 timer, bruger vi de frigjorte ressourcer på at levere eksemplarisk. Det er ikke hastighed der afgør kvalitet på lang sigt — det er viljen til at udnytte potentialet til det fuldeste.",
+        "AI har ændret forudsætningerne. Vi har tilpasset vores proces, ikke vores ambitionsniveau. Vi investerer stadig 100–300 timer pr. projekt. Samme fundament som altid. Forskellen er hvad de timer producerer i dag.",
+        "Hvor andre reducerer til 2–5 timer, bruger vi de frigjorte ressourcer på at levere eksemplarisk. Det er ikke hastighed der afgør kvalitet på lang sigt. Det er viljen til at udnytte potentialet til det fuldeste.",
       ],
       stats: [
         { value: "150+", label: "Projekter leveret" },
@@ -119,7 +119,7 @@ export const webudvikling: ServicePage = {
           step: "01",
           title: "Analyse & strategi",
           description:
-            "Vi starter aldrig med design. Vi starter med at forstå — din forretning, dine kunder, dine konkurrenter. Det er her fundamentet lægges.",
+            "Vi starter aldrig med design. Vi starter med at forstå: din forretning, dine kunder, dine konkurrenter. Det er her fundamentet lægges.",
           icon: SearchIcon,
           accent: "#00b67a",
         },
@@ -136,7 +136,7 @@ export const webudvikling: ServicePage = {
           step: "03",
           title: "Udvikling",
           description:
-            "Next.js, React, Tailwind — moderne teknologi der performer. Under 2 sekunders loadtid. Responsivt fra dag ét. Kode du ejer 100%.",
+            "Next.js, React, Tailwind. Moderne teknologi der performer. Under 2 sekunders loadtid. Responsivt fra dag ét. Kode du ejer 100%.",
           icon: CodeIcon,
           accent: "#6b8aed",
         },
@@ -144,7 +144,7 @@ export const webudvikling: ServicePage = {
           step: "04",
           title: "Launch & vækst",
           description:
-            "Vi launcher ikke bare — vi overvåger, optimerer og sikrer at din side konverterer. SEO, hastighed, brugeradfærd. Vi slipper ikke før det virker.",
+            "Vi launcher ikke bare. Vi overvåger, optimerer og sikrer at din side konverterer. SEO, hastighed, brugeradfærd. Vi slipper ikke før det virker.",
           icon: RocketIcon,
           accent: "#00b67a",
         },
@@ -154,16 +154,16 @@ export const webudvikling: ServicePage = {
       type: "deliverables",
       eyebrow: "Under overfladen",
       heading: ["Fra udgift", "til investering"],
-      body: "De fleste ser kun overfladen. Vi ser det der ligger under — loadtid, sikkerhed, SEO-struktur, tilgængelighed. Det er de ting der afgør om din hjemmeside arbejder for dig, eller bare står der.",
+      body: "De fleste ser kun overfladen. Vi ser det der ligger under: loadtid, sikkerhed, SEO-struktur, tilgængelighed. Det er de ting der afgør om din hjemmeside arbejder for dig, eller bare står der.",
       items: [
-        { icon: SmartphoneIcon, text: "Responsivt design — mobil, tablet, desktop", bg: "bg-[#e4e8f0]", fg: "text-[#2a3550]" },
-        { icon: ZapIcon, text: "Under 2s loadtid — optimeret til Core Web Vitals", bg: "bg-[#fce8db]", fg: "text-[#6b3a1f]" },
-        { icon: ShieldCheckIcon, text: "SEO-fundament — metadata, sitemap, struktureret data", bg: "bg-[#e0eeec]", fg: "text-[#1f4a42]" },
-        { icon: MousePointerClickIcon, text: "Konverteringsoptimeret — CTA, flow, brugerrejse", bg: "bg-[#f0ece4]", fg: "text-[#5a4a2d]" },
-        { icon: PaletteIcon, text: "Unikt design — ingen templates, kun din forretning", bg: "bg-[#e8f0e4]", fg: "text-[#2d4a28]" },
-        { icon: LayersIcon, text: "CMS-integration — redigér selv indhold", bg: "bg-[#ebe4f0]", fg: "text-[#3d2a50]" },
-        { icon: LayoutIcon, text: "Tilgængelighed — WCAG 2.1 AA compliant", bg: "bg-[#e4e8f0]", fg: "text-[#2a3550]" },
-        { icon: CodeIcon, text: "Ren kodebase — nem at vedligeholde og udvide", bg: "bg-[#2a2a2a]", fg: "text-[#f5f5f0]" },
+        { icon: SmartphoneIcon, text: "Responsivt design: mobil, tablet, desktop", bg: "bg-[#e4e8f0]", fg: "text-[#2a3550]" },
+        { icon: ZapIcon, text: "Under 2s loadtid, optimeret til Core Web Vitals", bg: "bg-[#fce8db]", fg: "text-[#6b3a1f]" },
+        { icon: ShieldCheckIcon, text: "SEO-fundament: metadata, sitemap, struktureret data", bg: "bg-[#e0eeec]", fg: "text-[#1f4a42]" },
+        { icon: MousePointerClickIcon, text: "Konverteringsoptimeret: CTA, flow, brugerrejse", bg: "bg-[#f0ece4]", fg: "text-[#5a4a2d]" },
+        { icon: PaletteIcon, text: "Unikt design, ingen templates, kun din forretning", bg: "bg-[#e8f0e4]", fg: "text-[#2d4a28]" },
+        { icon: LayersIcon, text: "CMS-integration, redigér selv indhold", bg: "bg-[#ebe4f0]", fg: "text-[#3d2a50]" },
+        { icon: LayoutIcon, text: "Tilgængelighed: WCAG 2.1 AA compliant", bg: "bg-[#e4e8f0]", fg: "text-[#2a3550]" },
+        { icon: CodeIcon, text: "Ren kodebase, nem at vedligeholde og udvide", bg: "bg-[#2a2a2a]", fg: "text-[#f5f5f0]" },
       ],
     },
     {
@@ -201,7 +201,7 @@ export const webudvikling: ServicePage = {
     {
       type: "gradientCta",
       heading: "Det hele kunne starte her.",
-      body: "Vi hører altid gerne om jeres visioner — og hvordan vi i fællesskab kan bygge dem.",
+      body: "Vi hører altid gerne om jeres visioner, og hvordan vi i fællesskab kan bygge dem.",
       primaryCta: { label: "Tag en snak", href: "/kontakt" },
       secondaryCta: { label: "hej@horizen.dk", href: "mailto:hej@horizen.dk" },
     },
@@ -215,15 +215,15 @@ export const webudvikling: ServicePage = {
       faqs: [
         {
           q: "Hvor lang tid tager det at bygge en hjemmeside?",
-          a: "De fleste projekter tager 4-8 uger fra første møde til launch. Det afhænger af omfanget — en simpel brandingside er hurtigere end en platform med booking, betalingsflow og integrationer. Vi giver dig en realistisk tidsplan efter første samtale.",
+          a: "De fleste projekter tager 4-8 uger fra første møde til launch. Det afhænger af omfanget. En simpel brandingside er hurtigere end en platform med booking, betalingsflow og integrationer. Vi giver dig en realistisk tidsplan efter første samtale.",
         },
         {
           q: "Hvilken teknologi bygger I med?",
-          a: "Vi arbejder primært med Next.js, React og Tailwind CSS — moderne teknologi der giver hurtige, skalerbare og søgemaskinevenlige hjemmesider. Til CMS bruger vi enten WordPress (headless), Sanity eller custom løsninger afhængigt af dit behov.",
+          a: "Vi arbejder primært med Next.js, React og Tailwind CSS. Moderne teknologi der giver hurtige, skalerbare og søgemaskinevenlige hjemmesider. Til CMS bruger vi enten WordPress (headless), Sanity eller custom løsninger afhængigt af dit behov.",
         },
         {
           q: "Ejer jeg koden bagefter?",
-          a: "Ja. 100%. Alt kode, alle assets, alle designs — det hele er dit. Vi står for hosting som en del af vores løsning, men du kan altid få det hele overdraget hvis du ønsker det. Vi binder dig aldrig til noget.",
+          a: "Ja. 100%. Alt kode, alle assets, alle designs: det hele er dit. Vi står for hosting som en del af vores løsning, men du kan altid få det hele overdraget hvis du ønsker det. Vi binder dig aldrig til noget.",
         },
         {
           q: "Hvad med vedligeholdelse efter launch?",
@@ -231,11 +231,11 @@ export const webudvikling: ServicePage = {
         },
         {
           q: "Kan I hjælpe med SEO og markedsføring?",
-          a: "Ja — og vi tænker det ind fra starten, ikke som en eftertanke. Semantisk HTML, struktureret data, hastighedsoptimering og konverteringsdesign er en del af hver hjemmeside vi bygger. Vi tilbyder også dedikeret SEO og Google Ads som separate services.",
+          a: "Ja, og vi tænker det ind fra starten, ikke som en eftertanke. Semantisk HTML, struktureret data, hastighedsoptimering og konverteringsdesign er en del af hver hjemmeside vi bygger. Vi tilbyder også dedikeret SEO og Google Ads som separate services.",
         },
         {
           q: "Hvad adskiller jer fra andre bureauer?",
-          a: "Vi kombinerer design, udvikling og strategi under ét tag. Du får ikke bare en flot side — du får en løsning der er bygget til at performe. Vi bruger AI til at accelerere processen, men det er erfaring og håndværk der sikrer kvaliteten. Og du ejer alt.",
+          a: "Vi kombinerer design, udvikling og strategi under ét tag. Du får ikke bare en flot side. Du får en løsning der er bygget til at performe. Vi bruger AI til at accelerere processen, men det er erfaring og håndværk der sikrer kvaliteten. Og du ejer alt.",
         },
       ],
     },

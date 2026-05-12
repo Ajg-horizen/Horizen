@@ -31,7 +31,7 @@ export const testimonials: Testimonial[] = [
   {
     id: "oliver-od-biler-ai-fundament",
     quote:
-      "Vi havde forsøgt os med en AI-løsning. Den så okay ud, men vi fik ingen henvendelser. Horizen lavede en audit og fandt flere kritiske fejl. Vi valgte at få bygget en ny side fra bunden — og nu har vi rent faktisk fået en side med aktivitet.",
+      "Vi havde forsøgt os med en AI-løsning. Den så okay ud, men vi fik ingen henvendelser. Horizen lavede en audit og fandt flere kritiske fejl. Vi valgte at få bygget en ny side fra bunden, og nu har vi rent faktisk fået en side med aktivitet.",
     rating: 5,
     author: {
       name: "Oliver Dethlefsen",
@@ -71,7 +71,7 @@ export const testimonials: Testimonial[] = [
   {
     id: "ana-fajardo",
     quote:
-      "Som en der går op i detaljer og kvalitet, har jeg sat stor pris på samarbejdet med Horizen. De kombinerer faglighed med en afslappet tilgang, hvor tingene bliver gjort ordentligt — uden unødvendig hast. Kan varmt anbefale Horizen til dem, der værdsætter ægte kvalitet.",
+      "Som en der går op i detaljer og kvalitet, har jeg sat stor pris på samarbejdet med Horizen. De kombinerer faglighed med en afslappet tilgang, hvor tingene bliver gjort ordentligt, uden unødvendig hast. Kan varmt anbefale Horizen til dem, der værdsætter ægte kvalitet.",
     rating: 5,
     author: { name: "Ana Fajardo" },
     source: "trustpilot",
@@ -79,7 +79,7 @@ export const testimonials: Testimonial[] = [
   {
     id: "anne-sofie-nordic-influence",
     quote:
-      "Komplet visuel identitet til min virksomhed hos Horizen — fra første kontakt til færdigt resultat var oplevelsen i top. Ærlig rådgivning, fleksibel og lydhør, professionelt håndværk og fair prissætning. Jeg kommer helt sikkert tilbage med næste projekt.",
+      "Komplet visuel identitet til min virksomhed hos Horizen. Fra første kontakt til færdigt resultat var oplevelsen i top. Ærlig rådgivning, fleksibel og lydhør, professionelt håndværk og fair prissætning. Jeg kommer helt sikkert tilbage med næste projekt.",
     rating: 5,
     author: {
       name: "Anne Sofie Pedersen",

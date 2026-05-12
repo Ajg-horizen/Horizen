@@ -219,7 +219,7 @@ export default function PhysicsPlayground() {
             Der er mange ting at holde styr&nbsp;på
           </h3>
           <p className="mt-3 max-w-lg text-base leading-relaxed text-muted md:mx-auto">
-            GDPR, SEO, performance, sikkerhed, AI, optimering — listen
+            GDPR, SEO, performance, sikkerhed, AI, optimering. Listen
             er lang. Vi tager os af det tekniske, så du kan fokusere
             på din forretning.
           </p>

@@ -92,7 +92,7 @@ export default function BrandDonut() {
               style={{ backgroundColor: seg.color }}
             />
             <span className="text-xs text-muted">
-              {seg.value}% — {seg.label}
+              {seg.value}% · {seg.label}
             </span>
           </div>
         ))}

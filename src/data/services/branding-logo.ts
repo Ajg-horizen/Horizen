@@ -14,9 +14,9 @@ import type { ServicePage } from "@/lib/services";
 export const brandingLogo: ServicePage = {
   slug: "branding-logo",
   metadata: {
-    title: "Branding — Horizen",
+    title: "Branding | Horizen",
     description:
-      "Holdbar visuel identitet bygget på strategi og fundament. Logo, farver, typografi, tone of voice og brandguide — design der holder.",
+      "Holdbar visuel identitet bygget på strategi og fundament. Logo, farver, typografi, tone of voice og brandguide. Design der holder.",
   },
   blocks: [
     {
@@ -26,7 +26,7 @@ export const brandingLogo: ServicePage = {
         lead: "Branding starter ikke med et logo.",
         mutedTail: "Det starter med hvem I er.",
       },
-      body: "Den visuelle identitet — farver, former, skrifttyper — udgør kun omkring 25% af et brand. Resten er fundament: virksomhedens værdier, kultur, løfte og retning. Når det indre er klart, skinner det igennem i alt det ydre. Vi bygger brands der starter indefra.",
+      body: "Den visuelle identitet (farver, former, skrifttyper) udgør kun omkring 25% af et brand. Resten er fundament: virksomhedens værdier, kultur, løfte og retning. Når det indre er klart, skinner det igennem i alt det ydre. Vi bygger brands der starter indefra.",
       cta: { label: "Start et brandingprojekt", href: "/kontakt" },
       image: {
         src: "/graphics/Hero-image-branding-services.webp",
@@ -50,7 +50,7 @@ export const brandingLogo: ServicePage = {
       eyebrow: "Under overfladen",
       heading: { lead: "Udtrykket er vigtigt.", mutedTail: "Men det er det indre der tæller." },
       paragraphs: [
-        "Et godt udtryk fanger interessen. Men det er fundamentet — værdier, kultur og strategi — der holder den. Når overfladen fylder mere end substansen, mærker folk det.",
+        "Et godt udtryk fanger interessen. Men det er fundamentet (værdier, kultur og strategi) der holder den. Når overfladen fylder mere end substansen, mærker folk det.",
         "Hver intern beslutning påvirker jeres brand over tid.",
       ],
     },
@@ -59,7 +59,7 @@ export const brandingLogo: ServicePage = {
       stickyGroup: "brandStack",
       eyebrow: "Klar til at kigge indad?",
       heading: "Lad os finde ud af hvad jeres brand har brug for.",
-      body: "Uanset om I starter fra bunden eller vil styrke en eksisterende identitet — det begynder med en samtale. Fortæl os hvor I er, og hvor I gerne vil hen.",
+      body: "Uanset om I starter fra bunden eller vil styrke en eksisterende identitet, det begynder med en samtale. Fortæl os hvor I er, og hvor I gerne vil hen.",
       cta: { label: "Start en samtale", href: "/kontakt" },
     },
     {
@@ -67,7 +67,7 @@ export const brandingLogo: ServicePage = {
       stickyGroup: "brandStack",
       eyebrow: "Alt det der tager tid",
       heading: { lead: "Holdbare brands bygges", mutedTail: "på gode værdier." },
-      body: "Et brand formes af hundredvis af små beslutninger — fra intern ledelse til hvordan I møder folk, svarer en mail eller håndterer en dårlig dag. Det er den slags oplevelser mennesker husker. Vi hjælper jer med at tænke det hele igennem, fra start til slut.",
+      body: "Et brand formes af hundredvis af små beslutninger, fra intern ledelse til hvordan I møder folk, svarer en mail eller håndterer en dårlig dag. Det er den slags oplevelser mennesker husker. Vi hjælper jer med at tænke det hele igennem, fra start til slut.",
       orbitItems: [
         [
           { label: "Tillid", dot: "#6BCB77" },
@@ -102,8 +102,8 @@ export const brandingLogo: ServicePage = {
       eyebrow: "Det vi tror på",
       heading: { lead: "Vi har kigget indad.", mutedTail: "Til fordel for jer." },
       paragraphs: [
-        "De bedste resultater opstår når mennesker har tilliden, friheden og ejerskabet. Det er ikke noget vi siger — det er noget vi tror på. Det er kernefundamentet hos Horizen.",
-        "Vi tror ikke på micromanagement. Vi tror på at løfte i fællesskab og belønne nysgerrighed. Det mærkes i vores arbejde — fordi hvert projekt bærer præg af mennesker der fik plads til at være mennesker og eksperimentere.",
+        "De bedste resultater opstår når mennesker har tilliden, friheden og ejerskabet. Det er ikke noget vi siger. Det er noget vi tror på. Det er kernefundamentet hos Horizen.",
+        "Vi tror ikke på micromanagement. Vi tror på at løfte i fællesskab og belønne nysgerrighed. Det mærkes i vores arbejde, fordi hvert projekt bærer præg af mennesker der fik plads til at være mennesker og eksperimentere.",
       ],
       reviews: {
         count: 200,
@@ -123,7 +123,7 @@ export const brandingLogo: ServicePage = {
       stickyGroup: "brandStack",
       eyebrow: "Processen",
       heading: "Fra indsigt til identitet",
-      body: "Vi tager jer igennem fire trin. Hvert trin bygger på det forrige, og I er med hele vejen — så det endelige resultat føles lige så meget jeres som vores.",
+      body: "Vi tager jer igennem fire trin. Hvert trin bygger på det forrige, og I er med hele vejen, så det endelige resultat føles lige så meget jeres som vores.",
       steps: [
         {
           step: "01",
@@ -145,7 +145,7 @@ export const brandingLogo: ServicePage = {
           step: "03",
           title: "Visuel identitet",
           description:
-            "Logo, farver, typografi, billedstil, ikoner. Vi designer ikke isolerede elementer — vi bygger et system der hænger sammen på tværs af alle touchpoints.",
+            "Logo, farver, typografi, billedstil, ikoner. Vi designer ikke isolerede elementer. Vi bygger et system der hænger sammen på tværs af alle touchpoints.",
           icon: PaletteIcon,
           accent: "#6b8aed",
         },
@@ -153,7 +153,7 @@ export const brandingLogo: ServicePage = {
           step: "04",
           title: "Aktivering & implementering",
           description:
-            "Et brand lever ikke i en PDF. Vi sikrer at identiteten tages i brug — internt i teamet og eksternt på alle touchpoints. I får alt værktøjet I skal bruge: brandguide, templates, eksempler. Men vigtigst: en fælles forståelse af hvorfor brandet er som det er.",
+            "Et brand lever ikke i en PDF. Vi sikrer at identiteten tages i brug, internt i teamet og eksternt på alle touchpoints. I får alt værktøjet I skal bruge: brandguide, templates, eksempler. Men vigtigst: en fælles forståelse af hvorfor brandet er som det er.",
           icon: FileTextIcon,
           accent: "#00b67a",
         },
@@ -164,11 +164,11 @@ export const brandingLogo: ServicePage = {
       id: "leverancer",
       eyebrow: "Hvad du får",
       heading: ["Alt fra strategi", "til færdigt brand"],
-      body: "Et brand er mere end en fil, en guide eller et logo. Vi leverer både det synlige — og det der får brandet til at leve internt. Fra strategi og værdier til håndgribelige værktøjer I kan bruge fra dag ét.",
+      body: "Et brand er mere end en fil, en guide eller et logo. Vi leverer både det synlige, og det der får brandet til at leve internt. Fra strategi og værdier til håndgribelige værktøjer I kan bruge fra dag ét.",
       items: [
         { icon: SearchIcon, text: "Brandløfte & positionering", bg: "bg-[#e4e8f0]", fg: "text-[#2a3550]" },
         { icon: TargetIcon, text: "Brandstrategi & værdier", bg: "bg-[#fce8db]", fg: "text-[#6b3a1f]" },
-        { icon: PenToolIcon, text: "Logodesign — primær + varianter", bg: "bg-[#e0eeec]", fg: "text-[#1f4a42]" },
+        { icon: PenToolIcon, text: "Logodesign: primær + varianter", bg: "bg-[#e0eeec]", fg: "text-[#1f4a42]" },
         { icon: PaletteIcon, text: "Farvepalet & typografisystem", bg: "bg-[#f0ece4]", fg: "text-[#5a4a2d]" },
         { icon: TypeIcon, text: "Tone of voice & sprogretningslinjer", bg: "bg-[#e8f0e4]", fg: "text-[#2d4a28]" },
         { icon: GridIcon, text: "Ikonografi & billedstil", bg: "bg-[#ebe4f0]", fg: "text-[#3d2a50]" },
@@ -211,7 +211,7 @@ export const brandingLogo: ServicePage = {
     {
       type: "gradientCta",
       heading: "Det hele kunne starte her.",
-      body: "Vi hører altid gerne om jeres visioner — og hvordan vi i fællesskab kan bygge dem.",
+      body: "Vi hører altid gerne om jeres visioner, og hvordan vi i fællesskab kan bygge dem.",
       primaryCta: { label: "Tag en snak", href: "/kontakt" },
       secondaryCta: { label: "hej@horizen.dk", href: "mailto:hej@horizen.dk" },
     },
@@ -225,7 +225,7 @@ export const brandingLogo: ServicePage = {
       faqs: [
         {
           q: "Hvad er forskellen på et logo og et brand?",
-          a: "Et logo er ét element — et brand er hele oplevelsen. Farver, stemme, stil, konsistens. Logoet er indgangen, men brandet er det folk husker.",
+          a: "Et logo er ét element. Et brand er hele oplevelsen. Farver, stemme, stil, konsistens. Logoet er indgangen, men brandet er det folk husker.",
         },
         {
           q: "Hvor lang tid tager det?",
@@ -233,11 +233,11 @@ export const brandingLogo: ServicePage = {
         },
         {
           q: "Kan vi nøjes med et logo?",
-          a: "Ja — men vi anbefaler altid minimum en farvepalet og typografivalg, så logoet har en kontekst at leve i. Et logo alene mister hurtigt sin kraft.",
+          a: "Ja, men vi anbefaler altid minimum en farvepalet og typografivalg, så logoet har en kontekst at leve i. Et logo alene mister hurtigt sin kraft.",
         },
         {
           q: "Ejer vi filerne?",
-          a: "Ja. Alt er jeres — logo i alle formater, Figma-filer, brandguide, templates. Ingen bindinger.",
+          a: "Ja. Alt er jeres: logo i alle formater, Figma-filer, brandguide, templates. Ingen bindinger.",
         },
         {
           q: "Hvad med rebranding?",
@@ -245,7 +245,7 @@ export const brandingLogo: ServicePage = {
         },
         {
           q: "Hvordan holder vi brandet konsistent?",
-          a: "Brandguiden er jeres manual. Den dokumenterer præcis hvordan brandet bruges — så alle, fra intern til ekstern, rammer den samme tone.",
+          a: "Brandguiden er jeres manual. Den dokumenterer præcis hvordan brandet bruges, så alle, fra intern til ekstern, rammer den samme tone.",
         },
       ],
     },

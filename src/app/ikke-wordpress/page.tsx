@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Hov! — Horizen",
+  title: "Hov! | Horizen",
   description:
     "Lille besked til den nysgerrige. Vi afslører lidt om vores stack.",
   robots: { index: false, follow: false },
@@ -19,7 +19,7 @@ export default function IkkeWordPressPage() {
 
         <div className="mt-8 space-y-5 text-base leading-relaxed text-muted-foreground md:text-lg">
           <p>
-            Hvad vi kan afsløre er, at vi måske — måske ikke — har bygget
+            Hvad vi kan afsløre er, at vi måske (måske ikke) har bygget
             vores løsning i WordPress.
           </p>
           <p>
@@ -31,7 +31,7 @@ export default function IkkeWordPressPage() {
             foretrækker værktøjer, der kræver en højere teknisk forståelse at
             arbejde i. Men til gengæld giver det os den frihed, en opinionated
             builder og dårlig CMS-struktur aldrig nogensinde ville kunne give
-            os — friheden til at bygge præcis, hvad du har brug for.
+            os. Friheden til at bygge præcis, hvad du har brug for.
           </p>
           <p>
             Har du fået bygget en løsning i en af ovenstående og er træt af

@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       from: FROM,
       to: TO,
       replyTo: email,
-      subject: `Ny besked fra ${name}${topic ? ` — ${topic}` : ""}`,
+      subject: `Ny besked fra ${name}${topic ? `: ${topic}` : ""}`,
       text: [
         `Navn: ${name}`,
         `E-mail: ${email}`,

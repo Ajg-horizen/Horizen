@@ -14,7 +14,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Horizen — Web, Design & Branding",
+  title: "Horizen | Web, Design & Branding",
   description:
     "Vi skaber digitale oplevelser der konverterer. Web, logo, grafisk design og branding.",
 };

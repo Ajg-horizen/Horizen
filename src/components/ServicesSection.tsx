@@ -29,7 +29,7 @@ const services: Service[] = [
     icon: LayoutIcon,
     title: "Webdesign",
     description:
-      "Websites der er gennemtænkte fra struktur til detalje — med fokus på konvertering og brugeroplevelse.",
+      "Websites der er gennemtænkte fra struktur til detalje, med fokus på konvertering og brugeroplevelse.",
     badge: "bg-[#e8f0e4] text-[#2d4a28]",
     href: "/services/webudvikling",
   },
@@ -45,7 +45,7 @@ const services: Service[] = [
     icon: PaletteIcon,
     title: "Branding",
     description:
-      "Fra logo til komplet visuel identitet — et sammenhængende udtryk der styrker genkendelighed.",
+      "Fra logo til komplet visuel identitet. Et sammenhængende udtryk der styrker genkendelighed.",
     badge: "bg-[#e4e8f0] text-[#2a3550]",
     href: "/services/branding-logo",
   },
@@ -53,14 +53,14 @@ const services: Service[] = [
     icon: SparklesIcon,
     title: "Grafisk Design",
     description:
-      "Print, digital, social — visuel kommunikation der fanger opmærksomhed.",
+      "Print, digital, social. Visuel kommunikation der fanger opmærksomhed.",
     badge: "bg-[#f0ece4] text-[#5a4a2d]",
   },
   {
     icon: CodeIcon,
     title: "Udvikling",
     description:
-      "Next.js, React, WordPress — moderne teknologi tilpasset dit behov.",
+      "Next.js, React, WordPress. Moderne teknologi tilpasset dit behov.",
     badge: "bg-[#2a2a2a] text-[#f5f5f0]",
     href: "/services/webudvikling",
   },
@@ -153,7 +153,7 @@ export default function ServicesSection() {
             Services
           </h2>
           <p className="mt-4 max-w-lg text-base text-muted">
-            Alt hvad du behøver for at skabe en stærk digital tilstedeværelse —
+            Alt hvad du behøver for at skabe en stærk digital tilstedeværelse,
             fra design til udvikling og markedsføring.
           </p>
         </motion.div>

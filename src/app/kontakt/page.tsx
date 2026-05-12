@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import ContactPageContent from "./ContactPageContent";
 
 export const metadata: Metadata = {
-  title: "Kontakt — Horizen",
+  title: "Kontakt | Horizen",
   description:
     "Har du et projekt, en idé eller bare brug for en sparring? Skriv til os.",
 };

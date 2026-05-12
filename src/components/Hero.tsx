@@ -79,7 +79,7 @@ export default function Hero() {
           className="mt-8 max-w-2xl sm:mx-auto text-left sm:text-center text-lg leading-relaxed text-muted sm:text-xl"
         >
           Andre bruger AI til at arbejde mindre. Vi bruger det til at
-          levere mere. Samme timer, samme dedikation — bare med endnu
+          levere mere. Samme timer, samme dedikation, bare med endnu
           mere værdi for din forretning. Drevet af erfaring. Forstærket
           af AI.
         </motion.p>

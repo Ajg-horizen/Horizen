@@ -193,7 +193,7 @@ export default function Footer() {
                 <PixelHeart />
               </div>
               <span className="text-xs text-background/30">
-                With great guidance, come great results — <span className="text-background/50 font-medium">Horizen</span>
+                With great guidance, come great results · <span className="text-background/50 font-medium">Horizen</span>
               </span>
             </div>
 

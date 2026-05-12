@@ -29,7 +29,7 @@ const project = {
   client: "Oliver Dethlefsen",
   image: "/cases/OD-Cases-image-car.webp",
   description:
-    "En professionel hjemmeside for OD Pro — et bilværksted i Glostrup der tilbyder service, reparation og salg af kvalitetsbiler.",
+    "En professionel hjemmeside for OD Pro, et bilværksted i Glostrup der tilbyder service, reparation og salg af kvalitetsbiler.",
   team: [
     {
       name: "Johanne",
@@ -248,7 +248,7 @@ export default function CaseContent() {
                   key={member.name}
                   src={member.avatar}
                   alt={member.name}
-                  title={`${member.name} — ${member.role}`}
+                  title={`${member.name}, ${member.role}`}
                   className="h-7 w-7 rounded-full border-2 border-background object-cover"
                 />
               ))}
@@ -380,7 +380,7 @@ export default function CaseContent() {
             </h2>
             <p className="mt-4 text-white/60 leading-relaxed">
               Allerede i det første kvartal efter lancering oplevede OD Pro
-              en markant stigning i synlighed og kundehenvendelser — langt
+              en markant stigning i synlighed og kundehenvendelser, langt
               over branchens gennemsnit for nye websites.
             </p>
             <div className="mt-8 flex gap-8">

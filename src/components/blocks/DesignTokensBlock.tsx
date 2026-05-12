@@ -214,7 +214,7 @@ export default function DesignTokensBlock({
           </div>
           <div className="p-5 font-mono text-[13px] leading-relaxed overflow-x-auto">
             <div className="text-white/20 select-none inline-block w-8 text-right mr-4">1</div>
-            <span className="text-[#5c6370]">{"// Design tokens — én sandhed"}</span>
+            <span className="text-[#5c6370]">{"// Design tokens, én sandhed"}</span>
             <br />
             <div className="text-white/20 select-none inline-block w-8 text-right mr-4">2</div>
             <span className="text-[#c678dd]">export const</span>

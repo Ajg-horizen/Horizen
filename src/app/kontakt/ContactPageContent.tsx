@@ -142,7 +142,7 @@ export default function ContactPageContent() {
                   {status === "sent" ? (
                     <>
                       <CheckIcon className="size-4" />
-                      Tak — vi vender tilbage
+                      Tak, vi vender tilbage
                     </>
                   ) : status === "sending" ? (
                     "Sender..."
@@ -193,7 +193,7 @@ export default function ContactPageContent() {
 
               <h2 className="text-xl font-semibold">Eller skriv direkte</h2>
               <p className="mt-2 text-sm text-muted-foreground">
-                Ingen formular nødvendig — du kan også fange os her.
+                Ingen formular nødvendig. Du kan også fange os her.
               </p>
 
               <ul className="mt-8 space-y-6">

@@ -200,7 +200,7 @@ function UiMockup() {
     /* eslint-disable-next-line @next/next/no-img-element */
     <img
       src="/graphics/UI-image-example-1.webp"
-      alt="Eksempel på poleret UI — færdig hjemmeside med typografi, farver, billeder, komponenter og indhold"
+      alt="Eksempel på poleret UI, færdig hjemmeside med typografi, farver, billeder, komponenter og indhold"
       className="block h-auto w-full"
     />
   );
