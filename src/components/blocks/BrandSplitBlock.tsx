@@ -17,6 +17,12 @@ const ColorBlindTest = dynamic(
   { ssr: false },
 );
 
+const WordPressChaos = dynamic(
+  () =>
+    import("@/components/ui/wordpress-chaos").then((m) => m.WordPressChaos),
+  { ssr: false },
+);
+
 export default function BrandSplitBlock({
   id,
   data,
@@ -52,7 +58,13 @@ export default function BrandSplitBlock({
         </motion.div>
 
         <div className="flex items-center justify-center">
-          {data.visual === "colorBlindTest" ? <ColorBlindTest /> : <BrandFigure />}
+          {data.visual === "colorBlindTest" ? (
+            <ColorBlindTest />
+          ) : data.visual === "wordpressChaos" ? (
+            <WordPressChaos />
+          ) : (
+            <BrandFigure />
+          )}
         </div>
       </div>
     </Container>

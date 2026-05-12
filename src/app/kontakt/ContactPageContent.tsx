@@ -184,7 +184,7 @@ export default function ContactPageContent() {
                   className="h-20 w-20 rounded-full object-cover"
                 />
                 <div>
-                  <p className="text-base font-semibold">José</p>
+                  <p className="text-base font-semibold">Andreas José</p>
                   <p className="text-sm text-muted-foreground">
                     Digital Designer & Founder
                   </p>

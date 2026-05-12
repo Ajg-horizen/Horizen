@@ -62,10 +62,9 @@ export const services: NavItem[] = [
   },
   {
     title: "WordPress",
-    description: "Fleksible CMS-løsninger du selv kan redigere",
+    description: "Support, vedligehold og overtagelse",
     href: "/services/wordpress",
     icon: LayoutIcon,
-    badge: "Under opbygning",
   },
 ];
 

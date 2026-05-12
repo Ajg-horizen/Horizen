@@ -254,7 +254,7 @@ export type BrandSplitBlock = {
   eyebrow: string;
   heading: { lead: string; mutedTail?: string };
   paragraphs: string[];
-  visual?: "smiley" | "colorBlindTest";
+  visual?: "smiley" | "colorBlindTest" | "wordpressChaos";
 };
 
 /* ─── Service page ────────────────────────────────────────── */
@@ -300,8 +300,15 @@ import { webudvikling } from "@/data/services/webudvikling";
 import { uiUxDesign } from "@/data/services/ui-ux-design";
 import { brandingLogo } from "@/data/services/branding-logo";
 import { grafiskDesign } from "@/data/services/grafisk-design";
+import { wordpress } from "@/data/services/wordpress";
 
-export const services: ServicePage[] = [webudvikling, uiUxDesign, brandingLogo, grafiskDesign];
+export const services: ServicePage[] = [
+  webudvikling,
+  uiUxDesign,
+  brandingLogo,
+  grafiskDesign,
+  wordpress,
+];
 
 export const servicesBySlug: Record<string, ServicePage> = Object.fromEntries(
   services.map((s) => [s.slug, s])
