@@ -25,9 +25,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isProduction = process.env.NODE_ENV === "production";
+
   return (
     <html lang="da" className={`${inter.variable} h-full antialiased`}>
-      <GoogleTagManager gtmId="GTM-WFZ26CS4" />
+      {isProduction && <GoogleTagManager gtmId="GTM-WFZ26CS4" />}
       <body className="min-h-full flex flex-col">
         <a href="#main" className="skip-link">
           Spring til indhold
@@ -37,7 +39,7 @@ export default function RootLayout({
         {children}
         <BackToTopButton />
         <CalEmbed />
-        <GoogleAnalytics gaId="G-HC4NR97H1P" />
+        {isProduction && <GoogleAnalytics gaId="G-HC4NR97H1P" />}
       </body>
     </html>
   );
