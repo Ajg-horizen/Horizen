@@ -191,10 +191,7 @@ export default function ContactPageContent() {
                 </div>
               </div>
 
-              <h2 className="text-xl font-semibold">Eller skriv direkte</h2>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Ingen formular nødvendig. Du kan også fange os her.
-              </p>
+              <h2 className="text-xl font-semibold">Kontaktinformation</h2>
 
               <ul className="mt-8 space-y-6">
                 <InfoRow
