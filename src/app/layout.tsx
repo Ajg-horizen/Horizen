@@ -18,6 +18,47 @@ export const metadata: Metadata = {
   title: "Horizen | Web, Design & Branding",
   description:
     "Vi skaber digitale oplevelser der konverterer. Web, logo, grafisk design og branding.",
+  openGraph: {
+    title: "Horizen | Web, Design & Branding",
+    description:
+      "Vi skaber digitale oplevelser der konverterer. Web, logo, grafisk design og branding.",
+    url: "/",
+    siteName: "Horizen",
+    locale: "da_DK",
+    type: "website",
+    images: [
+      {
+        url: "/graphics/Hero-image-branding-services.webp",
+        width: 1200,
+        height: 630,
+        alt: "Horizen",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Horizen | Web, Design & Branding",
+    description:
+      "Vi skaber digitale oplevelser der konverterer. Web, logo, grafisk design og branding.",
+    images: ["/graphics/Hero-image-branding-services.webp"],
+  },
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Horizen",
+  url: "https://horizen.dk",
+  logo: "https://horizen.dk/logo/Horizen-LogoType-Black.svg",
+  email: "hej@horizen.dk",
+  sameAs: [],
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Horizen",
+  url: "https://horizen.dk",
 };
 
 export default function RootLayout({
@@ -37,6 +78,16 @@ export default function RootLayout({
         <SmoothScroll />
         <ScrollToTop />
         {children}
+        <script
+          id="schema-organization"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          id="schema-website"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
         <BackToTopButton />
         <CalEmbed />
         {isProduction && <GoogleAnalytics gaId="G-HC4NR97H1P" />}
