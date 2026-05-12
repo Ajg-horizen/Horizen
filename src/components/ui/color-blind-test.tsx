@@ -128,7 +128,7 @@ export function ColorBlindTest() {
   ];
 
   return (
-    <div className="w-full max-w-md rounded-2xl border border-foreground/[0.06] bg-foreground/[0.02] p-5">
+    <div className="w-full max-w-md xl:max-w-lg 2xl:max-w-xl rounded-2xl border border-foreground/[0.06] bg-foreground/[0.02] p-5 xl:p-6">
       <div className="mb-4 flex items-center justify-between">
         <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-muted">
           Kontrast-test
@@ -140,7 +140,7 @@ export function ColorBlindTest() {
       </div>
 
       <div
-        className="flex h-28 w-full items-center justify-center rounded-xl border border-foreground/[0.06] text-4xl font-bold tracking-widest transition-colors duration-200"
+        className="flex h-28 xl:h-36 2xl:h-44 w-full items-center justify-center rounded-xl border border-foreground/[0.06] text-4xl xl:text-5xl 2xl:text-6xl font-bold tracking-widest transition-colors duration-200"
         style={{ backgroundColor: bg, color: fg }}
       >
         AAAA
@@ -150,7 +150,7 @@ export function ColorBlindTest() {
         {simulations.map((s) => (
           <div key={s.label} className="flex flex-col items-center gap-1.5">
             <div
-              className="flex h-12 w-full items-center justify-center rounded-lg border border-foreground/[0.06] text-sm font-bold tracking-wider transition-colors duration-200"
+              className="flex h-12 xl:h-14 2xl:h-16 w-full items-center justify-center rounded-lg border border-foreground/[0.06] text-sm xl:text-base 2xl:text-lg font-bold tracking-wider transition-colors duration-200"
               style={{ backgroundColor: s.bg, color: s.fg }}
             >
               AAAA

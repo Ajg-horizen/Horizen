@@ -109,7 +109,7 @@ export function WordPressChaos() {
   const scores = cleaned ? SCORES_CLEAN : SCORES_CHAOS;
 
   return (
-    <div className="w-full max-w-md overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0f0f0f] text-[#f5f5f0] shadow-xl">
+    <div className="w-full max-w-md xl:max-w-lg 2xl:max-w-xl overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0f0f0f] text-[#f5f5f0] shadow-xl">
       <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
           Dashboard · Advarsler

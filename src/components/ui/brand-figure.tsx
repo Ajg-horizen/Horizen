@@ -172,9 +172,9 @@ export default function BrandFigure() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center gap-8 w-full max-w-sm mx-auto">
+    <div className="flex flex-col items-center gap-8 w-full max-w-sm xl:max-w-md 2xl:max-w-lg mx-auto">
       {/* Rive figure */}
-      <div className={`relative w-48 h-48 md:w-56 md:h-56 ${bounce ? "brand-figure-bounce" : ""}`}>
+      <div className={`relative w-48 h-48 md:w-56 md:h-56 xl:w-64 xl:h-64 2xl:w-72 2xl:h-72 ${bounce ? "brand-figure-bounce" : ""}`}>
         {EMOTIONS.map((emo) => {
           const isBallance = emo.artboard === "Emotions-02";
           const visible = isBallance
