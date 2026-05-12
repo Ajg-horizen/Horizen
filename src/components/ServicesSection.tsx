@@ -75,18 +75,17 @@ const services: Service[] = [
 
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1] as const },
+    transition: { duration: 0.5, ease: "easeOut" as const },
   },
 };
 
 const gridVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.08 },
+    transition: { staggerChildren: 0.06 },
   },
 };
 
