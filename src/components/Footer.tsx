@@ -35,7 +35,7 @@ const navigation: Record<string, FooterLink[]> = {
   services: [
     { name: "Webudvikling", href: "/services/webudvikling" },
     { name: "UI/UX Design", href: "/services/ui-ux-design" },
-    { name: "Branding", href: "/services/branding-logo" },
+    { name: "Branding", href: "/services/branding" },
     { name: "WordPress", href: "/services/wordpress", disabled: true },
   ],
   marketing: [

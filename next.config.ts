@@ -15,20 +15,26 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // Gamle sider der er fjernet. 301-redirect for at bevare SEO-værdi.
-      // /digital-design/ ranker pos 9-10 på "digitalt design bureau"
-      // (1.329 visninger/md, 0 klik). Sendes til ui-ux-design som er
-      // det semantisk tætteste match.
-      {
-        source: "/digital-design",
-        destination: "/services/ui-ux-design",
-        permanent: true,
-      },
-      {
-        source: "/digital-design/:path*",
-        destination: "/services/ui-ux-design",
-        permanent: true,
-      },
+      // ─── Spøgelsessider fra før relancering (maj 2026) ─────────────
+      // 301-redirects der bevarer SEO-værdi fra det gamle site.
+
+      // /digital-design/ rankede pos ~10 på "digitalt design bureau"
+      // (1.329 visninger/md). Sendes til ui-ux-design (semantisk match).
+      { source: "/digital-design", destination: "/services/ui-ux-design", permanent: true },
+      { source: "/digital-design/:path*", destination: "/services/ui-ux-design", permanent: true },
+
+      // /hjemmeside/ rankede pos 3,26 (180 visninger). Var den gamle
+      // webudvikling-side. Sendes til den nye service-side.
+      { source: "/hjemmeside", destination: "/services/webudvikling", permanent: true },
+      { source: "/hjemmeside/:path*", destination: "/services/webudvikling", permanent: true },
+
+      // /branding/ rankede pos 9,85 (68 visninger). Sendes til den nye
+      // branding-service. Samtidig flyttes /services/branding-logo til
+      // /services/branding (kortere slug).
+      { source: "/branding", destination: "/services/branding", permanent: true },
+      { source: "/branding/:path*", destination: "/services/branding", permanent: true },
+      { source: "/services/branding-logo", destination: "/services/branding", permanent: true },
+      { source: "/services/branding-logo/:path*", destination: "/services/branding", permanent: true },
     ];
   },
 };

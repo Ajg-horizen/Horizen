@@ -47,7 +47,7 @@ const services: Service[] = [
     description:
       "Fra logo til komplet visuel identitet. Et sammenhængende udtryk der styrker genkendelighed.",
     badge: "bg-[#e4e8f0] text-[#2a3550]",
-    href: "/services/branding-logo",
+    href: "/services/branding",
   },
   {
     icon: SparklesIcon,

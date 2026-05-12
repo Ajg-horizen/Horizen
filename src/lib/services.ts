@@ -299,14 +299,14 @@ export function stickyClasses(index?: number): string {
 
 import { webudvikling } from "@/data/services/webudvikling";
 import { uiUxDesign } from "@/data/services/ui-ux-design";
-import { brandingLogo } from "@/data/services/branding-logo";
+import { branding } from "@/data/services/branding";
 import { grafiskDesign } from "@/data/services/grafisk-design";
 import { wordpress } from "@/data/services/wordpress";
 
 export const services: ServicePage[] = [
   webudvikling,
   uiUxDesign,
-  brandingLogo,
+  branding,
   grafiskDesign,
   wordpress,
 ];

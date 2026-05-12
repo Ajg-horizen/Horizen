@@ -11,8 +11,8 @@ import {
 } from "lucide-react";
 import type { ServicePage } from "@/lib/services";
 
-export const brandingLogo: ServicePage = {
-  slug: "branding-logo",
+export const branding: ServicePage = {
+  slug: "branding",
   metadata: {
     title: "Branding | Horizen",
     description:

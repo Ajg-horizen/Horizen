@@ -44,7 +44,7 @@ export const services: NavItem[] = [
   {
     title: "Branding",
     description: "Strategi, positionering og identitet der holder",
-    href: "/services/branding-logo",
+    href: "/services/branding",
     icon: BrushIcon,
   },
   {
