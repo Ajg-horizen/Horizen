@@ -48,6 +48,7 @@ const cases = [
     title: "Ensemble Hermes",
     subtitle: "Webdesign · UI/UX · Redesign",
     image: "/cases/Case-Hermes.webp",
+    logo: "/Bomærker/Ensemble-hermes-bookmark-white.svg",
     href: "/cases/ensemble-hermes",
     comingSoon: true,
     team: [

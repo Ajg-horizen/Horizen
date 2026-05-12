@@ -6,7 +6,6 @@ import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import { TextScramble } from "@/components/ui/text-scramble";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
-import { fadeInUp } from "@/lib/animations";
 import Container from "@/components/Container";
 import {
   LayoutIcon,
@@ -75,16 +74,28 @@ const services: Service[] = [
 ];
 
 
-function ServiceCard({ service, index }: { service: Service; index: number }) {
+const cardVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1] as const },
+  },
+};
+
+const gridVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08 },
+  },
+};
+
+function ServiceCard({ service }: { service: Service }) {
   const [hovered, setHovered] = useState(false);
 
   return (
     <motion.div
-      custom={index}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-50px" }}
-      variants={fadeInUp}
+      variants={cardVariants}
       className="group flex flex-col rounded-2xl border border-foreground/[0.06] p-8 transition-all duration-300 hover:border-foreground/[0.12] hover:bg-foreground/[0.02]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -147,11 +158,17 @@ export default function ServicesSection() {
           </p>
         </motion.div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, i) => (
-            <ServiceCard key={service.title} service={service} index={i} />
+        <motion.div
+          variants={gridVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+        >
+          {services.map((service) => (
+            <ServiceCard key={service.title} service={service} />
           ))}
-        </div>
+        </motion.div>
       </div>
     </Container>
   );
