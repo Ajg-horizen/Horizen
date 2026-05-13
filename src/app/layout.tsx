@@ -146,6 +146,34 @@ export default function RootLayout({
     <html lang="da" className={`${inter.variable} h-full antialiased`}>
       {isProduction && <GoogleTagManager gtmId="GTM-WFZ26CS4" />}
       <body className="min-h-full flex flex-col">
+        {/* View-source signatur (ignoreres af browseren, synlig i kildekoden) */}
+        <script
+          type="text/x-horizen-signature"
+          dangerouslySetInnerHTML={{
+            __html: `
+
+   ██╗  ██╗ ██████╗ ██████╗ ██╗███████╗███████╗███╗   ██╗
+   ██║  ██║██╔═══██╗██╔══██╗██║╚══███╔╝██╔════╝████╗  ██║
+   ███████║██║   ██║██████╔╝██║  ███╔╝ █████╗  ██╔██╗ ██║
+   ██╔══██║██║   ██║██╔══██╗██║ ███╔╝  ██╔══╝  ██║╚██╗██║
+   ██║  ██║╚██████╔╝██║  ██║██║███████╗███████╗██║ ╚████║
+   ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝
+
+   Digital design bureau, baseret i Aarhus.
+   Drevet af erfaring. Forstærket af AI.
+
+   Kan du li' det du ser? Skriv til os: hej@horizen.dk
+   horizen.dk
+
+`,
+          }}
+        />
+        {/* Console-signatur (synlig i DevTools) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var b='font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;line-height:1.2;color:#0f0f0f;';var t='font-style:italic;color:#666;font-size:12px;';var l='color:#0066cc;font-size:12px;';console.log('%c\\n   ██╗  ██╗ ██████╗ ██████╗ ██╗███████╗███████╗███╗   ██╗\\n   ██║  ██║██╔═══██╗██╔══██╗██║╚══███╔╝██╔════╝████╗  ██║\\n   ███████║██║   ██║██████╔╝██║  ███╔╝ █████╗  ██╔██╗ ██║\\n   ██╔══██║██║   ██║██╔══██╗██║ ███╔╝  ██╔══╝  ██║╚██╗██║\\n   ██║  ██║╚██████╔╝██║  ██║██║███████╗███████╗██║ ╚████║\\n   ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝\\n',b);console.log('%cDigital design bureau, baseret i Aarhus.\\nDrevet af erfaring. Forstærket af AI.',t);console.log('%cKan du li det du ser? Skriv til os: hej@horizen.dk',l);}catch(e){}})();`,
+          }}
+        />
         <a href="#main" className="skip-link">
           Spring til indhold
         </a>
