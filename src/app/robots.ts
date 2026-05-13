@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/ikke-wordpress"],
+        disallow: ["/api/", "/ikke-wordpress", "/dashboard"],
       },
     ],
     sitemap: "https://horizen.dk/sitemap.xml",
