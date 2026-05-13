@@ -73,8 +73,8 @@ export default function Footer() {
                 className="h-6 w-auto invert"
               />
               <p className="mt-6 max-w-xs text-sm leading-relaxed text-background/50">
-                Vi skaber digitale oplevelser der konverterer. Drevet af
-                erfaring. Forstærket af AI.
+                Digital design bureau med 8+ års erfaring. Hjemmesider,
+                branding og UI/UX. Drevet af erfaring. Forstærket af AI.
               </p>
               <div className="mt-8 space-y-2">
                 <a
