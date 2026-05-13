@@ -56,19 +56,30 @@ export default function Hero() {
         />
       </div>
       <div ref={contentRef}>
-        {/* Headline */}
+        {/* SEO H1 (lille eyebrow). Indeholder primary keyword "digital design bureau". */}
         <motion.h1
+          custom={0.2}
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+          className="max-w-4xl text-left text-xs font-medium uppercase tracking-[0.2em] text-muted sm:text-center sm:text-sm"
+        >
+          Digital design bureau
+        </motion.h1>
+
+        {/* Visuel hovedoverskrift (brand). IKKE h1, da semantik gemmes til SEO-h1 ovenfor. */}
+        <motion.p
           custom={0.4}
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="max-w-4xl text-left text-4xl font-black uppercase leading-[1.1] tracking-tight sm:text-center sm:text-5xl md:text-6xl lg:text-7xl"
+          className="mt-4 max-w-4xl text-left text-4xl font-black uppercase leading-[1.1] tracking-tight sm:text-center sm:text-5xl md:text-6xl lg:text-7xl"
         >
           SOLUTIONS CRAFTED{" "}
           WITH REAL{" "}
           <span className="lg:hidden">EXPERIENCE</span>
           <TextRoll className="hidden lg:inline-block cursor-pointer">EXPERIENCE</TextRoll>
-        </motion.h1>
+        </motion.p>
 
         {/* Body copy */}
         <motion.p
