@@ -104,6 +104,8 @@ export type PageDetail = {
   built: boolean;
   seoStatus: SeoStatus;
   lastSeoUpdate: string | null;
+  /** Dato for hvornår denne side næste gang skal opdateres/reviewes (ISO YYYY-MM-DD). Null = ikke planlagt. */
+  nextUpdate: string | null;
   nextStep: string;
   /** Sidens samlede snit-position på tværs af alle queries den ranker på */
   pageAvgPosition: number | null;
@@ -129,6 +131,7 @@ export const pages: PageDetail[] = [
     built: true,
     seoStatus: "done",
     lastSeoUpdate: "2026-05-13",
+    nextUpdate: "2026-06-12",
     pageAvgPosition: 11.71,
     nextStep: "Vent på juni-data (12. juni) for at se effekt af SEO-arbejdet.",
     keywords: {
@@ -186,6 +189,7 @@ export const pages: PageDetail[] = [
     built: true,
     seoStatus: "pending",
     lastSeoUpdate: null,
+    nextUpdate: null,
     pageAvgPosition: null,
     nextStep: "Modtager redirect-trafik fra /hjemmeside/ (pos 1,88!). SEO-cyklus skal køres snarest for at cementere positionen.",
     keywords: {
@@ -222,6 +226,7 @@ export const pages: PageDetail[] = [
     built: true,
     seoStatus: "pending",
     lastSeoUpdate: null,
+    nextUpdate: null,
     pageAvgPosition: null,
     nextStep: "Modtager redirect-trafik fra /digital-design/ (pos 6,64). SEO-cyklus skal køres snarest.",
     keywords: {
@@ -259,6 +264,7 @@ export const pages: PageDetail[] = [
     built: true,
     seoStatus: "pending",
     lastSeoUpdate: null,
+    nextUpdate: null,
     pageAvgPosition: null,
     nextStep: "Modtager redirect-trafik fra /branding/ (pos 9,85) + /services/branding-logo/. SEO-cyklus klar til at starte.",
     keywords: {
@@ -295,6 +301,7 @@ export const pages: PageDetail[] = [
     built: true,
     seoStatus: "pending",
     lastSeoUpdate: null,
+    nextUpdate: null,
     pageAvgPosition: null,
     nextStep: "Ny side. Ingen SEO-arv. Skal bygges fra bunden.",
     keywords: {
@@ -323,6 +330,7 @@ export const pages: PageDetail[] = [
     built: true,
     seoStatus: "pending",
     lastSeoUpdate: null,
+    nextUpdate: null,
     pageAvgPosition: null,
     nextStep: "Ny side. Ingen SEO-arv. Skal bygges fra bunden.",
     keywords: {
@@ -351,6 +359,7 @@ export const pages: PageDetail[] = [
     built: true,
     seoStatus: "pending",
     lastSeoUpdate: null,
+    nextUpdate: null,
     pageAvgPosition: null,
     nextStep: "Blog-oversigtsside. Lavere prioritet end service-sider.",
     keywords: {
@@ -376,6 +385,7 @@ export const pages: PageDetail[] = [
     built: true,
     seoStatus: "not_applicable",
     lastSeoUpdate: null,
+    nextUpdate: null,
     pageAvgPosition: null,
     nextStep: "Kontaktsider rankes normalt kun for brand-søgninger ('horizen kontakt'). Lav prioritet.",
     keywords: { primary: null, secondary: [] },

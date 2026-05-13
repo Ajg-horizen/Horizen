@@ -9,6 +9,7 @@ import {
   MinusIcon,
   TargetIcon,
 } from "lucide-react";
+import Countdown from "./Countdown";
 import type { PageDetail, SeoStatus } from "./data";
 
 function formatDateDk(date: string): string {
@@ -89,6 +90,14 @@ function PageDetailView({ page }: { page: PageDetail }) {
           <SeoStatusBadge status={page.seoStatus} />
         </div>
       </div>
+
+      {/* Countdown til næste opdatering */}
+      {page.nextUpdate && (
+        <Countdown
+          targetDate={page.nextUpdate}
+          label={`Næste opdatering af ${page.name}`}
+        />
+      )}
 
       {/* Next step */}
       <div className="rounded-xl border border-foreground/[0.08] bg-background p-4">
