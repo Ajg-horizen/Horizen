@@ -15,13 +15,13 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://horizen.dk"),
-  title: "Horizen | Web, Design & Branding",
+  title: "Horizen, digital design bureau",
   description:
-    "Vi skaber digitale oplevelser der konverterer. Web, logo, grafisk design og branding.",
+    "Digital design bureau med 8+ års erfaring. Hjemmesider, branding, UI/UX og webudvikling drevet af erfaring og forstærket af AI.",
   openGraph: {
-    title: "Horizen | Web, Design & Branding",
+    title: "Horizen, digital design bureau",
     description:
-      "Vi skaber digitale oplevelser der konverterer. Web, logo, grafisk design og branding.",
+      "Digital design bureau med 8+ års erfaring. Hjemmesider, branding, UI/UX og webudvikling drevet af erfaring og forstærket af AI.",
     url: "/",
     siteName: "Horizen",
     locale: "da_DK",
@@ -37,28 +37,102 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Horizen | Web, Design & Branding",
+    title: "Horizen, digital design bureau",
     description:
-      "Vi skaber digitale oplevelser der konverterer. Web, logo, grafisk design og branding.",
+      "Digital design bureau med 8+ års erfaring. Hjemmesider, branding, UI/UX og webudvikling drevet af erfaring og forstærket af AI.",
     images: ["/graphics/Hero-image-branding-services.webp"],
   },
 };
 
 const organizationSchema = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": "ProfessionalService",
+  "@id": "https://horizen.dk/#organization",
   name: "Horizen",
+  alternateName: "Horizen Digital Design Bureau",
+  description:
+    "Digital design bureau med 8+ års erfaring. Vi laver hjemmesider, branding, UI/UX og webudvikling. Drevet af erfaring, forstærket af AI.",
   url: "https://horizen.dk",
   logo: "https://horizen.dk/logo/Horizen-LogoType-Black.svg",
+  image: "https://horizen.dk/graphics/Hero-image-branding-services.webp",
   email: "hej@horizen.dk",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Aarhus",
+    addressRegion: "Midtjylland",
+    addressCountry: "DK",
+  },
+  areaServed: {
+    "@type": "Country",
+    name: "Danmark",
+  },
+  knowsAbout: [
+    "Webudvikling",
+    "UI/UX Design",
+    "Branding",
+    "Grafisk Design",
+    "WordPress",
+    "Digital design",
+  ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Services",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Webudvikling",
+          url: "https://horizen.dk/services/webudvikling",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "UI/UX Design",
+          url: "https://horizen.dk/services/ui-ux-design",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Branding",
+          url: "https://horizen.dk/services/branding",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "Grafisk Design",
+          url: "https://horizen.dk/services/grafisk-design",
+        },
+      },
+      {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: "WordPress",
+          url: "https://horizen.dk/services/wordpress",
+        },
+      },
+    ],
+  },
   sameAs: [],
 };
 
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": "https://horizen.dk/#website",
   name: "Horizen",
   url: "https://horizen.dk",
+  inLanguage: "da-DK",
+  publisher: {
+    "@id": "https://horizen.dk/#organization",
+  },
 };
 
 export default function RootLayout({

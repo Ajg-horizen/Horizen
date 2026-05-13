@@ -122,6 +122,7 @@ function ServiceCard({ service }: { service: Service }) {
         {service.href ? (
           <Link
             href={service.href}
+            aria-label={`Læs mere om ${service.title}`}
             className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground/80 transition-colors duration-300 hover:text-foreground"
           >
             Læs mere
@@ -153,8 +154,9 @@ export default function ServicesSection() {
             Services
           </h2>
           <p className="mt-4 max-w-lg text-base text-muted">
-            Alt hvad du behøver for at skabe en stærk digital tilstedeværelse,
-            fra design til udvikling og markedsføring.
+            Som digital design bureau dækker vi hele paletten. Fra UI/UX og
+            branding til webudvikling og markedsføring. Alt hvad du behøver
+            for at skabe en stærk digital tilstedeværelse.
           </p>
         </motion.div>
 

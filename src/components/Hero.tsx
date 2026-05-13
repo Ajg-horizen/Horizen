@@ -106,17 +106,17 @@ export default function Hero() {
           <div className="flex flex-col items-center gap-2">
             <div className="flex -space-x-3">
               {[
-                { src: "/staff/staff-jose-digital-design.jpg", name: "José" },
-                { src: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp", name: "Anne-Sofie" },
-                { src: "/staff/staff-Web-udvikler-designer-Johanne-horizen.avif", name: "Johanne" },
-                { src: "/staff/staff-kommunikation-og-salg-Ludvig.webp", name: "Ludvig" },
-                { src: "/staff/staff-.Sebastian-Meta-facebook.jpg", name: "Sebastian" },
-                { src: "/staff/Kontor-Hund-Gurli-Web-udvikler.webp", name: "Gurli" },
+                { src: "/staff/staff-jose-digital-design.jpg", name: "José", role: "Digital design lead hos Horizen" },
+                { src: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp", name: "Anne-Sofie", role: "Marketing-ansvarlig hos Horizen" },
+                { src: "/staff/staff-Web-udvikler-designer-Johanne-horizen.avif", name: "Johanne", role: "Webudvikler og designer hos Horizen" },
+                { src: "/staff/staff-kommunikation-og-salg-Ludvig.webp", name: "Ludvig", role: "Kommunikation og salg hos Horizen" },
+                { src: "/staff/staff-.Sebastian-Meta-facebook.jpg", name: "Sebastian", role: "Meta-annoncering hos Horizen" },
+                { src: "/staff/Kontor-Hund-Gurli-Web-udvikler.webp", name: "Gurli", role: "Kontorhund hos Horizen" },
               ].map((member, i) => (
                 <img
                   key={i}
                   src={member.src}
-                  alt={member.name}
+                  alt={`${member.name}, ${member.role}`}
                   loading="lazy"
                   className="h-10 w-10 rounded-full border-2 border-background object-cover"
                 />

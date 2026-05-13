@@ -100,7 +100,7 @@ export default function CasesSectionBento() {
             <>
               <img
                 src={c.image}
-                alt={c.title}
+                alt={`${c.title}, ${c.subtitle} af Horizen`}
                 loading="lazy"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
               />
