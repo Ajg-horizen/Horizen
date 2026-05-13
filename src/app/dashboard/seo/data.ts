@@ -213,10 +213,9 @@ export const pages: PageDetail[] = [
       "Hero-body: 'enhver hjemmeside' → 'enhver ny hjemmeside'",
       "H1 og visuel copy bevaret 1:1",
       "Deployed til main",
+      "Anmodet om re-indeksering i Search Console",
     ],
-    pendingTasks: [
-      "Anmod om re-indeksering i Search Console",
-    ],
+    pendingTasks: [],
     activity: [
       {
         date: "2026-05-13",
