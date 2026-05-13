@@ -269,7 +269,24 @@ function PageAccordion({ page }: { page: PageDetail }) {
           </div>
         )}
 
-        {/* Positions */}
+        {/* Page average position (across all queries that lead to this page) */}
+        {page.pageAvgPosition !== null && (
+          <div>
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/50 mb-1">
+              Sidens snit-position
+            </h4>
+            <p className="text-xs text-foreground/50 mb-3">
+              Gennemsnit på tværs af alle queries der leder hertil
+            </p>
+            <div className="rounded-xl border border-foreground/[0.08] bg-background p-3 w-fit">
+              <p className="text-2xl font-bold tabular-nums">
+                {page.pageAvgPosition}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Positions for specific primary keyword */}
         {hasPositions && (
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/50 mb-1">
@@ -418,8 +435,8 @@ export default function SeoDashboardPage() {
 
         {/* Key metrics */}
         <SectionHeader
-          title="Performance, samlet"
-          description={`${baseline.source} · ${baseline.period} · Tal er gennemsnit på tværs af alle queries (inkl. brand)`}
+          title="Performance, hele sitet"
+          description={`${baseline.source} · ${baseline.period} · Tal er aggregeret på tværs af alle sider og queries`}
         />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <MetricCard
@@ -441,10 +458,10 @@ export default function SeoDashboardPage() {
             hint="Over branchegennemsnit (~3%)"
           />
           <MetricCard
-            label="Forsidens snit-position"
-            value={baseline.metrics.frontpagePosition}
+            label="Site snit-position"
+            value={baseline.metrics.avgPosition}
             status="good"
-            hint="Alle queries, forbedret fra 23,46"
+            hint="Hele horizen.dk, alle queries"
           />
         </div>
 
