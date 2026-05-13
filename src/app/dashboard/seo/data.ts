@@ -187,11 +187,11 @@ export const pages: PageDetail[] = [
     name: "Webudvikling",
     url: "/services/webudvikling",
     built: true,
-    seoStatus: "in_progress",
+    seoStatus: "done",
     lastSeoUpdate: "2026-05-13",
     nextUpdate: "2026-06-12",
     pageAvgPosition: null,
-    nextStep: "Strategi besluttet. Copy-implementation (title, meta, schema, 1 body-ændring) afventer Andreas-godkendelse.",
+    nextStep: "Deployed. Anmod om re-indeksering i Search Console. Vent på juni-data (12. juni) for at se effekt.",
     keywords: {
       primary: "ny hjemmeside",
       secondary: ["professionel hjemmeside", "webudvikling"],
@@ -207,16 +207,23 @@ export const pages: PageDetail[] = [
       "SERP-analyse på top 3 kandidater",
       "Anti-kannibaliserings-tjek mod forsiden — ingen overlap",
       "Strategi-dokument skrevet",
+      "Title-tag opdateret med primary keyword",
+      "Meta description opdateret med Next.js + React + teknisk fundament",
+      "Schema.org Service auto-opdateret via metadata",
+      "Hero-body: 'enhver hjemmeside' → 'enhver ny hjemmeside'",
+      "H1 og visuel copy bevaret 1:1",
+      "Deployed til main",
     ],
     pendingTasks: [
-      "Implementér title-tag med primary keyword",
-      "Implementér meta description",
-      "Tilføj Schema.org Service struktureret data",
-      "Lille body-ændring i techFoundation (én sætning)",
-      "Deploy til main",
       "Anmod om re-indeksering i Search Console",
     ],
     activity: [
+      {
+        date: "2026-05-13",
+        title: "SEO deployed: title, meta, schema, body-tekst",
+        description: "Title: 'Ny hjemmeside, bygget til at holde'. Meta med Next.js + React + 100-300 timers fundament. Schema.org auto-opdateret. Hero-body fik 'ny' tilføjet. H1 urørt.",
+        commit: "ec942ca",
+      },
       {
         date: "2026-05-13",
         title: "Keyword-strategi besluttet",
@@ -229,7 +236,7 @@ export const pages: PageDetail[] = [
         commit: "e84ce54",
       },
     ],
-    notes: "SERP'en for primary keywords er domineret af billig-WordPress-bureauer. Horizen positionerer sig som premium alternativ uden at lyve om pris — eksisterende copy filtrerer publikum naturligt. H1 bevares 1:1. SEO-håndtag ligger i title/meta/schema.",
+    notes: "SERP'en for primary keywords er domineret af billig-WordPress-bureauer. Horizen positionerer sig som premium alternativ uden at lyve om pris — eksisterende copy filtrerer publikum naturligt. H1 bevaret 1:1. SEO-håndtag ligger i title/meta/schema.",
   },
   {
     name: "UI/UX Design",
@@ -436,8 +443,14 @@ export const upcomingPages = [
 export const recentActivity = [
   {
     date: "2026-05-13",
+    title: "Webudvikling: SEO deployed",
+    description: "Title, meta, schema og hero-body opdateret. Targeter 'ny hjemmeside' (590 vol) + 'professionel hjemmeside' (480) + 'webudvikling' (210). H1 urørt.",
+    commit: "ec942ca",
+  },
+  {
+    date: "2026-05-13",
     title: "Webudvikling: keyword-strategi besluttet",
-    description: "Primary 'ny hjemmeside' (590 vol) + 'professionel hjemmeside' (480) + 'webudvikling' (210). Total ~1.300 vol/md. Copy-implementation afventer godkendelse.",
+    description: "Primary 'ny hjemmeside' (590 vol) + 'professionel hjemmeside' (480) + 'webudvikling' (210). Total ~1.300 vol/md.",
   },
   {
     date: "2026-05-13",
