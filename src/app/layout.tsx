@@ -4,7 +4,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 import SmoothScroll from "@/components/SmoothScroll";
 import BackToTopButton from "@/components/BackToTopButton";
 import CalEmbed from "@/components/CalEmbed";
-import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({
@@ -144,7 +144,6 @@ export default function RootLayout({
 
   return (
     <html lang="da" className={`${inter.variable} h-full antialiased`}>
-      {isProduction && <GoogleTagManager gtmId="GTM-WFZ26CS4" />}
       <body className="min-h-full flex flex-col">
         <a href="#main" className="skip-link">
           Spring til indhold
@@ -164,7 +163,20 @@ export default function RootLayout({
         />
         <BackToTopButton />
         <CalEmbed />
-        {isProduction && <GoogleAnalytics gaId="G-HC4NR97H1P" />}
+        {isProduction && (
+          <>
+            <Script id="gtm-init" strategy="lazyOnload">
+              {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WFZ26CS4');`}
+            </Script>
+            <Script
+              src="https://www.googletagmanager.com/gtag/js?id=G-HC4NR97H1P"
+              strategy="lazyOnload"
+            />
+            <Script id="gtag-init" strategy="lazyOnload">
+              {`window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-HC4NR97H1P');`}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );
