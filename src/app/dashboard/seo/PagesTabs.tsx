@@ -81,23 +81,16 @@ function PageDetailView({ page }: { page: PageDetail }) {
           <h3 className="text-2xl font-bold tracking-tight">{page.name}</h3>
           <p className="mt-1 text-sm text-foreground/50 font-mono">{page.url}</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           {page.lastSeoUpdate && (
             <span className="text-xs text-foreground/50">
               Opdateret {formatDateDk(page.lastSeoUpdate)}
             </span>
           )}
+          {page.nextUpdate && <Countdown targetDate={page.nextUpdate} />}
           <SeoStatusBadge status={page.seoStatus} />
         </div>
       </div>
-
-      {/* Countdown til næste opdatering */}
-      {page.nextUpdate && (
-        <Countdown
-          targetDate={page.nextUpdate}
-          label={`Næste opdatering af ${page.name}`}
-        />
-      )}
 
       {/* Next step */}
       <div className="rounded-xl border border-foreground/[0.08] bg-background p-4">
