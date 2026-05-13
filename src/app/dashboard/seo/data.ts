@@ -91,65 +91,289 @@ export const actionItems = [
 
 export type SeoStatus = "done" | "in_progress" | "pending" | "not_applicable";
 
-export const existingPages = [
+export type PageActivity = {
+  date: string;
+  title: string;
+  description: string;
+  commit?: string;
+};
+
+export type PageDetail = {
+  name: string;
+  url: string;
+  built: boolean;
+  seoStatus: SeoStatus;
+  lastSeoUpdate: string | null;
+  nextStep: string;
+  keywords: {
+    primary: string | null;
+    secondary: string[];
+  };
+  positions: {
+    current: number | null;
+    target: number | null;
+    impressions28d: number | null;
+  };
+  completedTasks: string[];
+  pendingTasks: string[];
+  activity: PageActivity[];
+  notes: string | null;
+};
+
+export const pages: PageDetail[] = [
   {
     name: "Forsiden",
     url: "/",
     built: true,
-    seoStatus: "done" as SeoStatus,
-    deployedAt: "2026-05-13",
-    primaryKeyword: "digital design bureau",
-    currentPosition: 11.71,
-    targetPosition: 5,
+    seoStatus: "done",
+    lastSeoUpdate: "2026-05-13",
+    nextStep: "Vent på juni-data (12. juni) for at se effekt af SEO-arbejdet.",
+    keywords: {
+      primary: "digital design bureau",
+      secondary: ["digitalt design bureau", "digitalt bureau ux"],
+    },
+    positions: {
+      current: 6.89,
+      target: 3,
+      impressions28d: 158,
+    },
+    completedTasks: [
+      "Title-tag opdateret med primary keyword",
+      "Meta description med 8+ års erfaring + service-paletten",
+      "Semantisk h1 (eyebrow) med 'digital design bureau'",
+      "Visuelt brand bevaret (SOLUTIONS CRAFTED som <p>)",
+      "Schema.org udvidet til ProfessionalService + PostalAddress (Aarhus)",
+      "hasOfferCatalog med alle 5 service-sider",
+      "Alt-tekster på hero staff-billeder + cases",
+      "Aria-labels på service-links",
+      "ServicesSection subtitle med primary keyword",
+      "Footer-beskrivelse opdateret",
+      "Layout default metadata opdateret",
+    ],
+    pendingTasks: [
+      "Page speed / Core Web Vitals audit",
+      "Trustpilot review-schema (rich snippets)",
+      "Yderligere internal linking fra service-sider tilbage til forsiden",
+    ],
+    activity: [
+      {
+        date: "2026-05-13",
+        title: "Forside SEO komplet færdig",
+        description: "Schema.org, alt-tekster, subtekster, aria-labels, footer-tekst",
+        commit: "cfeb661",
+      },
+      {
+        date: "2026-05-13",
+        title: "Semantisk h1 + title/meta deployed",
+        description: "'Digital design bureau' som lille eyebrow + brand-tekst bevaret",
+        commit: "fbce0c0",
+      },
+      {
+        date: "2026-05-13",
+        title: "Reviderede keywords efter 28-dages data",
+        description: "'digitalt bureau aarhus' droppet → 'digital design bureau' nu primary",
+      },
+    ],
+    notes:
+      "Forsiden er strategisk vigtigst. Den rangerer allerede pos 6,89 for primary keyword. Et lille skub kan løfte os til top 3-5.",
   },
   {
     name: "Webudvikling",
     url: "/services/webudvikling",
     built: true,
-    seoStatus: "pending" as SeoStatus,
-    primaryKeyword: null,
+    seoStatus: "pending",
+    lastSeoUpdate: null,
+    nextStep: "Modtager redirect-trafik fra /hjemmeside/ (pos 1,88!). SEO-cyklus skal køres snarest for at cementere positionen.",
+    keywords: {
+      primary: null,
+      secondary: [],
+    },
+    positions: {
+      current: null,
+      target: null,
+      impressions28d: null,
+    },
+    completedTasks: [],
+    pendingTasks: [
+      "Search Console-research: hvad rangerer siden allerede på?",
+      "Ubersuggest-research: find primary + secondaries",
+      "Anti-kannibaliserings-tjek mod forsiden",
+      "Skriv strategi-dokument",
+      "Optimér copy (title, meta, h1, h2'er)",
+      "Deploy + test",
+    ],
+    activity: [
+      {
+        date: "2026-05-12",
+        title: "301-redirect fra /hjemmeside/ → /services/webudvikling",
+        description: "Bevarer SEO-værdien fra den gamle URL (pos 1,88!)",
+        commit: "e84ce54",
+      },
+    ],
+    notes: "Høj prioritet. Den gamle /hjemmeside/-side ranker stadig pos 1,88. Vi skal kæmpe for at den nye side overtager den position.",
   },
   {
     name: "UI/UX Design",
     url: "/services/ui-ux-design",
     built: true,
-    seoStatus: "pending" as SeoStatus,
-    primaryKeyword: null,
+    seoStatus: "pending",
+    lastSeoUpdate: null,
+    nextStep: "Modtager redirect-trafik fra /digital-design/ (pos 6,64). SEO-cyklus skal køres snarest.",
+    keywords: {
+      primary: null,
+      secondary: [],
+    },
+    positions: {
+      current: null,
+      target: null,
+      impressions28d: null,
+    },
+    completedTasks: [],
+    pendingTasks: [
+      "Search Console-research: hvad rangerer siden allerede på?",
+      "Ubersuggest-research: find primary + secondaries",
+      "Anti-kannibaliserings-tjek (forsiden targeter 'digital design bureau' og 'digitalt bureau ux' — vi må ikke kannibalisere)",
+      "Skriv strategi-dokument",
+      "Optimér copy",
+      "Deploy + test",
+    ],
+    activity: [
+      {
+        date: "2026-05-12",
+        title: "301-redirect fra /digital-design/ → /services/ui-ux-design",
+        description: "Bevarer SEO-værdien fra den gamle URL (1.329 visninger/md)",
+        commit: "3adfa40",
+      },
+    ],
+    notes:
+      "Konflikt-risiko med forsiden: forsidens secondary er 'digitalt bureau ux'. UI/UX-siden skal target noget andet for ikke at kannibalisere.",
   },
   {
     name: "Branding",
     url: "/services/branding",
     built: true,
-    seoStatus: "pending" as SeoStatus,
-    primaryKeyword: null,
+    seoStatus: "pending",
+    lastSeoUpdate: null,
+    nextStep: "Modtager redirect-trafik fra /branding/ (pos 9,85) + /services/branding-logo/. SEO-cyklus klar til at starte.",
+    keywords: {
+      primary: null,
+      secondary: [],
+    },
+    positions: {
+      current: null,
+      target: null,
+      impressions28d: null,
+    },
+    completedTasks: ["Slug omdøbt fra 'branding-logo' til 'branding'"],
+    pendingTasks: [
+      "Search Console-research",
+      "Ubersuggest-research",
+      "Anti-kannibaliserings-tjek",
+      "Skriv strategi",
+      "Optimér copy",
+      "Deploy + test",
+    ],
+    activity: [
+      {
+        date: "2026-05-12",
+        title: "Slug omdøbt + redirects deployed",
+        description: "branding-logo → branding. Gamle /branding/-URL redirecter også.",
+        commit: "e84ce54",
+      },
+    ],
+    notes: null,
   },
   {
     name: "Grafisk Design",
     url: "/services/grafisk-design",
     built: true,
-    seoStatus: "pending" as SeoStatus,
-    primaryKeyword: null,
+    seoStatus: "pending",
+    lastSeoUpdate: null,
+    nextStep: "Ny side. Ingen SEO-arv. Skal bygges fra bunden.",
+    keywords: {
+      primary: null,
+      secondary: [],
+    },
+    positions: {
+      current: null,
+      target: null,
+      impressions28d: null,
+    },
+    completedTasks: [],
+    pendingTasks: [
+      "Search Console-research (begrænset data, ny side)",
+      "Ubersuggest-research",
+      "Skriv strategi",
+      "Optimér copy",
+      "Deploy + test",
+    ],
+    activity: [],
+    notes: "Lavere prioritet. Ingen arv at beskytte.",
   },
   {
     name: "WordPress",
     url: "/services/wordpress",
     built: true,
-    seoStatus: "pending" as SeoStatus,
-    primaryKeyword: null,
+    seoStatus: "pending",
+    lastSeoUpdate: null,
+    nextStep: "Ny side. Ingen SEO-arv. Skal bygges fra bunden.",
+    keywords: {
+      primary: null,
+      secondary: [],
+    },
+    positions: {
+      current: null,
+      target: null,
+      impressions28d: null,
+    },
+    completedTasks: [],
+    pendingTasks: [
+      "Search Console-research (begrænset data, ny side)",
+      "Ubersuggest-research",
+      "Skriv strategi",
+      "Optimér copy",
+      "Deploy + test",
+    ],
+    activity: [],
+    notes: null,
   },
   {
-    name: "Blog",
+    name: "Blog (oversigt)",
     url: "/blog",
     built: true,
-    seoStatus: "pending" as SeoStatus,
-    primaryKeyword: null,
+    seoStatus: "pending",
+    lastSeoUpdate: null,
+    nextStep: "Blog-oversigtsside. Lavere prioritet end service-sider.",
+    keywords: {
+      primary: null,
+      secondary: [],
+    },
+    positions: {
+      current: null,
+      target: null,
+      impressions28d: null,
+    },
+    completedTasks: [],
+    pendingTasks: [
+      "Vurder om der er volume nok til at SEO'e blog-oversigten",
+      "Eventuelt optimér meta + h1",
+    ],
+    activity: [],
+    notes: "Individuelle blog-artikler ranker bedre end oversigten. Strategien her er begrænset.",
   },
   {
     name: "Kontakt",
     url: "/kontakt",
     built: true,
-    seoStatus: "not_applicable" as SeoStatus,
-    primaryKeyword: null,
+    seoStatus: "not_applicable",
+    lastSeoUpdate: null,
+    nextStep: "Kontaktsider rankes normalt kun for brand-søgninger ('horizen kontakt'). Lav prioritet.",
+    keywords: { primary: null, secondary: [] },
+    positions: { current: null, target: null, impressions28d: null },
+    completedTasks: [],
+    pendingTasks: [],
+    activity: [],
+    notes: "Allerede pos 2,56 på 'horizen kontakt'-relaterede søgninger. Fint som det er.",
   },
 ];
 
@@ -206,15 +430,5 @@ export const recentActivity = [
     date: "2026-05-12",
     title: "Baseline trukket fra Search Console",
     description: "Maj 2026: 110 klik, 1.338 visninger (3-måneders data)",
-  },
-];
-
-export const keywordsTracked = [
-  {
-    page: "Forsiden",
-    primary: "digital design bureau",
-    secondary: ["digitalt design bureau", "digitalt bureau ux"],
-    currentPosition: 6.89,
-    impressionsLast28d: 158,
   },
 ];
