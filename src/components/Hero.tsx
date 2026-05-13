@@ -56,18 +56,31 @@ export default function Hero() {
         />
       </div>
       <div ref={contentRef}>
+        {/* Eyebrow (brand-flair) */}
+        <motion.p
+          custom={0.2}
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+          className="max-w-4xl text-left text-xs font-medium uppercase tracking-[0.2em] text-muted sm:text-center sm:text-sm"
+        >
+          Solutions crafted with real{" "}
+          <span className="lg:hidden">experience</span>
+          <TextRoll className="hidden lg:inline-block cursor-pointer">experience</TextRoll>
+        </motion.p>
+
         {/* Headline */}
         <motion.h1
           custom={0.4}
           initial="hidden"
           animate="visible"
           variants={fadeUp}
-          className="max-w-4xl text-left text-4xl font-black uppercase leading-[1.1] tracking-tight sm:text-center sm:text-5xl md:text-6xl lg:text-7xl"
+          className="mt-4 max-w-4xl text-left text-4xl font-black uppercase leading-[1.1] tracking-tight sm:text-center sm:text-5xl md:text-6xl lg:text-7xl"
         >
-          SOLUTIONS CRAFTED{" "}
-          WITH REAL{" "}
-          <span className="lg:hidden">EXPERIENCE</span>
-          <TextRoll className="hidden lg:inline-block cursor-pointer">EXPERIENCE</TextRoll>
+          Digital design bureau.{" "}
+          <span className="block text-muted/70 normal-case font-medium text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-2 tracking-normal">
+            Vi kombinerer erfaring med AI, ikke omvendt.
+          </span>
         </motion.h1>
 
         {/* Body copy */}
@@ -78,9 +91,10 @@ export default function Hero() {
           variants={fadeUp}
           className="mt-8 max-w-2xl sm:mx-auto text-left sm:text-center text-lg leading-relaxed text-muted sm:text-xl"
         >
-          Andre bruger AI til at arbejde mindre. Vi bruger det til at
-          levere mere. Samme timer, samme dedikation, bare med endnu
-          mere værdi for din forretning. Drevet af erfaring. Forstærket
+          Digital design bureau med 8+ års erfaring. Vi laver hjemmesider,
+          branding og UI/UX. Andre bruger AI til at arbejde mindre. Vi bruger
+          det til at levere mere. Samme timer, samme dedikation, bare med
+          endnu mere værdi for din forretning. Drevet af erfaring. Forstærket
           af AI.
         </motion.p>
 
