@@ -272,9 +272,14 @@ function PageAccordion({ page }: { page: PageDetail }) {
         {/* Positions */}
         {hasPositions && (
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/50 mb-3">
-              Position i Google
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/50 mb-1">
+              Position for primary keyword
             </h4>
+            {page.keywords.primary && (
+              <p className="text-xs text-foreground/50 mb-3 italic">
+                {`"${page.keywords.primary}"`}
+              </p>
+            )}
             <div className="grid grid-cols-3 gap-3">
               <div className="rounded-xl border border-foreground/[0.08] bg-background p-3">
                 <p className="text-xs text-foreground/50">Aktuel</p>
@@ -414,7 +419,7 @@ export default function SeoDashboardPage() {
         {/* Key metrics */}
         <SectionHeader
           title="Performance, samlet"
-          description={`${baseline.source} · ${baseline.period}`}
+          description={`${baseline.source} · ${baseline.period} · Tal er gennemsnit på tværs af alle queries (inkl. brand)`}
         />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <MetricCard
@@ -436,10 +441,10 @@ export default function SeoDashboardPage() {
             hint="Over branchegennemsnit (~3%)"
           />
           <MetricCard
-            label="Forsidens position"
+            label="Forsidens snit-position"
             value={baseline.metrics.frontpagePosition}
             status="good"
-            hint="Forbedret fra 23,46 (3-måneders gns.)"
+            hint="Alle queries, forbedret fra 23,46"
           />
         </div>
 
