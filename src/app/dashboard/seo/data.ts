@@ -70,6 +70,12 @@ export const actionItems = [
     estimatedTime: "5 min",
   },
   {
+    title: "Vercel: skift primary domain til horizen.dk",
+    description: "Vercel dashboard → Settings → Domains → horizen.dk → 'Set as Production Domain'. Fjerner redirect-kæden www → non-www og sparer 1,4 sek mobile LCP.",
+    priority: "high" as const,
+    estimatedTime: "2 min",
+  },
+  {
     title: "Opret Google Business Profile",
     description: "Kritisk for lokal pack-visning på Aarhus-søgninger.",
     priority: "medium" as const,
@@ -133,7 +139,7 @@ export const pages: PageDetail[] = [
     lastSeoUpdate: "2026-05-13",
     nextUpdate: "2026-06-12",
     pageAvgPosition: 11.71,
-    nextStep: "Vent på juni-data (12. juni) for at se effekt af SEO-arbejdet.",
+    nextStep: "I morgen: skift primary domain i Vercel til horizen.dk (sparer 1,4 sek mobile LCP). Bagefter re-kør PageSpeed audit. Vent ellers på juni-data (12. juni).",
     keywords: {
       primary: "digital design bureau",
       secondary: ["digitalt design bureau", "digitalt bureau ux"],
@@ -155,13 +161,22 @@ export const pages: PageDetail[] = [
       "ServicesSection subtitle med primary keyword",
       "Footer-beskrivelse opdateret",
       "Layout default metadata opdateret",
+      "PageSpeed / Core Web Vitals audit kørt (desktop 🟡, mobile 🔴)",
+      "Google Tag Manager + GA4 lazy-loaded (245 kb flyttet væk fra critical path)",
     ],
     pendingTasks: [
-      "Page speed / Core Web Vitals audit",
+      "Vercel: skift primary domain til horizen.dk (Andreas opgave i dashboard)",
+      "Re-kør PageSpeed audit efter de 2 fix er deployed",
       "Trustpilot review-schema (rich snippets)",
       "Yderligere internal linking fra service-sider tilbage til forsiden",
     ],
     activity: [
+      {
+        date: "2026-05-13",
+        title: "PageSpeed audit + lazy-load af Google-scripts",
+        description: "Mobile LCP målt til 15,2 sek (rødt). Lazy-load deployed for at flytte 245 kb GTM/GA/Ads-JS væk fra critical path. Forventet ny mobile LCP: 5-7 sek.",
+        commit: "fe06d28",
+      },
       {
         date: "2026-05-13",
         title: "Forside SEO komplet færdig",
@@ -181,7 +196,7 @@ export const pages: PageDetail[] = [
       },
     ],
     notes:
-      "Forsiden er strategisk vigtigst. Den rangerer allerede pos 6,89 for primary keyword. Et lille skub kan løfte os til top 3-5.",
+      "Forsiden er strategisk vigtigst. Den rangerer allerede pos 6,89 for primary keyword. Et lille skub kan løfte os til top 3-5. PageSpeed-tal pr. 2026-05-13: desktop LCP 3,4s (🟡), mobile LCP 15,2s (🔴). Lazy-load deployet — venter på Vercel domain-fix for at lukke loopet.",
   },
   {
     name: "Webudvikling",
@@ -440,6 +455,12 @@ export const upcomingPages = [
 ];
 
 export const recentActivity = [
+  {
+    date: "2026-05-13",
+    title: "Forside: PageSpeed audit + lazy-load af Google-scripts",
+    description: "Mobile LCP 15,2s (rødt). Lazy-load deployed for 245 kb GTM/GA-JS. Venter på Vercel domain-fix (skift primary til horizen.dk) for at lukke loopet.",
+    commit: "fe06d28",
+  },
   {
     date: "2026-05-13",
     title: "Webudvikling: SEO deployed",
