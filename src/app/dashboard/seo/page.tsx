@@ -434,10 +434,20 @@ export default function SeoDashboardPage() {
         </div>
 
         {/* Key metrics */}
-        <SectionHeader
-          title="Performance, hele sitet"
-          description={`${baseline.source} · ${baseline.period} · Tal er aggregeret på tværs af alle sider og queries`}
-        />
+        <div className="mb-6">
+          <div className="flex flex-wrap items-center gap-3">
+            <h2 className="text-2xl font-bold tracking-tight">
+              Performance, hele sitet
+            </h2>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-foreground/[0.08] bg-foreground/[0.04] px-2.5 py-1 text-xs font-medium text-foreground/70">
+              <CalendarIcon className="size-3" />
+              Sidste 28 dage
+            </span>
+          </div>
+          <p className="mt-1 text-sm text-foreground/60">
+            {baseline.source} · {dataAsOf} · Tal er aggregeret på tværs af alle sider og queries
+          </p>
+        </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <MetricCard
             label="Klik"
