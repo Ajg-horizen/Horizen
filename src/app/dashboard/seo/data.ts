@@ -187,30 +187,41 @@ export const pages: PageDetail[] = [
     name: "Webudvikling",
     url: "/services/webudvikling",
     built: true,
-    seoStatus: "pending",
-    lastSeoUpdate: null,
-    nextUpdate: null,
+    seoStatus: "in_progress",
+    lastSeoUpdate: "2026-05-13",
+    nextUpdate: "2026-06-12",
     pageAvgPosition: null,
-    nextStep: "Modtager redirect-trafik fra /hjemmeside/ (pos 1,88!). SEO-cyklus skal køres snarest for at cementere positionen.",
+    nextStep: "Strategi besluttet. Copy-implementation (title, meta, schema, 1 body-ændring) afventer Andreas-godkendelse.",
     keywords: {
-      primary: null,
-      secondary: [],
+      primary: "ny hjemmeside",
+      secondary: ["professionel hjemmeside", "webudvikling"],
     },
     positions: {
       current: null,
-      target: null,
+      target: 30,
       impressions28d: null,
     },
-    completedTasks: [],
+    completedTasks: [
+      "Search Console-research kørt",
+      "Ubersuggest keyword-research (15+ kandidater testet)",
+      "SERP-analyse på top 3 kandidater",
+      "Anti-kannibaliserings-tjek mod forsiden — ingen overlap",
+      "Strategi-dokument skrevet",
+    ],
     pendingTasks: [
-      "Search Console-research: hvad rangerer siden allerede på?",
-      "Ubersuggest-research: find primary + secondaries",
-      "Anti-kannibaliserings-tjek mod forsiden",
-      "Skriv strategi-dokument",
-      "Optimér copy (title, meta, h1, h2'er)",
-      "Deploy + test",
+      "Implementér title-tag med primary keyword",
+      "Implementér meta description",
+      "Tilføj Schema.org Service struktureret data",
+      "Lille body-ændring i techFoundation (én sætning)",
+      "Deploy til main",
+      "Anmod om re-indeksering i Search Console",
     ],
     activity: [
+      {
+        date: "2026-05-13",
+        title: "Keyword-strategi besluttet",
+        description: "Primary: 'ny hjemmeside' (590 vol, SD 31). Secondary: 'professionel hjemmeside' (480 vol) + 'webudvikling' (210 vol). Total fangst ~1.300 vol/md. Volumen + premium-positionering.",
+      },
       {
         date: "2026-05-12",
         title: "301-redirect fra /hjemmeside/ → /services/webudvikling",
@@ -218,7 +229,7 @@ export const pages: PageDetail[] = [
         commit: "e84ce54",
       },
     ],
-    notes: "Høj prioritet. Den gamle /hjemmeside/-side ranker stadig pos 1,88. Vi skal kæmpe for at den nye side overtager den position.",
+    notes: "SERP'en for primary keywords er domineret af billig-WordPress-bureauer. Horizen positionerer sig som premium alternativ uden at lyve om pris — eksisterende copy filtrerer publikum naturligt. H1 bevares 1:1. SEO-håndtag ligger i title/meta/schema.",
   },
   {
     name: "UI/UX Design",
@@ -423,6 +434,11 @@ export const upcomingPages = [
 ];
 
 export const recentActivity = [
+  {
+    date: "2026-05-13",
+    title: "Webudvikling: keyword-strategi besluttet",
+    description: "Primary 'ny hjemmeside' (590 vol) + 'professionel hjemmeside' (480) + 'webudvikling' (210). Total ~1.300 vol/md. Copy-implementation afventer godkendelse.",
+  },
   {
     date: "2026-05-13",
     title: "Forside SEO komplet færdig",

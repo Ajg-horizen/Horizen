@@ -20,9 +20,9 @@ import type { ServicePage } from "@/lib/services";
 export const webudvikling: ServicePage = {
   slug: "webudvikling",
   metadata: {
-    title: "Webudvikling | Horizen",
+    title: "Ny hjemmeside, bygget til at holde | Horizen",
     description:
-      "Custom webudvikling med fokus på performance, skalerbarhed og teknisk eksekvering. Next.js, React og moderne web-arkitektur bygget fra bunden.",
+      "Professionel hjemmeside med Next.js og React. 100-300 timers teknisk fundament. Webudvikling der konverterer, performer og holder i årevis.",
   },
   blocks: [
     {
@@ -32,7 +32,7 @@ export const webudvikling: ServicePage = {
         lead: "Hjemmesider er blevet en commodity.",
         mutedTail: "Vi kombinerer erfaring med AI, ikke omvendt.",
       },
-      body: "Uden forståelse for det tekniske fundament vil enhver hjemmeside fejle. Vi bygger på et fundament af 8+ års teknisk erfaring. Forstærket af AI til din fordel.",
+      body: "Uden forståelse for det tekniske fundament vil enhver ny hjemmeside fejle. Vi bygger på et fundament af 8+ års teknisk erfaring. Forstærket af AI til din fordel.",
       cta: { label: "Start et projekt", href: "/kontakt" },
       image: {
         src: "/graphics/Web-hero-image-marketing-google-ads.avif",
