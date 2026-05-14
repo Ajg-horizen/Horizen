@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import {
+  AlertTriangleIcon,
   CheckCircle2Icon,
   CircleDashedIcon,
   ClockIcon,
@@ -214,15 +215,16 @@ function PageDetailView({ page }: { page: PageDetail }) {
           )}
 
           {hasPendingTasks && (
-            <div>
-              <h4 className="text-xs font-semibold uppercase tracking-wider text-foreground/50 mb-3">
+            <div className="rounded-xl border border-amber-200 bg-amber-50/40 p-4">
+              <h4 className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-amber-800">
+                <AlertTriangleIcon className="size-3.5" />
                 Manglende opgaver ({page.pendingTasks.length})
               </h4>
               <ul className="space-y-1.5">
                 {page.pendingTasks.map((task, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm">
-                    <CircleDashedIcon className="mt-0.5 size-3.5 shrink-0 text-foreground/40" />
-                    <span className="text-foreground/70">{task}</span>
+                    <AlertTriangleIcon className="mt-0.5 size-3.5 shrink-0 text-amber-600" />
+                    <span className="text-foreground/80">{task}</span>
                   </li>
                 ))}
               </ul>

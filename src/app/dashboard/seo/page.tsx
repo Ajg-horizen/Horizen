@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Container from "@/components/Container";
 import {
+  AlertTriangleIcon,
   ArrowUpRightIcon,
   CalendarIcon,
   ClockIcon,
@@ -285,10 +286,18 @@ export default function SeoDashboardPage() {
           {actionItems.map((item) => (
             <div
               key={item.title}
-              className="rounded-xl border border-foreground/[0.08] bg-background p-4"
+              className={`rounded-xl border p-4 ${
+                item.priority === "high"
+                  ? "border-amber-200 bg-amber-50/40"
+                  : "border-foreground/[0.08] bg-background"
+              }`}
             >
               <div className="flex items-start gap-3 min-w-0">
-                <div className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded border-2 border-foreground/20" />
+                {item.priority === "high" ? (
+                  <AlertTriangleIcon className="mt-0.5 size-5 shrink-0 text-amber-600" />
+                ) : (
+                  <div className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded border-2 border-foreground/20" />
+                )}
                 <div className="min-w-0">
                   <h4 className="text-sm font-semibold leading-snug">
                     {item.title}

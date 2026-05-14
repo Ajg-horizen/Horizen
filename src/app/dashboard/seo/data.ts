@@ -11,6 +11,12 @@ export const dataAsOf = "2026-04-13 til 2026-05-13"; // 28-dages periode i basel
 
 export const upcomingReviews = [
   {
+    date: "2026-05-16",
+    title: "Test rich snippet validering",
+    description: "Gå til search.google.com/test/rich-results, indtast horizen.dk, og bekræft at 'Review snippet' + 'LocalBusiness' er 'eligible for rich results'. 2 min.",
+    type: "check" as const,
+  },
+  {
     date: "2026-05-20",
     title: "Sundhedstjek",
     description: "Tjek Search Console for indekseringsfejl. 5 min arbejde.",
