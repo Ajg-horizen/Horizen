@@ -11,7 +11,6 @@ const staticRoutes = [
   "/cases/od-biler-pro",
   "/cases/tandsundhed-uden-graenser",
   "/cases/never-another",
-  "/blog/ai-webdesign",
   "/blog/figma-til-kode",
   "/blog/seo-fejl-2026",
 ];

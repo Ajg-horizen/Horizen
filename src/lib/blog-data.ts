@@ -12,7 +12,6 @@ function calcReadTime(wordCount: number): string {
 }
 
 // Word counts measured from actual article content components
-const AI_WEBDESIGN_WORDS = 320;
 const SEO_FEJL_WORDS = 420;
 const FIGMA_TIL_KODE_WORDS = 380;
 
@@ -34,24 +33,6 @@ export interface BlogPost {
 }
 
 export const blogPosts: BlogPost[] = [
-  {
-    slug: "ai-webdesign",
-    title: "Sådan bruger vi AI til at levere bedre webdesign",
-    excerpt:
-      "Vi dykker ned i hvordan kunstig intelligens ændrer vores designproces, og hvad det betyder for dig som kunde.",
-    image:
-      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=500&fit=crop&q=80",
-    author: {
-      name: "José",
-      title: "CEO & Designer",
-      role: "10+ års erfaring",
-      avatar: "/staff/staff-jose-digital-design.jpg",
-    },
-    date: "15. marts 2026",
-    readTime: calcReadTime(AI_WEBDESIGN_WORDS),
-    tags: ["AI", "Design"],
-    href: "/blog/ai-webdesign",
-  },
   {
     slug: "seo-fejl-2026",
     title: "5 SEO-fejl der koster dig kunder i 2026",
