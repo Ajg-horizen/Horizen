@@ -5,6 +5,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import BackToTopButton from "@/components/BackToTopButton";
 import CalEmbed from "@/components/CalEmbed";
 import Script from "next/script";
+import { testimonials } from "@/lib/testimonials";
 import "./globals.css";
 
 const inter = Inter({
@@ -121,6 +122,29 @@ const organizationSchema = {
     ],
   },
   sameAs: [],
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: (
+      testimonials.reduce((sum, t) => sum + t.rating, 0) / testimonials.length
+    ).toFixed(1),
+    reviewCount: testimonials.length,
+    bestRating: 5,
+    worstRating: 1,
+  },
+  review: testimonials.map((t) => ({
+    "@type": "Review",
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: t.rating,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    author: {
+      "@type": "Person",
+      name: t.author.name,
+    },
+    reviewBody: t.quote,
+  })),
 };
 
 const websiteSchema = {

@@ -6,7 +6,7 @@
  * med MD-filerne i ~/Desktop/Claude Workflows/01-Kunder/Horizen/SEO/.
  */
 
-export const lastUpdated = "2026-05-13";
+export const lastUpdated = "2026-05-14";
 export const dataAsOf = "2026-04-13 til 2026-05-13"; // 28-dages periode i baseline
 
 export const upcomingReviews = [
@@ -210,11 +210,11 @@ export const pages: PageDetail[] = [
       "Layout default metadata opdateret",
       "PageSpeed / Core Web Vitals audit kørt (desktop 🟡, mobile 🔴)",
       "Google Tag Manager + GA4 lazy-loaded (245 kb flyttet væk fra critical path)",
+      "Trustpilot review-schema: AggregateRating + 7 Review-objekter på ProfessionalService",
     ],
     pendingTasks: [
       "Vercel: skift primary domain til horizen.dk (Andreas opgave i dashboard)",
       "Re-kør PageSpeed audit efter de 2 fix er deployed",
-      "Trustpilot review-schema (rich snippets)",
       "Yderligere internal linking fra service-sider tilbage til forsiden",
     ],
     activity: [
@@ -502,6 +502,17 @@ export const upcomingPages = [
 ];
 
 export const recentActivity = [
+  {
+    date: "2026-05-14",
+    title: "Forside: Trustpilot review-schema tilføjet (gratis rich snippets)",
+    description: "AggregateRating 5.0 fra 7 reviews + alle review-objekter i ProfessionalService schema. Genereres dynamisk fra testimonials.ts. Google kan nu vise stjerner i søgeresultater.",
+  },
+  {
+    date: "2026-05-14",
+    title: "Footer: synlig 'Aarhus, Danmark' geo-signal",
+    description: "Lokal SEO-forstærkning. Adressen var allerede i Schema.org, nu også synlig i footer.",
+    commit: "ba25694",
+  },
   {
     date: "2026-05-13",
     title: "Forside: PageSpeed audit + lazy-load af Google-scripts",
