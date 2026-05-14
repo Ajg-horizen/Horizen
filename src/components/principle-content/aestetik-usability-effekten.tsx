@@ -69,17 +69,19 @@ const content: PrincipleContent = {
           </p>
         </Section>
 
-        <Section title="Sådan bruger vi det">
+        <Section title="Sådan bruges det i praksis">
           <p>
-            Når vi designer hos Horizen, behandler vi visuel kvalitet som
-            et fundament — ikke som finpudsning til sidst. Typografi,
-            rytme, kontrast og hvidrum sættes tidligt, fordi det er dét,
-            der afgør hvor meget tålmodighed brugeren har, når de møder
-            selve funktionaliteten.
+            Apples produktsider er et tydeligt eksempel. Selve flowet —
+            vælg model, vælg konfiguration, læg i kurv — adskiller sig
+            ikke radikalt fra konkurrenternes. Men den visuelle ro,
+            typografiens hierarki og produktbilledernes komposition får
+            siderne til at føles mere brugervenlige end de objektivt er.
           </p>
           <p>
-            Men vi bygger aldrig pænt design oven på en utestet struktur.
-            Det er rækkefølgen der gør forskellen.
+            Et meta-eksempel: i Kurosus oprindelige hæveautomat-studie
+            havde nogle af de pænere designs faktisk dårligere
+            funktionalitet — men brugerne klagede mindre. Effekten
+            virker, også når det ikke burde.
           </p>
         </Section>
       </SectionGrid>

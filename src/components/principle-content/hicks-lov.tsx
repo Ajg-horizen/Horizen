@@ -66,12 +66,19 @@ const content: PrincipleContent = {
           </p>
         </Section>
 
-        <Section title="Sådan bruger vi det">
+        <Section title="Sådan bruges det i praksis">
           <p>
-            Vi grupperer relaterede valg, fremhæver det vigtigste, og
-            sætter en "anbefalet" eller "mest populær" mærkat på det der
-            statistisk er det rigtige for de fleste. Brugeren kan stadig
-            vælge frit — men friktionen ved at vælge er sænket markant.
+            Spotify er et godt eksempel. Tidligere havde appens
+            hovednavigation over 20 menupunkter; i 2019 blev det
+            reduceret til tre: Hjem, Søg, Bibliotek. Trafikken til de
+            afgørende skærme steg, fordi brugerne ikke længere skulle
+            stoppe op og parse en lang liste.
+          </p>
+          <p>
+            Samme princip ses i abonnementssider med 3 prisplaner i
+            stedet for 7, og i hvorfor mange checkout-flows samler
+            beslutninger i trin. Pointen er ikke at fjerne valg — det
+            er at lade brugeren tage ét ad gangen.
           </p>
         </Section>
       </SectionGrid>

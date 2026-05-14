@@ -64,13 +64,19 @@ const content: PrincipleContent = {
           </p>
         </Section>
 
-        <Section title="Sådan bruger vi det">
+        <Section title="Sådan bruges det i praksis">
           <p>
-            Når vi designer interfaces, gør vi den primære handling
-            visuelt og fysisk dominerende — og placerer destruktive
-            handlinger et stykke væk fra muselandingen. Touch-targets
-            holdes på minimum 44×44 pixels, fordi en finger ikke kan
-            sigte med samme præcision som en muse.
+            macOS' menulinje er klassikeren. Den sidder helt øverst i
+            skærmen — ikke et par pixels nede. Den lille forskel betyder
+            at musen kan kastes opad uden præcision, fordi skærmkanten
+            stopper bevægelsen. Et mål i kanten er reelt uendeligt
+            stort.
+          </p>
+          <p>
+            På mobil ses loven i 44×44-px reglen for touch-targets, og
+            i hvorfor en "Køb"-knap sjældent sidder gemt i et hjørne af
+            en webshop. Det er Fitts' lov der dikterer hvor afstanden
+            mellem læsepositionen og handlingen skal være kortest.
           </p>
         </Section>
       </SectionGrid>

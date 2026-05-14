@@ -64,12 +64,20 @@ const content: PrincipleContent = {
           </p>
         </Section>
 
-        <Section title="Sådan bruger vi det">
+        <Section title="Sådan bruges det i praksis">
           <p>
-            Når et flow kræver at brugeren husker noget (en
-            ordrebekræftelse, en bekræftelseskode, et regnskabsfelt),
-            holder vi den aktive belastning lav. Lange formularer brydes
-            op i trin. Lange tal grupperes. Sammenhørende felter samles.
+            Det mest hverdagsnære eksempel er telefonnumre. Otte
+            sammenhængende cifre (12345678) overstiger
+            arbejdshukommelsen, mens fire grupper á to (12 34 56 78)
+            føles ubesværet. Samme logik bag kreditkortnumre (4 ×
+            4 cifre), IBAN, og verifikationskoder fra banker (typisk
+            6 cifre, ofte i to grupper).
+          </p>
+          <p>
+            På web ses det i hvordan lange formularer brydes op i trin
+            — en flerstegs-checkout føles lettere end den samme
+            information samlet på én skærm, selv om den totale mængde
+            felter er identisk.
           </p>
         </Section>
       </SectionGrid>

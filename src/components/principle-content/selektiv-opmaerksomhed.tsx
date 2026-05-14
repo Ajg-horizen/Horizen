@@ -70,13 +70,21 @@ const content: PrincipleContent = {
           </p>
         </Section>
 
-        <Section title="Sådan bruger vi det">
+        <Section title="Sådan bruges det i praksis">
           <p>
-            Vigtige beskeder placeres i den naturlige læserytme — ikke
-            som visuelle "rør mig"-bokse. Vi skriver dem så de ligner
-            indhold, ikke marketing. Hvis noget skal fanges
-            absolut, bruger vi kontekst (timing, position i flowet)
-            i stedet for visuel skrigen.
+            Det mest dokumenterede eksempel er banner-blindhed.
+            Nielsen Norman Group har siden 1997 målt at brugere
+            systematisk overser elementer der ligner reklamer — også
+            når det er vigtig information de selv har bedt om. Eye-
+            tracking-studier viser at blikket bogstaveligt springer
+            over disse områder.
+          </p>
+          <p>
+            Det er derfor GDPR-pop-ups med store farver og rystende
+            bevægelse ofte ignoreres, mens en lille tekstboks med
+            samme indhold placeret i læseflowet bliver læst. Filteret
+            er trænet — og det handler om at undgå at trigge det, ikke
+            at overdøve det.
           </p>
         </Section>
       </SectionGrid>

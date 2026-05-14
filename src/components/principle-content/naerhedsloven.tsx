@@ -66,12 +66,20 @@ const content: PrincipleContent = {
           </p>
         </Section>
 
-        <Section title="Sådan bruger vi det">
+        <Section title="Sådan bruges det i praksis">
           <p>
-            Vi bruger nærhed som første værktøj, bokse og linjer som
-            sidste udvej. Hvidrum er ikke tomt — det er det der fortæller
-            læseren hvad der hører sammen, og hvor én tanke slutter og
-            en anden begynder.
+            Klassikeren er formulardesign. Når etiketten "Email" står
+            klods op ad sit inputfelt — og dobbelt så langt fra det
+            næste felt — er det indlysende hvad der hører sammen. Gør
+            afstandene ens, og læseren må scanne linje for linje for
+            at finde ud af det. Samme information, helt anden
+            oplevelse.
+          </p>
+          <p>
+            Samme princip i navigation: når underpunkter står tættere
+            på deres kategori end på naboerne, behøver designet ingen
+            bokse eller linjer for at fortælle hvad der hører sammen.
+            Hvidrum gør arbejdet.
           </p>
         </Section>
       </SectionGrid>
