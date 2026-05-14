@@ -136,7 +136,7 @@ export default function PrincipleDetail({ principle, content }: Props) {
 
         {/* Related principles in same category */}
         {related.length > 0 && (
-          <Container size="site" className="mt-24">
+          <Container size="article" className="mt-24 mb-32">
             <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
               Andre designprincipper
             </h2>
