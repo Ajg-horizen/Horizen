@@ -17,7 +17,7 @@ import {
   GraduationCapIcon,
   PlayCircleIcon,
   NewspaperIcon,
-  LightbulbIcon,
+  BookOpenIcon,
 } from "lucide-react";
 
 export type NavItem = {
@@ -152,11 +152,10 @@ export const resources: NavItem[] = [
     icon: NewspaperIcon,
   },
   {
-    title: "Tips & Tricks",
-    description: "Praktiske råd til din digitale strategi",
-    href: "/ressourcer/tips-og-tricks",
-    icon: LightbulbIcon,
-    badge: "Kommer snart",
+    title: "Designprincipper",
+    description: "Bibliotek over UX- og designprincipper vi arbejder ud fra",
+    href: "/ressourcer/designprincipper",
+    icon: BookOpenIcon,
   },
   {
     title: "Video Tutorials",
