@@ -122,29 +122,34 @@ const organizationSchema = {
     ],
   },
   sameAs: [],
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: (
-      testimonials.reduce((sum, t) => sum + t.rating, 0) / testimonials.length
-    ).toFixed(1),
-    reviewCount: testimonials.length,
-    bestRating: 5,
-    worstRating: 1,
-  },
-  review: testimonials.map((t) => ({
-    "@type": "Review",
-    reviewRating: {
-      "@type": "Rating",
-      ratingValue: t.rating,
+  // Schema-reviews afspejler KUN de faktiske Trustpilot-reviews (ikke direct/interview-kilder),
+  // så aggregate-rating matcher hvad Google selv kan verificere mod Trustpilot.
+  aggregateRating: (() => {
+    const tp = testimonials.filter((t) => t.source === "trustpilot");
+    return {
+      "@type": "AggregateRating",
+      ratingValue: (tp.reduce((sum, t) => sum + t.rating, 0) / tp.length).toFixed(1),
+      reviewCount: tp.length,
       bestRating: 5,
       worstRating: 1,
-    },
-    author: {
-      "@type": "Person",
-      name: t.author.name,
-    },
-    reviewBody: t.quote,
-  })),
+    };
+  })(),
+  review: testimonials
+    .filter((t) => t.source === "trustpilot")
+    .map((t) => ({
+      "@type": "Review",
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: t.rating,
+        bestRating: 5,
+        worstRating: 1,
+      },
+      author: {
+        "@type": "Person",
+        name: t.author.name,
+      },
+      reviewBody: t.quote,
+    })),
 };
 
 const websiteSchema = {

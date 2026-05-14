@@ -40,7 +40,7 @@ export const testimonials: Testimonial[] = [
       location: "Aabenraa",
       photo: "/Clients/oliver-profile-OD-biler.webp",
     },
-    source: "trustpilot",
+    source: "direct",
     featured: true,
   },
   {
