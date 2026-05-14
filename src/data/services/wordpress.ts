@@ -198,7 +198,7 @@ export const wordpress: ServicePage = {
       heading: "Det hele kunne starte her.",
       body: "Vi hører altid gerne om jeres visioner, og hvordan vi i fællesskab kan bygge dem.",
       primaryCta: { label: "Tag en snak", href: "/kontakt" },
-      secondaryCta: { label: "hej@horizen.dk", href: "mailto:hej@horizen.dk" },
+      secondaryCta: { label: "ajg@horizen.dk", href: "mailto:ajg@horizen.dk" },
     },
     {
       type: "faq",
@@ -206,7 +206,7 @@ export const wordpress: ServicePage = {
       eyebrow: "Spørgsmål",
       heading: ["Det vi", "oftest får"],
       intro: "Mangler du svar på noget? Skriv direkte til os på",
-      email: "hej@horizen.dk",
+      email: "ajg@horizen.dk",
       faqs: [
         {
           q: "Kan I overtage en side I ikke selv har bygget?",

@@ -78,10 +78,10 @@ export default function Footer() {
               </p>
               <div className="mt-8 space-y-2">
                 <a
-                  href="mailto:hej@horizen.dk"
+                  href="mailto:ajg@horizen.dk"
                   className="block text-sm text-background/50 transition-colors duration-300 hover:text-background"
                 >
-                  hej@horizen.dk
+                  ajg@horizen.dk
                 </a>
                 <a
                   href="tel:+4528127652"

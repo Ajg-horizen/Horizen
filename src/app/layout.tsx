@@ -55,7 +55,7 @@ const organizationSchema = {
   url: "https://horizen.dk",
   logo: "https://horizen.dk/logo/Horizen-LogoType-Black.svg",
   image: "https://horizen.dk/graphics/Hero-image-branding-services.webp",
-  email: "hej@horizen.dk",
+  email: "ajg@horizen.dk",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Aarhus",

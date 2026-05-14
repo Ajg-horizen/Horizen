@@ -27,10 +27,10 @@ export default function CtaSection() {
             Start et projekt
           </a>
           <a
-            href="mailto:hej@horizen.dk"
+            href="mailto:ajg@horizen.dk"
             className="text-sm font-medium text-background/50 transition-colors duration-300 hover:text-background"
           >
-            hej@horizen.dk &rarr;
+            ajg@horizen.dk &rarr;
           </a>
         </div>
       </motion.div>

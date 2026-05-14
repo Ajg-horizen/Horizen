@@ -203,7 +203,7 @@ export const webudvikling: ServicePage = {
       heading: "Det hele kunne starte her.",
       body: "Vi hører altid gerne om jeres visioner, og hvordan vi i fællesskab kan bygge dem.",
       primaryCta: { label: "Tag en snak", href: "/kontakt" },
-      secondaryCta: { label: "hej@horizen.dk", href: "mailto:hej@horizen.dk" },
+      secondaryCta: { label: "ajg@horizen.dk", href: "mailto:ajg@horizen.dk" },
     },
     {
       type: "faq",
@@ -211,7 +211,7 @@ export const webudvikling: ServicePage = {
       eyebrow: "Spørgsmål",
       heading: ["Ofte stillede", "spørgsmål"],
       intro: "Har du et spørgsmål der ikke er besvaret her? Skriv til os på",
-      email: "hej@horizen.dk",
+      email: "ajg@horizen.dk",
       faqs: [
         {
           q: "Hvor lang tid tager det at bygge en hjemmeside?",
