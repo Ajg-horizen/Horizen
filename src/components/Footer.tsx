@@ -89,6 +89,9 @@ export default function Footer() {
                 >
                   +45 28 12 76 52
                 </a>
+                <p className="block text-sm text-background/50">
+                  Aarhus, Danmark
+                </p>
               </div>
             </div>
 
