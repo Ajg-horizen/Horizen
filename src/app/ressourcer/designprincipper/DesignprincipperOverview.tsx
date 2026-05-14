@@ -177,8 +177,8 @@ export default function DesignprincipperOverview() {
         </Container>
 
         <div className="mt-32" />
+        <Footer />
       </main>
-      <Footer />
     </>
   );
 }

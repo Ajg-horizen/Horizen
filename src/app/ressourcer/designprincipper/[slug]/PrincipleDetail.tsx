@@ -29,7 +29,7 @@ export default function PrincipleDetail({ principle, content }: Props) {
   return (
     <>
       <Navbar alwaysVisible />
-      <main className="min-h-screen bg-background pt-32 pb-32">
+      <main className="min-h-screen bg-background pt-32">
         <Container size="article">
           {/* Back link */}
           <Link
@@ -184,8 +184,8 @@ export default function PrincipleDetail({ principle, content }: Props) {
             </ul>
           </Container>
         )}
+        <Footer />
       </main>
-      <Footer />
     </>
   );
 }
