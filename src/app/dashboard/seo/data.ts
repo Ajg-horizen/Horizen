@@ -36,6 +36,53 @@ export const upcomingReviews = [
   },
 ];
 
+export const relaunchData = {
+  relaunchDate: "2026-05-08",
+  before: {
+    label: "Før relancering",
+    period: "8. feb - 7. maj 2026 (90 dage)",
+    source: "Google Analytics 4 (G-HC4NR97H1P)",
+    metrics: {
+      activeUsers: 847,
+      newUsers: 829,
+      avgEngagementSec: 145.5,
+      eventCount: 16248,
+      organicSessions: 364,
+      directSessions: 835,
+      keyEvents: 1039,
+    },
+    topPages: [
+      { title: "Digitalt bureau – Aarhus (forsiden)", views: 1102, bounceRate: 25.6 },
+      { title: "Digitalt marketingbureau → Horizen", views: 946, bounceRate: 62.5 },
+      { title: "Digitalt bureau → Horizen", views: 528, bounceRate: 56.9 },
+      { title: "Kontakt", views: 506, bounceRate: 2.1 },
+      { title: "Hjemmeside (gammel webudvikling)", views: 248, bounceRate: 2.3 },
+      { title: "Digital Design (gammel UI/UX)", views: 232, bounceRate: 7.5 },
+      { title: "Branding (gammel)", views: 152, bounceRate: 2.1 },
+    ],
+    topGeo: [
+      { city: "Aarhus", users: 322 },
+      { city: "Copenhagen", users: 161 },
+      { city: "Amsterdam", users: 33 },
+    ],
+  },
+  after: {
+    label: "Efter relancering",
+    period: "8. - 14. maj 2026 (6 dage, ufuldstændig)",
+    source: "Google Analytics 4",
+    status: "pending" as const,
+    metrics: null,
+    note: "Efter-data fyldes på 12. juni (30 dages data) og igen 12. juli + 12. august.",
+  },
+  observations: [
+    "Direct + organic dominerer trafikken (835 + 86 førstebesøgende). Brand-genkendelse er hovedkilden.",
+    "Forsidens forgænger 'Digitalt bureau – Aarhus' var sitets stærkeste asset: 1.102 views med kun 25,6% bounce.",
+    "Kontaktsider havde 2% bounce — folk var allerede klar til at konvertere.",
+    "Engagement time gennemsnit: 2 min 25 sek — solid kvalitet på trafikken før relancering.",
+    "Aarhus 322 + Copenhagen 161 = 57% af danske brugere fra de to byer.",
+  ],
+};
+
 export const baseline = {
   period: "Sidste 28 dage (2026-04-13 til 2026-05-13)",
   source: "Google Search Console",

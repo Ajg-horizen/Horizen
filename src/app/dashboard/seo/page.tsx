@@ -15,6 +15,7 @@ import {
   lastUpdated,
   pages,
   recentActivity,
+  relaunchData,
   upcomingPages,
   upcomingReviews,
   type SeoStatus,
@@ -235,6 +236,113 @@ export default function SeoDashboardPage() {
             <p className="text-sm leading-relaxed text-foreground/80">
               {baseline.insight}
             </p>
+          </div>
+        </div>
+
+        {/* Relancering: før vs. efter */}
+        <div className="mt-16">
+          <SectionHeader
+            title="Relancering, før vs. efter"
+            description={`Relancering ${formatDateDk(relaunchData.relaunchDate)}. Sammenligning af 90 dage før og efter. Efter-data fyldes på fra 12. juni.`}
+          />
+          <div className="grid gap-5 lg:grid-cols-2">
+            {/* Før-kolonne */}
+            <div className="rounded-2xl border border-foreground/[0.08] bg-foreground/[0.02] p-6">
+              <div className="mb-4 flex items-baseline justify-between gap-3">
+                <h3 className="text-lg font-semibold">{relaunchData.before.label}</h3>
+                <span className="text-xs uppercase tracking-wide text-foreground/50">
+                  {relaunchData.before.period}
+                </span>
+              </div>
+              <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                <div>
+                  <dt className="text-xs uppercase tracking-wide text-foreground/50">Active users</dt>
+                  <dd className="mt-1 text-2xl font-bold tabular-nums">{relaunchData.before.metrics.activeUsers}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs uppercase tracking-wide text-foreground/50">Avg engagement</dt>
+                  <dd className="mt-1 text-2xl font-bold tabular-nums">
+                    {Math.floor(relaunchData.before.metrics.avgEngagementSec / 60)}m {Math.round(relaunchData.before.metrics.avgEngagementSec % 60)}s
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-xs uppercase tracking-wide text-foreground/50">Organic sessions</dt>
+                  <dd className="mt-1 text-2xl font-bold tabular-nums">{relaunchData.before.metrics.organicSessions}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs uppercase tracking-wide text-foreground/50">Direct sessions</dt>
+                  <dd className="mt-1 text-2xl font-bold tabular-nums">{relaunchData.before.metrics.directSessions}</dd>
+                </div>
+                <div className="col-span-2">
+                  <dt className="text-xs uppercase tracking-wide text-foreground/50">Key events (konverteringer)</dt>
+                  <dd className="mt-1 text-2xl font-bold tabular-nums">{relaunchData.before.metrics.keyEvents}</dd>
+                </div>
+              </dl>
+              <p className="mt-4 text-xs text-foreground/50">
+                Kilde: {relaunchData.before.source}
+              </p>
+            </div>
+
+            {/* Efter-kolonne */}
+            <div className="rounded-2xl border border-dashed border-foreground/[0.15] bg-foreground/[0.01] p-6">
+              <div className="mb-4 flex items-baseline justify-between gap-3">
+                <h3 className="text-lg font-semibold text-foreground/70">{relaunchData.after.label}</h3>
+                <span className="text-xs uppercase tracking-wide text-foreground/50">
+                  {relaunchData.after.period}
+                </span>
+              </div>
+              <div className="flex h-[180px] flex-col items-center justify-center gap-3 text-center">
+                <ClockIcon className="size-8 text-foreground/30" />
+                <p className="max-w-xs text-sm text-foreground/60">
+                  {relaunchData.after.note}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Top sider før relancering */}
+          <div className="mt-5 rounded-2xl border border-foreground/[0.08] bg-foreground/[0.02] p-6">
+            <h3 className="mb-1 text-base font-semibold">Top sider før relancering</h3>
+            <p className="mb-4 text-xs text-foreground/60">
+              De sider der bar mest trafik på det gamle site. Sammenligning med nye sider kommer fra 12. juni.
+            </p>
+            <div className="overflow-hidden rounded-xl border border-foreground/[0.06]">
+              <table className="w-full text-sm">
+                <thead className="bg-foreground/[0.03] text-xs uppercase tracking-wide text-foreground/60">
+                  <tr>
+                    <th className="px-4 py-2.5 text-left font-medium">Side</th>
+                    <th className="px-4 py-2.5 text-right font-medium">Views</th>
+                    <th className="px-4 py-2.5 text-right font-medium">Bounce rate</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-foreground/[0.06]">
+                  {relaunchData.before.topPages.map((page) => (
+                    <tr key={page.title}>
+                      <td className="px-4 py-2.5">{page.title}</td>
+                      <td className="px-4 py-2.5 text-right tabular-nums">{page.views.toLocaleString("da-DK")}</td>
+                      <td className="px-4 py-2.5 text-right tabular-nums">
+                        <span className={page.bounceRate < 10 ? "text-emerald-600" : page.bounceRate < 40 ? "text-foreground/70" : "text-amber-600"}>
+                          {page.bounceRate.toFixed(1)}%
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Observationer */}
+          <div className="mt-5 rounded-2xl border border-foreground/[0.08] bg-foreground/[0.02] p-6">
+            <h3 className="mb-3 text-base font-semibold">Observationer fra baseline</h3>
+            <ul className="space-y-2 text-sm text-foreground/80">
+              {relaunchData.observations.map((obs, i) => (
+                <li key={i} className="flex gap-2.5 leading-relaxed">
+                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-foreground/40" />
+                  <span>{obs}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
