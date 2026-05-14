@@ -153,7 +153,7 @@ export const resources: NavItem[] = [
   },
   {
     title: "Designprincipper",
-    description: "Bibliotek over UX- og designprincipper vi arbejder ud fra",
+    description: "Principperne bag godt design",
     href: "/ressourcer/designprincipper",
     icon: BookOpenIcon,
   },
