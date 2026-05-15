@@ -25,9 +25,9 @@ const content: PrincipleContent = {
         <Section title="Hvor effekten kommer fra">
           <p>
             Psykologen Paul Fitts målte i 1954 hvor lang tid det tog
-            forsøgspersoner at flytte en stylus mellem to plader. Han fandt
-            en simpel relation: tiden voksede med afstanden og faldt med
-            målets størrelse.
+            forsøgspersoner at flytte en metalpen frem og tilbage mellem
+            to plader. Han fandt en simpel relation: tiden voksede med
+            afstanden og faldt med målets størrelse.
           </p>
           <p>
             Formlen er stadig anvendt i HCI-forskning syv årtier senere —
