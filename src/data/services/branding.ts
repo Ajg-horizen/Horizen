@@ -178,6 +178,7 @@ export const branding: ServicePage = {
     },
     {
       type: "featuredTestimonial",
+      testimonialId: "anne-sofie-nordic-influence",
     },
     {
       type: "cases",

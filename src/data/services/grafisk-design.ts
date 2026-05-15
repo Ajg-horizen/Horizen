@@ -186,6 +186,7 @@ export const grafiskDesign: ServicePage = {
     },
     {
       type: "featuredTestimonial",
+      testimonialId: "ditte-never-another",
     },
     {
       type: "cases",

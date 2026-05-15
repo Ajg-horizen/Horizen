@@ -126,3 +126,17 @@ export function getFeaturedTestimonial(): Testimonial {
   if (!t) throw new Error("No featured testimonial found");
   return t;
 }
+
+/**
+ * Pluk en testimonial deterministisk ud fra en nøgle (typisk side-slug).
+ * Samme nøgle giver altid samme testimonial — så hver service-side viser
+ * konsekvent én bestemt anmeldelse, men forskellig på tværs af siderne.
+ */
+export function pickTestimonialByKey(key: string): Testimonial {
+  let h = 0;
+  for (let i = 0; i < key.length; i++) {
+    h = (h * 31 + key.charCodeAt(i)) | 0;
+  }
+  const idx = Math.abs(h) % testimonials.length;
+  return testimonials[idx];
+}

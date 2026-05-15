@@ -150,6 +150,7 @@ export const uiUxDesign: ServicePage = {
     },
     {
       type: "featuredTestimonial",
+      testimonialId: "ana-fajardo",
     },
     {
       type: "cases",

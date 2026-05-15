@@ -192,6 +192,7 @@ export const wordpress: ServicePage = {
     },
     {
       type: "featuredTestimonial",
+      testimonialId: "michael-seitz-malerfirma",
     },
     {
       type: "gradientCta",

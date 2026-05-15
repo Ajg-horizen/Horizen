@@ -23,7 +23,8 @@ function renderBlock(
   block: Block,
   inStickyStack?: boolean,
   stickyIndex?: number,
-  key?: string | number
+  key?: string | number,
+  pageKey?: string,
 ) {
   switch (block.type) {
     case "hero":
@@ -68,7 +69,9 @@ function renderBlock(
     case "gradientCta":
       return <GradientCtaBlock key={key} data={block} />;
     case "featuredTestimonial":
-      return <FeaturedTestimonialBlock key={key} />;
+      return (
+        <FeaturedTestimonialBlock key={key} data={block} pageKey={pageKey} />
+      );
     case "techFoundation":
       return <TechFoundationBlock key={key} id={block.id} data={block} />;
     case "techChecklist":
@@ -101,7 +104,15 @@ function renderBlock(
  * Grupperer fortløbende blocks med samme `stickyGroup` så de stables med
  * sticky-effekt. Andre blocks rendres direkte.
  */
-export default function PageBuilder({ blocks }: { blocks: ServicePage["blocks"] }) {
+export default function PageBuilder({
+  blocks,
+  pageKey,
+}: {
+  blocks: ServicePage["blocks"];
+  /** Side-slug — bruges af blocks der vil pluk konsekvent (fx
+   * featuredTestimonial deler en testimonial pr. side). */
+  pageKey?: string;
+}) {
   const out: React.ReactNode[] = [];
   let i = 0;
 
@@ -121,14 +132,14 @@ export default function PageBuilder({ blocks }: { blocks: ServicePage["blocks"] 
       out.push(
         <div key={`sticky-${group}-${i}`} className="relative">
           {groupBlocks.map(({ block: b, index }, localIdx) =>
-            renderBlock(b, true, localIdx, `${b.type}-${index}`)
+            renderBlock(b, true, localIdx, `${b.type}-${index}`, pageKey)
           )}
         </div>
       );
 
       i = j;
     } else {
-      out.push(renderBlock(block, false, 0, `${block.type}-${i}`));
+      out.push(renderBlock(block, false, 0, `${block.type}-${i}`, pageKey));
       i++;
     }
   }

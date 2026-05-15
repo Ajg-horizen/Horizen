@@ -26,10 +26,10 @@ export default function ServicePage({ slug }: { slug: string }) {
     <main>
       <Navbar alwaysVisible />
 
-      {hasHero && <PageBuilder blocks={heroBlocks} />}
+      {hasHero && <PageBuilder blocks={heroBlocks} pageKey={slug} />}
 
       <div className="relative z-10 bg-background">
-        <PageBuilder blocks={restBlocks} />
+        <PageBuilder blocks={restBlocks} pageKey={slug} />
         <Footer />
       </div>
     </main>
