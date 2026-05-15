@@ -27,7 +27,7 @@ export const wordpress: ServicePage = {
         lead: "WordPress driver over 40% af alle hjemmesider.",
         mutedTail: "De færreste får det fulde potentiale ud.",
       },
-      body: "WordPress er fleksibel og kraftfuld, men også kompleks. Selv etablerede virksomheder bruger den forkert: tunge billeder, langsom opsætning, plugins der hober sig op. Vi vurderer hver case for sig og leverer rådgivning, support eller en helt ny løsning hvis det er det rigtige.",
+      body: "WordPress er fleksibelt og kraftfuldt, men også komplekst. Selv etablerede virksomheder bruger det forkert: tunge billeder, langsom opsætning, plugins der hober sig op. Vi vurderer hver case for sig og leverer rådgivning, support eller en helt ny løsning hvis det er det rigtige.",
       cta: {
         label: "Få et gratis WordPress-tjek",
         href: "/kontakt",
@@ -75,8 +75,8 @@ export const wordpress: ServicePage = {
       stickyGroup: "wpStack",
       eyebrow: "Alt det der kan gå galt",
       heading: {
-        lead: "WordPress er fleksibel.",
-        mutedTail: "Det er også grunden til at den knækker.",
+        lead: "WordPress er fleksibelt.",
+        mutedTail: "Det er også grunden til at det knækker.",
       },
       body: "Plugins der ikke følger med. Themes der overskriver opdateringer. PHP-versioner der udløber. Backups der aldrig blev testet. Det meste opdager man først når noget er gået galt. Vi holder øje løbende.",
       orbitItems: [
