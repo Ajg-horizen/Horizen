@@ -8,7 +8,7 @@ const content: PrincipleContent = {
       Når to ting står tæt på hinanden, opfatter hjernen dem som beslægtede
       — også når de ikke er det. Det er et af de mest umiddelbart kraftfulde
       designprincipper, fordi det kun kræver én ting: at du tænker over
-      hvidrum.
+      white space.
     </>
   ),
 
@@ -24,7 +24,7 @@ const content: PrincipleContent = {
       <SectionGrid>
         <Section title="Hvor effekten kommer fra">
           <p>
-            Nærhedsloven er en af de oprindelige gestaltlove, formuleret
+            Law of Proximity er en af de oprindelige gestaltlove, formuleret
             af Max Wertheimer i 1923. Gestaltpsykologerne påviste at vi
             ikke opfatter elementer enkeltvis — vi grupperer dem
             automatisk efter visuelle signaler.
@@ -79,7 +79,7 @@ const content: PrincipleContent = {
             Samme princip i navigation: når underpunkter står tættere
             på deres kategori end på naboerne, behøver designet ingen
             bokse eller linjer for at fortælle hvad der hører sammen.
-            Hvidrum gør arbejdet.
+            White space gør arbejdet.
           </p>
         </Section>
       </SectionGrid>

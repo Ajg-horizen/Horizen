@@ -59,7 +59,7 @@ const content: PrincipleContent = {
           </p>
           <p>
             Det er afstanden mellem mål der også tæller. Hvis "Annullér"
-            sidder tæt på "Slet permanent", er Fitts-vinklen forkert
+            sidder tæt på "Slet permanent", er Fitts's Law forkert
             anvendt: nemheden bliver farlig.
           </p>
         </Section>
@@ -75,7 +75,7 @@ const content: PrincipleContent = {
           <p>
             På mobil ses loven i 44×44-px reglen for touch-targets, og
             i hvorfor en "Køb"-knap sjældent sidder gemt i et hjørne af
-            en webshop. Det er Fitts' lov der dikterer hvor afstanden
+            en webshop. Det er Fitts's Law der dikterer hvor afstanden
             mellem læsepositionen og handlingen skal være kortest.
           </p>
         </Section>
