@@ -55,7 +55,7 @@ const content: PrincipleContent = {
           <p>
             Loven bruges ofte som undskyldning for at gøre knapper enorme.
             Men store knapper uden hierarki gør det modsatte — alt
-            skriger lige højt, og brugeren ved ikke hvor han skal kigge.
+            skriger lige højt, og brugeren ved ikke hvor blikket skal lande.
           </p>
           <p>
             Det er afstanden mellem mål der også tæller. Hvis "Annullér"

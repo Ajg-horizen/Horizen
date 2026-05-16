@@ -59,7 +59,7 @@ const content: PrincipleContent = {
           </p>
           <p>
             Du må gerne have 30 produkter i en liste. Brugeren skal ikke
-            huske dem alle — han skal bare scanne. Loven gælder når der
+            huske dem alle — brugeren skal bare scanne. Loven gælder når der
             kræves aktiv holdning af information.
           </p>
         </Section>
