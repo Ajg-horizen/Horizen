@@ -37,12 +37,13 @@ const nextConfig: NextConfig = {
       { source: "/services/branding-logo/:path*", destination: "/services/branding", permanent: true },
 
       // /paid-ads/ og /seo-tekstforfatning/ var gamle marketing-sider.
-      // Marketing-service-siderne er endnu ikke bygget, så vi sender
-      // brugerne til kontakt hvor de kan komme videre.
-      { source: "/paid-ads", destination: "/kontakt", permanent: true },
-      { source: "/paid-ads/:path*", destination: "/kontakt", permanent: true },
-      { source: "/seo-tekstforfatning", destination: "/kontakt", permanent: true },
-      { source: "/seo-tekstforfatning/:path*", destination: "/kontakt", permanent: true },
+      // Der findes endnu ikke service-sider for disse, så vi sender til
+      // forsiden hvor brugeren kan orientere sig. Skift til de specifikke
+      // service-sider når /marketing/google-ads og /marketing/seo er bygget.
+      { source: "/paid-ads", destination: "/", permanent: true },
+      { source: "/paid-ads/:path*", destination: "/", permanent: true },
+      { source: "/seo-tekstforfatning", destination: "/", permanent: true },
+      { source: "/seo-tekstforfatning/:path*", destination: "/", permanent: true },
     ];
   },
 };
