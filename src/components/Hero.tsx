@@ -91,7 +91,7 @@ export default function Hero() {
         >
           AI er ikke en undskyldning for at arbejde mindre. Det er
           værktøjet, der gør, at vi kan levere mere. Samme timer, samme
-          dedikation, bare med endnu mere værdi for din forretning.
+          dedikation, blot med endnu mere værdi for din forretning.
           Drevet af erfaring. Forstærket af AI.
         </motion.p>
 
