@@ -16,13 +16,13 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://horizen.dk"),
-  title: "Horizen, digital design bureau",
+  title: "Horizen, digitalt design bureau",
   description:
-    "Digital design bureau med 8+ års erfaring. Hjemmesider, branding, UI/UX og webudvikling drevet af erfaring og forstærket af AI.",
+    "Digitalt design bureau med 8+ års erfaring. Hjemmesider, branding, UI/UX og webudvikling drevet af erfaring og forstærket af AI.",
   openGraph: {
-    title: "Horizen, digital design bureau",
+    title: "Horizen, digitalt design bureau",
     description:
-      "Digital design bureau med 8+ års erfaring. Hjemmesider, branding, UI/UX og webudvikling drevet af erfaring og forstærket af AI.",
+      "Digitalt design bureau med 8+ års erfaring. Hjemmesider, branding, UI/UX og webudvikling drevet af erfaring og forstærket af AI.",
     url: "/",
     siteName: "Horizen",
     locale: "da_DK",
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Horizen, digital design bureau",
+    title: "Horizen, digitalt design bureau",
     description:
-      "Digital design bureau med 8+ års erfaring. Hjemmesider, branding, UI/UX og webudvikling drevet af erfaring og forstærket af AI.",
+      "Digitalt design bureau med 8+ års erfaring. Hjemmesider, branding, UI/UX og webudvikling drevet af erfaring og forstærket af AI.",
     images: ["/graphics/Hero-image-branding-services.webp"],
   },
 };
@@ -50,9 +50,9 @@ const organizationSchema = {
   "@type": "ProfessionalService",
   "@id": "https://horizen.dk/#organization",
   name: "Horizen",
-  alternateName: "Horizen Digital Design Bureau",
+  alternateName: "Horizen Digitalt Design Bureau",
   description:
-    "Digital design bureau med 8+ års erfaring. Vi laver hjemmesider, branding, UI/UX og webudvikling. Drevet af erfaring, forstærket af AI.",
+    "Digitalt design bureau med 8+ års erfaring. Vi laver hjemmesider, branding, UI/UX og webudvikling. Drevet af erfaring, forstærket af AI.",
   url: "https://horizen.dk",
   logo: "https://horizen.dk/logo/Horizen-LogoType-Black.svg",
   image: "https://horizen.dk/graphics/Hero-image-branding-services.webp",
@@ -73,7 +73,7 @@ const organizationSchema = {
     "Branding",
     "Grafisk Design",
     "WordPress",
-    "Digital design",
+    "Digitalt design",
   ],
   hasOfferCatalog: {
     "@type": "OfferCatalog",

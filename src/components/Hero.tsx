@@ -56,7 +56,7 @@ export default function Hero() {
         />
       </div>
       <div ref={contentRef}>
-        {/* SEO H1 (lille eyebrow). Indeholder primary keyword "digital design bureau". */}
+        {/* SEO H1 (lille eyebrow). Indeholder primary keyword "digitalt design bureau". */}
         <motion.h1
           custom={0.2}
           initial="hidden"
@@ -64,7 +64,7 @@ export default function Hero() {
           variants={fadeUp}
           className="max-w-4xl text-left text-xs font-medium uppercase tracking-[0.2em] text-muted sm:text-center sm:text-sm"
         >
-          Digital design bureau
+          Digitalt design bureau
         </motion.h1>
 
         {/* Visuel hovedoverskrift (brand). IKKE h1, da semantik gemmes til SEO-h1 ovenfor. */}
