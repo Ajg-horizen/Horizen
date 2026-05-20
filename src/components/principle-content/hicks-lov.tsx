@@ -6,7 +6,7 @@ const content: PrincipleContent = {
   intro: (
     <>
       Jo flere valg du giver folk, jo længere tid tager det dem at beslutte
-      sig — og jo større er chancen for at de slet ikke beslutter sig. Det
+      sig, og jo større er chancen for at de slet ikke beslutter sig. Det
       handler ikke om at brugerne er dovne. Det handler om hvad hjernen
       reelt orker at sortere igennem.
     </>
@@ -31,7 +31,7 @@ const content: PrincipleContent = {
           <p>
             Formlen er enkel: fordoble antallet af valg, og
             beslutningstiden vokser med en konstant. Ikke et lineært
-            forhold — men en kurve der bliver stejlere jo flere
+            forhold, men en kurve der bliver stejlere jo flere
             muligheder du tilføjer.
           </p>
         </Section>
@@ -39,7 +39,7 @@ const content: PrincipleContent = {
         <Section title="Hvad det betyder i praksis">
           <p>
             En navigation med 12 menupunkter føles ikke bare lidt
-            tungere end én med 6 — den får brugeren til at frygte
+            tungere end én med 6, den får brugeren til at frygte
             beslutningen. Folk lukker fanen, scroller forbi, eller
             vælger ingenting.
           </p>
@@ -56,12 +56,12 @@ const content: PrincipleContent = {
           <p>
             Loven misforstås tit som "altid færre valg = bedre". Men
             hvis du fjerner muligheder folk faktisk har brug for, har du
-            ikke gjort beslutningen lettere — du har gjort den umulig.
+            ikke gjort beslutningen lettere, du har gjort den umulig.
             Målet er kurateret valg, ikke amputeret valg.
           </p>
           <p>
             Den anden faldgrube: progressive disclosure misbrugt.
-            At gemme valgene bag en menu betyder ikke at de er væk —
+            At gemme valgene bag en menu betyder ikke at de er væk , 
             brugeren ved stadig de findes, og det vejer.
           </p>
         </Section>
@@ -77,7 +77,7 @@ const content: PrincipleContent = {
           <p>
             Samme princip ses i abonnementssider med 3 prisplaner i
             stedet for 7, og i hvorfor mange checkout-flows samler
-            beslutninger i trin. Pointen er ikke at fjerne valg — det
+            beslutninger i trin. Pointen er ikke at fjerne valg, det
             er at lade brugeren tage ét ad gangen.
           </p>
         </Section>

@@ -1,5 +1,5 @@
 /**
- * Designprincipper — bibliotek over UX- og designprincipper.
+ * Designprincipper, bibliotek over UX- og designprincipper.
  *
  * Single source of truth: PRINCIPLE_SLUGS er den autoritative liste.
  * Alt andet (designPrinciples, illustrations-map, content-registry) er typet
@@ -77,7 +77,7 @@ function make(
 
 export const designPrinciples: DesignPrinciple[] = [
   make("aestetik-usability-effekten", "Aesthetic-Usability Effect",
-    "Folk oplever æstetisk design som mere brugervenligt — også når det objektivt set ikke er det.",
+    "Folk oplever æstetisk design som mere brugervenligt, også når det objektivt set ikke er det.",
     "Perception"),
   make("chunking", "Chunking",
     "Mennesker husker information bedre, når den er delt op i mindre, meningsfulde grupper.",
@@ -107,7 +107,7 @@ export const designPrinciples: DesignPrinciple[] = [
     "Brugere forventer at din side fungerer som alle de andre sider, de allerede kender.",
     "Adfærd"),
   make("loven-om-faelles-omraade", "Law of Common Region",
-    "Elementer i samme afgrænsede område opfattes som en gruppe — selv uden andre lighedstegn.",
+    "Elementer i samme afgrænsede område opfattes som en gruppe, selv uden andre lighedstegn.",
     "Perception"),
   make("naerhedsloven", "Law of Proximity",
     "Elementer der er tæt på hinanden, opleves som beslægtede. Afstand fortæller en historie.",
@@ -131,16 +131,16 @@ export const designPrinciples: DesignPrinciple[] = [
     "Blandt løsninger der virker, er den enkleste oftest den bedste. Skær fra, indtil det stadig virker.",
     "Kognition"),
   make("aktiv-bruger-paradoks", "Paradox of the Active User",
-    "Folk vil bruge — ikke lære. De læser ikke manualen før de prøver. Designet skal forklare sig selv.",
+    "Folk vil bruge, ikke lære. De læser ikke manualen før de prøver. Designet skal forklare sig selv.",
     "Adfærd"),
   make("pareto-princippet", "Pareto Principle",
-    "Omkring 80% af effekten kommer fra 20% af årsagerne. Find de 20% — og prioriter dem.",
+    "Omkring 80% af effekten kommer fra 20% af årsagerne. Find de 20%, og prioriter dem.",
     "Adfærd"),
   make("parkinsons-lov", "Parkinson's Law",
     "Opgaven fylder den tid der er til den. Sætter du tidspres på et flow, færdiggør folk hurtigere.",
     "Adfærd"),
   make("peak-end-reglen", "Peak-End Rule",
-    "Folk husker oplevelser ud fra højdepunktet og slutningen — ikke gennemsnittet.",
+    "Folk husker oplevelser ud fra højdepunktet og slutningen, ikke gennemsnittet.",
     "Hukommelse"),
   make("postels-lov", "Postel's Law",
     "Vær konservativ i hvad du sender, liberal i hvad du accepterer. Tilgivende inputfelter vinder.",
@@ -155,7 +155,7 @@ export const designPrinciples: DesignPrinciple[] = [
     "Et system har en iboende mængde kompleksitet. Spørgsmålet er, hvem der skal håndtere den.",
     "Kognition"),
   make("von-restorff", "Von Restorff Effect",
-    "Det der skiller sig ud, huskes. Brug det sparsomt — ellers udjævner forskellen sig.",
+    "Det der skiller sig ud, huskes. Brug det sparsomt, ellers udjævner forskellen sig.",
     "Hukommelse"),
   make("arbejdshukommelse", "Working Memory",
     "Den midlertidige mentale notesblok. Hold den let belastet, og designet føles intuitivt.",
@@ -169,7 +169,7 @@ export const designPrinciples: DesignPrinciple[] = [
 ];
 
 // Sanity-check ved modul-load: PRINCIPLE_SLUGS og designPrinciples skal være i synk.
-// Fanges i dev og under build — aldrig i prod uden at vi har set det først.
+// Fanges i dev og under build, aldrig i prod uden at vi har set det først.
 if (process.env.NODE_ENV !== "production") {
   const built = new Set(designPrinciples.map((p) => p.slug));
   for (const slug of PRINCIPLE_SLUGS) {
@@ -181,7 +181,7 @@ if (process.env.NODE_ENV !== "production") {
   }
   if (built.size !== PRINCIPLE_SLUGS.length) {
     throw new Error(
-      `[design-principles] Slug count mismatch — PRINCIPLE_SLUGS: ${PRINCIPLE_SLUGS.length}, designPrinciples: ${built.size}`,
+      `[design-principles] Slug count mismatch, PRINCIPLE_SLUGS: ${PRINCIPLE_SLUGS.length}, designPrinciples: ${built.size}`,
     );
   }
 }
@@ -190,7 +190,7 @@ export function getPrincipleBySlug(slug: string) {
   return designPrinciples.find((p) => p.slug === slug);
 }
 
-/** Deterministisk hash af en streng — bruges til stabil, slug-baseret picking. */
+/** Deterministisk hash af en streng, bruges til stabil, slug-baseret picking. */
 function hashStr(s: string): number {
   let h = 0;
   for (let i = 0; i < s.length; i++) {
@@ -202,7 +202,7 @@ function hashStr(s: string): number {
 /**
  * Vælg N relaterede principper (eksklusiv det aktuelle).
  *
- * Pickingen er deterministisk pr. slug — samme princip viser altid de
+ * Pickingen er deterministisk pr. slug, samme princip viser altid de
  * samme relaterede. Det giver stabile interne links til SEO og en
  * konsekvent oplevelse på tværs af genindlæsninger.
  *

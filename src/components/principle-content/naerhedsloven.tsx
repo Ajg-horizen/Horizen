@@ -5,8 +5,8 @@ import { illustrationBg } from "@/lib/principle-bg";
 const content: PrincipleContent = {
   intro: (
     <>
-      Når to ting står tæt på hinanden, opfatter hjernen dem som beslægtede
-      — også når de ikke er det. Det er et af de mest umiddelbart kraftfulde
+      Når to ting står tæt på hinanden, opfatter hjernen dem som beslægtede,
+      også når de ikke er det. Det er et af de mest umiddelbart kraftfulde
       designprincipper, fordi det kun kræver én ting: at du tænker over
       white space.
     </>
@@ -26,7 +26,7 @@ const content: PrincipleContent = {
           <p>
             Law of Proximity er en af de oprindelige gestaltlove, formuleret
             af Max Wertheimer i 1923. Gestaltpsykologerne påviste at vi
-            ikke opfatter elementer enkeltvis — vi grupperer dem
+            ikke opfatter elementer enkeltvis, vi grupperer dem
             automatisk efter visuelle signaler.
           </p>
           <p>
@@ -39,7 +39,7 @@ const content: PrincipleContent = {
         <Section title="Hvad det betyder i praksis">
           <p>
             En etiket og dens inputfelt skal stå tættere på hinanden end
-            de er på det næste felt — ellers ved brugeren ikke hvilken
+            de er på det næste felt, ellers ved brugeren ikke hvilken
             etiket der hører til hvad. Det lyder banalt, men det er en
             af de mest oversete usability-fejl i formulardesign.
           </p>
@@ -55,7 +55,7 @@ const content: PrincipleContent = {
         <Section title="Faldgruber">
           <p>
             Den almindelige fejl er at hælde alt jævnt fordelt på siden.
-            "Det ser ryddeligt ud" — men når intet er tættere på noget
+            "Det ser ryddeligt ud", men når intet er tættere på noget
             andet, kan hjernen ikke gruppere. Resultatet er at læseren
             må gøre arbejdet selv.
           </p>
@@ -69,8 +69,8 @@ const content: PrincipleContent = {
         <Section title="Sådan bruges det i praksis">
           <p>
             Klassikeren er formulardesign. Når etiketten "Email" står
-            klods op ad sit inputfelt — og dobbelt så langt fra det
-            næste felt — er det indlysende hvad der hører sammen. Gør
+            klods op ad sit inputfelt, og dobbelt så langt fra det
+            næste felt, er det indlysende hvad der hører sammen. Gør
             afstandene ens, og læseren må scanne linje for linje for
             at finde ud af det. Samme information, helt anden
             oplevelse.

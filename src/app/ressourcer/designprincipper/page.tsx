@@ -3,7 +3,7 @@ import DesignprincipperOverview from "./DesignprincipperOverview";
 
 const title = "Designprincipper | Horizen";
 const description =
-  "Bibliotek over de UX- og designprincipper vi arbejder ud fra hos Horizen. Forskningsbaserede principper omsat til praksis — krediteret Jon Yablonskis Laws of UX.";
+  "Bibliotek over de UX- og designprincipper vi arbejder ud fra hos Horizen. Forskningsbaserede principper omsat til praksis, krediteret Jon Yablonskis Laws of UX.";
 
 export const metadata: Metadata = {
   title,

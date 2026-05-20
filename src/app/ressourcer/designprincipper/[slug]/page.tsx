@@ -12,7 +12,7 @@ interface Props {
 }
 
 // Generér kun statiske ruter for udgivne principper. Skjulte principper
-// returnerer 404 ved direkte tilgang — de findes i koden men er ikke live.
+// returnerer 404 ved direkte tilgang, de findes i koden men er ikke live.
 export function generateStaticParams() {
   return designPrinciples
     .filter((p) => isPublished(p.slug))

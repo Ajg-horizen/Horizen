@@ -6,7 +6,7 @@ const content: PrincipleContent = {
   intro: (
     <>
       Hjernen kan holde omkring syv ting i sin korttidshukommelse på én
-      gang — give eller tage et par. Det er ikke en svaghed du skal kæmpe
+      gang, give eller tage et par. Det er ikke en svaghed du skal kæmpe
       imod. Det er en begrænsning du skal bygge dit interface oveni.
     </>
   ),
@@ -26,11 +26,11 @@ const content: PrincipleContent = {
             Psykologen George A. Miller udgav i 1956 et af de mest
             citerede papers i kognitionsforskningens historie: "The
             magical number seven, plus or minus two". Han viste at
-            arbejdshukommelsen håndterer 5-9 elementer ad gangen — uanset
+            arbejdshukommelsen håndterer 5-9 elementer ad gangen, uanset
             om det er tal, ord eller billeder.
           </p>
           <p>
-            Nyere forskning peger på at det ofte er endnu lavere — 3-4
+            Nyere forskning peger på at det ofte er endnu lavere, 3-4
             elementer er mere realistisk for komplekst materiale. Tallet
             7 er en pejling, ikke en konstant.
           </p>
@@ -54,12 +54,12 @@ const content: PrincipleContent = {
         <Section title="Faldgruber">
           <p>
             Loven misbruges tit som regel: "max 7 menupunkter". Men det
-            handler ikke om visuelle elementer på en side — det handler
+            handler ikke om visuelle elementer på en side, det handler
             om hvad brugeren skal HOLDE i hovedet samtidig.
           </p>
           <p>
             Du må gerne have 30 produkter i en liste. Brugeren skal ikke
-            huske dem alle — brugeren skal bare scanne. Loven gælder når der
+            huske dem alle, brugeren skal bare scanne. Loven gælder når der
             kræves aktiv holdning af information.
           </p>
         </Section>
@@ -74,8 +74,8 @@ const content: PrincipleContent = {
             6 cifre, ofte i to grupper).
           </p>
           <p>
-            På web ses det i hvordan lange formularer brydes op i trin
-            — en flerstegs-checkout føles lettere end den samme
+            På web ses det i hvordan lange formularer brydes op i trin,
+            en flerstegs-checkout føles lettere end den samme
             information samlet på én skærm, selv om den totale mængde
             felter er identisk.
           </p>

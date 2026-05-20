@@ -5,7 +5,7 @@ import { illustrationBg } from "@/lib/principle-bg";
 const content: PrincipleContent = {
   intro: (
     <>
-      Hjernen filtrerer aktivt det irrelevante fra — det er sådan vi
+      Hjernen filtrerer aktivt det irrelevante fra, det er sådan vi
       overhovedet kan fungere i et miljø fyldt med signaler. Problemet er
       at den også filtrerer ting fra som du *gerne* ville have at brugeren
       lagde mærke til. Folk er gode til at ignorere det de er trænet i at
@@ -58,13 +58,13 @@ const content: PrincipleContent = {
         <Section title="Faldgruber">
           <p>
             Det fristende svar er at gøre vigtige beskeder ENDNU mere
-            iøjnefaldende — større, mere farve, mere bevægelse. Det
+            iøjnefaldende, større, mere farve, mere bevægelse. Det
             forstærker som regel filteret. Jo mere det ligner reklame,
             jo mere bliver det ignoreret.
           </p>
           <p>
             Den anden faldgrube er at antage at brugeren ser hvad du
-            ser. Designeren har set siden hundrede gange — for brugeren
+            ser. Designeren har set siden hundrede gange, for brugeren
             er det første gang, og hjernen er allerede i gang med at
             sortere.
           </p>
@@ -74,7 +74,7 @@ const content: PrincipleContent = {
           <p>
             Det mest dokumenterede eksempel er banner-blindhed.
             Nielsen Norman Group har siden 1997 målt at brugere
-            systematisk overser elementer der ligner reklamer — også
+            systematisk overser elementer der ligner reklamer, også
             når det er vigtig information de selv har bedt om. Eye-
             tracking-studier viser at blikket bogstaveligt springer
             over disse områder.
@@ -83,7 +83,7 @@ const content: PrincipleContent = {
             Det er derfor GDPR-pop-ups med store farver og rystende
             bevægelse ofte ignoreres, mens en lille tekstboks med
             samme indhold placeret i læseflowet bliver læst. Filteret
-            er trænet — og det handler om at undgå at trigge det, ikke
+            er trænet, og det handler om at undgå at trigge det, ikke
             at overdøve det.
           </p>
         </Section>

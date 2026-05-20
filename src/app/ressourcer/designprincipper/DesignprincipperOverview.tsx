@@ -17,7 +17,7 @@ import {
   type PrincipleCategory,
 } from "@/lib/design-principles";
 
-// Skjul principper uden content fra public — de findes i koden men er
+// Skjul principper uden content fra public, de findes i koden men er
 // ikke publiceret endnu. Tilføj en fil i principle-content/ for at "tænde" et.
 const publishedPrinciples = designPrinciples.filter((p) => isPublished(p.slug));
 
@@ -62,7 +62,7 @@ export default function DesignprincipperOverview() {
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
               Et bibliotek over de UX- og designprincipper vi arbejder ud fra
               i hverdagen. Forskningsbaserede regler omsat til konkret
-              praksis — så du kan se hvad der ligger bag de valg, vi
+              praksis, så du kan se hvad der ligger bag de valg, vi
               træffer.
             </p>
             <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted">
@@ -76,7 +76,7 @@ export default function DesignprincipperOverview() {
                 Laws of UX
               </a>
               . Vi fortolker og forklarer dem i vores egen tone med
-              eksempler fra det arbejde vi laver — og linker tilbage til den
+              eksempler fra det arbejde vi laver, og linker tilbage til den
               oprindelige kilde og forskningen bag.
             </p>
           </motion.div>

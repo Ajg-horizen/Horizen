@@ -5,7 +5,7 @@ import { illustrationBg } from "@/lib/principle-bg";
 const content: PrincipleContent = {
   intro: (
     <>
-      Folk oplever æstetisk design som mere brugervenligt — også når det
+      Folk oplever æstetisk design som mere brugervenligt, også når det
       objektivt set ikke er det. Det er ikke en holdning eller en
       mavefornemmelse. Det er en dokumenteret effekt, og en af de mest
       praktiske ting at have med i baghovedet, når man bygger en hjemmeside.
@@ -31,7 +31,7 @@ const content: PrincipleContent = {
           </p>
           <p>
             Resultatet: deltagerne vurderede de pæne versioner som markant
-            nemmere at bruge — selv når de faktisk var lige så besværlige
+            nemmere at bruge, selv når de faktisk var lige så besværlige
             som de grimme. Æstetik påvirkede den oplevede brugervenlighed
             mere end den reelle brugervenlighed gjorde.
           </p>
@@ -41,8 +41,8 @@ const content: PrincipleContent = {
           <p>
             Når en bruger lander på en hjemmeside der ser gennemtænkt ud,
             går hjernen automatisk i en mere tålmodig tilstand. Små bumps i
-            oplevelsen — et felt der opfører sig lidt mærkeligt, en knap
-            der sidder et uventet sted — bliver tilgivet i stedet for at
+            oplevelsen, et felt der opfører sig lidt mærkeligt, en knap
+            der sidder et uventet sted, bliver tilgivet i stedet for at
             føre til frustration.
           </p>
           <p>
@@ -57,7 +57,7 @@ const content: PrincipleContent = {
         <Section title="Bagsiden af medaljen">
           <p>
             Effekten er ikke uden faldgruber. Når et design er for pænt,
-            kan rigtige usability-problemer blive overset — også i
+            kan rigtige usability-problemer blive overset, også i
             brugertests. Testpersoner kan finde et flow forvirrende, men
             alligevel sige at det fungerer fint, fordi det ser
             professionelt ud.
@@ -71,8 +71,8 @@ const content: PrincipleContent = {
 
         <Section title="Sådan bruges det i praksis">
           <p>
-            Apples produktsider er et tydeligt eksempel. Selve flowet —
-            vælg model, vælg konfiguration, læg i kurv — adskiller sig
+            Apples produktsider er et tydeligt eksempel. Selve flowet , 
+            vælg model, vælg konfiguration, læg i kurv, adskiller sig
             ikke radikalt fra konkurrenternes. Men den visuelle ro,
             typografiens hierarki og produktbilledernes komposition får
             siderne til at føles mere brugervenlige end de objektivt er.
@@ -80,7 +80,7 @@ const content: PrincipleContent = {
           <p>
             Et meta-eksempel: i Kurosus oprindelige hæveautomat-studie
             havde nogle af de pænere designs faktisk dårligere
-            funktionalitet — men brugerne klagede mindre. Effekten
+            funktionalitet, men brugerne klagede mindre. Effekten
             virker, også når det ikke burde.
           </p>
         </Section>

@@ -8,7 +8,7 @@ import type { PrincipleSlug } from "@/lib/design-principles";
  *
  * Stil: matsort forms på pastel baggrund (sat via div omkring SVG'en,
  * mappet pr. kategori i CATEGORY_BG). Fremhævning via størrelse og
- * komposition — aldrig farve.
+ * komposition, aldrig farve.
  *
  * "Cut-outs" (fx trekanten i Æstetik-Usability, mellem-ringen i Fitts)
  * læser den aktuelle bg-farve via BgContext, så pastel-laget matcher kortet.
@@ -48,7 +48,7 @@ function Frame({
 
 // ----- Perception -----
 
-/** Æstetik-Usability — sort cirkel med trekant skåret ud */
+/** Æstetik-Usability, sort cirkel med trekant skåret ud */
 function AestetikUsability({ className }: IllProps) {
   const bg = useBg();
   return (
@@ -59,7 +59,7 @@ function AestetikUsability({ className }: IllProps) {
   );
 }
 
-/** Fælles område — region indrammer en gruppe, én skiller sig ud */
+/** Fælles område, region indrammer en gruppe, én skiller sig ud */
 function FaellesOmraade({ className }: IllProps) {
   const bg = useBg();
   return (
@@ -86,7 +86,7 @@ function FaellesOmraade({ className }: IllProps) {
   );
 }
 
-/** Nærhedsloven — to klynger af prikker */
+/** Nærhedsloven, to klynger af prikker */
 function Naerhedsloven({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -100,7 +100,7 @@ function Naerhedsloven({ className }: IllProps) {
   );
 }
 
-/** Prägnanz — kompleks form reduceres til enkel hexagon */
+/** Prägnanz, kompleks form reduceres til enkel hexagon */
 function Praegnanz({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -126,7 +126,7 @@ function Praegnanz({ className }: IllProps) {
   );
 }
 
-/** Lighedsloven — fremhævede prikker danner et "S"-mønster blandt dæmpede */
+/** Lighedsloven, fremhævede prikker danner et "S"-mønster blandt dæmpede */
 function Lighedsloven({ className }: IllProps) {
   // S-formet pattern indenfor 5x7 grid
   const highlights = new Set([
@@ -159,7 +159,7 @@ function Lighedsloven({ className }: IllProps) {
   );
 }
 
-/** Ensartet forbindelse — prikker forbundet via koncentriske ring-baner */
+/** Ensartet forbindelse, prikker forbundet via koncentriske ring-baner */
 function EnsartetForbindelse({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -181,7 +181,7 @@ function EnsartetForbindelse({ className }: IllProps) {
   );
 }
 
-/** Von Restorff — grid af firkanter, én cirkel skiller sig ud */
+/** Von Restorff, grid af firkanter, én cirkel skiller sig ud */
 function VonRestorff({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -212,7 +212,7 @@ function VonRestorff({ className }: IllProps) {
 
 // ----- Kognition -----
 
-/** Kognitive bias — forskudte ringe omkring central prik (forvrænget perception) */
+/** Kognitive bias, forskudte ringe omkring central prik (forvrænget perception) */
 function KognitiveBias({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -224,7 +224,7 @@ function KognitiveBias({ className }: IllProps) {
   );
 }
 
-/** Kognitiv belastning — lodrette bjælker, halvdelen fyldt */
+/** Kognitiv belastning, lodrette bjælker, halvdelen fyldt */
 function KognitivBelastning({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -250,7 +250,7 @@ function KognitivBelastning({ className }: IllProps) {
   );
 }
 
-/** Hicks' lov — grid af valg-prikker med beslutningspunkt i centrum */
+/** Hicks' lov, grid af valg-prikker med beslutningspunkt i centrum */
 function HicksLov({ className }: IllProps) {
   const bg = useBg();
   const cols = 9;
@@ -284,7 +284,7 @@ function HicksLov({ className }: IllProps) {
   );
 }
 
-/** Mental model — isometrisk wireframe-kube (komprimeret repræsentation) */
+/** Mental model, isometrisk wireframe-kube (komprimeret repræsentation) */
 function MentalModel({ className }: IllProps) {
   // Isometriske hjørnepunkter
   const top = { x: 200, y: 50 };
@@ -322,7 +322,7 @@ function MentalModel({ className }: IllProps) {
   );
 }
 
-/** Occams ragekniv — 2x2 grid hvor 3 felter er kaotiske, ét er rent */
+/** Occams ragekniv, 2x2 grid hvor 3 felter er kaotiske, ét er rent */
 function OccamsRagekniv({ className }: IllProps) {
   const bg = useBg();
   const cells = [
@@ -346,7 +346,7 @@ function OccamsRagekniv({ className }: IllProps) {
   );
 }
 
-/** Teslers lov — hexagon med alle diagonaler (kompleksitet kan ikke fjernes) */
+/** Teslers lov, hexagon med alle diagonaler (kompleksitet kan ikke fjernes) */
 function TeslersLov({ className }: IllProps) {
   const pts = [
     { x: 200, y: 40 },
@@ -380,7 +380,7 @@ function TeslersLov({ className }: IllProps) {
   );
 }
 
-/** Valg-overload — checkerboard af fyldte/outline prikker (alle konkurrerer) */
+/** Valg-overload, checkerboard af fyldte/outline prikker (alle konkurrerer) */
 function ValgOverload({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -410,7 +410,7 @@ function ValgOverload({ className }: IllProps) {
 
 // ----- Hukommelse -----
 
-/** Chunking — én lang række brudt op i 3 grupper */
+/** Chunking, én lang række brudt op i 3 grupper */
 function Chunking({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -421,7 +421,7 @@ function Chunking({ className }: IllProps) {
   );
 }
 
-/** Millers lov — 7 fremhævede prikker i en grid (7±2 arbejdshukommelse) */
+/** Millers lov, 7 fremhævede prikker i en grid (7±2 arbejdshukommelse) */
 function MillersLov({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -446,7 +446,7 @@ function MillersLov({ className }: IllProps) {
   );
 }
 
-/** Peak-end-reglen — kurve med peak i midten og høj ende */
+/** Peak-end-reglen, kurve med peak i midten og høj ende */
 function PeakEnd({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -464,7 +464,7 @@ function PeakEnd({ className }: IllProps) {
   );
 }
 
-/** Serielle positions-effekt — første og sidste fremhævet */
+/** Serielle positions-effekt, første og sidste fremhævet */
 function SerielPosition({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -478,9 +478,9 @@ function SerielPosition({ className }: IllProps) {
   );
 }
 
-/** Von Restorff — defined above */
+/** Von Restorff, defined above */
 
-/** Arbejdshukommelse — 3x3 grid af cirkler, fader mod bunden (info forsvinder) */
+/** Arbejdshukommelse, 3x3 grid af cirkler, fader mod bunden (info forsvinder) */
 function Arbejdshukommelse({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -500,7 +500,7 @@ function Arbejdshukommelse({ className }: IllProps) {
   );
 }
 
-/** Zeigarnik — fremdriftsbar halvt fyldt */
+/** Zeigarnik, fremdriftsbar halvt fyldt */
 function Zeigarnik({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -512,7 +512,7 @@ function Zeigarnik({ className }: IllProps) {
 
 // ----- Opmærksomhed -----
 
-/** Mål-gradient-effekten — stablede bjælker, accelererer mod målet */
+/** Mål-gradient-effekten, stablede bjælker, accelererer mod målet */
 function MaalGradient({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -543,7 +543,7 @@ function MaalGradient({ className }: IllProps) {
   );
 }
 
-/** Selektiv opmærksomhed — én markant blandt mange svage */
+/** Selektiv opmærksomhed, én markant blandt mange svage */
 function SelektivOpmaerksomhed({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -565,7 +565,7 @@ function SelektivOpmaerksomhed({ className }: IllProps) {
 
 // ----- Adfærd -----
 
-/** Doherty-grænsen — koncentriske ringe (hurtig feedback-loop) */
+/** Doherty-grænsen, koncentriske ringe (hurtig feedback-loop) */
 function Doherty({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -577,7 +577,7 @@ function Doherty({ className }: IllProps) {
   );
 }
 
-/** Fitts' lov — stort mål */
+/** Fitts' lov, stort mål */
 function FittsLov({ className }: IllProps) {
   const bg = useBg();
   return (
@@ -589,7 +589,7 @@ function FittsLov({ className }: IllProps) {
   );
 }
 
-/** Flow — koncentriske kvadrater (zoom-in, fuld fordybelse) */
+/** Flow, koncentriske kvadrater (zoom-in, fuld fordybelse) */
 function Flow({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -609,7 +609,7 @@ function Flow({ className }: IllProps) {
   );
 }
 
-/** Jakobs lov — to overlappende kvadrat-outlines (genkendelighed) */
+/** Jakobs lov, to overlappende kvadrat-outlines (genkendelighed) */
 function JakobsLov({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -619,7 +619,7 @@ function JakobsLov({ className }: IllProps) {
   );
 }
 
-/** Aktiv brugers paradoks — menneske springer over manualen med lange ben */
+/** Aktiv brugers paradoks, menneske springer over manualen med lange ben */
 function AktivBrugerParadoks({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -634,21 +634,21 @@ function AktivBrugerParadoks({ className }: IllProps) {
 
       {/* Hoved */}
       <circle cx="170" cy="55" r="14" fill={C.fg} />
-      {/* Krop — lænet fremad */}
+      {/* Krop, lænet fremad */}
       <line x1="178" y1="68" x2="210" y2="125" stroke={C.fg} strokeWidth="5" strokeLinecap="round" />
       {/* Front-arm strakt frem */}
       <line x1="190" y1="85" x2="260" y2="75" stroke={C.fg} strokeWidth="5" strokeLinecap="round" />
       {/* Bag-arm trækker bagud */}
       <line x1="184" y1="80" x2="135" y2="95" stroke={C.fg} strokeWidth="5" strokeLinecap="round" />
-      {/* Front-ben — langt og strakt fremad */}
+      {/* Front-ben, langt og strakt fremad */}
       <line x1="210" y1="125" x2="305" y2="155" stroke={C.fg} strokeWidth="6" strokeLinecap="round" />
-      {/* Bag-ben — langt og strakt bagud */}
+      {/* Bag-ben, langt og strakt bagud */}
       <line x1="210" y1="125" x2="110" y2="155" stroke={C.fg} strokeWidth="6" strokeLinecap="round" />
     </Frame>
   );
 }
 
-/** Pareto — 80/20 bjælker */
+/** Pareto, 80/20 bjælker */
 function ParetoPrincippet({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -659,7 +659,7 @@ function ParetoPrincippet({ className }: IllProps) {
   );
 }
 
-/** Parkinsons lov — diamant med pile udad (opgaven udvider sig) */
+/** Parkinsons lov, diamant med pile udad (opgaven udvider sig) */
 function ParkinsonsLov({ className }: IllProps) {
   return (
     <Frame className={className}>
@@ -684,7 +684,7 @@ function ParkinsonsLov({ className }: IllProps) {
   );
 }
 
-/** Postels lov — pyramide af trekanter (bred input, smal output) */
+/** Postels lov, pyramide af trekanter (bred input, smal output) */
 function PostelsLov({ className }: IllProps) {
   // 4 rækker, antal trekanter falder fra 4 til 1
   const rows = [
@@ -715,7 +715,7 @@ function PostelsLov({ className }: IllProps) {
 
 // ----- map -----
 
-// Record<PrincipleSlug, ...> — TypeScript håndhæver at HVER slug fra
+// Record<PrincipleSlug...>, TypeScript håndhæver at HVER slug fra
 // PRINCIPLE_SLUGS findes her. Tilføjer du en ny slug, fejler kompilering
 // indtil du har tilføjet en illustration.
 const map: Record<PrincipleSlug, (p: IllProps) => React.JSX.Element> = {

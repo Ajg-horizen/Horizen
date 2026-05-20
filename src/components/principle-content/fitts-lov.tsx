@@ -6,7 +6,7 @@ const content: PrincipleContent = {
   intro: (
     <>
       Tiden det tager at klikke på noget afhænger af to ting: hvor langt
-      målet er væk, og hvor stort det er. Det lyder banalt — men det er den
+      målet er væk, og hvor stort det er. Det lyder banalt, men det er den
       enkleste lov der findes om hvorfor små knapper i hjørner føles
       besværlige, og hvorfor centrerede call-to-actions konverterer bedre.
     </>
@@ -30,7 +30,7 @@ const content: PrincipleContent = {
             afstanden og faldt med målets størrelse.
           </p>
           <p>
-            Formlen er stadig anvendt i HCI-forskning syv årtier senere —
+            Formlen er stadig anvendt i HCI-forskning syv årtier senere , 
             inklusive på alt fra musepile til touch-targets på mobil.
           </p>
         </Section>
@@ -54,7 +54,7 @@ const content: PrincipleContent = {
         <Section title="Faldgruber">
           <p>
             Loven bruges ofte som undskyldning for at gøre knapper enorme.
-            Men store knapper uden hierarki gør det modsatte — alt
+            Men store knapper uden hierarki gør det modsatte, alt
             skriger lige højt, og brugeren ved ikke hvor blikket skal lande.
           </p>
           <p>
@@ -67,7 +67,7 @@ const content: PrincipleContent = {
         <Section title="Sådan bruges det i praksis">
           <p>
             macOS' menulinje er klassikeren. Den sidder helt øverst i
-            skærmen — ikke et par pixels nede. Den lille forskel betyder
+            skærmen, ikke et par pixels nede. Den lille forskel betyder
             at musen kan kastes opad uden præcision, fordi skærmkanten
             stopper bevægelsen. Et mål i kanten er reelt uendeligt
             stort.

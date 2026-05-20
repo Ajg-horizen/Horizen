@@ -22,7 +22,7 @@ interface Props {
 
 export default function PrincipleDetail({ principle, content }: Props) {
   const bg = illustrationBg(principle.category);
-  // Træk kun fra udgivne principper — vi linker aldrig til skjulte sider
+  // Træk kun fra udgivne principper, vi linker aldrig til skjulte sider
   const publishedPool = designPrinciples.filter((p) => isPublished(p.slug));
   const related = getRelatedPrinciples(principle.slug, 3, publishedPool);
 
@@ -89,7 +89,7 @@ export default function PrincipleDetail({ principle, content }: Props) {
               <p className="mt-3 max-w-2xl text-sm text-muted leading-relaxed">
                 Begrebet er beskrevet og samlet af Jon Yablonski i hans
                 projekt Laws of UX. Her er den oprindelige reference og den
-                akademiske baggrund — kredit hører til dem der bærer arbejdet.
+                akademiske baggrund, kredit hører til dem der bærer arbejdet.
               </p>
               <ul className="mt-6 grid gap-3 sm:grid-cols-2">
                 {content.sources.map((s, i) => {

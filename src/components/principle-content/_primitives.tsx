@@ -39,7 +39,7 @@ export function SectionGrid({ children }: { children: ReactNode }) {
 
 /**
  * Typografisk callout der krediterer originalstudiet bag et princip.
- * Ingen ansigter — bare ren typografi med tydeligt hierarki.
+ * Ingen ansigter, bare ren typografi med tydeligt hierarki.
  */
 export function ResearchOrigin({
   authors,
@@ -50,7 +50,7 @@ export function ResearchOrigin({
   authors: string[];
   institution: string;
   year: number | string;
-  /** Valgfri pastelfarve som baggrund — fx kategoriens egen pastel. */
+  /** Valgfri pastelfarve som baggrund, fx kategoriens egen pastel. */
   tint?: string;
 }) {
   return (

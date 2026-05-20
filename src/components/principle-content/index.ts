@@ -34,7 +34,7 @@ export interface PrincipleContent {
 
 // Partial: ikke alle principper har færdigt content endnu. Når en slug
 // tilføjes her, tvinger PrincipleSlug-typen den til at matche listen
-// i design-principles.ts — ingen tavse drift mellem registries.
+// i design-principles.ts, ingen tavse drift mellem registries.
 const registry: Partial<Record<PrincipleSlug, PrincipleContent>> = {
   "aestetik-usability-effekten": aestetikUsability,
   "fitts-lov": fittsLov,
@@ -49,7 +49,7 @@ export function getPrincipleContent(slug: string): PrincipleContent | null {
 }
 
 /**
- * Sandt hvis et princip er "udgivet" — dvs. har en content-fil registreret.
+ * Sandt hvis et princip er "udgivet", dvs. har en content-fil registreret.
  * Alle public surfaces (overview, sitemap, related, generateStaticParams)
  * skal filtrere på det her. Et princip uden content er skjult fra brugere
  * og Google, men findes stadig i koden indtil det er klar.
