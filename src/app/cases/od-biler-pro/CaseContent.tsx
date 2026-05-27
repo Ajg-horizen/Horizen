@@ -63,7 +63,6 @@ const project = {
   stats: [
     { label: "Hurtigere loadtid", value: "2.1s" },
     { label: "Mobil-først design", value: "100%" },
-    { label: "Sider leveret", value: "8+" },
     { label: "Leveringstid", value: "3 uger" },
   ],
   otherCases: [
@@ -334,11 +333,11 @@ export default function CaseContent() {
         >
           <ScrambleEyebrow>Resultater</ScrambleEyebrow>
           <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
-            Tal der taler
+            Det målbare fundament
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-3">
           {project.stats.map((stat, i) => (
             <motion.div
               key={stat.label}
