@@ -478,23 +478,6 @@ export default function CaseContent() {
                       <span className="font-bold text-emerald-400">2,5 timer spart</span> hver eneste dag
                     </p>
                   </div>
-                  <div className="grid grid-cols-3 gap-4 pt-4">
-                    <div className="text-center">
-                      <p className="text-lg font-bold text-emerald-400">700 kr</p>
-                      <p className="text-[10px] text-white/30 mt-1">Spart pr. dag</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-lg font-bold text-emerald-400">15.400 kr</p>
-                      <p className="text-[10px] text-white/30 mt-1">Spart pr. måned</p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-lg font-bold text-emerald-400">184.800 kr</p>
-                      <p className="text-[10px] text-white/30 mt-1">Spart pr. år</p>
-                    </div>
-                  </div>
-                  <p className="text-[10px] text-white/20 text-center">
-                    Baseret på 280 kr/time, 22 arbejdsdage/md, 1 medarbejder
-                  </p>
                 </motion.div>
               </div>
             </div>
