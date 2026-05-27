@@ -327,7 +327,7 @@ export default function CaseContent() {
         >
           <ScrambleEyebrow>Resultater</ScrambleEyebrow>
           <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
-            Tal der taler
+            Det målbare fundament
           </h2>
         </motion.div>
 
