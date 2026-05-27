@@ -104,7 +104,7 @@ export const webudvikling: ServicePage = {
       stats: [
         { value: "150+", label: "Projekter leveret" },
         { value: "98%", label: "Tilfredse kunder" },
-        { value: "12 år", label: "Erfaring i branchen" },
+        { value: "8 år", label: "Erfaring i branchen" },
       ],
     },
     {

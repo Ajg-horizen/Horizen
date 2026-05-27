@@ -231,7 +231,6 @@ Bemærk: Vi siger *"Ja"* eller *"Nej"* først. Derefter nuance.
 
 Brug disse når de er relevante:
 - **8+** års teknisk erfaring
-- **12** års erfaring i branchen (agentur-niveau)
 - **150+** projekter leveret
 - **50+** brands udviklet
 - **98%** tilfredse kunder
