@@ -15,12 +15,10 @@ import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import Footer from "@/components/Footer";
 
 const clientLogos = [
-  { src: "/logo/Horizen_Branding_Novo_Nordisk.svg", alt: "Novo Nordisk" },
   { src: "/logo/Horizen_Branding_ArenaRanders.svg", alt: "Arena Randers" },
   { src: "/logo/Logo-NeverAnother-White-RGB.svg", alt: "Never Another" },
   { src: "/logo/Horizen_Branding_Nordic.svg", alt: "Nordic" },
   { src: "/logo/Horizen_Branding_Jesper_Lundgaard-08.svg", alt: "Jesper Lundgaard" },
-  { src: "/logo/Horizen_Branding_Komunikado.svg", alt: "Komunikado" },
   { src: "/logo/Horizen_Branding_AAEL.svg", alt: "AAEL" },
   { src: "/logo/BettrPlans-logo-01.svg", alt: "BettrPlans" },
   { src: "/Bomærker/TUG-Bomærke-hvid.svg", alt: "Tandsundhed Uden Grænser" },
