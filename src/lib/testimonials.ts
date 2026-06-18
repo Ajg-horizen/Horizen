@@ -100,6 +100,19 @@ export const testimonials: Testimonial[] = [
     source: "trustpilot",
   },
   {
+    id: "tatiana-tandsundhed",
+    quote:
+      "José var lydhør og hurtig til at forstå vores behov som NGO, og hele forløbet var trygt og effektivt. Der var aldrig noget, der føltes umuligt. Vores arbejde er nu meget bedre formidlet og synligt, og det gør en reel forskel. Vi kan varmt anbefale Horizen.",
+    rating: 5,
+    author: {
+      name: "Tatiana",
+      role: "Projektleder",
+      company: "Tandsundhed Uden Grænser",
+      photo: "/Clients/Tatiana-TUG.webp",
+    },
+    source: "trustpilot",
+  },
+  {
     id: "nikolaj-lippert",
     quote:
       "Rigtig god service! Igennem hele forløbet var José både åben og transparent og havde et rigtig højt niveau af kommunikation. Stor anbefaling herfra!",

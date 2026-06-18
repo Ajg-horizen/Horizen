@@ -4,6 +4,7 @@ import { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRightIcon,
+  ArrowUpRightIcon,
   PenToolIcon,
   MousePointerClickIcon,
   GitBranchIcon,
@@ -20,6 +21,8 @@ import Footer from "@/components/Footer";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { fadeInUp, fadeUp } from "@/lib/animations";
 import Container from "@/components/Container";
+import { TestimonialBody } from "@/components/FeaturedTestimonial";
+import { getTestimonial } from "@/lib/testimonials";
 
 const project = {
   title: "Tandsundhed Uden Grænser",
@@ -28,7 +31,7 @@ const project = {
   client: "Tandsundhed Uden Grænser",
   image: "/cases/smilende_kvinde_fra_Mongoliet.webp",
   description:
-    "Komplet redesign og ny visuel identitet for en NGO der kæmper for bedre tandsundhed globalt. Fra forældet WPBakery-site til et skræddersyet CMS der sparer timer hver dag.",
+    "Komplet redesign og ny visuel identitet for en NGO der kæmper for bedre tandsundhed globalt. Fra forældet WPBakery-site til et specialbygget CMS der sparer timer hver dag.",
   team: [
     {
       name: "Johanne",
@@ -289,7 +292,7 @@ export default function CaseContent() {
           >
             <ScrambleEyebrow>Løsningen</ScrambleEyebrow>
             <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
-              Skræddersyet CMS & ny identitet
+              Specialbygget CMS & ny identitet
             </h2>
           </motion.div>
           <motion.div
@@ -301,7 +304,7 @@ export default function CaseContent() {
           >
             <p className="text-base text-muted leading-relaxed">
               Vi designede en helt ny visuel identitet og byggede sitet fra bunden
-              med et skræddersyet CMS der er tilpasset organisationens daglige
+              med et specialbygget CMS der er tilpasset organisationens daglige
               behov. Redigeringstiden gik fra 3 timer til under 30 minutter om
               dagen. En reduktion på over 83%.
             </p>
@@ -488,34 +491,21 @@ export default function CaseContent() {
 
       {/* Kundecitat */}
       <Container as="section" size="site" className="py-24 border-t border-foreground/[0.06]">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          custom={0}
-          variants={fadeInUp}
-          className="max-w-3xl mx-auto text-center"
-        >
-          <div className="flex justify-center gap-0.5 mb-8">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <div
-                key={i}
-                className="flex h-6 w-6 items-center justify-center bg-[#00b67a]"
-              >
-                <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-white">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-              </div>
-            ))}
-          </div>
-          <blockquote className="text-2xl md:text-3xl font-light leading-relaxed tracking-tight">
-            &ldquo;Horizen gav os en hjemmeside der virkelig afspejler vores mission. Det nye CMS sparer os timer hver uge.&rdquo;
-          </blockquote>
-          <div className="mt-8">
-            <p className="font-semibold">Tandsundhed Uden Grænser</p>
-            <p className="text-sm text-muted">NGO, Danmark</p>
-          </div>
-        </motion.div>
+        <TestimonialBody
+          testimonial={getTestimonial("tatiana-tandsundhed")}
+          align="center"
+        />
+        <div className="mt-10 text-center">
+          <a
+            href="https://dhwb.dk/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-1.5 text-sm font-medium text-foreground underline-offset-4 hover:underline"
+          >
+            Besøg hjemmeside
+            <ArrowUpRightIcon className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </a>
+        </div>
       </Container>
 
       {/* Tools & Teknologier */}
