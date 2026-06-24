@@ -29,21 +29,6 @@ export type Testimonial = {
 
 export const testimonials: Testimonial[] = [
   {
-    id: "oliver-od-biler-ai-fundament",
-    quote:
-      "Vi havde forsøgt os med en AI-løsning. Den så okay ud, men vi fik ingen henvendelser. Horizen lavede en audit og fandt flere kritiske fejl. Vi valgte at få bygget en ny side fra bunden, og nu har vi rent faktisk fået en side med aktivitet.",
-    rating: 5,
-    author: {
-      name: "Oliver Dethlefsen",
-      role: "Indehaver",
-      company: "OD Pro",
-      location: "Aabenraa",
-      photo: "/Clients/oliver-profile-OD-biler.webp",
-    },
-    source: "direct",
-    featured: true,
-  },
-  {
     id: "saxo-bettrplans",
     quote:
       "Jeg har haft en fantastisk oplevelse med teamet hos Horizen! Dette var min første hjemmeside, men de formåede at guide mig trygt gennem hele processen. Resultatet blev en flot og velfungerende hjemmeside.",
@@ -54,6 +39,7 @@ export const testimonials: Testimonial[] = [
       company: "BettrPlans",
     },
     source: "trustpilot",
+    featured: true,
   },
   {
     id: "michael-seitz-malerfirma",

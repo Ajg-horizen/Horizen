@@ -548,7 +548,7 @@ export default function CaseContent() {
       {/* Kundecitat — single source fra testimonials.ts */}
       <Container as="section" size="site" className="py-24 border-t border-foreground/[0.06]">
         <TestimonialBody
-          testimonial={getTestimonial("oliver-od-biler-ai-fundament")}
+          testimonial={getTestimonial("michael-seitz-malerfirma")}
         />
       </Container>
 
