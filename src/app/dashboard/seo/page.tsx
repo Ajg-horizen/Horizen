@@ -400,7 +400,7 @@ export default function SeoDashboardPage() {
     <>
       <SectionHeader
         title="Relancering, før vs. efter"
-        description={`Relancering ${formatDateDk(relaunchData.relaunchDate)}. Sammenligning af 90 dage før og efter. Efter-data fyldes på fra 12. juni.`}
+        description={`Relancering ${formatDateDk(relaunchData.relaunchDate)}. Før = 90 dage, efter = 70 dage — sammenlign tendenser, ikke rå-tal 1:1.`}
       />
       <div className="grid gap-5 lg:grid-cols-2">
         {/* Før-kolonne */}
@@ -441,19 +441,40 @@ export default function SeoDashboardPage() {
         </div>
 
         {/* Efter-kolonne */}
-        <div className="rounded-2xl border border-dashed border-foreground/[0.15] bg-foreground/[0.01] p-6">
+        <div className="rounded-2xl border border-foreground/[0.08] bg-foreground/[0.02] p-6">
           <div className="mb-4 flex items-baseline justify-between gap-3">
-            <h3 className="text-lg font-semibold text-foreground/70">{relaunchData.after.label}</h3>
+            <h3 className="text-lg font-semibold">{relaunchData.after.label}</h3>
             <span className="text-xs uppercase tracking-wide text-foreground/50">
               {relaunchData.after.period}
             </span>
           </div>
-          <div className="flex h-[180px] flex-col items-center justify-center gap-3 text-center">
-            <ClockIcon className="size-8 text-foreground/30" />
-            <p className="max-w-xs text-sm text-foreground/60">
-              {relaunchData.after.note}
-            </p>
-          </div>
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
+            <div>
+              <dt className="text-xs uppercase tracking-wide text-foreground/50">Active users</dt>
+              <dd className="mt-1 text-2xl font-bold tabular-nums">{relaunchData.after.metrics.activeUsers}</dd>
+            </div>
+            <div>
+              <dt className="text-xs uppercase tracking-wide text-foreground/50">Avg engagement</dt>
+              <dd className="mt-1 text-2xl font-bold tabular-nums">
+                {Math.floor(relaunchData.after.metrics.avgEngagementSec / 60)}m {Math.round(relaunchData.after.metrics.avgEngagementSec % 60)}s
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs uppercase tracking-wide text-foreground/50">Organic sessions</dt>
+              <dd className="mt-1 text-2xl font-bold tabular-nums">{relaunchData.after.metrics.organicSessions}</dd>
+            </div>
+            <div>
+              <dt className="text-xs uppercase tracking-wide text-foreground/50">Direct sessions</dt>
+              <dd className="mt-1 text-2xl font-bold tabular-nums">{relaunchData.after.metrics.directSessions}</dd>
+            </div>
+            <div className="col-span-2">
+              <dt className="text-xs uppercase tracking-wide text-foreground/50">Key events (konverteringer)</dt>
+              <dd className="mt-1 text-2xl font-bold tabular-nums">{relaunchData.after.metrics.keyEvents}</dd>
+            </div>
+          </dl>
+          <p className="mt-4 text-xs leading-relaxed text-foreground/50">
+            Kilde: {relaunchData.after.source}. {relaunchData.after.note}
+          </p>
         </div>
       </div>
 
@@ -461,7 +482,7 @@ export default function SeoDashboardPage() {
       <div className="mt-5 rounded-2xl border border-foreground/[0.08] bg-foreground/[0.02] p-6">
         <h3 className="mb-1 text-base font-semibold">Top sider før relancering</h3>
         <p className="mb-4 text-xs text-foreground/60">
-          De sider der bar mest trafik på det gamle site. Sammenligning med nye sider kommer fra 12. juni.
+          De sider der bar mest trafik på det gamle site (GA4, 90 dage før 8. maj).
         </p>
         <div className="overflow-hidden rounded-xl border border-foreground/[0.06]">
           <table className="w-full text-sm">
@@ -474,6 +495,38 @@ export default function SeoDashboardPage() {
             </thead>
             <tbody className="divide-y divide-foreground/[0.06]">
               {relaunchData.before.topPages.map((page) => (
+                <tr key={page.title}>
+                  <td className="px-4 py-2.5">{page.title}</td>
+                  <td className="px-4 py-2.5 text-right tabular-nums">{page.views.toLocaleString("da-DK")}</td>
+                  <td className="px-4 py-2.5 text-right tabular-nums">
+                    <span className={page.bounceRate < 10 ? "text-emerald-600" : page.bounceRate < 40 ? "text-foreground/70" : "text-amber-600"}>
+                      {page.bounceRate.toFixed(1)}%
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Top sider efter relancering */}
+      <div className="mt-5 rounded-2xl border border-foreground/[0.08] bg-foreground/[0.02] p-6">
+        <h3 className="mb-1 text-base font-semibold">Top sider efter relancering</h3>
+        <p className="mb-4 text-xs text-foreground/60">
+          De mest besøgte sider på det nye site (GA4, 13. maj – 22. juli). Forsiden er lagt sammen på tværs af gammel/ny title.
+        </p>
+        <div className="overflow-hidden rounded-xl border border-foreground/[0.06]">
+          <table className="w-full text-sm">
+            <thead className="bg-foreground/[0.03] text-xs uppercase tracking-wide text-foreground/60">
+              <tr>
+                <th className="px-4 py-2.5 text-left font-medium">Side</th>
+                <th className="px-4 py-2.5 text-right font-medium">Views</th>
+                <th className="px-4 py-2.5 text-right font-medium">Bounce rate</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-foreground/[0.06]">
+              {relaunchData.after.topPages.map((page) => (
                 <tr key={page.title}>
                   <td className="px-4 py-2.5">{page.title}</td>
                   <td className="px-4 py-2.5 text-right tabular-nums">{page.views.toLocaleString("da-DK")}</td>
