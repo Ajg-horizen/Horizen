@@ -182,7 +182,7 @@ export default function SeoDashboardPage() {
           </h2>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-foreground/[0.08] bg-foreground/[0.04] px-2.5 py-1 text-xs font-medium text-foreground/70">
             <CalendarIcon className="size-3" />
-            Sidste 28 dage
+            Sidste 3 måneder
           </span>
         </div>
         <p className="mt-1 text-sm text-foreground/60">
@@ -194,25 +194,25 @@ export default function SeoDashboardPage() {
           label="Klik"
           value={baseline.metrics.clicks}
           status="warning"
-          hint="Lavt, men forventet for nyt site"
+          hint="3 mdr. Domineret af brandsøgning"
         />
         <MetricCard
           label="Visninger"
           value={baseline.metrics.impressions}
           status="warning"
-          hint="Vokser, mål 700+ til juni"
+          hint="Oppustet af gammelt indhold + www-dublet"
         />
         <MetricCard
           label="CTR"
           value={`${baseline.metrics.ctr}%`}
-          status="good"
-          hint="Over branchegennemsnit (~3%)"
+          status="warning"
+          hint="Trukket ned af dublet-visninger uden klik"
         />
         <MetricCard
           label="Site snit-position"
           value={baseline.metrics.avgPosition}
-          status="good"
-          hint="Hele horizen.dk, alle queries"
+          status="warning"
+          hint="Bloat-forurenet, rene sider ligger side 1"
         />
       </div>
 

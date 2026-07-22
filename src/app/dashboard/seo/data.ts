@@ -7,37 +7,25 @@
  */
 
 export const lastUpdated = "2026-07-22";
-export const dataAsOf = "2026-04-13 til 2026-05-13"; // 28-dages periode i baseline
+export const dataAsOf = "2026-04-21 til 2026-07-20 (3 måneder)"; // GSC-udtræk 22. juli
 
 export const upcomingReviews = [
   {
-    date: "2026-05-16",
-    title: "Test rich snippet validering",
-    description: "Gå til search.google.com/test/rich-results, indtast horizen.dk, og bekræft at 'Review snippet' + 'LocalBusiness' er 'eligible for rich results'. 2 min.",
+    date: "2026-08-05",
+    title: "Tjek indeksering efter domæneskift",
+    description: "Inspicér horizen.dk i Search Console: er www-dubletten på vej ud af Pages-rapporten, og har Google valgt horizen.dk som canonical? 5 min.",
     type: "check" as const,
   },
   {
-    date: "2026-05-20",
-    title: "Sundhedstjek",
-    description: "Tjek Search Console for indekseringsfejl. 5 min arbejde.",
-    type: "check" as const,
-  },
-  {
-    date: "2026-06-12",
-    title: "Første rigtige måling",
-    description: "Eksportér 28-dages Search Console-data. Vi sammenligner med maj-baseline.",
+    date: "2026-08-20",
+    title: "Næste måling (28 dage efter kanonisering)",
+    description: "Eksportér frisk GSC-data. Renses gennemsnittet efter www-dublet-fix + oprydning i gamle URL'er? Sammenlign med 3-måneders-tallet (pos 20,2).",
     type: "review" as const,
   },
   {
-    date: "2026-07-12",
-    title: "Anden måling",
-    description: "Eksportér data igen. Trend bliver synlig.",
-    type: "review" as const,
-  },
-  {
-    date: "2026-08-12",
+    date: "2026-09-22",
     title: "Strategisk check-in",
-    description: "3 måneders data. Beslutter om strategien virker.",
+    description: "2 måneder efter kanonisering. Vurder om de rene sider løftes, og om bloatet er væk. Beslut næste træk.",
     type: "milestone" as const,
   },
 ];
@@ -90,17 +78,17 @@ export const relaunchData = {
 };
 
 export const baseline = {
-  period: "Sidste 28 dage (2026-04-13 til 2026-05-13)",
+  period: "Sidste 3 måneder (2026-04-21 til 2026-07-20)",
   source: "Google Search Console",
   metrics: {
-    clicks: 25,
-    impressions: 428,
-    ctr: 5.84,
-    avgPosition: 7.57,
-    frontpagePosition: 11.71,
+    clicks: 68,
+    impressions: 3129,
+    ctr: 2.17,
+    avgPosition: 20.2,
+    frontpagePosition: 16.72,
   },
   insight:
-    "Sitet ligger på snit-position 7,57 (side 1 i gennemsnit). Forsiden alene er rykket fra 23,46 → 11,71 på 28 dage. Relanceringen virker. Næste måling 12. juni viser om SEO-arbejdet accelererer udviklingen.",
+    "Snit-positionen ser ud til at falde (8 i april → 25 i juli) og CTR at kollapse (4,4% → 0,7%), men det er ikke fordi sitet er blevet dårligere. Gennemsnittet trækkes ned af to ting: (1) www.horizen.dk indekseres stadig som dublet af forsiden — 1.586 visninger på pos 26 næsten uden klik — og (2) gammelt WordPress-indhold + fem spøgelses-subdomæner (webinsight, estimator, hjemmeside, seo, mysite) høster visninger på lave positioner. De rigtige sider er sunde: kontakt pos 1,9, webudvikling 6,6, ui-ux-design 7,1, blog/ai-webdesign 6,7, brand 'horizen' pos 1,7. Dagens canonical + domæneskift (22. juli) retter www-dubletten; næste skridt er at afindeksere/redirecte de gamle URL'er og subdomæner, så gennemsnittet renses.",
 };
 
 export const actionItems = [
