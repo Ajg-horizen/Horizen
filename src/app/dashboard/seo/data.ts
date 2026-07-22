@@ -269,13 +269,13 @@ export const pages: PageDetail[] = [
     nextUpdate: "2026-06-12",
     pageAvgPosition: 6.57,
     positionsUpdated: "2026-07-22",
-    nextStep: "Re-indeksering anmodet (22. juli). Ligger allerede pos 6,57 på sidens queries (65 visn/3 mdr). Vent på næste måling (20. aug).",
+    nextStep: "Sidens snit er 6,57, men det er på lav-volumen queries — på target-keywordet 'ny hjemmeside' (590 vol) ranker vi ikke i top endnu (derfor Aktuel = —). Mål <30 = realistisk første milepæl på et svært keyword; strammes når vi er inde på side 1-3. Re-indeksering anmodet (22. juli).",
     keywords: {
       primary: "ny hjemmeside",
       secondary: ["professionel hjemmeside", "webudvikling"],
     },
     positions: {
-      current: 6.57,
+      current: null,
       target: 30,
       impressions28d: 65,
     },
