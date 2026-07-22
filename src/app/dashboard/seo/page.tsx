@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import DashboardTabs from "./DashboardTabs";
 import PagesTabs from "./PagesTabs";
+import ActivityByMonth from "./ActivityByMonth";
 import {
   actionItems,
   baseline,
@@ -364,34 +365,7 @@ export default function SeoDashboardPage() {
           title="Seneste aktivitet, samlet"
           description="Tidslinje på tværs af alle sider"
         />
-        <div className="space-y-3">
-          {recentActivity.map((a, i) => (
-            <div key={i} className="flex gap-4">
-              <div className="flex flex-col items-center">
-                <div className="size-2 rounded-full bg-foreground" />
-                {i < recentActivity.length - 1 && (
-                  <div className="w-px flex-1 bg-foreground/[0.08]" />
-                )}
-              </div>
-              <div className="flex-1 pb-4">
-                <div className="flex flex-wrap items-baseline gap-2">
-                  <h4 className="text-sm font-semibold">{a.title}</h4>
-                  <span className="text-xs text-foreground/50">
-                    {formatDateDk(a.date)}
-                  </span>
-                  {a.commit && (
-                    <span className="font-mono text-xs text-foreground/40">
-                      #{a.commit}
-                    </span>
-                  )}
-                </div>
-                <p className="mt-1 text-sm text-foreground/60">
-                  {a.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <ActivityByMonth items={recentActivity} />
       </div>
     </>
   );

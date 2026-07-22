@@ -516,6 +516,16 @@ export const upcomingPages = [
 export const recentActivity = [
   {
     date: "2026-07-22",
+    title: "Dashboard opdateret med friske GSC- + GA4-tal + bloat-analyse",
+    description: "Performance-kort skiftet til 3-mdr GSC-data (68 klik, 3.129 visn, pos 20,2) med forklaring på at faldet er impression bloat fra www-dublet + gammelt indhold, ikke reel forringelse. GA4 efter-relancering fyldt (517 brugere, Facebook-gruppe-trafik dominerer, København > Aarhus). Kommende-datoer ryddet op.",
+  },
+  {
+    date: "2026-07-22",
+    title: "Gamle subdomæner + WordPress-URL'er kortlagt, Removals kørt",
+    description: "5 spøgelses-subdomæner (webinsight/estimator/hjemmeside/seo/mysite) + 4 døde WordPress-URL'er identificeret som kilde til bloat. Fund: subdomænerne 404'er via Vercel-wildcard (intet DNS at slette), gamle service-URL'er redirecter korrekt. GSC Removals indsendt på alle 9.",
+  },
+  {
+    date: "2026-07-22",
     title: "Domæne-kanonisering: horizen.dk (non-www) gjort primær",
     description: "Vercel production domain skiftet fra www til horizen.dk. www.horizen.dk laver nu 308 permanent redirect ind til horizen.dk. Fjerner den modstridende situation hvor koden pegede på non-www mens sitet blev serveret på www.",
   },
