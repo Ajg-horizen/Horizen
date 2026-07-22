@@ -114,6 +114,14 @@ export const baseline = {
   },
   insight:
     "Snit-positionen ser ud til at falde (8 i april → 25 i juli) og CTR at kollapse (4,4% → 0,7%), men det er ikke fordi sitet er blevet dårligere. Gennemsnittet trækkes ned af to ting: (1) www.horizen.dk indekseres stadig som dublet af forsiden — 1.586 visninger på pos 26 næsten uden klik — og (2) gammelt WordPress-indhold + fem spøgelses-subdomæner (webinsight, estimator, hjemmeside, seo, mysite) høster visninger på lave positioner. De rigtige sider er sunde: kontakt pos 1,9, webudvikling 6,6, ui-ux-design 7,1, blog/ai-webdesign 6,7, brand 'horizen' pos 1,7. Dagens canonical + domæneskift (22. juli) retter www-dubletten; næste skridt er at afindeksere/redirecte de gamle URL'er og subdomæner, så gennemsnittet renses.",
+  trend: {
+    label:
+      "Pilene sammenligner juni med maj 2026 (de to seneste hele måneder — juli er ikke færdig endnu). Bemærk: stigningen i visninger er bloat, ikke ægte vækst, derfor gul.",
+    clicks: { text: "34%", direction: "down" as const, tone: "bad" as const },
+    impressions: { text: "62%", direction: "up" as const, tone: "warn" as const },
+    ctr: { text: "60%", direction: "down" as const, tone: "bad" as const },
+    position: { text: "5 pladser", direction: "down" as const, tone: "bad" as const },
+  },
 };
 
 export const actionItems = [
