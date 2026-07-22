@@ -119,15 +119,15 @@ export const baseline = {
 export const actionItems = [
   {
     title: "Afindeksér 5 gamle spøgelses-subdomæner",
-    description: "webinsight., estimator., hjemmeside., seo. og mysite.horizen.dk er stadig indekseret og høster visninger på lave positioner (juli-data). De er hovedkilden til at sitets gennemsnitsposition forurenes. Fjern/afvikl dem eller sæt noindex + redirect til horizen.dk. Kræver DNS/host-adgang — ligger uden for dette repo.",
+    description: "webinsight., estimator., hjemmeside., seo. og mysite.horizen.dk hænger stadig i Googles indeks og forurener sitets snit-position. FUND 22. juli: de 404'er allerede (serverer intet); DNS administreres i Vercel (ns*.vercel-dns.com), records peger på gammel host 216.150.x.x. HANDLING: (1) Vercel → horizen.dk → DNS Records → slet A-records for de 5 subdomæner; (2) Search Console → Removals → indsend hvert subdomæne for hurtig af-indeksering.",
     priority: "high" as const,
-    estimatedTime: "1-2 timer",
+    estimatedTime: "20 min",
   },
   {
-    title: "Ryd op i gamle WordPress-URL'er i Search Console",
-    description: "Gamle URL'er ranker stadig og oppuster visninger: /digital-design/ (399 visn, pos 8,9), /wereme/, /hyundai/, /arena-randers/, /cookie-policy/. Tjek hvilke der allerede 301/308-redirecter vs stadig svarer 200. Brug GSC Removals-værktøjet til dem der skal hurtigt ud af indekset.",
-    priority: "high" as const,
-    estimatedTime: "45 min",
+    title: "Gamle WordPress-URL'er — verificeret, minimal handling",
+    description: "FUND 22. juli: de gamle service-URL'er redirecter korrekt (/digital-design→ui-ux-design, /branding, /hjemmeside→webudvikling, /paid-ads→forsiden). Junk-URL'erne /wereme/, /hyundai/, /arena-randers/, /cookie-policy/ 404'er allerede — Google af-indekserer dem selv, ingen handling nødvendig. Kun /digital-design/ (399 visn) bar reel trafik, og den er redirectet.",
+    priority: "low" as const,
+    estimatedTime: "0 (verificeret)",
   },
   {
     title: "Bekræft www-dublet forsvinder efter kanonisering",
