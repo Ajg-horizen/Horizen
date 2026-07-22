@@ -6,7 +6,7 @@
  * med MD-filerne i ~/Desktop/Claude Workflows/01-Kunder/Horizen/SEO/.
  */
 
-export const lastUpdated = "2026-05-14";
+export const lastUpdated = "2026-07-22";
 export const dataAsOf = "2026-04-13 til 2026-05-13"; // 28-dages periode i baseline
 
 export const upcomingReviews = [
@@ -105,28 +105,10 @@ export const baseline = {
 
 export const actionItems = [
   {
-    title: "Test alle redirects live",
-    description: "/digital-design/, /hjemmeside/, /branding/, /services/branding-logo/",
-    priority: "high" as const,
-    estimatedTime: "5 min",
-  },
-  {
-    title: "Indsend sitemap.xml i Search Console",
-    description: "Søgekonsol → Sitemaps → indtast `sitemap.xml` → Indsend",
-    priority: "high" as const,
-    estimatedTime: "1 min",
-  },
-  {
-    title: "Anmod om re-indeksering for nye URL'er",
-    description: "5 URL'er: forsiden + 4 service-sider. Bruger Search Console URL-inspektion.",
-    priority: "high" as const,
-    estimatedTime: "5 min",
-  },
-  {
-    title: "Vercel: skift primary domain til horizen.dk",
-    description: "Vercel dashboard → Settings → Domains → horizen.dk → 'Set as Production Domain'. Fjerner redirect-kæden www → non-www og sparer 1,4 sek mobile LCP.",
-    priority: "high" as const,
-    estimatedTime: "2 min",
+    title: "Ryd op i gamle WordPress-spøgelses-URL'er",
+    description: "Search Console viser stadig referrals fra seo.horizen.dk, hjemmeside.horizen.dk og ?feed=comments-rss2 (rester fra det gamle WordPress-site). Vurder redirect/afvikling.",
+    priority: "medium" as const,
+    estimatedTime: "30 min",
   },
   {
     title: "Opret Google Business Profile",
@@ -219,7 +201,6 @@ export const pages: PageDetail[] = [
       "Trustpilot review-schema: AggregateRating + 7 Review-objekter på ProfessionalService",
     ],
     pendingTasks: [
-      "Vercel: skift primary domain til horizen.dk (Andreas opgave i dashboard)",
       "Re-kør PageSpeed audit efter de 2 fix er deployed",
       "Yderligere internal linking fra service-sider tilbage til forsiden",
     ],
@@ -508,6 +489,22 @@ export const upcomingPages = [
 ];
 
 export const recentActivity = [
+  {
+    date: "2026-07-22",
+    title: "Domæne-kanonisering: horizen.dk (non-www) gjort primær",
+    description: "Vercel production domain skiftet fra www til horizen.dk. www.horizen.dk laver nu 308 permanent redirect ind til horizen.dk. Fjerner den modstridende situation hvor koden pegede på non-www mens sitet blev serveret på www.",
+  },
+  {
+    date: "2026-07-22",
+    title: "Canonical-tags tilføjet på alle 14 sider",
+    description: "Self-referencing alternates.canonical (non-www) på forside, kontakt, godt-formaal, blog + artikler, cases, designprincipper og de dynamiske service- og principper-routes. Canonical var før helt fraværende. Live i prod.",
+    commit: "6135032",
+  },
+  {
+    date: "2026-07-22",
+    title: "Search Console: re-indeksering anmodet + sitemap bekræftet",
+    description: "Sitemap allerede indsendt (Success, 22 sider, sidst læst 20. juli). Re-indeksering anmodet for forside + webudvikling + ui-ux-design + branding + kontakt, så Google opdager domæne-skift + canonical hurtigere.",
+  },
   {
     date: "2026-05-14",
     title: "Forside: Trustpilot review-schema tilføjet (gratis rich snippets)",
