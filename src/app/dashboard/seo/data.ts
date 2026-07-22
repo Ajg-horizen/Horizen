@@ -119,9 +119,9 @@ export const baseline = {
 export const actionItems = [
   {
     title: "Afindeksér 5 gamle spøgelses-subdomæner",
-    description: "webinsight., estimator., hjemmeside., seo. og mysite.horizen.dk hænger stadig i Googles indeks og forurener sitets snit-position. FUND 22. juli: de 404'er allerede (serverer intet); DNS administreres i Vercel (ns*.vercel-dns.com), records peger på gammel host 216.150.x.x. HANDLING: (1) Vercel → horizen.dk → DNS Records → slet A-records for de 5 subdomæner; (2) Search Console → Removals → indsend hvert subdomæne for hurtig af-indeksering.",
+    description: "webinsight., estimator., hjemmeside., seo. og mysite.horizen.dk hænger stadig i Googles indeks fra det gamle WordPress-site. FUND 22. juli: der er INGEN DNS-records at slette — en wildcard (* ALIAS → Vercel, låst/auto) fanger alle subdomæner og 404'er dem (bekræftet: selv tilfældige subdomæner 404'er). 216.150.x.x = Vercel, ikke gammel host. Rør IKKE wildcarden. HANDLING: kun Search Console → Removals → indsend de 5 subdomæner (præfiks-fjern) for hurtig af-indeksering; 404 rydder resten over tid.",
     priority: "high" as const,
-    estimatedTime: "20 min",
+    estimatedTime: "10 min",
   },
   {
     title: "Gamle WordPress-URL'er — verificeret, minimal handling",
