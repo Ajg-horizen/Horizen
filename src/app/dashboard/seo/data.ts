@@ -93,10 +93,22 @@ export const baseline = {
 
 export const actionItems = [
   {
-    title: "Ryd op i gamle WordPress-spøgelses-URL'er",
-    description: "Search Console viser stadig referrals fra seo.horizen.dk, hjemmeside.horizen.dk og ?feed=comments-rss2 (rester fra det gamle WordPress-site). Vurder redirect/afvikling.",
+    title: "Afindeksér 5 gamle spøgelses-subdomæner",
+    description: "webinsight., estimator., hjemmeside., seo. og mysite.horizen.dk er stadig indekseret og høster visninger på lave positioner (juli-data). De er hovedkilden til at sitets gennemsnitsposition forurenes. Fjern/afvikl dem eller sæt noindex + redirect til horizen.dk. Kræver DNS/host-adgang — ligger uden for dette repo.",
+    priority: "high" as const,
+    estimatedTime: "1-2 timer",
+  },
+  {
+    title: "Ryd op i gamle WordPress-URL'er i Search Console",
+    description: "Gamle URL'er ranker stadig og oppuster visninger: /digital-design/ (399 visn, pos 8,9), /wereme/, /hyundai/, /arena-randers/, /cookie-policy/. Tjek hvilke der allerede 301/308-redirecter vs stadig svarer 200. Brug GSC Removals-værktøjet til dem der skal hurtigt ud af indekset.",
+    priority: "high" as const,
+    estimatedTime: "45 min",
+  },
+  {
+    title: "Bekræft www-dublet forsvinder efter kanonisering",
+    description: "www.horizen.dk/ havde 1.586 visninger på pos 26 uden klik (dublet af forsiden). Efter dagens 308-redirect + canonical skal den gradvist forsvinde fra Pages-rapporten. Tjek ved næste måling (20. aug).",
     priority: "medium" as const,
-    estimatedTime: "30 min",
+    estimatedTime: "5 min",
   },
   {
     title: "Opret Google Business Profile",
