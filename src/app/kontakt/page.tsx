@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Kontakt | Horizen",
   description:
     "Har du et projekt, en idé eller bare brug for en sparring? Skriv til os.",
+  alternates: {
+    canonical: "/kontakt",
+  },
   openGraph: {
     title: "Kontakt | Horizen",
     description:

@@ -9,6 +9,9 @@ const ogImage = "/cases/OD-Cases-image-car.webp";
 export const metadata: Metadata = {
   title,
   description,
+  alternates: {
+    canonical: "/cases/od-biler-pro",
+  },
   openGraph: {
     title,
     description,

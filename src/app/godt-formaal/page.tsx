@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Godt formål | Horizen",
   description:
     "Driver I en forening eller NGO med et godt formål? Søg om en gratis hjemmeside. Vi vurderer hver ansøgning personligt.",
+  alternates: {
+    canonical: "/godt-formaal",
+  },
   openGraph: {
     title: "Godt formål | Horizen",
     description:

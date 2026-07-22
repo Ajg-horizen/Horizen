@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Blog | Horizen",
   description:
     "Indsigt, tips og artikler om webdesign, SEO, branding og digital strategi fra teamet bag Horizen.",
+  alternates: {
+    canonical: "/blog",
+  },
   openGraph: {
     title: "Blog | Horizen",
     description:

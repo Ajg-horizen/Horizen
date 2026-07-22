@@ -10,6 +10,9 @@ const datePublished = "2026-01-10";
 export const metadata: Metadata = {
   title,
   description,
+  alternates: {
+    canonical: "/blog/figma-til-kode",
+  },
   openGraph: {
     title,
     description,

@@ -9,6 +9,9 @@ const ogImage = "/cases/BettrPlans-Case-Image-02.webp";
 export const metadata: Metadata = {
   title,
   description,
+  alternates: {
+    canonical: "/cases/bettrplans",
+  },
   openGraph: {
     title,
     description,

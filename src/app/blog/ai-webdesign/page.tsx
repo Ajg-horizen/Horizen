@@ -10,6 +10,9 @@ const datePublished = "2026-03-15";
 export const metadata: Metadata = {
   title,
   description,
+  alternates: {
+    canonical: "/blog/ai-webdesign",
+  },
   openGraph: {
     title,
     description,

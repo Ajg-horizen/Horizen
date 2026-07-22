@@ -9,6 +9,9 @@ const ogImage = "/graphics/Hero-image-branding-services.webp";
 export const metadata: Metadata = {
   title,
   description,
+  alternates: {
+    canonical: "/cases/never-another",
+  },
   openGraph: {
     title,
     description,

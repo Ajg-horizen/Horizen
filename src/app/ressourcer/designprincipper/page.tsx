@@ -8,6 +8,9 @@ const description =
 export const metadata: Metadata = {
   title,
   description,
+  alternates: {
+    canonical: "/ressourcer/designprincipper",
+  },
   openGraph: {
     title,
     description,

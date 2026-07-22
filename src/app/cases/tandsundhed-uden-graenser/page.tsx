@@ -9,6 +9,9 @@ const ogImage = "/cases/smilende_kvinde_fra_Mongoliet.webp";
 export const metadata: Metadata = {
   title,
   description,
+  alternates: {
+    canonical: "/cases/tandsundhed-uden-graenser",
+  },
   openGraph: {
     title,
     description,

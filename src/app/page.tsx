@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Digitalt design bureau i Aarhus, Horizen",
   description:
     "Digitalt design bureau med 8+ års erfaring. Vi laver hjemmesider, branding og UI/UX. AI er ikke en undskyldning for at arbejde mindre. Det er værktøjet, der gør, at vi kan levere mere.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Digitalt design bureau i Aarhus, Horizen",
     description:
