@@ -116,6 +116,12 @@ function PageDetailView({ page }: { page: PageDetail }) {
             </h4>
             <p className="text-xs text-foreground/50 mb-3">
               Gennemsnit på tværs af alle queries der leder hertil
+              {page.positionsUpdated && (
+                <span className="text-foreground/40">
+                  {" · GSC-data pr. "}
+                  {formatDateDk(page.positionsUpdated)}
+                </span>
+              )}
             </p>
             <div className="rounded-xl border border-foreground/[0.08] bg-background p-3 w-fit">
               <p className="text-2xl font-bold tabular-nums">
@@ -186,7 +192,7 @@ function PageDetailView({ page }: { page: PageDetail }) {
               </p>
             </div>
             <div className="rounded-xl border border-foreground/[0.08] bg-background p-3">
-              <p className="text-xs text-foreground/50">Visninger 28d</p>
+              <p className="text-xs text-foreground/50">Visninger 3 mdr</p>
               <p className="mt-1 text-2xl font-bold tabular-nums">
                 {page.positions.impressions28d ?? "—"}
               </p>

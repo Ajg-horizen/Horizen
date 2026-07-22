@@ -175,6 +175,8 @@ export type PageDetail = {
   nextStep: string;
   /** Sidens samlede snit-position på tværs af alle queries den ranker på */
   pageAvgPosition: number | null;
+  /** Dato for hvornår positions-data sidst blev trukket fra Search Console (ISO YYYY-MM-DD). */
+  positionsUpdated: string | null;
   keywords: {
     primary: string | null;
     secondary: string[];
@@ -198,16 +200,17 @@ export const pages: PageDetail[] = [
     seoStatus: "done",
     lastSeoUpdate: "2026-05-13",
     nextUpdate: "2026-06-12",
-    pageAvgPosition: 11.71,
-    nextStep: "I morgen: skift primary domain i Vercel til horizen.dk (sparer 1,4 sek mobile LCP). Bagefter re-kør PageSpeed audit. Vent ellers på juni-data (12. juni).",
+    pageAvgPosition: 16.72,
+    positionsUpdated: "2026-07-22",
+    nextStep: "Domæne skiftet til horizen.dk + canonical live (22. juli). Afventer at Google flytter indeksering til non-www + næste måling (20. aug). Primary keyword ligger pos 9,14 — skub mod top 5.",
     keywords: {
       primary: "digital design bureau",
       secondary: ["digitalt design bureau", "digitalt bureau ux"],
     },
     positions: {
-      current: 6.89,
+      current: 9.14,
       target: 3,
-      impressions28d: 158,
+      impressions28d: 135,
     },
     completedTasks: [
       "Title-tag opdateret med primary keyword",
@@ -264,16 +267,17 @@ export const pages: PageDetail[] = [
     seoStatus: "done",
     lastSeoUpdate: "2026-05-13",
     nextUpdate: "2026-06-12",
-    pageAvgPosition: null,
-    nextStep: "Deployed. Anmod om re-indeksering i Search Console. Vent på juni-data (12. juni) for at se effekt.",
+    pageAvgPosition: 6.57,
+    positionsUpdated: "2026-07-22",
+    nextStep: "Re-indeksering anmodet (22. juli). Ligger allerede pos 6,57 på sidens queries (65 visn/3 mdr). Vent på næste måling (20. aug).",
     keywords: {
       primary: "ny hjemmeside",
       secondary: ["professionel hjemmeside", "webudvikling"],
     },
     positions: {
-      current: null,
+      current: 6.57,
       target: 30,
-      impressions28d: null,
+      impressions28d: 65,
     },
     completedTasks: [
       "Search Console-research kørt",
@@ -318,8 +322,9 @@ export const pages: PageDetail[] = [
     seoStatus: "pending",
     lastSeoUpdate: null,
     nextUpdate: null,
-    pageAvgPosition: null,
-    nextStep: "Modtager redirect-trafik fra /digital-design/ (pos 6,64). SEO-cyklus skal køres snarest.",
+    pageAvgPosition: 7.12,
+    positionsUpdated: "2026-07-22",
+    nextStep: "Ligger pos 7,12 (34 visn/3 mdr) — arver redirect-trafik fra /digital-design/. SEO-cyklus skal køres snarest for at fange volumen-keywords.",
     keywords: {
       primary: null,
       secondary: [],
@@ -356,8 +361,9 @@ export const pages: PageDetail[] = [
     seoStatus: "pending",
     lastSeoUpdate: null,
     nextUpdate: null,
-    pageAvgPosition: null,
-    nextStep: "Modtager redirect-trafik fra /branding/ (pos 9,85) + /services/branding-logo/. SEO-cyklus klar til at starte.",
+    pageAvgPosition: 1.54,
+    positionsUpdated: "2026-07-22",
+    nextStep: "Pos 1,54 men kun 35 visn/3 mdr — det er brand-søgninger ('horizen branding'), ikke volumen-keywords. SEO-cyklus klar til at starte.",
     keywords: {
       primary: null,
       secondary: [],
@@ -393,8 +399,9 @@ export const pages: PageDetail[] = [
     seoStatus: "pending",
     lastSeoUpdate: null,
     nextUpdate: null,
-    pageAvgPosition: null,
-    nextStep: "Ny side. Ingen SEO-arv. Skal bygges fra bunden.",
+    pageAvgPosition: 3.1,
+    positionsUpdated: "2026-07-22",
+    nextStep: "Pos 3,1 men kun 29 visn/3 mdr (niche/brand). Skal bygges fra bunden.",
     keywords: {
       primary: null,
       secondary: [],
@@ -422,8 +429,9 @@ export const pages: PageDetail[] = [
     seoStatus: "pending",
     lastSeoUpdate: null,
     nextUpdate: null,
-    pageAvgPosition: null,
-    nextStep: "Ny side. Ingen SEO-arv. Skal bygges fra bunden.",
+    pageAvgPosition: 17.67,
+    positionsUpdated: "2026-07-22",
+    nextStep: "Pos 17,67 (6 visn/3 mdr). Skal bygges fra bunden.",
     keywords: {
       primary: null,
       secondary: [],
@@ -451,8 +459,9 @@ export const pages: PageDetail[] = [
     seoStatus: "pending",
     lastSeoUpdate: null,
     nextUpdate: null,
-    pageAvgPosition: null,
-    nextStep: "Blog-oversigtsside. Lavere prioritet end service-sider.",
+    pageAvgPosition: 1.37,
+    positionsUpdated: "2026-07-22",
+    nextStep: "Pos 1,37 (35 visn/3 mdr, mest brand). Blog-oversigt, lavere prioritet end service-sider.",
     keywords: {
       primary: null,
       secondary: [],
@@ -477,8 +486,9 @@ export const pages: PageDetail[] = [
     seoStatus: "not_applicable",
     lastSeoUpdate: null,
     nextUpdate: null,
-    pageAvgPosition: null,
-    nextStep: "Kontaktsider rankes normalt kun for brand-søgninger ('horizen kontakt'). Lav prioritet.",
+    pageAvgPosition: 1.86,
+    positionsUpdated: "2026-07-22",
+    nextStep: "Pos 1,86 (88 visn/3 mdr) — stærk på brand-søgninger som forventet. Lav prioritet.",
     keywords: { primary: null, secondary: [] },
     positions: { current: null, target: null, impressions28d: null },
     completedTasks: [],
