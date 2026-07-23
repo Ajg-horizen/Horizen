@@ -11,6 +11,7 @@ import {
 import DashboardTabs from "./DashboardTabs";
 import PagesTabs from "./PagesTabs";
 import ActivityByMonth from "./ActivityByMonth";
+import TechniquesTab from "./TechniquesTab";
 import {
   actionItems,
   baseline,
@@ -19,6 +20,7 @@ import {
   pages,
   recentActivity,
   relaunchData,
+  seoTechniques,
   upcomingPages,
   upcomingReviews,
   type SeoStatus,
@@ -579,6 +581,11 @@ export default function SeoDashboardPage() {
           tabs={[
             { id: "seo", label: "SEO Status", content: seoStatusTab },
             { id: "analytics", label: "Analytics", content: analyticsTab },
+            {
+              id: "teknikker",
+              label: "Teknikker & tips",
+              content: <TechniquesTab items={seoTechniques} />,
+            },
           ]}
           defaultTab="seo"
         />

@@ -144,6 +144,12 @@ export const actionItems = [
     estimatedTime: "5 min",
   },
   {
+    title: "Byg blog/guides-spor (long-tail → autoritet)",
+    description: "PÅ SIGT, ingen fast plan endnu. Ram long-tail-søgeord med dedikerede guides ('Hvad koster en ny hjemmeside i Aarhus?', 'WordPress eller custom?') der linker ind til service-siderne. Hver guide bygger autoritet til pengesiden uden at røre dens design (hub-and-spoke). Rolig rytme, 1-2 guides/md. Hvorfor: en lille virksomhed vinder på long-tail først og klatrer op ad SD-trappen. Se fanen 'Teknikker & tips'.",
+    priority: "low" as const,
+    estimatedTime: "løbende",
+  },
+  {
     title: "Opret Google Business Profile",
     description: "Kritisk for lokal pack-visning på Aarhus-søgninger.",
     priority: "medium" as const,
@@ -613,5 +619,66 @@ export const recentActivity = [
     date: "2026-05-12",
     title: "Baseline trukket fra Search Console",
     description: "Maj 2026: 110 klik, 1.338 visninger (3-måneders data)",
+  },
+];
+
+/**
+ * SEO-teknikker & modeller — en intern opslagsbog.
+ * Gradvist udvidbar: tilføj en ny post når vi lærer eller bruger en teknik.
+ * Formålet er at Andreas kan læse op på HVORFOR vi gør som vi gør.
+ */
+export type SeoTechnique = {
+  title: string;
+  category: "Søgeord" | "Indhold" | "Teknisk" | "Lokal";
+  /** Én linje: hvad er det. */
+  summary: string;
+  /** Hvornår / hvorfor bruger vi det. */
+  whenToUse: string;
+  /** Forklaring i afsnit (menneskeligt sprog, ingen jargon uden forklaring). */
+  body: string[];
+};
+
+export const seoTechniques: SeoTechnique[] = [
+  {
+    title: "Long-tail-strategien",
+    category: "Søgeord",
+    summary:
+      "En lille virksomhed vinder nedefra: start på lange, specifikke søgeord med lav konkurrence og klatr op efterhånden som autoriteten vokser.",
+    whenToUse:
+      "Når vi vælger keywords til en ny eller lille side. Aldrig gå frontalt efter de brede, høj-konkurrence-ord fra dag ét.",
+    body: [
+      "Brede søgeord som 'hjemmeside' eller 'webbureau' (SEO-sværhedsgrad 70-100) er ejet af sites med årtiers autoritet og tusindvis af links. En ny virksomhed slår dem ikke frontalt. Det er som at åbne en café og forvente at slå Starbucks på ordet 'kaffe'.",
+      "Long-tail betyder lange, specifikke søgninger: 'hvad koster en ny hjemmeside i Aarhus' har måske 20 søgninger/md, men sværhedsgrad tæt på 0. De store gider ikke optimere efter det, så et nyt site kan blive nr. 1 på uger.",
+      "To fordele udover at man kan vinde: (1) høj intent, folk der søger så specifikt ved hvad de vil have og er tæt på at købe; (2) hver gang du rangerer på et lille ord, stiger dit domænes troværdighed, og det er DEN autoritet der på sigt låser de brede ord op.",
+      "Trappen: long-tail (SD 0-15) → lokale/niche (SD 15-30) → mellemsvære (SD 30-50) → brede (SD 50+). Man klatrer, man springer ikke.",
+    ],
+  },
+  {
+    title: "Hub-and-spoke (indholdsklynger)",
+    category: "Indhold",
+    summary:
+      "Hold service-siden (pengesiden) ren og bred, og ram long-tail-søgeord med separate guides der linker ind til den og bygger dens autoritet.",
+    whenToUse:
+      "Når vi vil rangere en service-side på et bredt keyword uden at fylde siden med long-tail-tekst der ødelægger designet.",
+    body: [
+      "Pengesiden (hub) er f.eks. /services/webudvikling. Den targeter det brede 'ny hjemmeside', er visuel og bygget til at konvertere. Vi rører ikke dens design. Kun title/meta/schema optimeres, og det er usynligt for besøgende.",
+      "Guides (spokes) er blogindlæg, ét pr. spørgsmål: 'Hvad koster en ny hjemmeside i Aarhus?', 'Hvor lang tid tager det at bygge en hjemmeside?', 'WordPress eller custom?'. De lever i bloggen, som er bygget til lang tekst, så de ser ikke smadrede ud.",
+      "Broen er intern linking: hver guide linker tilbage til pengesiden. Google ser en klynge af indhold om samme tema, der alle peger på service-siden, og konkluderer at den side er autoritativ på temaet. Over måneder kan den så klatre op på det brede keyword, uden at vi har rørt dens design.",
+      "Rytmen er rolig og separat: service-siderne bygges i deres eget tempo, guides lægges oveni med f.eks. 1-2 om måneden. Autoritet bygges af små, konsistente tiltag over tid.",
+    ],
+  },
+  {
+    title: "Structured data & rich snippets (Schema.org)",
+    category: "Teknisk",
+    summary:
+      "En blok JSON-kode i sidens kode der forklarer Google hvad siden handler om. Driver de forbedrede søgeresultater (stjerner, FAQ, priser) og hjælper Google forstå din virksomhed.",
+    whenToUse:
+      "På alle vigtige sider. Særligt nyttigt for nye sider hvor Google er i tvivl om emnet, og for sider hvor vi vil have rich snippets (anmeldelser, FAQ).",
+    body: [
+      "Structured data skrives som JSON-LD (et lille stykke kode i sidens <head>). Det er usynligt for besøgende, men Google læser det og bruger det til at forstå indholdet og vise 'rich snippets': stjerner, FAQ-dropdowns, priser, brødkrummer i søgeresultatet.",
+      "Entity-disambiguering: Google har en intern database (Knowledge Graph) over ting i verden. Med egenskaben 'sameAs' kan man linke sin virksomhed til autoritative kilder som LinkedIn, Wikipedia eller Wikidata, og dermed sige 'denne virksomhed er den samme som den kendte reference'. Det hjælper Google placere dig hurtigere.",
+      "Ærlig nuance: 'sameAs' til Wikipedia for EMNER (ikke virksomheden selv) har typisk beskeden effekt for små sites. Det der virkelig rykker er schema for virksomheden (ProfessionalService, adresse, LinkedIn) og for anmeldelser (AggregateRating + Review), som giver synlige stjerner i Google.",
+      "Horizen bruger allerede dette: forsiden har ProfessionalService + PostalAddress + hasOfferCatalog + Trustpilot-anmeldelser (AggregateRating + 7 reviews). Det er derfor vi kan få stjerner i søgeresultater gratis.",
+    ],
   },
 ];
