@@ -722,4 +722,37 @@ export const seoTechniques: SeoTechnique[] = [
       "Nogle dele har beskeden effekt (fx sameAs til Wikipedia for emner)",
     ],
   },
+  {
+    title: "Static Site Generation (SSG)",
+    category: "Teknisk",
+    summary:
+      "Siderne bygges til færdige HTML-filer på forhånd (ved deploy), så de serveres lynhurtigt. Et af de stærkeste tekniske fundamenter for SEO.",
+    whenToUse:
+      "På alt indhold der ikke ændrer sig ved hvert besøg: forsider, service-sider, blog, cases. Standarden for SEO-sider. Horizen kører allerede fuld SSG.",
+    body: [
+      "Der er tre måder en side kan bygges på. SSG (statisk): siderne laves til færdige HTML-filer på forhånd, når sitet deployes. Når Google eller en besøgende kommer, serveres den færdige side med det samme. SSR (server-rendered): siden bygges på serveren ved hvert besøg, frisk men lidt langsommere. CSR (client-rendered): siden bygges i browseren med JavaScript, dårligst for SEO.",
+      "Hvorfor SSG er bedst for SEO: (1) Hastighed, færdig HTML serveres øjeblikkeligt, hvilket giver bedre Core Web Vitals, og Google belønner hurtige sider. (2) Google ser indholdet med det samme, uden at skulle køre JavaScript først, så indekseringen er pålidelig. (3) Stabilitet, færdige filer betyder ingen server-fejl ved besøg.",
+      "I Next.js aktiveres SSG for dynamiske sider (fx /services/[slug]) med funktionen generateStaticParams, der fortæller build-processen hvilke sider der skal genereres på forhånd. Almindelige sider er statiske af sig selv, medmindre man aktivt slår det fra.",
+      "Horizen bruger det allerede fuldt ud: begge dynamiske ruter (service-sider + designprincipper) har generateStaticParams, og der er ingen force-dynamic nogen steder. Alle sider er statiske.",
+    ],
+    codeExample: {
+      label: "Sådan aktiveres SSG i Next.js (fra /services/[slug])",
+      code: `// Fortæller build-processen hvilke sider der skal
+// genereres til færdig HTML på forhånd.
+export async function generateStaticParams() {
+  return getAllServiceSlugs().map((slug) => ({ slug }));
+}`,
+    },
+    pros: [
+      "Lynhurtig levering (færdig HTML) → bedre Core Web Vitals → Google belønner hastighed",
+      "Google ser indholdet uden at køre JavaScript → pålidelig indeksering",
+      "Stabilt og sikkert — ingen server der kan fejle ved besøg",
+      "Billig, skalerbar hosting (statiske filer kan ligge på et CDN)",
+    ],
+    cons: [
+      "Indholdet er 'frosset' ved build — ændringer (fx i Sanity) kræver et nyt build eller revalidering for at slå igennem",
+      "Ikke egnet til stærkt personaliseret eller live-data (fx et bruger-dashboard) — det hører til SSR",
+      "Mange sider kan give lange build-tider",
+    ],
+  },
 ];
