@@ -73,6 +73,17 @@ export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
                       </p>
                     ))}
                   </div>
+                  {t.codeExample && (
+                    <div className="mt-4">
+                      <p className="mb-1.5 text-xs font-medium text-foreground/50">
+                        {t.codeExample.label}
+                      </p>
+                      <pre className="overflow-x-auto rounded-xl border border-foreground/[0.08] bg-[#0f0f0f] p-4 text-xs leading-relaxed text-[#e6e6e6]">
+                        <code className="font-mono">{t.codeExample.code}</code>
+                      </pre>
+                    </div>
+                  )}
+
                   <div className="mt-4 rounded-xl border border-foreground/[0.08] bg-background p-3">
                     <p className="text-xs font-semibold uppercase tracking-wider text-foreground/50">
                       Hvornår bruger vi det

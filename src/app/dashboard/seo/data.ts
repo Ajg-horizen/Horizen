@@ -636,6 +636,8 @@ export type SeoTechnique = {
   whenToUse: string;
   /** Forklaring i afsnit (menneskeligt sprog, ingen jargon uden forklaring). */
   body: string[];
+  /** Valgfrit kode-eksempel til at gøre teknikken håndgribelig. */
+  codeExample?: { label: string; code: string };
 };
 
 export const seoTechniques: SeoTechnique[] = [
@@ -680,5 +682,28 @@ export const seoTechniques: SeoTechnique[] = [
       "Ærlig nuance: 'sameAs' til Wikipedia for EMNER (ikke virksomheden selv) har typisk beskeden effekt for små sites. Det der virkelig rykker er schema for virksomheden (ProfessionalService, adresse, LinkedIn) og for anmeldelser (AggregateRating + Review), som giver synlige stjerner i Google.",
       "Horizen bruger allerede dette: forsiden har ProfessionalService + PostalAddress + hasOfferCatalog + Trustpilot-anmeldelser (AggregateRating + 7 reviews). Det er derfor vi kan få stjerner i søgeresultater gratis.",
     ],
+    codeExample: {
+      label: "JSON-LD i sidens <head> (forenklet, tæt på Horizens forside)",
+      code: `<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Horizen",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Aarhus"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/company/horizen",
+    "https://www.instagram.com/horizen"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5.0",
+    "reviewCount": "7"
+  }
+}
+</script>`,
+    },
   },
 ];
