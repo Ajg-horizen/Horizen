@@ -756,3 +756,110 @@ export async function generateStaticParams() {
     ],
   },
 ];
+
+/**
+ * Værktøjskasse — de redskaber vi bruger i SEO-arbejdet.
+ * Gradvist udvidbar. Adskilt fra teknikker (metoder) med vilje.
+ */
+export type SeoTool = {
+  name: string;
+  /** Kort rolle-label til badge. */
+  role: string;
+  /** Én linje: hvad er det. */
+  summary: string;
+  /** Uddybning i afsnit. */
+  body: string[];
+  /** Hvornår bruger vi det. */
+  whenToUse: string;
+  /** Pris-note. */
+  pricing: string;
+  url: string;
+};
+
+export const seoTools: SeoTool[] = [
+  {
+    name: "Google Search Console",
+    role: "Måling",
+    summary:
+      "Googles eget værktøj der viser hvordan I performer i søgning: klik, visninger, position og indekseringsfejl.",
+    body: [
+      "Egne, ægte data direkte fra Google, ikke estimater. Viser hvilke søgeord I faktisk rangerer på, hvilke sider der er indekseret, og tekniske fejl.",
+      "Det er her vi trækker de månedlige målinger, indsender sitemap, og kører Removals (som vi gjorde med spøgelses-URL'erne).",
+    ],
+    whenToUse:
+      "Altid først. Til månedlige målinger, til at tjekke indeksering, og til at se hvad I reelt rangerer på.",
+    pricing: "Gratis",
+    url: "https://search.google.com/search-console",
+  },
+  {
+    name: "Screaming Frog SEO Spider",
+    role: "Teknisk audit",
+    summary:
+      "En crawler der kravler hele sitet som Google og finder tekniske SEO-problemer i én liste.",
+    body: [
+      "Finder 300+ mulige problemer: brudte links (404), redirect-kæder, manglende eller dublette titler og meta-beskrivelser, manglende canonical og alt-tekster. Tjekker også robots.txt og sitemap.",
+      "Det er den systematiske version af den manuelle oprydning vi lavede i dag: den ville have fanget www-dublet + spøgelses-URL'er + redirect-kæderne automatisk på få minutter.",
+    ],
+    whenToUse:
+      "Til teknisk sundhedstjek, fx før en launch og et par gange om året. Kør en crawl, ryd op i det den finder.",
+    pricing:
+      "Gratis op til 500 URL'er (rigeligt for horizen.dk med ~25-30 sider). €245/år for ubegrænset + JavaScript-rendering.",
+    url: "https://www.screamingfrog.co.uk/seo-spider/",
+  },
+  {
+    name: "Ubersuggest",
+    role: "Søgeord",
+    summary:
+      "Søgeords-research: finder varianter, søgevolumen og sværhedsgrad (SD) for et keyword.",
+    body: [
+      "Bruges til at finde og vurdere keywords før vi skriver copy: hvor mange søger på det, og hvor svært er det at rangere.",
+      "Vigtig regel: Search Console (egne data) går ALTID først. Ubersuggest fylder hullerne med varianter og estimater, især til at opdage nye long-tail-muligheder.",
+    ],
+    whenToUse:
+      "Før vi vælger keywords til en side, og når vi leder efter nye long-tail-muligheder.",
+    pricing: "Gratis-tier med daglig opslagsgrænse; betalt abonnement for mere.",
+    url: "https://neilpatel.com/ubersuggest/",
+  },
+  {
+    name: "Google Analytics 4 (GA4)",
+    role: "Adfærd",
+    summary:
+      "Måler hvad folk gør PÅ sitet: hvor de kommer fra, hvor længe de bliver, og om de konverterer.",
+    body: [
+      "Hvor Search Console viser hvordan folk finder jer i Google, viser GA4 hvad de gør når de er inde: trafik-kilder, engagement, sidevisninger og konverteringer.",
+      "NB: vi mangler stadig at sætte ægte konverteringssporing op her (kontaktform + klik på tlf/email), så vi kan måle om trafik bliver til leads.",
+    ],
+    whenToUse:
+      "Til at forstå trafik-kilder og adfærd, og — når sporing er sat op — om trafikken bliver til henvendelser.",
+    pricing: "Gratis",
+    url: "https://analytics.google.com",
+  },
+  {
+    name: "PageSpeed Insights",
+    role: "Hastighed",
+    summary:
+      "Måler sidernes hastighed og Core Web Vitals og giver konkrete forbedringsforslag.",
+    body: [
+      "Tester en sides indlæsning på mobil + desktop og giver en score plus Core Web Vitals (LCP, INP, CLS). Hurtige sider belønnes af Google.",
+      "Vi brugte det til forsidens audit (mobil-LCP var i rødt, hvorefter Google-scripts blev lazy-loaded).",
+    ],
+    whenToUse:
+      "Til at tjekke og forbedre hastighed, især efter store ændringer på en side.",
+    pricing: "Gratis",
+    url: "https://pagespeed.web.dev",
+  },
+  {
+    name: "Looker Studio",
+    role: "Rapportering",
+    summary:
+      "Bygger visuelle, delbare rapporter (dashboards) af data fra Search Console og GA4.",
+    body: [
+      "Til pæne, visuelle rapporter man deler med KUNDER: trækker data fra Search Console + GA4 og viser det i grafer.",
+      "Til Horizens egen interne brug bruger vi dette dashboard i stedet, så Looker er primært til kunde-leverancer.",
+    ],
+    whenToUse:
+      "Når vi skal dele SEO-resultater visuelt med en kunde. Ikke nødvendigt til intern brug.",
+    pricing: "Gratis",
+    url: "https://lookerstudio.google.com",
+  },
+];

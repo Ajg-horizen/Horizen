@@ -12,6 +12,7 @@ import DashboardTabs from "./DashboardTabs";
 import PagesTabs from "./PagesTabs";
 import ActivityByMonth from "./ActivityByMonth";
 import TechniquesTab from "./TechniquesTab";
+import ToolsTab from "./ToolsTab";
 import {
   actionItems,
   baseline,
@@ -21,6 +22,7 @@ import {
   recentActivity,
   relaunchData,
   seoTechniques,
+  seoTools,
   upcomingPages,
   upcomingReviews,
   type SeoStatus,
@@ -583,8 +585,13 @@ export default function SeoDashboardPage() {
             { id: "analytics", label: "Analytics", content: analyticsTab },
             {
               id: "teknikker",
-              label: "Teknikker & tips",
+              label: "Teknikker",
               content: <TechniquesTab items={seoTechniques} />,
+            },
+            {
+              id: "vaerktoejer",
+              label: "Værktøjer",
+              content: <ToolsTab items={seoTools} />,
             },
           ]}
           defaultTab="seo"
