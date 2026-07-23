@@ -638,6 +638,9 @@ export type SeoTechnique = {
   body: string[];
   /** Valgfrit kode-eksempel til at gøre teknikken håndgribelig. */
   codeExample?: { label: string; code: string };
+  /** Valgfri fordele/ulemper. */
+  pros?: string[];
+  cons?: string[];
 };
 
 export const seoTechniques: SeoTechnique[] = [
@@ -705,5 +708,18 @@ export const seoTechniques: SeoTechnique[] = [
 }
 </script>`,
     },
+    pros: [
+      "Rich snippets (stjerner, FAQ, priser) får dig til at skille dig ud i søgeresultatet → højere klikrate",
+      "Hjælper Google forstå siden hurtigere → bedre indeksering, især for nye sider",
+      "Kan give plads i Knowledge Graph (info-panelet til højre i Google)",
+      "Gratis, det er bare kode",
+      "Fremtidssikrer: AI-søgning (Google AI Overviews, ChatGPT) bruger structured data til at forstå hvem I er",
+    ],
+    cons: [
+      "Ingen garanti — Google beslutter selv om rich snippets vises",
+      "Ingen direkte ranking-boost — det forbedrer hvordan du VISES (klikrate), ikke din placering",
+      "Skal holdes ægte og opdateret — pyntet eller falsk markup (fx uægte anmeldelser) kan give manuel straf",
+      "Nogle dele har beskeden effekt (fx sameAs til Wikipedia for emner)",
+    ],
   },
 ];

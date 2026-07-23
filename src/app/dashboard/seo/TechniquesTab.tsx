@@ -73,6 +73,41 @@ export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
                       </p>
                     ))}
                   </div>
+                  {(t.pros || t.cons) && (
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                      {t.pros && (
+                        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.04] p-3">
+                          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-emerald-600">
+                            Fordele
+                          </p>
+                          <ul className="space-y-1.5">
+                            {t.pros.map((p, j) => (
+                              <li key={j} className="flex gap-2 text-sm text-foreground/80">
+                                <span className="mt-0.5 shrink-0 text-emerald-600">+</span>
+                                <span>{p}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {t.cons && (
+                        <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-3">
+                          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-amber-600">
+                            Ulemper & forbehold
+                          </p>
+                          <ul className="space-y-1.5">
+                            {t.cons.map((c, j) => (
+                              <li key={j} className="flex gap-2 text-sm text-foreground/80">
+                                <span className="mt-0.5 shrink-0 text-amber-600">−</span>
+                                <span>{c}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   {t.codeExample && (
                     <div className="mt-4">
                       <p className="mb-1.5 text-xs font-medium text-foreground/50">
