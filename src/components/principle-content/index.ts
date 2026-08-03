@@ -13,6 +13,11 @@ import hicksLov from "./hicks-lov";
 import millersLov from "./millers-lov";
 import naerhedsloven from "./naerhedsloven";
 import selektivOpmaerksomhed from "./selektiv-opmaerksomhed";
+import jakobsLov from "./jakobs-lov";
+import occamsRagekniv from "./occams-ragekniv";
+import dohertyGraensen from "./doherty-graensen";
+import peakEndReglen from "./peak-end-reglen";
+import vonRestorff from "./von-restorff";
 
 export interface PrincipleSource {
   /** Udgiver eller forfatter, fx "Laws of UX" eller "Kurosu & Kashimura, 1995" */
@@ -42,6 +47,11 @@ const registry: Partial<Record<PrincipleSlug, PrincipleContent>> = {
   "millers-lov": millersLov,
   naerhedsloven: naerhedsloven,
   "selektiv-opmaerksomhed": selektivOpmaerksomhed,
+  "jakobs-lov": jakobsLov,
+  "occams-ragekniv": occamsRagekniv,
+  "doherty-graensen": dohertyGraensen,
+  "peak-end-reglen": peakEndReglen,
+  "von-restorff": vonRestorff,
 };
 
 export function getPrincipleContent(slug: string): PrincipleContent | null {

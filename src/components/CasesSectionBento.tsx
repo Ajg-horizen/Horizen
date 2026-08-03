@@ -6,7 +6,17 @@ import { ArrowRightIcon } from "lucide-react";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import Container from "@/components/Container";
 
-const cases = [
+type CaseCard = {
+  title: string;
+  subtitle: string;
+  image: string;
+  logo: string;
+  href: string;
+  comingSoon?: boolean;
+  team: { name: string; avatar: string }[];
+};
+
+const cases: CaseCard[] = [
   {
     title: "BettrPlans",
     subtitle: "Webdesign · Branding · Visuel identitet",
@@ -50,7 +60,6 @@ const cases = [
     image: "/cases/Case-Hermes.webp",
     logo: "/Bomærker/Ensemble-hermes-bookmark-white.svg",
     href: "/cases/ensemble-hermes",
-    comingSoon: true,
     team: [
       { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
       { name: "Anne-Sofie", avatar: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp" },

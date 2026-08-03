@@ -18,11 +18,13 @@ const clientLogos = [
   { src: "/logo/Horizen_Branding_ArenaRanders.svg", alt: "Arena Randers" },
   { src: "/logo/Logo-NeverAnother-White-RGB.svg", alt: "Never Another" },
   { src: "/logo/Horizen_Branding_Nordic.svg", alt: "Nordic" },
+  { src: "/Bomærker/Ensemble-hermes-bookmark-white.svg", alt: "Ensemble Hermes", wordmark: "Hermes", serif: true },
   { src: "/logo/Horizen_Branding_Jesper_Lundgaard-08.svg", alt: "Jesper Lundgaard" },
   { src: "/logo/Horizen_Branding_AAEL.svg", alt: "AAEL" },
   { src: "/logo/BettrPlans-logo-01.svg", alt: "BettrPlans" },
   { src: "/Bomærker/TUG-Bomærke-hvid.svg", alt: "Tandsundhed Uden Grænser" },
   { src: "/Bomærker/Co-Craft-bomærke.svg", alt: "Co Craft" },
+  { src: "/Bomærker/Miljøkontoret-Bomærke-white.svg", alt: "Miljøkontoret", wordmark: "Miljøkontoret", boxed: true },
 ];
 
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import ScrollToTop from "@/components/ScrollToTop";
 import SmoothScroll from "@/components/SmoothScroll";
 import BackToTopButton from "@/components/BackToTopButton";
@@ -12,6 +12,14 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   weight: ["300", "400", "500", "600", "700", "800", "900"],
+});
+
+// Elegant serif — bruges kun til udvalgte ordmærker (fx Hermes-lockup i logoreolen).
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  weight: ["500"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -172,7 +180,7 @@ export default function RootLayout({
   const isProduction = process.env.NODE_ENV === "production";
 
   return (
-    <html lang="da" className={`${inter.variable} h-full antialiased`}>
+    <html lang="da" className={`${inter.variable} ${playfair.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <a href="#main" className="skip-link">
           Spring til indhold

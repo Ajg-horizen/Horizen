@@ -110,6 +110,18 @@ export const testimonials: Testimonial[] = [
     },
     source: "trustpilot",
   },
+  {
+    id: "rebecca-hermes",
+    quote:
+      "José har været intet mindre end fantastisk at arbejde sammen med. Vi havde længe haft brug for en ny hjemmeside til vores klassiske strygeensemble, Ensemble Hermes, men det føltes som en uoverskuelig opgave. Han er yderst professionel og imødekommende og fik processen til at føles behagelig og spændende. Man mærker et oprigtigt ønske om at lære sine kunder at kende i dybden og præsentere dem elegant og tidssvarende. Vi vil til enhver tid anbefale Horizen.",
+    rating: 5,
+    author: {
+      name: "Rebecca Fuglsig",
+      company: "Ensemble Hermes",
+      photo: "/Clients/Rebecca-Hermes.webp",
+    },
+    source: "trustpilot",
+  },
 ];
 
 /** Hent testimonial efter id — throw hvis ikke fundet, så build-time catches det. */
