@@ -10,6 +10,8 @@ type CaseCard = {
   title: string;
   subtitle: string;
   image: string;
+  /** Valgfri baggrundsvideo til kortet. Billedet bruges som poster/fallback. */
+  video?: string;
   logo: string;
   href: string;
   comingSoon?: boolean;
@@ -45,6 +47,7 @@ const cases: CaseCard[] = [
     title: "Tandsundhed Uden Grænser",
     subtitle: "Webdesign · CMS · Udvikling",
     image: "/cases/Tand-sundhed-hero-image.webp",
+    video: "/video/Tandsundhed-UI.mp4",
     logo: "/Bomærker/TUG-Bomærke-hvid.svg",
     href: "/cases/tandsundhed-uden-graenser",
     team: [
@@ -107,12 +110,26 @@ export default function CasesSectionBento() {
           const cardClassName = `group relative block h-full min-h-[340px] overflow-hidden rounded-2xl bg-foreground/[0.04] md:min-h-[420px] xl:min-h-[520px] 2xl:min-h-[620px] ${c.comingSoon ? "cursor-default" : ""}`;
           const cardInner = (
             <>
-              <img
-                src={c.image}
-                alt={`${c.title}, ${c.subtitle} af Horizen`}
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-              />
+              {c.video ? (
+                <video
+                  src={c.video}
+                  poster={c.image}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-label={`${c.title}, ${c.subtitle} af Horizen`}
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                />
+              ) : (
+                <img
+                  src={c.image}
+                  alt={`${c.title}, ${c.subtitle} af Horizen`}
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                />
+              )}
 
               <div
                 aria-hidden="true"
