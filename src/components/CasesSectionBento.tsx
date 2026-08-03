@@ -44,6 +44,17 @@ const cases: CaseCard[] = [
     ],
   },
   {
+    title: "Ensemble Hermes",
+    subtitle: "Webdesign · UI/UX · Redesign",
+    image: "/cases/Case-Hermes.webp",
+    logo: "/Bomærker/Ensemble-hermes-bookmark-white.svg",
+    href: "/cases/ensemble-hermes",
+    team: [
+      { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
+      { name: "Anne-Sofie", avatar: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp" },
+    ],
+  },
+  {
     title: "Tandsundhed Uden Grænser",
     subtitle: "Webdesign · CMS · Udvikling",
     image: "/cases/Tand-sundhed-hero-image.webp",
@@ -55,17 +66,6 @@ const cases: CaseCard[] = [
       { name: "Johanne", avatar: "/staff/staff-Web-udvikler-designer-Johanne-horizen.avif" },
       { name: "Anne-Sofie", avatar: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp" },
       { name: "Ludvig", avatar: "/staff/staff-kommunikation-og-salg-Ludvig.webp" },
-    ],
-  },
-  {
-    title: "Ensemble Hermes",
-    subtitle: "Webdesign · UI/UX · Redesign",
-    image: "/cases/Case-Hermes.webp",
-    logo: "/Bomærker/Ensemble-hermes-bookmark-white.svg",
-    href: "/cases/ensemble-hermes",
-    team: [
-      { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
-      { name: "Anne-Sofie", avatar: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp" },
     ],
   },
 ];
