@@ -281,15 +281,14 @@ export default function CaseContent() {
               variants={fadeInUp}
             >
               <p className="text-base text-muted leading-relaxed">
-                Ensemble Hermes skaber utraditionelle koncertprojekter, men
-                hjemmesiden fulgte ikke med. Den gamle Wix-side var svær at
-                navigere, og efterhånden som den voksede, blev den kun mere
-                uoverskuelig.
+                Ensemble Hermes er et samlet team, der længe havde brugt Wix. Men
+                de mødte hurtigt grænserne for, hvad Wix kunne i forhold til deres
+                behov og krav.
               </p>
               <p className="mt-4 text-base text-muted leading-relaxed">
-                Hver ny koncert betød manuelt arbejde, og brugerfladen føltes
-                tungere for hvert lag der kom til. Publikum brugte for lang tid
-                på at finde det næste de kunne opleve.
+                Platformen kunne ikke følge med den måde, de arbejder på. Særligt
+                koncertoversigten blev tung at holde ved lige, og de følte sig
+                begrænset af, hvad løsningen tillod.
               </p>
             </motion.div>
           </div>
@@ -319,10 +318,10 @@ export default function CaseContent() {
                 variants={fadeInUp}
               >
                 <p className="text-base text-muted leading-relaxed">
-                  Vi byggede sitet op fra bunden med et system skabt til deres
-                  hverdag. Koncerterne styres nu ét sted og falder automatisk på
-                  plads i oversigten, så publikum hurtigt finder det næste de kan
-                  opleve.
+                  Derfor udviklede vi i fællesskab en side fra bunden, bygget
+                  direkte til deres behov. Koncerterne oprettes og håndteres nu
+                  ét sted og falder automatisk på plads i oversigten, så publikum
+                  hurtigt finder det næste de kan opleve.
                 </p>
                 <p className="mt-4 text-base text-muted leading-relaxed">
                   Brugerfladen er gjort enklere hele vejen igennem, og et
