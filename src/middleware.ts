@@ -21,18 +21,24 @@ const WP_PATTERNS = [
  */
 function denyDashboardAccess(request: NextRequest): NextResponse | null {
   const password = process.env.DASHBOARD_PASSWORD;
-  if (!password) return null;
+  const isProd = process.env.NODE_ENV === "production";
 
-  const auth = request.headers.get("authorization");
-  const expected = "Basic " + btoa(`horizen:${password}`);
-  if (auth === expected) return null;
-
-  return new NextResponse("Adgang kræver login.", {
+  const loginRequired = new NextResponse("Adgang kræver login.", {
     status: 401,
     headers: {
       "WWW-Authenticate": 'Basic realm="Horizen Dashboard", charset="UTF-8"',
     },
   });
+
+  // Ingen adgangskode konfigureret: åben i dev (så vi kan arbejde),
+  // men LÅST i prod (fail-closed — bedre låst end åbent).
+  if (!password) return isProd ? loginRequired : null;
+
+  const auth = request.headers.get("authorization");
+  const expected = "Basic " + btoa(`horizen:${password}`);
+  if (auth === expected) return null;
+
+  return loginRequired;
 }
 
 export function middleware(request: NextRequest) {
