@@ -35,7 +35,7 @@ function denyDashboardAccess(request: NextRequest): NextResponse | null {
   });
 }
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (pathname.startsWith("/dashboard")) {
