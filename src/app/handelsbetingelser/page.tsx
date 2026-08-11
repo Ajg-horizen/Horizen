@@ -168,6 +168,7 @@ const sections: Section[] = [
           "Kunden ejer sin hjemmeside, sit indhold, sin kildekode og sit domæne.",
           "Rettighederne til det udførte arbejde overgår til kunden ved fuld betaling.",
           "Ved samarbejdets ophør udleveres alt relevant materiale, herunder kildekode, filer, adgange og logins, således at kunden frit kan råde herover.",
+          "Kunden får altid sin hjemmeside med, men selve overdragelsen og overflytningen, herunder det hertil forbundne tidsforbrug, afregnes særskilt på timebasis efter gældende timepris.",
           "Undtaget herfra er tredjepartskomponenter og licenser, der er underlagt egne vilkår.",
         ],
       },
