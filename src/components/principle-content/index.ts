@@ -18,6 +18,25 @@ import occamsRagekniv from "./occams-ragekniv";
 import dohertyGraensen from "./doherty-graensen";
 import peakEndReglen from "./peak-end-reglen";
 import vonRestorff from "./von-restorff";
+import chunking from "./chunking";
+import kognitiveBias from "./kognitive-bias";
+import kognitivBelastning from "./kognitiv-belastning";
+import flow from "./flow";
+import maalGradientEffekten from "./maal-gradient-effekten";
+import lovenOmFaellesOmraade from "./loven-om-faelles-omraade";
+import praegnanz from "./praegnanz";
+import lighedsloven from "./lighedsloven";
+import ensartetForbindelse from "./ensartet-forbindelse";
+import mentalModel from "./mental-model";
+import aktivBrugerParadoks from "./aktiv-bruger-paradoks";
+import paretoPrincippet from "./pareto-princippet";
+import parkinsonsLov from "./parkinsons-lov";
+import postelsLov from "./postels-lov";
+import serielPosition from "./seriel-position";
+import teslersLov from "./teslers-lov";
+import arbejdshukommelse from "./arbejdshukommelse";
+import zeigarnikEffekten from "./zeigarnik-effekten";
+import valgOverload from "./valg-overload";
 
 export interface PrincipleSource {
   /** Udgiver eller forfatter, fx "Laws of UX" eller "Kurosu & Kashimura, 1995" */
@@ -52,6 +71,25 @@ const registry: Partial<Record<PrincipleSlug, PrincipleContent>> = {
   "doherty-graensen": dohertyGraensen,
   "peak-end-reglen": peakEndReglen,
   "von-restorff": vonRestorff,
+  chunking: chunking,
+  "kognitive-bias": kognitiveBias,
+  "kognitiv-belastning": kognitivBelastning,
+  flow: flow,
+  "maal-gradient-effekten": maalGradientEffekten,
+  "loven-om-faelles-omraade": lovenOmFaellesOmraade,
+  praegnanz: praegnanz,
+  lighedsloven: lighedsloven,
+  "ensartet-forbindelse": ensartetForbindelse,
+  "mental-model": mentalModel,
+  "aktiv-bruger-paradoks": aktivBrugerParadoks,
+  "pareto-princippet": paretoPrincippet,
+  "parkinsons-lov": parkinsonsLov,
+  "postels-lov": postelsLov,
+  "seriel-position": serielPosition,
+  "teslers-lov": teslersLov,
+  arbejdshukommelse: arbejdshukommelse,
+  "zeigarnik-effekten": zeigarnikEffekten,
+  "valg-overload": valgOverload,
 };
 
 export function getPrincipleContent(slug: string): PrincipleContent | null {
