@@ -17,6 +17,7 @@ const staticRoutes = [
   "/blog/ai-webdesign",
   "/blog/figma-til-kode",
   "/blog/seo-fejl-2026",
+  "/handelsbetingelser",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
