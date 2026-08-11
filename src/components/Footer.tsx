@@ -186,10 +186,18 @@ export default function Footer() {
 
           {/* Bottom */}
           <div className="mt-8 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-            <p className="text-xs text-background/30">
-              &copy; {new Date().getFullYear()} Horizen. Alle rettigheder
-              forbeholdes.
-            </p>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+              <p className="text-xs text-background/30">
+                &copy; {new Date().getFullYear()} Horizen. Alle rettigheder
+                forbeholdes.
+              </p>
+              <Link
+                href="/handelsbetingelser"
+                className="text-xs text-background/30 transition-colors duration-300 hover:text-background"
+              >
+                Handelsbetingelser
+              </Link>
+            </div>
 
             <div className="flex items-center gap-2">
               <div className="relative">
