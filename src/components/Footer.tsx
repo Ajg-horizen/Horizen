@@ -191,6 +191,7 @@ export default function Footer() {
                 &copy; {new Date().getFullYear()} Horizen. Alle rettigheder
                 forbeholdes.
               </p>
+              <span className="text-xs text-background/30">CVR 44637588</span>
               <Link
                 href="/handelsbetingelser"
                 className="text-xs text-background/30 transition-colors duration-300 hover:text-background"
