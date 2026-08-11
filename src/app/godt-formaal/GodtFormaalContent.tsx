@@ -261,10 +261,9 @@ export default function GodtFormaalContent() {
 
               <div className="mt-8 border-t border-foreground/10 pt-6">
                 <p className="text-sm leading-relaxed text-muted-foreground">
-                  Selve hjemmesiden er gratis, og det første halve år efter
-                  lancering er hostingen også gratis. I får en løsning til en
-                  værdi af ca. 80.000 kr., bygget på det fundament vi bruger til
-                  alle vores kunder.
+                  Selve hjemmesiden er gratis. I får en løsning til en værdi af
+                  ca. 80.000 kr., bygget på det fundament vi bruger til alle
+                  vores kunder.
                 </p>
               </div>
 
