@@ -101,9 +101,9 @@ const sections: Section[] = [
       {
         type: "list",
         items: [
-          "Opgaver ud over den løbende service afregnes på timebasis efter konkret aftale. Timeprisen udgør 900 kr. ekskl. moms.",
-          "Der faktureres alene for arbejde, der på forhånd er aftalt og godkendt af kunden. Tid anvendt på opgaver, der ikke er godkendt af kunden, faktureres ikke.",
-          "Horizen orienterer kunden og indhenter godkendelse forud for igangsættelse af opgaver, der medfører fakturering.",
+          "Opgaver ud over den løbende service afregnes på timebasis efter aftale. Timeprisen udgør 900 kr. ekskl. moms.",
+          "Medmindre andet er aftalt, faktureres alene for arbejde, der på forhånd er aftalt og godkendt af kunden. Tid anvendt på opgaver, der ikke er godkendt, faktureres ikke, og Horizen indhenter kundens godkendelse forud for igangsættelse af opgaver, der medfører fakturering.",
+          "Parterne kan i stedet aftale et løbende timeforbrug, eksempelvis en øvre timeramme pr. måned. En sådan aftale kan indgås mundtligt eller skriftligt. Er der aftalt en ramme, orienterer Horizen kunden, når forbruget nærmer sig grænsen.",
         ],
       },
       { type: "sub", text: "Priser generelt" },
