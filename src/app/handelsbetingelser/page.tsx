@@ -167,7 +167,7 @@ const sections: Section[] = [
         items: [
           "Kunden ejer sin hjemmeside, sit indhold, sin kildekode og sit domæne.",
           "Rettighederne til det udførte arbejde overgår til kunden ved fuld betaling.",
-          "Ved samarbejdets ophør udleveres alt relevant materiale, herunder kildekode, filer, adgange og logins, således at kunden frit kan råde herover.",
+          "Ved samarbejdets ophør udleveres alt relevant materiale, herunder kildekode, filer, adgange og logins, på kundens anmodning, således at kunden frit kan råde herover.",
           "Kunden får altid sin hjemmeside med, men selve overdragelsen og overflytningen, herunder det hertil forbundne tidsforbrug, afregnes særskilt på timebasis efter gældende timepris.",
           "Undtaget herfra er tredjepartskomponenter og licenser, der er underlagt egne vilkår.",
         ],
@@ -309,11 +309,11 @@ const sections: Section[] = [
     blocks: [
       {
         type: "p",
-        text: "Den løbende hjemmesideservice (webhotel og drift) ophører ved manglende fornyelse, jf. afsnittet om priser og ydelser. Hjemmesiden tages offline efter en rimelig periode, og kunden varsles forinden.",
+        text: "Den løbende hjemmesideservice (webhotel og drift) ophører ved manglende fornyelse eller manglende betaling, jf. afsnittet om priser og ydelser. Horizen overfører ikke automatisk hjemmesiden ved ophør. Ønsker kunden hjemmesiden overdraget, skal dette anmodes, og overdragelsen afregnes, jf. afsnittet om ejerskab og rettigheder. Sker der hverken fornyelse eller anmodning om overdragelse, tages hjemmesiden offline og slettes efter en rimelig periode, og kunden varsles forinden.",
       },
       {
         type: "p",
-        text: "For løbende ydelser i form af retainer eller vedligeholdelse, eksempelvis løbende drift af Google Ads, gælder en opsigelsesperiode på den løbende måned plus én måned, medmindre andet er aftalt.",
+        text: "For løbende ydelser i form af retainer- eller vedligeholdelsesaftaler, herunder aftaler mod et fast månedligt beløb, gælder en opsigelsesperiode på den løbende måned plus én måned, medmindre andet er aftalt. Dette omfatter blandt andet løbende drift og optimering af annoncering (eksempelvis Google Ads) samt løbende vedligeholdelse.",
       },
       {
         type: "p",
