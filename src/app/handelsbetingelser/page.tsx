@@ -309,7 +309,15 @@ const sections: Section[] = [
     blocks: [
       {
         type: "p",
-        text: "Den løbende service ophører ved manglende fornyelse, jf. afsnittet om priser og ydelser. Ved væsentlig misligholdelse er hver part berettiget til at opsige samarbejdet med rimeligt varsel. Ved manglende fornyelse tages hjemmesiden offline efter en rimelig periode, og kunden varsles forinden.",
+        text: "Den løbende hjemmesideservice (webhotel og drift) ophører ved manglende fornyelse, jf. afsnittet om priser og ydelser. Hjemmesiden tages offline efter en rimelig periode, og kunden varsles forinden.",
+      },
+      {
+        type: "p",
+        text: "For løbende ydelser i form af retainer eller vedligeholdelse, eksempelvis løbende drift af Google Ads, gælder en opsigelsesperiode på den løbende måned plus én måned, medmindre andet er aftalt.",
+      },
+      {
+        type: "p",
+        text: "Ved væsentlig misligholdelse er hver part berettiget til at opsige samarbejdet med rimeligt varsel.",
       },
     ],
   },
