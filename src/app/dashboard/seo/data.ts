@@ -6,7 +6,7 @@
  * med MD-filerne i ~/Desktop/Claude Workflows/01-Kunder/Horizen/SEO/.
  */
 
-export const lastUpdated = "2026-07-22";
+export const lastUpdated = "2026-08-12";
 export const dataAsOf = "2026-04-21 til 2026-07-20 (3 måneder)"; // GSC-udtræk 22. juli
 
 export const upcomingReviews = [
@@ -538,6 +538,12 @@ export const upcomingPages = [
 ];
 
 export const recentActivity = [
+  {
+    date: "2026-08-12",
+    title: "Forside: notifikations-popup live (designprincipper + gratis hjemmeside)",
+    description:
+      "Roterende popup nederst til højre (tablet og op, 1×/session): to notifikationer der veksler — Designprincipper → /ressourcer/designprincipper og 'Gratis hjemmeside?' → /godt-formaal. Baseline for at måle om den driver trafik til designprincipperne, øger returbesøg og spreder gratis-hjemmeside-tilbuddet. NB: alle 30 designprincipper gik også live dagen før (11/8), så et udslag kan skyldes begge.",
+  },
   {
     date: "2026-07-22",
     title: "Dashboard opdateret med friske GSC- + GA4-tal + bloat-analyse",
