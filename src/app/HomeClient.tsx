@@ -30,6 +30,7 @@ const clientLogos = [
 
 // Lazy load heavy components (Matter.js ~90KB, tsparticles ~40KB)
 const FloatingContact = dynamic(() => import("@/components/FloatingContact"), { ssr: false });
+const PrinciplesPopup = dynamic(() => import("@/components/PrinciplesPopup"), { ssr: false });
 const PhysicsPlayground = dynamic(() => import("@/components/PhysicsPlayground"), { ssr: false });
 
 export default function HomeClient() {
@@ -37,6 +38,7 @@ export default function HomeClient() {
     <main id="main" tabIndex={-1}>
       <Navbar />
       <FloatingContact />
+      <PrinciplesPopup />
 
       <Hero />
 
