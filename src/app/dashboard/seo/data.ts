@@ -167,6 +167,13 @@ export const actionItems = [
     priority: "low" as const,
     estimatedTime: "15 min",
   },
+  {
+    title: "Skift <img> til next/image (avatar + logo-marquee)",
+    description:
+      "Perf/Core Web Vitals: et par billeder (team-avatars, partner-logoer) bruger stadig <img> i stedet for next/image, så de ikke auto-optimeres (webp, sizing, lazy). Ikke kritisk, det er små billeder og næppe LCP-elementet, men en let hastigheds-gevinst der hjælper CWV. Kirurgisk skift der kræver width/height plus test af layout. Fundet under kode-oprydningen 12. aug.",
+    priority: "low" as const,
+    estimatedTime: "20-30 min",
+  },
 ];
 
 export type SeoStatus = "done" | "in_progress" | "pending" | "not_applicable";
