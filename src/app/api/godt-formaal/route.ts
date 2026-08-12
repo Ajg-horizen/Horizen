@@ -19,6 +19,7 @@ export async function POST(request: Request) {
       organisation,
       cvr,
       type,
+      size,
       contact,
       role,
       email,
@@ -32,6 +33,7 @@ export async function POST(request: Request) {
       organisation?: string;
       cvr?: string;
       type?: string;
+      size?: string;
       contact?: string;
       role?: string;
       email?: string;
@@ -43,7 +45,19 @@ export async function POST(request: Request) {
       consent?: boolean;
     };
 
-    if (!organisation || !cvr || !contact || !email || !cause || !need) {
+    if (
+      !organisation ||
+      !cvr ||
+      !type ||
+      !size ||
+      !contact ||
+      !role ||
+      !email ||
+      !phone ||
+      !cause ||
+      !need ||
+      !why
+    ) {
       return NextResponse.json(
         { error: "Udfyld venligst alle påkrævede felter" },
         { status: 400 },
@@ -68,6 +82,7 @@ export async function POST(request: Request) {
         `Organisation: ${organisation}`,
         `CVR-nr.: ${cvr}`,
         type ? `Type: ${type}` : null,
+        size ? `Antal i organisationen: ${size}` : null,
         "",
         `Kontaktperson: ${contact}${role ? ` (${role})` : ""}`,
         `E-mail: ${email}`,

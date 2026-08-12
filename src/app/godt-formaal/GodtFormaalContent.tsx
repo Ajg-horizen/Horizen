@@ -16,6 +16,10 @@ import { getTestimonial } from "@/lib/testimonials";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
+// Gratis-hjemmeside-tilbud: én plads om året. Opdatér `year` når året skifter,
+// og sæt `slotsOpen: 0`, når årets plads er givet væk.
+const OFFER = { year: 2026, slotsOpen: 1 };
+
 export default function GodtFormaalContent() {
   const [status, setStatus] = useState<Status>("idle");
 
@@ -28,6 +32,7 @@ export default function GodtFormaalContent() {
       organisation: formData.get("organisation"),
       cvr: formData.get("cvr"),
       type: formData.get("type"),
+      size: formData.get("size"),
       contact: formData.get("contact"),
       role: formData.get("role"),
       email: formData.get("email"),
@@ -67,9 +72,26 @@ export default function GodtFormaalContent() {
             Ansøg om en gratis hjemmeside.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-            Til frivillige foreninger og NGO&apos;er. Fortæl os om jeres sag, så
-            vender vi tilbage.
+            Hvert år støtter vi ét frivilligt projekt med en gratis hjemmeside.
+            Fortæl os om jeres sag, så vender vi tilbage.
           </p>
+          <div className="mt-8 inline-flex items-center gap-2.5 rounded-full border border-foreground/10 bg-foreground/[0.03] px-4 py-2 text-sm font-medium">
+            <span className="relative flex size-2.5">
+              {OFFER.slotsOpen > 0 && (
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500/60" />
+              )}
+              <span
+                className={`relative inline-flex size-2.5 rounded-full ${
+                  OFFER.slotsOpen > 0 ? "bg-emerald-500" : "bg-foreground/30"
+                }`}
+              />
+            </span>
+            <span>
+              {OFFER.slotsOpen > 0
+                ? `${OFFER.slotsOpen} plads åben i ${OFFER.year}`
+                : `Fuldt booket i ${OFFER.year}`}
+            </span>
+          </div>
         </motion.div>
       </Container>
 
@@ -109,6 +131,8 @@ export default function GodtFormaalContent() {
                 <SelectField
                   label="Type organisation"
                   name="type"
+                  required
+                  placeholder="Vælg type"
                   options={[
                     "Forening",
                     "Fond",
@@ -117,11 +141,27 @@ export default function GodtFormaalContent() {
                     "Andet",
                   ]}
                 />
+                <SelectField
+                  label="Hvor mange er I i organisationen?"
+                  name="size"
+                  required
+                  placeholder="Vælg antal"
+                  options={[
+                    "1-2 personer",
+                    "3-10 personer",
+                    "11-30 personer",
+                    "31-100 personer",
+                    "Mere end 100",
+                  ]}
+                />
+              </div>
+
+              <div className="mt-5">
                 <Field
                   label="Nuværende website"
                   name="website"
                   type="text"
-                  placeholder="(valgfrit)"
+                  placeholder="(valgfrit) hvis I allerede har en"
                 />
               </div>
 
@@ -137,7 +177,8 @@ export default function GodtFormaalContent() {
                   label="Rolle"
                   name="role"
                   type="text"
-                  placeholder="(valgfrit)"
+                  required
+                  placeholder="Din rolle"
                 />
               </div>
 
@@ -153,7 +194,8 @@ export default function GodtFormaalContent() {
                   label="Telefon"
                   name="phone"
                   type="tel"
-                  placeholder="(valgfrit)"
+                  required
+                  placeholder="Dit telefonnummer"
                 />
               </div>
 
@@ -179,7 +221,8 @@ export default function GodtFormaalContent() {
                 <TextareaField
                   label="Hvorfor jer?"
                   name="why"
-                  placeholder="(valgfrit) Hvad ville det betyde for jeres arbejde?"
+                  required
+                  placeholder="Hvad ville det betyde for jeres arbejde?"
                   rows={4}
                 />
               </div>
@@ -390,24 +433,30 @@ function SelectField({
   label,
   name,
   options,
+  required,
+  placeholder = "Vælg",
 }: {
   label: string;
   name: string;
   options: string[];
+  required?: boolean;
+  placeholder?: string;
 }) {
   return (
     <div>
       <label htmlFor={name} className="mb-2 block text-sm font-medium">
         {label}
+        {required && <span className="text-foreground/40"> *</span>}
       </label>
       <select
         id={name}
         name={name}
+        required={required}
         className="w-full rounded-xl border border-foreground/15 bg-background px-4 py-3 text-base outline-none transition-colors focus:border-foreground/40"
         defaultValue=""
       >
         <option value="" disabled>
-          Vælg type
+          {placeholder}
         </option>
         {options.map((o) => (
           <option key={o} value={o}>
