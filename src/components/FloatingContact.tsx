@@ -6,6 +6,8 @@ import { ContactButton } from "@/components/ContactButton";
 
 export default function FloatingContact() {
   const [visible, setVisible] = useState(false);
+  // Gem knappen, mens notifikations-stakken er åben, så de ikke støder sammen.
+  const [suppressed, setSuppressed] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setVisible(window.scrollY > 200);
@@ -13,9 +15,18 @@ export default function FloatingContact() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const onPopup = (e: Event) => {
+      const detail = (e as CustomEvent<{ open: boolean }>).detail;
+      setSuppressed(Boolean(detail?.open));
+    };
+    window.addEventListener("principles-popup", onPopup);
+    return () => window.removeEventListener("principles-popup", onPopup);
+  }, []);
+
   return (
     <AnimatePresence>
-      {visible && (
+      {visible && !suppressed && (
         <motion.div
           initial={{ opacity: 0, x: 80 }}
           animate={{ opacity: 1, x: 0 }}
