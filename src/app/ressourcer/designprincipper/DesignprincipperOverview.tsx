@@ -174,6 +174,19 @@ export default function DesignprincipperOverview() {
               </p>
             </div>
           )}
+
+          {/* Sådan bruger vi principperne */}
+          <div className="mt-24 border-t border-foreground/10 pt-12">
+            <h2 className="max-w-3xl text-2xl font-bold tracking-tight md:text-3xl">
+              Sådan bruger vi principperne
+            </h2>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
+              Vi trækker på dem i alle vores projekter, i forskellige
+              sammenhænge. Sjældent alle på én gang, for ikke alle giver mening
+              hver gang. Men det er som regel her, forklaringen ligger, når det
+              vi bygger, ender med at give resultater.
+            </p>
+          </div>
         </Container>
 
         <div className="mt-32" />
