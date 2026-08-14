@@ -186,12 +186,12 @@ export default function Footer() {
           <div className="mt-20 border-t border-background/[0.08]" />
 
           {/* Bottom */}
-          <div className="mt-8 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+          <div className="mt-8 flex flex-col items-start justify-between gap-6 lg:flex-row lg:items-center">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
               <img
                 src="/logo/yello-b-badge.svg"
                 alt="Horizen er B-mærket certificeret"
-                className="h-8 w-auto"
+                className="h-[38px] w-auto"
               />
               <p className="text-xs text-background/30">
                 &copy; {new Date().getFullYear()} Horizen. Alle rettigheder
