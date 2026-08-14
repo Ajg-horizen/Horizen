@@ -37,8 +37,8 @@ const POOL: Campaign[] = [
   {
     id: "godt-formaal",
     icon: <PixelHeart />,
-    title: "Gratis hjemmeside?",
-    subtitle: "Til jer, der gør en forskel for andre",
+    title: "Frivillig organisation eller NGO?",
+    subtitle: "Vi støtter ét projekt om året",
     action: "Se mere",
     href: "/godt-formaal",
   },
@@ -148,7 +148,7 @@ export default function PrinciplesPopup() {
                     {n.icon}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-[15px] font-semibold leading-tight text-foreground">
+                    <p className="line-clamp-2 text-[15px] font-semibold leading-tight text-foreground">
                       {n.title}
                     </p>
                     <p className="line-clamp-2 text-[13px] leading-tight text-muted">
