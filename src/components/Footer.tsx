@@ -191,7 +191,7 @@ export default function Footer() {
               <img
                 src="/logo/yello-b-badge.svg"
                 alt="Horizen er B-mærket certificeret"
-                className="h-[38px] w-auto"
+                className="h-[38px] w-auto self-start sm:self-auto"
               />
               <p className="text-xs text-background/30">
                 &copy; {new Date().getFullYear()} Horizen. Alle rettigheder
