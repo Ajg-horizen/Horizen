@@ -4,7 +4,8 @@ import { useState, useEffect, type ReactNode } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { XIcon } from "lucide-react";
-import { PixelHeart, PixelDiamond } from "@/components/pixel-glyphs";
+// PixelHeart genimporteres når Godt formål-popup genaktiveres nedenfor.
+import { PixelDiamond } from "@/components/pixel-glyphs";
 
 const SESSION_KEY = "principles-popup-dismissed";
 const ROTATION_KEY = "principles-popup-rotation";
@@ -34,14 +35,16 @@ const POOL: Campaign[] = [
     action: "Læs",
     href: "/ressourcer/designprincipper",
   },
-  {
-    id: "godt-formaal",
-    icon: <PixelHeart />,
-    title: "Frivillig organisation eller NGO?",
-    subtitle: "Vi støtter ét projekt om året",
-    action: "Se mere",
-    href: "/godt-formaal",
-  },
+  // Midlertidigt deaktiveret (Andreas' ønske): Godt formål-popup skjult, så
+  // kun designprincipper vises. Genaktivér ved at fjerne kommentaren.
+  // {
+  //   id: "godt-formaal",
+  //   icon: <PixelHeart />,
+  //   title: "Frivillig organisation eller NGO?",
+  //   subtitle: "Vi støtter ét projekt om året",
+  //   action: "Se mere",
+  //   href: "/godt-formaal",
+  // },
 ];
 
 /** Fortæl FloatingContact at stakken åbner/lukker, så knappen kan gemme sig. */
