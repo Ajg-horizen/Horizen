@@ -15,6 +15,7 @@ function calcReadTime(wordCount: number): string {
 const AI_WEBDESIGN_WORDS = 320;
 const SEO_FEJL_WORDS = 420;
 const FIGMA_TIL_KODE_WORDS = 380;
+const SAADAN_FUNGERER_SEO_WORDS = 850;
 
 export interface BlogPost {
   slug: string;
@@ -34,6 +35,23 @@ export interface BlogPost {
 }
 
 export const blogPosts: BlogPost[] = [
+  {
+    slug: "hvad-er-seo",
+    title: "Hvad er SEO? Sådan bygger du fundamentet i den rigtige rækkefølge",
+    excerpt:
+      "SEO virker ikke som en kontakt du tænder til sidst. Her er rækkefølgen der giver resultater, og hvornår du kan forvente at se dem.",
+    image: "/blog/hvad-er-seo.webp",
+    author: {
+      name: "Anne-Sofie",
+      title: "Marketing Lead",
+      role: "SEO & Digital Strategi",
+      avatar: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp",
+    },
+    date: "9. september 2026",
+    readTime: calcReadTime(SAADAN_FUNGERER_SEO_WORDS),
+    tags: ["SEO", "Strategi"],
+    href: "/blog/hvad-er-seo",
+  },
   {
     slug: "ai-webdesign",
     title: "Sådan bruger vi AI til at levere bedre webdesign",
