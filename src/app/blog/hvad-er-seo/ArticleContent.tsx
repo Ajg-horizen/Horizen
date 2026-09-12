@@ -170,16 +170,24 @@ function Content() {
         variants={fadeInUp}
       >
         <p className="text-lg font-medium leading-relaxed text-foreground">
-          Den største misforståelse om SEO er, at det er en engangsopgave. At man får skrevet nogle
-          tekster ud fra en søgeordsanalyse, lægger dem på hjemmesiden, og så rangerer man for
-          altid. Sådan fungerer det ikke. SEO er løbende arbejde, og det bygges op i en bestemt
-          rækkefølge.
+          En af de misforståelser, vi oftest møder, er at SEO er en engangsopgave. At man får skrevet
+          nogle tekster ud fra en søgeordsanalyse, og så klarer man sig godt på Google. Sådan er det
+          desværre ikke.
+        </p>
+        <p className="mt-4 text-lg leading-relaxed text-foreground">
+          SEO er et hårdt konkurrencepræget marked, hvor det kræver løbende vedligeholdelse og
+          arbejde. De helt store virksomheder kan have et helt team af ansatte, der udelukkende
+          fokuserer på SEO for én enkelt hjemmeside. Derfor er en enkelt indsats med et par
+          overskrifter og sidetitler sjældent nok.
         </p>
         <p className="mt-4 text-lg italic leading-relaxed text-muted-foreground">
-          Tænk på det som et træningscenter. Går du derned én gang, ser du ingen resultater. Det er
-          den tilbagevendende rutine der rykker: du kommer igen en eller to gange om ugen, holder
-          øje med hvad der virker, og justerer. Og stopper du med at komme, falder resultaterne
-          igen, og du skal starte forfra. Præcis sådan er SEO.
+          Vi kan godt lide at sammenligne SEO med at træne i fitness. Går du derned én gang, er
+          resultaterne minimale, og to gange gør sjældent den store forskel. Det er den vedvarende indsats, hvor
+          du kommer igen og vedligeholder, der giver de stærke resultater. Typisk ser vi det efter
+          seks til tolv måneder, hvor det faste arbejde holder dig oppe i søgeresultaterne. Stopper
+          du, falder placeringerne ikke med det samme. Præcis som musklerne, der langsomt aftager når
+          træningen stopper, sker nedgangen gradvist. Og jo længere du holder pause, jo mere skal der
+          trænes op igen.
         </p>
       </motion.div>
 
@@ -195,14 +203,24 @@ function Content() {
           Hvad er SEO?
         </h2>
         <p className="mt-4 text-muted leading-relaxed">
-          SEO (search engine optimization) er kort sagt arbejdet med at gøre din hjemmeside nemmere
-          at finde på Google, når nogen søger efter det, du tilbyder. Ikke ved tricks, men ved at
-          være det bedste svar på det, folk leder efter.
+          SEO (search engine optimization) er det, der gør din hjemmeside synlig på Google.
+          Grundlæggende sender du en række signaler til søgemaskinen om, hvad din side handler om, så
+          den kan matche dig med de rigtige mennesker.
         </p>
         <p className="mt-4 text-muted leading-relaxed">
-          Det koger ned til tre ting: at gøre det nemt for Google at finde din side, at forstå hvad
-          den handler om, og at stole på, at den er det bedste svar. Kort sagt teknik, indhold og
-          troværdighed. Resten er detaljer.
+          Det er en disciplin i sig selv, og målet er ikke at rangere nummer ét for enhver pris. Da
+          SEO var nyt, kunne en skobutik proppe siden med et helt urelateret modeord og alligevel
+          kravle til tops. Den slags straffer Google i dag. Det virker ikke længere, og vi anbefaler
+          det aldrig.
+        </p>
+        <p className="mt-4 text-muted leading-relaxed">
+          Relevans er alt. Sælger du babylegetøj, kan det friste at kapre et emne, hele landet søger
+          på lige nu, som den nyeste iPhone. Lad være. Det giver måske et kort ryk i indekseringen,
+          men når Google opdager, at indholdet er irrelevant, falder du hårdere, end du steg.
+        </p>
+        <p className="mt-4 text-muted leading-relaxed">
+          God SEO er det stik modsatte. Et skarpt, ærligt signal om, præcis hvad din hjemmeside er.
+          Og det er dét signal, der fører de rigtige kunder hen til dig.
         </p>
       </motion.section>
 
