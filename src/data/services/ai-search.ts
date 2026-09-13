@@ -27,10 +27,10 @@ export const aiSearch: ServicePage = {
       type: "hero",
       eyebrow: { label: "AI Search", icon: SparklesIcon },
       heading: {
-        lead: "Folk spørger ikke længere kun Google.",
-        mutedTail: "De spørger en AI. Vær der, når de gør.",
+        lead: "Et paradigmeskifte.",
+        mutedTail: "Flere og flere spørger AI, og AI bliver mere og mere kildekritisk.",
       },
-      body: "AI-svar henter deres viden fra velstruktureret indhold. Vi bygger din synlighed med de samme greb som solid SEO, plus det der skal til, for at en AI citerer netop dig. Drevet af erfaring, ikke af hype.",
+      body: "AI-svar henter deres viden fra velstruktureret indhold. Vi bygger din synlighed med de samme greb som solid SEO, plus det der skal til, for at en AI citerer netop dig.",
       cta: { label: "Book et gratis AI-synlighedstjek", href: "/kontakt" },
       image: {
         src: "/graphics/Web-hero-image-marketing-google-ads.avif",
