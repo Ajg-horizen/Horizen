@@ -266,7 +266,7 @@ export default function UxVsUiBlock({
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
           variants={fadeInUp}
-          className="group flex flex-col gap-4 rounded-2xl border border-foreground/[0.08] bg-background p-5 transition-all duration-500 hover:border-foreground/[0.18] md:p-6"
+          className="group flex flex-col gap-4 rounded-2xl border border-foreground/[0.08] bg-background p-5 transition-colors duration-500 hover:border-foreground/[0.18] md:p-6"
         >
           <div className="flex items-center justify-between">
             <span className="inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-accent/40 px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-muted">
@@ -299,7 +299,7 @@ export default function UxVsUiBlock({
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
           variants={fadeInUp}
-          className="group flex flex-col gap-4 rounded-2xl border border-foreground/[0.08] bg-background p-5 transition-all duration-500 hover:border-foreground/[0.18] md:p-6"
+          className="group flex flex-col gap-4 rounded-2xl border border-foreground/[0.08] bg-background p-5 transition-colors duration-500 hover:border-foreground/[0.18] md:p-6"
         >
           <div className="flex items-center justify-between">
             <span className="inline-flex items-center gap-2 rounded-full border border-foreground/15 bg-accent/40 px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-[0.2em] text-muted">

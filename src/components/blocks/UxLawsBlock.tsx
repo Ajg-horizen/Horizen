@@ -20,7 +20,7 @@ function LawCard({ law, index }: { law: UxLaw; index: number }) {
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
       variants={fadeInUp}
-      className="group relative flex flex-col gap-4 rounded-2xl border border-foreground/[0.08] bg-background p-6 transition-all duration-500 hover:border-foreground/[0.18] md:p-8"
+      className="group relative flex flex-col gap-4 rounded-2xl border border-foreground/[0.08] bg-background p-6 transition-colors duration-500 hover:border-foreground/[0.18] md:p-8"
     >
       <div className="flex items-center justify-between">
         <span
