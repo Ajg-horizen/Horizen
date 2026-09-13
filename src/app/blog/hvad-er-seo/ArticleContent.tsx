@@ -139,7 +139,7 @@ function ResultsTimeline() {
 const faqs = [
   {
     q: "Er SEO en engangsopgave?",
-    a: "Nej. Det er den største misforståelse, vi møder. Man skriver ikke bare nogle tekster én gang og rangerer så for evigt. SEO er løbende arbejde: analysere, justere, skrive om og holde øje, måned efter måned. Det er der, resultaterne kommer fra.",
+    a: "Nej. Det er den misforståelse, vi møder oftest. Man skriver ikke nogle tekster én gang og rangerer så for evigt. SEO er løbende arbejde: analysere, justere, skrive om og holde øje, måned efter måned.",
   },
   {
     q: "Kan jeg se resultater, før alt er på plads?",
@@ -175,10 +175,9 @@ function Content() {
           desværre ikke.
         </p>
         <p className="mt-4 text-lg leading-relaxed text-foreground">
-          SEO er et hårdt konkurrencepræget marked, hvor det kræver løbende vedligeholdelse og
-          arbejde. De helt store virksomheder kan have et helt team af ansatte, der udelukkende
-          fokuserer på SEO for én enkelt hjemmeside. Derfor er en enkelt indsats med et par
-          overskrifter og sidetitler sjældent nok.
+          SEO er et hårdt konkurrencepræget felt, der kræver løbende vedligeholdelse. De helt store
+          virksomheder kan have et team, der udelukkende laver SEO for én enkelt hjemmeside. Derfor
+          er en enkelt omgang med et par overskrifter og sidetitler sjældent nok.
         </p>
         <p className="mt-4 text-lg italic leading-relaxed text-muted-foreground">
           Vi kan godt lide at sammenligne SEO med at træne i fitness. Går du derned én gang, er
@@ -203,24 +202,24 @@ function Content() {
           Hvad er SEO?
         </h2>
         <p className="mt-4 text-muted leading-relaxed">
-          SEO (search engine optimization) er det, der gør din hjemmeside synlig på Google.
-          Grundlæggende sender du en række signaler til søgemaskinen om, hvad din side handler om, så
-          den kan matche dig med de rigtige mennesker.
+          SEO (search engine optimization) er det, der gør din hjemmeside synlig på Google. Du
+          sender en række signaler til søgemaskinen om, hvad din side handler om, så den kan matche
+          dig med de rigtige mennesker.
         </p>
         <p className="mt-4 text-muted leading-relaxed">
           Det er en disciplin i sig selv, og målet er ikke at rangere nummer ét for enhver pris. Da
           SEO var nyt, kunne en skobutik proppe siden med et helt urelateret modeord og alligevel
-          kravle til tops. Den slags straffer Google i dag. Det virker ikke længere, og vi anbefaler
-          det aldrig.
+          kravle til tops. Det straffer Google i dag, og vi anbefaler det aldrig.
         </p>
         <p className="mt-4 text-muted leading-relaxed">
-          Relevans er alt. Sælger du babylegetøj, kan det friste at kapre et emne, hele landet søger
-          på lige nu, som den nyeste iPhone. Lad være. Det giver måske et kort ryk i indekseringen,
-          men når Google opdager, at indholdet er irrelevant, falder du hårdere, end du steg.
+          Relevans er alt. Sælger du babylegetøj, kan det friste at gå efter et populært søgeord som
+          den nyeste iPhone, bare fordi hele landet googler det lige nu. Lad være. Det giver måske et
+          kort ryk i indekseringen, men når Google opdager, at indholdet er irrelevant, falder du
+          hårdere, end du steg.
         </p>
         <p className="mt-4 text-muted leading-relaxed">
-          God SEO er det stik modsatte. Et skarpt, ærligt signal om, præcis hvad din hjemmeside er.
-          Og det er dét signal, der fører de rigtige kunder hen til dig.
+          God SEO er det stik modsatte: et skarpt, ærligt signal om, præcis hvad din hjemmeside er.
+          Det er dét, der fører de rigtige kunder hen til dig.
         </p>
       </motion.section>
 
@@ -256,14 +255,14 @@ function Content() {
         </h2>
         <p className="mt-4 text-muted leading-relaxed">
           Først kort: et backlink er bare et link fra en anden hjemmeside ind til din. Google ser
-          det lidt som en anbefaling. Og svaret er ja, man kan sagtens rangere uden dem. Det er den
-          største misforståelse i SEO. Troen på, at man først kan være med, når andre linker til en,
-          passer kun på de allerhårdeste søgeord, hvor alle slås. På lokale og nichede fagord kan en
-          velbygget side rangere på indhold alene.
+          det lidt som en anbefaling. Og ja, man kan sagtens rangere uden dem. Troen på, at man først
+          er med, når andre linker til en, holder kun på de allerhårdeste søgeord, hvor alle slås. På
+          lokale og nichede fagord kan en velbygget side rangere på indhold alene.
         </p>
         <p className="mt-4 text-muted leading-relaxed">
-          Links er en forstærker, ikke en adgangsbillet. De afgør de sværeste ord, ikke om du
-          overhovedet kan komme med. Derfor kommer de sidst, oven på et fundament der allerede virker.
+          Links er en forstærker, ikke en adgangsbillet. De afgør de sværeste søgeord, men de
+          bestemmer ikke, om du kan være med. Derfor kommer de sidst, oven på et fundament, der
+          allerede virker.
         </p>
       </motion.section>
 
