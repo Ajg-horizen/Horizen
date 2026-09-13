@@ -42,7 +42,7 @@ export default function DeliverablesBlock({ id, data }: { id?: string; data: Del
                 whileInView="visible"
                 viewport={{ once: true, margin: "-30px" }}
                 variants={fadeInUp}
-                className="flex items-start gap-4 overflow-hidden rounded-xl border border-foreground/[0.06] p-4 transition-all duration-300 hover:border-foreground/[0.12] hover:bg-foreground/[0.02]"
+                className="flex items-start gap-4 overflow-hidden rounded-xl border border-foreground/[0.06] p-4 transition-colors duration-300 hover:border-foreground/[0.12] hover:bg-foreground/[0.02]"
               >
                 <div
                   className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${item.bg}`}

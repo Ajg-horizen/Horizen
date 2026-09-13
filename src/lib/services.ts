@@ -79,6 +79,73 @@ export type DeliverablesBlock = {
   items: DeliverableItem[];
 };
 
+export type MonthlyWorkItem = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  /** Kadence-tag, fx "Hver måned", "Løbende", "Kvartalsvis". */
+  cadence?: string;
+  bg: string;
+  fg: string;
+};
+
+/**
+ * Retainer-variant af deliverables. Viser tilbagevendende arbejde med en
+ * kadence pr. punkt, i stedet for et statisk grid af engangsleverancer.
+ */
+export type MonthlyWorkBlock = {
+  type: "monthlyWork";
+  id?: string;
+  eyebrow: string;
+  /** Heading med valgfri linjebrud — brug array for multi-line. */
+  heading: string | string[];
+  body: string;
+  items: MonthlyWorkItem[];
+  /** Valgfri fodnote, fx "Ingen binding. Du kan stoppe når som helst." */
+  note?: string;
+};
+
+export type AiCitationSignal = {
+  icon: LucideIcon;
+  label: string;
+};
+
+/**
+ * Signatur-visual til AI Search-siden. Viser et stiliseret AI-svar der
+ * citerer kunden, plus de signaler der gør indholdet citérbart.
+ */
+export type AiCitationBlock = {
+  type: "aiCitation";
+  id?: string;
+  eyebrow: string;
+  heading: string | { lead: string; mutedTail?: string };
+  body: string;
+  /** Spørgsmålet der "skrives" i chat-demoen. */
+  question: string;
+  /** Mock AI-svar: ledetekst før den fremhævede kilde. */
+  answerLead: string;
+  /** Den fremhævede kilde (kunden), vises som citat-chip. */
+  answerCitation: string;
+  /** Valgfri tekst efter kilden. */
+  answerTrail?: string;
+  /** Valgfrie credentials der vises som badges i AI-svaret (Trustpilot, B-mærket). */
+  credentials?: {
+    /** Trustpilot-score, fx "4,4". Skal være den ægte score. */
+    trustpilotScore: string;
+    /** Valgfrit antal anmeldelser, fx "11 anmeldelser". */
+    trustpilotReviews?: string;
+    /** Link til Trustpilot-profilen. Åbnes i ny tab. */
+    trustpilotUrl?: string;
+    /** Vis B-mærket-badge. Kræver ægte certificering + officielt logo. */
+    bMaerket?: boolean;
+    /** Link til B-mærket-profilen/-siden. Åbnes i ny tab. */
+    bMaerketUrl?: string;
+  };
+  /** Label over signal-listen, fx "Derfor bliver du citeret". */
+  signalsLabel: string;
+  signals: AiCitationSignal[];
+};
+
 export type PositioningStat = { value: string; label: string };
 
 export type PositioningReviews = {
@@ -237,6 +304,8 @@ export type ServiceBlock =
   | CenteredCtaBlock
   | ProcessBlock
   | DeliverablesBlock
+  | MonthlyWorkBlock
+  | AiCitationBlock
   | PositioningBlock
   | CasesBlock
   | FaqBlock
@@ -302,6 +371,7 @@ import { uiUxDesign } from "@/data/services/ui-ux-design";
 import { branding } from "@/data/services/branding";
 import { grafiskDesign } from "@/data/services/grafisk-design";
 import { wordpress } from "@/data/services/wordpress";
+import { aiSearch } from "@/data/services/ai-search";
 
 export const services: ServicePage[] = [
   webudvikling,
@@ -309,6 +379,7 @@ export const services: ServicePage[] = [
   branding,
   grafiskDesign,
   wordpress,
+  aiSearch,
 ];
 
 export const servicesBySlug: Record<string, ServicePage> = Object.fromEntries(

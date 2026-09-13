@@ -96,7 +96,7 @@ function ServiceCard({ service }: { service: Service }) {
   return (
     <motion.div
       variants={cardVariants}
-      className="group flex flex-col rounded-2xl border border-foreground/[0.06] p-8 transition-all duration-300 hover:border-foreground/[0.12] hover:bg-foreground/[0.02]"
+      className="group flex flex-col rounded-2xl border border-foreground/[0.06] p-8 transition-colors duration-300 hover:border-foreground/[0.12] hover:bg-foreground/[0.02]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

@@ -3,6 +3,8 @@ import SectionTOCBlock from "./SectionTOCBlock";
 import CenteredCtaBlock from "./CenteredCtaBlock";
 import ProcessBlock from "./ProcessBlock";
 import DeliverablesBlock from "./DeliverablesBlock";
+import MonthlyWorkBlock from "./MonthlyWorkBlock";
+import AiCitationBlock from "./AiCitationBlock";
 import PositioningBlock from "./PositioningBlock";
 import CasesBlock from "./CasesBlock";
 import FaqBlock from "./FaqBlock";
@@ -52,6 +54,10 @@ function renderBlock(
       );
     case "deliverables":
       return <DeliverablesBlock key={key} id={block.id} data={block} />;
+    case "monthlyWork":
+      return <MonthlyWorkBlock key={key} id={block.id} data={block} />;
+    case "aiCitation":
+      return <AiCitationBlock key={key} id={block.id} data={block} />;
     case "positioning":
       return (
         <PositioningBlock

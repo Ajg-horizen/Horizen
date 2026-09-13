@@ -25,7 +25,7 @@ function ProcessCard({ item, index }: { item: ProcessStep; index: number }) {
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
       variants={fadeInUp}
-      className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 transition-all duration-500 hover:border-white/[0.15] hover:bg-white/[0.06]"
+      className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 transition-colors duration-500 hover:border-white/[0.15] hover:bg-white/[0.06]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
