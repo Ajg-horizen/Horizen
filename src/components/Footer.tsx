@@ -40,10 +40,9 @@ const navigation: Record<string, FooterLink[]> = {
   ],
   marketing: [
     { name: "SEO", href: "/marketing/seo", disabled: true },
-    { name: "GEO", href: "/marketing/ai-search-optimization", disabled: true },
     { name: "Google Ads", href: "/marketing/google-ads", disabled: true },
     { name: "Social Media", href: "/marketing/social-media", disabled: true },
-    { name: "AI Search", href: "/marketing/ai-search-optimization", disabled: true },
+    { name: "AI Search", href: "/services/ai-search" },
   ],
   virksomhed: [
     { name: "Cases", href: "/cases", disabled: true },

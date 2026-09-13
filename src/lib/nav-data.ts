@@ -86,9 +86,8 @@ export const marketing: NavItem[] = [
   {
     title: "AI Search (GEO/AIO)",
     description: "Optimering til AI-drevne søgemaskiner",
-    href: "/marketing/ai-search-optimization",
+    href: "/services/ai-search",
     icon: SearchCheckIcon,
-    badge: "Under opbygning",
   },
   {
     title: "Social Media",
