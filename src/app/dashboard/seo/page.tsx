@@ -13,6 +13,7 @@ import PagesTabs from "./PagesTabs";
 import ActivityByMonth from "./ActivityByMonth";
 import TechniquesTab from "./TechniquesTab";
 import ToolsTab from "./ToolsTab";
+import PromptsTab from "./PromptsTab";
 import {
   actionItems,
   baseline,
@@ -21,6 +22,7 @@ import {
   pages,
   recentActivity,
   relaunchData,
+  seoPrompts,
   seoTechniques,
   seoTools,
   upcomingPages,
@@ -592,6 +594,11 @@ export default function SeoDashboardPage() {
               id: "vaerktoejer",
               label: "Værktøjer",
               content: <ToolsTab items={seoTools} />,
+            },
+            {
+              id: "prompts",
+              label: "Prompts",
+              content: <PromptsTab items={seoPrompts} />,
             },
           ]}
           defaultTab="seo"
