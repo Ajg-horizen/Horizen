@@ -36,6 +36,24 @@ export function prevMonth(now = new Date()): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
 }
 
+const formatMonth = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+
+/**
+ * De HELE måneder Google stadig har data for, ældste først. Search Console gemmer
+ * 16 måneder, så måneden vinduet starter midt i er ufuldstændig og tages ikke med.
+ */
+export function availableMonths(now = new Date()): string[] {
+  const windowStart = new Date(now.getFullYear(), now.getMonth() - 16, now.getDate());
+  let cursor = new Date(windowStart.getFullYear(), windowStart.getMonth() + (windowStart.getDate() === 1 ? 0 : 1), 1);
+  const last = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const months: string[] = [];
+  while (cursor <= last) {
+    months.push(formatMonth(cursor));
+    cursor = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1);
+  }
+  return months;
+}
+
 /** Første + sidste dag i måneden som "ÅÅÅÅ-MM-DD". */
 function monthRange(month: string): { startDate: string; endDate: string } {
   const [y, m] = month.split("-").map(Number);
@@ -43,8 +61,14 @@ function monthRange(month: string): { startDate: string; endDate: string } {
   return { startDate: `${month}-01`, endDate: `${month}-${String(lastDay).padStart(2, "0")}` };
 }
 
+// Access tokens lever ca. en time. Genbruges, så en backfill af mange måneder
+// ikke beder Google om et nyt token for hvert eneste kald.
+let cachedToken: { value: string; expiresAt: number } | null = null;
+
 /** Bytter refresh token til et kortlivet access token. */
 async function getAccessToken(): Promise<string> {
+  if (cachedToken && Date.now() < cachedToken.expiresAt) return cachedToken.value;
+
   const clientId = process.env.GOOGLE_OAUTH_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
   const refreshToken = process.env.GOOGLE_OAUTH_REFRESH_TOKEN;
@@ -63,7 +87,9 @@ async function getAccessToken(): Promise<string> {
     cache: "no-store",
   });
   if (!res.ok) throw new Error(`OAuth token ${res.status}: ${await res.text()}`);
-  return (await res.json()).access_token as string;
+  const json = (await res.json()) as { access_token: string; expires_in?: number };
+  cachedToken = { value: json.access_token, expiresAt: Date.now() + ((json.expires_in ?? 3600) - 120) * 1000 };
+  return json.access_token;
 }
 
 async function query(site: string, month: string, body: Record<string, unknown>) {
