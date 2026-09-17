@@ -44,6 +44,10 @@ const nextConfig: NextConfig = {
       { source: "/paid-ads/:path*", destination: "/", permanent: true },
       { source: "/seo-tekstforfatning", destination: "/", permanent: true },
       { source: "/seo-tekstforfatning/:path*", destination: "/", permanent: true },
+
+      // Genvej til Sanity Studio (hostet hos Sanity). Midlertidig (307), så adressen kan ændres.
+      { source: "/admin", destination: "https://horizen.sanity.studio", permanent: false },
+      { source: "/admin/:path*", destination: "https://horizen.sanity.studio", permanent: false },
     ];
   },
 };
