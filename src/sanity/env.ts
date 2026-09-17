@@ -5,7 +5,7 @@
  *  - Live og preview:  production
  *  - Lokalt:           .env.local sætter NEXT_PUBLIC_SANITY_DATASET=development
  */
-export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "h8zzgfds";
+export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "4555ww0t";
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 export const apiVersion = "2025-02-19";
 

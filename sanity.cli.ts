@@ -4,7 +4,7 @@ import { defineCliConfig } from "sanity/cli";
 // kører indlejret i sitet på /admin og deployes sammen med det.
 export default defineCliConfig({
   api: {
-    projectId: "h8zzgfds",
+    projectId: "4555ww0t",
     dataset: "development",
   },
 });
