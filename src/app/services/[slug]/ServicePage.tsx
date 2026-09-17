@@ -2,17 +2,30 @@
 
 /**
  * Client-component der renderer en service-side.
- * Modtager kun slug fra server, slår data op selv — så vi undgår at sende
- * ikke-serialiserbare LucideIcon-komponenter over server/client-grænsen.
+ *
+ * LucideIcon-komponenter kan ikke sendes over server/client-grænsen. Derfor
+ * kommer CMS-indhold som ren JSON (`content`, ikoner som navne) og hydreres her.
+ * Uden `content` slås siden op i den lokale datafil via slug.
  */
 
+import { useMemo } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageBuilder from "@/components/blocks/PageBuilder";
 import { getService } from "@/lib/services";
+import { hydrateService, type SerializedServicePage } from "@/lib/service-serialize";
 
-export default function ServicePage({ slug }: { slug: string }) {
-  const service = getService(slug);
+export default function ServicePage({
+  slug,
+  content,
+}: {
+  slug: string;
+  content?: SerializedServicePage | null;
+}) {
+  const service = useMemo(
+    () => (content ? hydrateService(content) : getService(slug)),
+    [content, slug],
+  );
   if (!service) return null;
 
   // Konvention: første block er hero og lever uden for bg-background-wrapperen
