@@ -6,7 +6,6 @@ import {
   CalendarIcon,
   ClockIcon,
   FlagIcon,
-  TrendingUpIcon,
 } from "lucide-react";
 import DashboardTabs from "./DashboardTabs";
 import PagesTabs from "./PagesTabs";
@@ -19,8 +18,6 @@ import { MetricCard, SectionHeader } from "./ui";
 import { getSeoSnapshots } from "@/sanity/seo-snapshots";
 import {
   actionItems,
-  baseline,
-  dataAsOf,
   lastUpdated,
   pages,
   recentActivity,
@@ -131,65 +128,8 @@ export default async function SeoDashboardPage() {
 
   const seoStatusTab = (
     <>
-      {/* Key metrics */}
-      <div className="mb-6">
-        <div className="flex flex-wrap items-center gap-3">
-          <h2 className="text-2xl font-bold tracking-tight">
-            Performance, hele sitet
-          </h2>
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-foreground/[0.08] bg-foreground/[0.04] px-2.5 py-1 text-xs font-medium text-foreground/70">
-            <CalendarIcon className="size-3" />
-            Sidste 3 måneder
-          </span>
-        </div>
-        <p className="mt-1 text-sm text-foreground/60">
-          {baseline.source} · {dataAsOf} · Tal er aggregeret på tværs af alle sider og queries
-        </p>
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <MetricCard
-          label="Klik"
-          value={baseline.metrics.clicks}
-          status="warning"
-          hint="3 mdr. Domineret af brandsøgning"
-          delta={baseline.trend.clicks}
-        />
-        <MetricCard
-          label="Visninger"
-          value={baseline.metrics.impressions}
-          status="warning"
-          hint="Oppustet af gammelt indhold + www-dublet"
-          delta={baseline.trend.impressions}
-        />
-        <MetricCard
-          label="CTR"
-          value={`${baseline.metrics.ctr}%`}
-          status="warning"
-          hint="Trukket ned af dublet-visninger uden klik"
-          delta={baseline.trend.ctr}
-        />
-        <MetricCard
-          label="Site snit-position"
-          value={baseline.metrics.avgPosition}
-          status="warning"
-          hint="Bloat-forurenet, rene sider ligger side 1"
-          delta={baseline.trend.position}
-        />
-      </div>
-
-      <p className="mt-3 text-xs text-foreground/50">{baseline.trend.label}</p>
-
-      <div className="mt-4 rounded-2xl border border-foreground/[0.08] bg-foreground/[0.02] p-5">
-        <div className="flex items-start gap-3">
-          <TrendingUpIcon className="mt-0.5 size-4 shrink-0 text-emerald-600" />
-          <p className="text-sm leading-relaxed text-foreground/80">
-            {baseline.insight}
-          </p>
-        </div>
-      </div>
-
       {/* Upcoming reviews */}
-      <div className="mt-16">
+      <div>
         <SectionHeader
           title="Kommende"
           description="Næste datoer hvor vi tjekker op"
@@ -507,13 +447,13 @@ export default async function SeoDashboardPage() {
             Dashboard
           </h1>
           <p className="mt-3 text-base text-foreground/60">
-            Sidst opdateret {formatDateDk(lastUpdated)} · Data fra {dataAsOf}
+            Sidst opdateret {formatDateDk(lastUpdated)}
           </p>
         </div>
 
         <DashboardTabs
           tabs={[
-            { id: "seo", label: "SEO Status", content: seoStatusTab },
+            { id: "seo", label: "Arbejdsrum", content: seoStatusTab },
             {
               id: "google",
               label: "Google-søgning",
