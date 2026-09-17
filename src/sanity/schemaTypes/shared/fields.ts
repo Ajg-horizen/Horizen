@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, type CustomValidator } from "sanity";
-import { ICON_NAMES, TONE_OPTIONS } from "../../../src/lib/service-options";
+import { ICON_NAMES, TONE_OPTIONS } from "@/lib/service-options";
 
 /** Advarer (blokerer ikke) når en tekst overstiger tone of voice-grænsen. */
 export const maxWords =
