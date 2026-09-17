@@ -1,17 +1,27 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getService, getAllServiceSlugs } from "@/lib/services";
+import { getServiceContent } from "@/sanity/service-content";
 import ServicePage from "./ServicePage";
 
 export async function generateStaticParams() {
   return getAllServiceSlugs().map((slug) => ({ slug }));
 }
 
-function getHeroImage(slug: string): string | undefined {
-  const service = getService(slug);
-  if (!service) return undefined;
-  const heroBlock = service.blocks.find((b) => b.type === "hero") as
-    | { type: "hero"; image: { src: string; alt: string } }
+/**
+ * Indhold kommer fra Sanity når siden findes der, ellers fra den lokale datafil.
+ * `content` er null ved fallback, og så slår client-komponenten selv op på slug.
+ */
+async function resolveService(slug: string) {
+  const content = await getServiceContent(slug);
+  const source = content ?? getService(slug);
+  if (!source) return null;
+  return { content, metadata: source.metadata, heroImage: getHeroImage(source.blocks) };
+}
+
+function getHeroImage(blocks: readonly { type: string }[]): string | undefined {
+  const heroBlock = blocks.find((b) => b.type === "hero") as
+    | { type: "hero"; image?: { src?: string } }
     | undefined;
   return heroBlock?.image?.src;
 }
@@ -22,10 +32,10 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = getService(slug);
+  const service = await resolveService(slug);
   if (!service) return {};
   const heroImage =
-    getHeroImage(slug) ?? "/graphics/Hero-image-branding-services.webp";
+    service.heroImage ?? "/graphics/Hero-image-branding-services.webp";
   const { title, description } = service.metadata;
   return {
     title,
@@ -64,7 +74,7 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = getService(slug);
+  const service = await resolveService(slug);
   if (!service) notFound();
 
   const serviceSchema = {
@@ -86,7 +96,7 @@ export default async function Page({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
       />
-      <ServicePage slug={slug} />
+      <ServicePage slug={slug} content={service.content} />
     </>
   );
 }

@@ -19,7 +19,7 @@ export default function DashboardTabs({
 
   return (
     <>
-      <div className="mb-12 flex gap-1 border-b border-foreground/[0.08]">
+      <div className="mb-12 flex gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden border-b border-foreground/[0.08]">
         {tabs.map((tab) => {
           const isActive = active === tab.id;
           return (
@@ -27,7 +27,7 @@ export default function DashboardTabs({
               key={tab.id}
               type="button"
               onClick={() => setActive(tab.id)}
-              className={`relative px-4 py-3 text-sm font-medium transition-colors ${
+              className={`relative shrink-0 whitespace-nowrap px-4 py-3 text-sm font-medium transition-colors ${
                 isActive
                   ? "text-foreground after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-foreground"
                   : "text-foreground/50 hover:text-foreground/80"

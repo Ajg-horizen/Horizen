@@ -16,6 +16,7 @@
     "@radix-ui/react-slot": "^1.2.4",
     "@rive-app/canvas-advanced": "^2.37.1",
     "@rive-app/react-canvas": "^4.28.0",
+    "@sanity/client": "^7.27.0",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.9.1",
     "class-variance-authority": "^0.7.1",
@@ -43,6 +44,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.2",
     "tailwindcss": "^4",
+    "tsx": "^4.23.13",
     "typescript": "^5"
   }
 }

@@ -876,3 +876,61 @@ export const seoTools: SeoTool[] = [
     url: "https://lookerstudio.google.com",
   },
 ];
+
+/**
+ * Promptbibliotek — gennemprøvede prompts til SEO-arbejdet, klar til at kopiere.
+ * Udvides løbende, når en prompt har vist sit værd på en kunde.
+ * NB: repoet er offentligt, så ingen kundenavne eller følsomme detaljer i teksten.
+ */
+export type SeoPrompt = {
+  title: string;
+  category: "Search Console" | "Søgeord" | "Indhold" | "Teknisk";
+  /** Én linje: hvad gør prompten. */
+  summary: string;
+  /** Hvad præcis den gør, i afsnit. */
+  body: string[];
+  /** Hvornår bruger vi den. */
+  whenToUse: string;
+  /** Hvad man skal have klar og sætte ind. */
+  input: string;
+  /** Selve prompten, som den kopieres. */
+  prompt: string;
+};
+
+export const seoPrompts: SeoPrompt[] = [
+  {
+    title: "Sortér 'Crawlet – ikke indekseret'",
+    category: "Search Console",
+    summary:
+      "Gør en lang, uoverskuelig liste af ikke-indekserede URL'er til en kort liste over de sider, der faktisk betyder noget.",
+    body: [
+      "Prompten tjekker først hver URL live: følger omdirigeringer til ende og noterer statuskode, noindex, canonical og om siden ligger i sitemap. Uden det tjek er sorteringen kun et gæt ud fra adressen.",
+      "Derefter sorteres URL'erne i de kategorier, der faktisk findes i listen, fx rester af et gammelt site, feeds, trackingparametre, filer og rigtige sider. Du får en tabel med antal og procent og et kort afsnit om hver kategori.",
+      "Den skiller det, vi selv har skabt og bør rette, fra det Google allerede håndterer korrekt. Og den peger på mønstre lavet af maskiner, fx -2/-3-endelser eller /en/-kopier, og hvad der sandsynligvis har lavet dem.",
+      "Til sidst får du de rigtige sider, der er værd at undersøge, og en anbefaling om hvad der skal gøres nu, hvad der kan vente, og hvornår vi tjekker igen.",
+    ],
+    whenToUse:
+      "Efter en relancering eller et domæneskift, og når rapporten 'Crawlet – ikke indekseret pt.' vokser. Særligt nyttig, når det gamle site kørte WordPress.",
+    input:
+      "Search Console → Indeksering → Sider → 'Crawlet – ikke indekseret pt.' → eksportér eller kopiér listen med URL og seneste crawl. Udfyld domænet øverst i prompten.",
+    prompt: `Jeg indsætter en liste af URL'er fra Google Search Console-rapporten "Crawlet – ikke indekseret pt." for [DOMÆNE]. Svar på dansk.
+
+Før du sorterer:
+- Tjek hver URL live. Følg omdirigeringer til ende, og notér den endelige statuskode, om siden har noindex, om canonical peger på sig selv, og om den ligger i sitemap. Kan du ikke tjekke live, så sig det tydeligt og marker kategorierne som gæt ud fra adressen.
+- Tag højde for sitets historik, hvis du kender den (fx tidligere CMS, relancering eller domæneskift).
+
+Sortér derefter hver URL i kategorier. Brug de kategorier, der faktisk findes i listen, fx rester af et gammelt site (indlæg, arkiver, demo-indhold), RSS-feeds, trackingparametre (UTM, gclid, fbclid), fejlskrevne stier, dubletter (med/uden skråstreg til sidst eller http/https), filer (CSS, JS, skrifttyper, billeder), robots- og sitemap-filer og rigtige sider på det nuværende site. Nævn kort de kategorier, der har 0.
+
+Giv mig:
+1. En tabel med kategori, antal, procent af total og live-status.
+2. Et kort afsnit pr. kategori: hvad der skaber den, og om det er et reelt problem.
+3. En klar opdeling mellem "vores egen sag, værd at rette" og "Google håndterer det korrekt, ignorér".
+4. De rigtige sider, der er værd at undersøge, med seneste crawl-dato og den mest sandsynlige årsag.
+5. En konkret anbefaling: hvad gør vi nu, hvad kan vente, og hvornår tjekker vi igen.
+
+Marker mønstre, der ligner maskinarbejde frem for mennesker, fx gentagne endelser (-2, -3), dobbelte skråstreger, sprogkopier (/en/) eller samme fejl på tværs af mange sider, og sig hvad der sandsynligvis laver dem.
+
+Her er URL'erne:
+[INDSÆT LISTEN]`,
+  },
+];
