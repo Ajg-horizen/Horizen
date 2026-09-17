@@ -59,6 +59,7 @@ function CardInner({
         <motion.img
           src={image}
           alt={title}
+          loading="lazy"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/80 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-40" />
@@ -100,7 +101,7 @@ function CardInner({
         <div className="mt-auto flex items-center justify-between border-t border-border/50 pt-4">
           <div className="flex items-center gap-2">
             <Avatar className="h-8 w-8 border border-border/50">
-              <AvatarImage src={author.avatar} alt={author.name} />
+              <AvatarImage src={author.avatar} alt={author.name} loading="lazy" />
               <AvatarFallback>{author.name[0]}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col text-xs">

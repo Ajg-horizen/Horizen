@@ -19,6 +19,7 @@ export default function TestimonialAvatar({
       <img
         src={author.photo}
         alt=""
+        loading="lazy"
         className={`${sizeClass} shrink-0 rounded-full object-cover`}
       />
     );

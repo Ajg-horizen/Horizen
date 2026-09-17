@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
@@ -10,6 +11,8 @@ type CaseCard = {
   title: string;
   subtitle: string;
   image: string;
+  /** Mindre varianter af billedet, så mobilen ikke henter originalen. */
+  srcSet?: string;
   /** Valgfri baggrundsvideo til kortet. Billedet bruges som poster/fallback. */
   video?: string;
   logo: string;
@@ -23,6 +26,7 @@ const cases: CaseCard[] = [
     title: "BettrPlans",
     subtitle: "Webdesign · Branding · Visuel identitet",
     image: "/cases/BettrPlans-Case-Image-01.webp",
+    srcSet: "/cases/BettrPlans-Case-Image-01-800w.webp 800w, /cases/BettrPlans-Case-Image-01.webp 1159w",
     logo: "/Bomærker/BettrPlans-Bomærke-hvid.svg",
     href: "/cases/bettrplans",
     team: [
@@ -35,6 +39,7 @@ const cases: CaseCard[] = [
     title: "OD Pro",
     subtitle: "Webdesign · Udvikling",
     image: "/cases/OD-Cases-image-car.webp",
+    srcSet: "/cases/OD-Cases-image-car-800w.webp 800w, /cases/OD-Cases-image-car-1600w.webp 1600w, /cases/OD-Cases-image-car.webp 6144w",
     logo: "/Bomærker/Bomærke-OD-biler.svg",
     href: "/cases/od-biler-pro",
     team: [
@@ -47,6 +52,7 @@ const cases: CaseCard[] = [
     title: "Ensemble Hermes",
     subtitle: "Webdesign · UI/UX · Redesign",
     image: "/cases/Case-Hermes.webp",
+    srcSet: "/cases/Case-Hermes-800w.webp 800w, /cases/Case-Hermes.webp 1280w",
     logo: "/Bomærker/Ensemble-hermes-bookmark-white.svg",
     href: "/cases/ensemble-hermes",
     team: [
@@ -57,7 +63,7 @@ const cases: CaseCard[] = [
   {
     title: "Tandsundhed Uden Grænser",
     subtitle: "Webdesign · CMS · Udvikling",
-    image: "/cases/Tand-sundhed-hero-image.webp",
+    image: "/cases/Tand-sundhed-hero-image-1600w.webp",
     video: "/video/Tandsundhed-UI.mp4",
     logo: "/Bomærker/TUG-Bomærke-hvid.svg",
     href: "/cases/tandsundhed-uden-graenser",
@@ -69,6 +75,49 @@ const cases: CaseCard[] = [
     ],
   },
 ];
+
+// Kortene fylder hele bredden på mobil og 5-7 af 12 kolonner fra md.
+const CARD_SIZES = "(min-width: 768px) 60vw, 100vw";
+
+/**
+ * Baggrundsvideo, der først henter filen, når kortet nærmer sig skærmen.
+ * Indtil da vises posteren, præcis som mens en video indlæses.
+ */
+function LazyCaseVideo({ src, poster, label }: { src: string; poster: string; label: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      src={inView ? src : undefined}
+      poster={poster}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="none"
+      aria-label={label}
+      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+    />
+  );
+}
 
 // 12-col bento "Z"-pattern: 7+5 / 5+7 — visuelt vægtskifte mellem rækkerne.
 const SPANS = ["md:col-span-7", "md:col-span-5", "md:col-span-5", "md:col-span-7"];
@@ -111,20 +160,16 @@ export default function CasesSectionBento() {
           const cardInner = (
             <>
               {c.video ? (
-                <video
+                <LazyCaseVideo
                   src={c.video}
                   poster={c.image}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  aria-label={`${c.title}, ${c.subtitle} af Horizen`}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                  label={`${c.title}, ${c.subtitle} af Horizen`}
                 />
               ) : (
                 <img
                   src={c.image}
+                  srcSet={c.srcSet}
+                  sizes={c.srcSet ? CARD_SIZES : undefined}
                   alt={`${c.title}, ${c.subtitle} af Horizen`}
                   loading="lazy"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
