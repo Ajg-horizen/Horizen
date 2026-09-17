@@ -14,6 +14,9 @@ import ActivityByMonth from "./ActivityByMonth";
 import TechniquesTab from "./TechniquesTab";
 import ToolsTab from "./ToolsTab";
 import PromptsTab from "./PromptsTab";
+import GoogleSearchTab from "./GoogleSearchTab";
+import { MetricCard, SectionHeader } from "./ui";
+import { getSeoSnapshots } from "@/sanity/seo-snapshots";
 import {
   actionItems,
   baseline,
@@ -29,6 +32,9 @@ import {
   upcomingReviews,
   type SeoStatus,
 } from "./data";
+
+// Læser friske Search Console-snapshots ved hvert besøg (siden er privat og lavt trafikeret).
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Dashboard, Horizen (privat)",
@@ -74,85 +80,6 @@ function formatDateDk(date: string): string {
 
 /* ─── Komponenter ──────────────────────────────────────────── */
 
-function MetricCard({
-  label,
-  value,
-  unit,
-  status,
-  hint,
-  delta,
-}: {
-  label: string;
-  value: string | number;
-  unit?: string;
-  status: "good" | "neutral" | "warning";
-  hint?: string;
-  delta?: {
-    text: string;
-    direction: "up" | "down";
-    tone: "good" | "bad" | "warn";
-  };
-}) {
-  const statusColor = {
-    good: "text-emerald-600",
-    neutral: "text-foreground/60",
-    warning: "text-amber-600",
-  }[status];
-
-  const dotColor = {
-    good: "bg-emerald-500",
-    neutral: "bg-foreground/30",
-    warning: "bg-amber-500",
-  }[status];
-
-  const deltaTone = {
-    good: "text-emerald-600 bg-emerald-500/10",
-    bad: "text-red-600 bg-red-500/10",
-    warn: "text-amber-600 bg-amber-500/10",
-  }[delta?.tone ?? "warn"];
-
-  return (
-    <div className="rounded-2xl border border-foreground/[0.08] bg-background p-6">
-      <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-[0.15em] text-foreground/50">
-          {label}
-        </span>
-        <div className={`h-1.5 w-1.5 rounded-full ${dotColor}`} />
-      </div>
-      <div className="mt-3 flex items-baseline gap-2">
-        <span className="text-4xl font-bold tracking-tight">{value}</span>
-        {unit && <span className="text-sm text-foreground/50">{unit}</span>}
-        {delta && (
-          <span
-            className={`inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-xs font-medium tabular-nums ${deltaTone}`}
-          >
-            {delta.direction === "up" ? "↑" : "↓"}
-            {delta.text}
-          </span>
-        )}
-      </div>
-      {hint && <p className={`mt-2 text-xs ${statusColor}`}>{hint}</p>}
-    </div>
-  );
-}
-
-function SectionHeader({
-  title,
-  description,
-}: {
-  title: string;
-  description?: string;
-}) {
-  return (
-    <div className="mb-6">
-      <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
-      {description && (
-        <p className="mt-1 text-sm text-foreground/60">{description}</p>
-      )}
-    </div>
-  );
-}
-
 function PriorityBadge({ priority }: { priority: 1 | 2 | 3 | 4 }) {
   const labels = {
     1: { text: "Prioritet 1", color: "bg-emerald-50 text-emerald-700 border-emerald-200" },
@@ -187,7 +114,10 @@ function PriorityFlag({ priority }: { priority: "high" | "medium" | "low" }) {
 
 /* ─── Side ─────────────────────────────────────────────────── */
 
-export default function SeoDashboardPage() {
+export default async function SeoDashboardPage() {
+  // Rigtige Search Console-tal, hentet månedligt af /api/cron/seo-snapshot.
+  const snapshots = await getSeoSnapshots();
+
   // Sortér sider: færdige først, så in_progress, så pending, så not_applicable
   const sortOrder: Record<SeoStatus, number> = {
     done: 0,
@@ -584,6 +514,11 @@ export default function SeoDashboardPage() {
         <DashboardTabs
           tabs={[
             { id: "seo", label: "SEO Status", content: seoStatusTab },
+            {
+              id: "google",
+              label: "Google-søgning",
+              content: <GoogleSearchTab snapshots={snapshots} pages={pages} />,
+            },
             { id: "analytics", label: "Analytics", content: analyticsTab },
             {
               id: "teknikker",
@@ -609,7 +544,8 @@ export default function SeoDashboardPage() {
           <p className="text-sm text-foreground/60">
             <strong className="text-foreground">Bemærk:</strong> Denne side er
             privat. Den er ikke indekseret af Google og ikke linket fra resten
-            af sitet. Data opdateres manuelt af Claude ved hver SEO-ændring.
+            af sitet. Google-søgning opdateres automatisk den 3. i hver måned.
+            Øvrige data opdateres manuelt af Claude ved hver SEO-ændring.
           </p>
           <a
             href="https://search.google.com/search-console"

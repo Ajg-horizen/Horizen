@@ -9,5 +9,11 @@ export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "4555ww0t"
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 export const apiVersion = "2025-02-19";
 
+/**
+ * SEO-snapshots er rigtige trafiktal og hører altid til i production, også når
+ * resten af sitet læser development lokalt. Kan overstyres til test.
+ */
+export const snapshotDataset = process.env.SEO_SNAPSHOT_DATASET || "production";
+
 /** CONTENT_SOURCE=local slår CMS'et helt fra, så sitet kører på datafilerne. */
 export const sanityConfigured = Boolean(projectId && dataset);
