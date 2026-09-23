@@ -642,7 +642,7 @@ export const recentActivity = [
  */
 export type SeoTechnique = {
   title: string;
-  category: "Søgeord" | "Indhold" | "Teknisk" | "Lokal";
+  category: "Søgeord" | "Indhold" | "Teknisk" | "Lokal" | "Data & måling";
   /** Én linje: hvad er det. */
   summary: string;
   /** Hvornår / hvorfor bruger vi det. */
@@ -766,6 +766,47 @@ export async function generateStaticParams() {
       "Indholdet er 'frosset' ved build — ændringer (fx i Sanity) kræver et nyt build eller revalidering for at slå igennem",
       "Ikke egnet til stærkt personaliseret eller live-data (fx et bruger-dashboard) — det hører til SSR",
       "Mange sider kan give lange build-tider",
+    ],
+  },  {
+    title: "Søgefunktion på sitet + søgeord i Google Analytics",
+    category: "Data & måling",
+    summary:
+      "En søgning på sitet hjælper besøgende med at finde det, de leder efter. Sender vi søgeordene til Google Analytics, får vi samtidig besøgendes egne ord for, hvad de mangler.",
+    whenToUse:
+      "På sites med nok indhold til, at menuen ikke dækker det hele (typisk 20+ sider, nyheder eller cases). GA-delen tager vi altid med, når vi bygger en søgning, så data begynder at samle sig fra dag ét.",
+    body: [
+      "Selve søgningen: sitet bygger et lille søgeindeks over alle sider, nyheder og historier fra Sanity, inklusive teksten inde i byggeklodserne. Indekset går hele dokumentet igennem og samler al tekst, i stedet for at have en fast liste over felter. Derfor kommer nye sider, sektioner og felter automatisk med, når redaktøren udgiver, uden at vi skal ind i koden. Skjulte sider og sektioner udelades. Søgefeltet sidder i menuen og åbner et overlay med resultater, mens man skriver.",
+      "Google Analytics måler normalt kun adfærd: hvilke sider folk ser, hvor længe og hvor de kommer fra. GA ved ikke, hvad folk leder efter. Det gør søgefeltet. Når en søgning er færdig (ikke for hvert tastetryk), sender siden GA's egen standardhændelse view_search_results med søgeordet i parameteren search_term. Fordi vi bruger Googles eget format, lander ordet automatisk i GA's indbyggede dimension 'Søgeterm'. Vi sender også antal resultater og hvilket resultat der blev klikket på.",
+      "Sådan læses det i GA: Rapporter → Realtid bruges til at teste (søg selv, og ordet dukker op inden for et minut). Rapporter → Engagement → Hændelser viser antal søgninger pr. periode. Den egentlige liste over søgeord ligger i en gemt rapport under Udforsk: rækker = Søgeterm, værdi = Antal hændelser, filter på hændelsen view_search_results. Filtrerer man på 0 resultater, ser man de søgninger, der ikke gav noget.",
+      "Hvorfor det er godt for SEO: søgefeltet giver ikke i sig selv bedre placeringer. Værdien er data. (1) Søgninger uden resultat viser huller i indholdet, altså emner til nye sider, nyheder eller FAQ-svar. (2) Besøgendes ord mod sitets ord: søger folk 'frivillig tandlæge', mens sitet overalt skriver 'udsendt', bruger overskrifterne ikke de ord, folk selv bruger, og det gælder sandsynligvis også på Google. (3) Navigation: søger mange efter 'kontakt' eller 'medlem', kan de ikke finde det i menuen. (4) Det supplerer Search Console: GSC viser, hvad folk søgte på i Google før besøget, søgefeltet viser, hvad de stadig manglede efter.",
+      "Sådan tilpasser og udvider vi det: bygger vi en helt ny indholdstype (fx 'Arrangementer'), tilføjes den til søgeindekset med én linje. Felter der ikke er tekst (links, slugs, farver, layout-valg) holdes ude via en fælles liste over tekniske felter. Søgeord der ligner e-mail eller telefonnummer sendes ikke til GA, så der ikke havner persondata. Kører sitet GA via Google Tag Manager i stedet for gtag, sendes den samme hændelse via dataLayer.push, og GTM videresender den.",
+      "Næste trin (ikke bygget endnu): SEO-dashboardet henter allerede Search Console-tal hver måned. Samme motor kan hente søgeordene fra GA via GA Data API, så kunden får en boks med 'Det søger besøgende efter på sitet' og 'Søgninger uden resultat' uden at åbne GA. Anslået 1-2 timer pr. dashboard, afhængigt af om Google-adgangen også må læse GA.",
+    ],
+    codeExample: {
+      label: "Hændelsen der sendes, når en søgning er færdig (gtag)",
+      code: `// Lander i GA's indbyggede dimension "Søgeterm".
+// Sendes først når brugeren stopper med at skrive
+// eller klikker et resultat, ikke pr. tastetryk.
+window.gtag?.("event", "view_search_results", {
+  search_term: term,
+  results_count: hits.length,
+});
+
+// GTM-variant:
+// window.dataLayer.push({ event: "view_search_results", search_term: term, results_count: hits.length });`,
+    },
+    pros: [
+      "Besøgende finder hurtigere det, de leder efter, også indhold der ligger dybt",
+      "Besøgendes egne ord: direkte input til søgeordsvalg og overskrifter",
+      "Søgninger uden resultat = konkret liste over indhold der mangler",
+      "Ingen ekstra tjeneste eller månedlig udgift, indekset bygges fra Sanity",
+      "Nye sider og sektioner kommer automatisk med, uden kodeændringer",
+    ],
+    cons: [
+      "Lille volumen på mindre sites, og kun besøgende der har accepteret statistik-cookies tælles. Giver først et brugbart billede efter et par måneder og skal læses som tendenser",
+      "GA's rapporter er ikke rare at navigere i, før vi får data ind i dashboardet",
+      "Tekst inde i PDF'er og billeder kan ikke søges, kun titlerne",
+      "En ny indholdstype skal huskes tilføjet til indekset",
     ],
   },
 ];

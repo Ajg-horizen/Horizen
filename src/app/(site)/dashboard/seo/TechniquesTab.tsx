@@ -9,7 +9,17 @@ const categoryStyle: Record<SeoTechnique["category"], string> = {
   Indhold: "bg-emerald-500/10 text-emerald-600",
   Teknisk: "bg-amber-500/10 text-amber-600",
   Lokal: "bg-purple-500/10 text-purple-600",
+  "Data & måling": "bg-sky-500/10 text-sky-700",
 };
+
+/** Kategorier i fast rækkefølge til oversigten (bibliotekets indholdsfortegnelse). */
+const CATEGORY_ORDER: SeoTechnique["category"][] = [
+  "Søgeord",
+  "Indhold",
+  "Teknisk",
+  "Lokal",
+  "Data & måling",
+];
 
 export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
   const [open, setOpen] = useState<number | null>(0);
@@ -25,13 +35,62 @@ export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
         </p>
       </div>
 
+      {/* Oversigt: indholdsfortegnelse pr. kategori. Start på et opslagsbibliotek,
+          der kan vokse efterhånden som vi samler flere teknikker. */}
+      <nav
+        aria-label="Oversigt over teknikker"
+        className="mb-8 rounded-2xl border border-foreground/[0.08] bg-background p-5"
+      >
+        <p className="text-xs font-semibold uppercase tracking-wider text-foreground/50">
+          Oversigt · {items.length} {items.length === 1 ? "teknik" : "teknikker"}
+        </p>
+        <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {CATEGORY_ORDER.map((cat) => {
+            const inCat = items
+              .map((t, i) => ({ t, i }))
+              .filter(({ t }) => t.category === cat);
+            if (inCat.length === 0) return null;
+            return (
+              <div key={cat}>
+                <span
+                  className={`rounded-full px-2 py-0.5 text-xs font-medium ${categoryStyle[cat]}`}
+                >
+                  {cat}
+                </span>
+                <ul className="mt-2 space-y-1">
+                  {inCat.map(({ t, i }) => (
+                    <li key={t.title}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setOpen(i);
+                          requestAnimationFrame(() =>
+                            document
+                              .getElementById(`teknik-${i}`)
+                              ?.scrollIntoView({ behavior: "smooth", block: "start" })
+                          );
+                        }}
+                        className="text-left text-sm text-foreground/80 underline-offset-2 hover:text-foreground hover:underline"
+                      >
+                        {t.title}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      </nav>
+
       <div className="space-y-3">
         {items.map((t, i) => {
           const isOpen = open === i;
           return (
             <div
               key={t.title}
-              className="overflow-hidden rounded-2xl border border-foreground/[0.08] bg-foreground/[0.02]"
+              id={`teknik-${i}`}
+              className="scroll-mt-24 overflow-hidden rounded-2xl border border-foreground/[0.08] bg-foreground/[0.02]"
             >
               <button
                 type="button"
