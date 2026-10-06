@@ -654,6 +654,9 @@ export type SeoTechnique = {
   /** Valgfri fordele/ulemper. */
   pros?: string[];
   cons?: string[];
+  /** Valgfri regler i praksis: hvad vi gør, og hvad vi ikke gør. */
+  dos?: string[];
+  donts?: string[];
 };
 
 export const seoTechniques: SeoTechnique[] = [
@@ -683,6 +686,41 @@ export const seoTechniques: SeoTechnique[] = [
       "Guides (spokes) er blogindlæg, ét pr. spørgsmål: 'Hvad koster en ny hjemmeside i Aarhus?', 'Hvor lang tid tager det at bygge en hjemmeside?', 'WordPress eller custom?'. De lever i bloggen, som er bygget til lang tekst, så de ser ikke smadrede ud.",
       "Broen er intern linking: hver guide linker tilbage til pengesiden. Google ser en klynge af indhold om samme tema, der alle peger på service-siden, og konkluderer at den side er autoritativ på temaet. Over måneder kan den så klatre op på det brede keyword, uden at vi har rørt dens design.",
       "Rytmen er rolig og separat: service-siderne bygges i deres eget tempo, guides lægges oveni med f.eks. 1-2 om måneden. Autoritet bygges af små, konsistente tiltag over tid.",
+    ],
+  },
+  {
+    title: "Content abuse: hvad Google straffer, og hvordan vi skriver om emner, der allerede er dækket",
+    category: "Indhold",
+    summary:
+      "Google straffer ikke, at et emne er skrevet om før. Google straffer indhold, der masseproduceres for at ranke og ikke tilføjer noget nyt. Vores svar er at bygge hver tekst på kundens egen erfaring.",
+    whenToUse:
+      "Hver gang vi skriver SEO-indhold for en kunde: guides, blogindlæg, nye undersider og især når vi overvejer mange sider på én gang, fx kommunesider. Gælder alle kunder.",
+    body: [
+      "Hvad det er: Googles spam-regel 'scaled content abuse' (marts 2024) rammer sider, der laves i stor mængde først og fremmest for at manipulere placeringer i Google, og som ikke hjælper den, der læser. Det gælder, uanset om teksten er skrevet af AI, af mennesker eller af en blanding. AI er ikke problemet i sig selv; Google siger selv, at AI må bruges som værktøj. Problemet er sider uden værdi.",
+      "Typiske eksempler på det, Google slår ned på: hundredvis af næsten ens sider, hvor kun bynavnet er skiftet ud. Tekster, der genfortæller det, der allerede står i top 10, med andre ord. Indhold uden afsender, uden erfaring og uden egne oplysninger. Mange tynde sider om det samme emne, der konkurrerer med hinanden.",
+      "Men emnet må gerne være dækket før: alt om skimmelsvamp er stort set skrevet (fx af Bolius), og det er fint. Google spørger ikke 'findes emnet?', men 'tilføjer denne side noget, de andre ikke har?'. Det kaldes ofte information gain.",
+      "Sådan virker det i praksis (E-E-A-T): Google vurderer erfaring, ekspertise, autoritet og troværdighed. Det første E, erfaring, er vores største fordel. Kunden er fagpersonen. Bolius har ikke Michael fra Miljøkontoret, og en stor konkurrent har ikke kundens egne sager, billeder og holdninger. Vi skal ikke skrive den samme artikel bedre; vi skal skrive den artikel, kun kunden kan skrive.",
+      "Sådan arbejder vi: (1) Søgeordsdata og 'Folk spørger også om' viser, hvad folk vil vide. (2) Et kort interview med kunden (15-20 minutter ud fra en spørgeliste) giver det unikke: typiske sager, myter, fejl folk begår, priser, egne billeder. (3) Vi skriver ud fra kundens svar, og kundens ordlyd er grundlaget. (4) Kunden læser faglige og helbredsmæssige påstande igennem. (5) Indlægget udgives med en navngiven forfatter med billede.",
+      "Eksempel fra Miljøkontoret (oktober 2026): Michaels svar om, at mange blander miljøscreening og miljøkortlægning sammen, og at en ordentlig screening oftest virker som en kortlægning, er viden fra praksis, som konkurrenterne ikke skriver. Den slags gør en side bedre end top 10.",
+      "Hvor risikoen er størst: når vi laver mange sider på én gang, fx 70 undersider eller sider pr. kommune. Kommunesider giver kun mening med reelle lokale data pr. side (fx radon, jordforurening, kommunens regler). Er kun bynavnet skiftet ud, laver vi dem ikke.",
+    ],
+    dos: [
+      "Bygger hver tekst på kundens egen erfaring, holdninger og rigtige (anonyme) eksempler",
+      "Bruger kundens egne billeder frem for stockfotos, når det er muligt",
+      "Tilføjer noget praktisk: tjeklister, priser, hvornår man selv kan klare det, og hvornår man skal have en fagperson",
+      "Udgiver med en navngiven fagperson som forfatter (navn og billede)",
+      "Lader kunden godkende faglige og helbredsmæssige påstande",
+      "Samler spørgsmål om samme emne i én stærk guide eller FAQ",
+      "Bygger mange nye sider i små hold, hver med eget indhold og målt søgevolumen",
+      "Bruger AI som værktøj til research, struktur og udkast",
+    ],
+    donts: [
+      "Omskriver de sider, der ligger øverst i Google, med andre ord",
+      "Laver flere tynde sider om det samme emne eller søgeord",
+      "Masseproducerer næsten ens sider, hvor kun by- eller produktnavn er skiftet ud",
+      "Udgiver indhold uden afsender, erfaring eller egne oplysninger",
+      "Udgiver AI-tekst uden menneskelig gennemlæsning og uden kundens input",
+      "Skriver om ydelser, kunden ikke sælger, bare fordi søgeordet er stort",
     ],
   },
   {

@@ -170,6 +170,41 @@ export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
                     </div>
                   )}
 
+                  {(t.dos || t.donts) && (
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                      {t.dos && (
+                        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.04] p-3">
+                          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-emerald-600">
+                            Det gør vi
+                          </p>
+                          <ul className="space-y-1.5">
+                            {t.dos.map((d, j) => (
+                              <li key={j} className="flex gap-2 text-sm text-foreground/80">
+                                <span className="mt-0.5 shrink-0 text-emerald-600">✓</span>
+                                <span>{d}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {t.donts && (
+                        <div className="rounded-xl border border-rose-500/20 bg-rose-500/[0.04] p-3">
+                          <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-rose-600">
+                            Det gør vi ikke
+                          </p>
+                          <ul className="space-y-1.5">
+                            {t.donts.map((d, j) => (
+                              <li key={j} className="flex gap-2 text-sm text-foreground/80">
+                                <span className="mt-0.5 shrink-0 text-rose-600">✕</span>
+                                <span>{d}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   {t.codeExample && (
                     <div className="mt-4">
                       <p className="mb-1.5 text-xs font-medium text-foreground/50">
