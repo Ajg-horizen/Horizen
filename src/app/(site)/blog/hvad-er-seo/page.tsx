@@ -5,7 +5,8 @@ const title = "Hvad er SEO? Byg fundamentet i den rigtige rækkefølge | Horizen
 const description =
   "Hvad er SEO, og i hvilken rækkefølge bygger man det? En begyndervenlig guide til fundament, on-page, indhold og links, og hvornår du kan forvente resultater.";
 const ogImage = "https://horizen.dk/blog/hvad-er-seo.webp";
-const datePublished = "2026-09-09";
+// Med dansk tidszone, som Googles test for rich results anbefaler
+const datePublished = "2026-09-09T08:00:00+02:00";
 
 export const metadata: Metadata = {
   title,
