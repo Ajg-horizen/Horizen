@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import ArticleContent from "./ArticleContent";
+import { getArticleAuthor } from "@/lib/blog-data";
+
+// Samme forfatter som vist på siden (fra blog-data.ts)
+const author = getArticleAuthor("figma-til-kode");
 
 const title = "Fra Figma til kode: Vores design-til-udvikling workflow | Horizen";
 const description =
   "Et kig bag kulisserne på hvordan vi omsætter designs til pixel-perfekt kode med moderne værktøjer.";
 const ogImage = "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1200&h=630&fit=crop&q=80";
-const datePublished = "2026-01-10";
+// Med dansk tidszone, som Googles test for rich results anbefaler
+const datePublished = "2026-01-10T08:00:00+01:00";
 
 export const metadata: Metadata = {
   title,
@@ -21,7 +26,7 @@ export const metadata: Metadata = {
     locale: "da_DK",
     type: "article",
     publishedTime: datePublished,
-    authors: ["Andreas José Glarbjerg"],
+    authors: [author.name],
     images: [
       {
         url: ogImage,
@@ -46,7 +51,7 @@ const articleSchema = {
   description,
   image: ogImage,
   datePublished,
-  author: { "@type": "Person", name: "Andreas José Glarbjerg" },
+  author: author.schema,
   publisher: {
     "@type": "Organization",
     name: "Horizen",

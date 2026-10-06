@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import ArticleContent from "./ArticleContent";
+import { getArticleAuthor } from "@/lib/blog-data";
+
+// Samme forfatter som vist på siden (fra blog-data.ts)
+const author = getArticleAuthor("hvad-er-seo");
 
 const title = "Hvad er SEO? Byg fundamentet i den rigtige rækkefølge | Horizen";
 const description =
   "Hvad er SEO, og i hvilken rækkefølge bygger man det? En begyndervenlig guide til fundament, on-page, indhold og links, og hvornår du kan forvente resultater.";
 const ogImage = "https://horizen.dk/blog/hvad-er-seo.webp";
-const datePublished = "2026-09-09";
+// Med dansk tidszone, som Googles test for rich results anbefaler
+const datePublished = "2026-09-09T08:00:00+02:00";
 
 export const metadata: Metadata = {
   title,
@@ -21,7 +26,7 @@ export const metadata: Metadata = {
     locale: "da_DK",
     type: "article",
     publishedTime: datePublished,
-    authors: ["Andreas José Glarbjerg"],
+    authors: [author.name],
     images: [
       {
         url: ogImage,
@@ -46,7 +51,7 @@ const articleSchema = {
   description,
   image: ogImage,
   datePublished,
-  author: { "@type": "Person", name: "Andreas José Glarbjerg" },
+  author: author.schema,
   publisher: {
     "@type": "Organization",
     name: "Horizen",
