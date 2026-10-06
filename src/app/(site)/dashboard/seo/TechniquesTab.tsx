@@ -23,12 +23,13 @@ function splitLabel(para: string): { label?: string; text: string } {
   return { text: para };
 }
 
+// Dæmpede farver: let tonet baggrund og blød tekst, så mærkerne ikke råber
 const categoryStyle: Record<SeoTechnique["category"], string> = {
-  Søgeord: "bg-blue-500/10 text-blue-600",
-  Indhold: "bg-emerald-500/10 text-emerald-600",
-  Teknisk: "bg-amber-500/10 text-amber-600",
-  Lokal: "bg-purple-500/10 text-purple-600",
-  "Data & måling": "bg-sky-500/10 text-sky-700",
+  Søgeord: "bg-blue-500/[0.06] text-blue-700/70",
+  Indhold: "bg-emerald-500/[0.06] text-emerald-700/70",
+  Teknisk: "bg-amber-500/[0.07] text-amber-700/70",
+  Lokal: "bg-purple-500/[0.06] text-purple-700/70",
+  "Data & måling": "bg-sky-500/[0.06] text-sky-700/70",
 };
 
 function CategoryLabel({ cat }: { cat: SeoTechnique["category"] }) {
