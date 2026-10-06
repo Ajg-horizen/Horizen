@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DynamicIslandTOC from "@/components/DynamicIslandTOC";
 import { fadeInUp } from "@/lib/animations";
-import { LinkIcon, CheckIcon } from "lucide-react";
+import { LinkIcon, CheckIcon, ChevronRight, ArrowLeft, ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
 
 interface ArticleProps {
@@ -98,6 +99,63 @@ function ShareButtons({ title }: { title: string }) {
   );
 }
 
+/**
+ * Brødkrummer: Forside › Blog › artiklen. Viser stien og er vejen tilbage.
+ * Mobil: kun "← Blog". Lægges også som BreadcrumbList til Google.
+ */
+function Breadcrumbs({ title }: { title: string }) {
+  const pathname = usePathname();
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Forside", item: "https://horizen.dk" },
+      { "@type": "ListItem", position: 2, name: "Blog", item: "https://horizen.dk/blog" },
+      { "@type": "ListItem", position: 3, name: title, item: `https://horizen.dk${pathname}` },
+    ],
+  };
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <nav aria-label="Brødkrummer" className="mb-6 text-sm">
+        {/* Mobil: kun tilbage til bloggen */}
+        <Link
+          href="/blog"
+          className="inline-flex items-center gap-1.5 text-muted transition-colors duration-300 hover:text-foreground sm:hidden"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" aria-hidden />
+          Blog
+        </Link>
+        {/* Tablet og desktop: hele stien */}
+        <ol className="hidden items-center gap-1.5 text-muted sm:flex">
+          <li>
+            <Link href="/" className="transition-colors duration-300 hover:text-foreground">
+              Forside
+            </Link>
+          </li>
+          <li aria-hidden>
+            <ChevronRight className="h-3.5 w-3.5 text-foreground/25" />
+          </li>
+          <li>
+            <Link href="/blog" className="transition-colors duration-300 hover:text-foreground">
+              Blog
+            </Link>
+          </li>
+          <li aria-hidden>
+            <ChevronRight className="h-3.5 w-3.5 text-foreground/25" />
+          </li>
+          <li aria-current="page" className="min-w-0 max-w-[420px] truncate text-foreground/70">
+            {title}
+          </li>
+        </ol>
+      </nav>
+    </>
+  );
+}
+
 export default function ArticleLayout({
   title,
   image,
@@ -129,6 +187,8 @@ export default function ArticleLayout({
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
+                <Breadcrumbs title={title} />
+
                 {/* Author inline (mobile) + Category | Date */}
                 <div className="flex items-center gap-3 text-sm">
                   <div className="flex items-center gap-2 lg:hidden">
@@ -244,11 +304,21 @@ export default function ArticleLayout({
               viewport={{ once: true, margin: "-100px" }}
               custom={0}
               variants={fadeInUp}
-              className="mb-10"
+              className="mb-10 flex flex-wrap items-end justify-between gap-4"
             >
               <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
                 Mere fra Horizen
               </h2>
+              <Link
+                href="/blog"
+                className="group inline-flex items-center gap-2 text-sm font-medium text-muted transition-colors duration-300 hover:text-foreground"
+              >
+                Se alle artikler
+                <ArrowRight
+                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                  aria-hidden
+                />
+              </Link>
             </motion.div>
 
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">

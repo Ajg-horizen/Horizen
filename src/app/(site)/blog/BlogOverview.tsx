@@ -1,31 +1,56 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Clock } from "lucide-react";
+import { ChevronDown, Clock } from "lucide-react";
 import { blogPosts } from "@/lib/blog-data";
-import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { fadeInUp } from "@/lib/animations";
 import Container from "@/components/Container";
 
+/**
+ * Blogoversigt (samme opbygning som Miljøkontorets /indsigter, i Horizens stil):
+ * desktop = søgefelt og kategorier til venstre, artikler til højre med billede;
+ * tablet og mobil = kun en kategoriknap, der folder ud.
+ */
+
+const ALL = "Alle";
 const allTags = Array.from(new Set(blogPosts.flatMap((p) => p.tags)));
 
-const POSTS_PER_PAGE = 12;
-
 export default function BlogOverview() {
-  const [activeTag, setActiveTag] = useState<string | null>(null);
-  const [visibleCount, setVisibleCount] = useState(POSTS_PER_PAGE);
+  const [query, setQuery] = useState("");
+  const [active, setActive] = useState(ALL);
+  const [open, setOpen] = useState(false);
+  const pickerRef = useRef<HTMLDivElement>(null);
 
-  const filtered = activeTag
-    ? blogPosts.filter((p) => p.tags.includes(activeTag))
-    : blogPosts;
+  // Fold-ud-vælgeren lukker ved tryk uden for den
+  useEffect(() => {
+    if (!open) return;
+    const close = (e: PointerEvent) => {
+      if (!pickerRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("pointerdown", close);
+    return () => document.removeEventListener("pointerdown", close);
+  }, [open]);
 
-  const visible = filtered.slice(0, visibleCount);
-  const hasMore = visibleCount < filtered.length;
+  const visible = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return blogPosts.filter(
+      (p) =>
+        (active === ALL || p.tags.includes(active)) &&
+        (!q || `${p.title} ${p.excerpt}`.toLowerCase().includes(q))
+    );
+  }, [query, active]);
+
+  const options = [ALL, ...allTags];
+
+  const choose = (tag: string) => {
+    setActive(tag);
+    setOpen(false);
+  };
 
   return (
     <>
@@ -33,12 +58,7 @@ export default function BlogOverview() {
       <main className="min-h-screen bg-background pt-32">
         <Container size="site">
           {/* Header */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            custom={0}
-            variants={fadeInUp}
-          >
+          <motion.div initial="hidden" animate="visible" custom={0} variants={fadeInUp}>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">
               Indsigt & Artikler
             </p>
@@ -51,136 +71,180 @@ export default function BlogOverview() {
             </p>
           </motion.div>
 
-          {/* Tags */}
           <motion.div
             initial="hidden"
             animate="visible"
             custom={0.2}
             variants={fadeInUp}
-            className="mt-8 flex flex-wrap gap-2"
+            className="mt-12 grid gap-10 lg:grid-cols-[280px_1fr] lg:gap-20"
           >
-            <button
-              onClick={() => setActiveTag(null)}
-              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300 ${
-                activeTag === null
-                  ? "bg-foreground text-background"
-                  : "bg-foreground/[0.06] text-foreground hover:bg-foreground/[0.10]"
-              }`}
-            >
-              Alle
-            </button>
-            {allTags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => { setActiveTag(activeTag === tag ? null : tag); setVisibleCount(POSTS_PER_PAGE); }}
-                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300 ${
-                  activeTag === tag
-                    ? "bg-foreground text-background"
-                    : "bg-foreground/[0.06] text-foreground hover:bg-foreground/[0.10]"
-                }`}
-              >
-                {tag}
-              </button>
-            ))}
-          </motion.div>
+            {/* Søgning + kategorier */}
+            <aside className="lg:sticky lg:top-28 lg:self-start">
+              <label htmlFor="blog-soeg" className="sr-only">
+                Søg i blogindlæg
+              </label>
+              <input
+                id="blog-soeg"
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Søg i blogindlæg..."
+                className="hidden w-full rounded-xl border border-foreground/[0.10] bg-white px-4 py-3 text-base outline-none transition-shadow focus:ring-2 focus:ring-foreground/10 lg:block"
+              />
 
-          {/* Grid */}
-          {visible.length > 0 && (
-            <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {visible.map((post, i) => (
-                <motion.div
-                  key={post.slug}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-50px" }}
-                  custom={i * 0.1}
-                  variants={fadeInUp}
+              {/* Tablet og mobil: fold-ud-vælger */}
+              <div ref={pickerRef} className="relative md:max-w-[360px] lg:hidden">
+                <button
+                  type="button"
+                  onClick={() => setOpen((o) => !o)}
+                  onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
+                  aria-expanded={open}
+                  aria-controls="blog-kategorier"
+                  className="flex w-full items-center justify-between rounded-xl border border-foreground/[0.10] bg-white px-4 py-3 text-left text-base"
                 >
-                  <Link href={post.href} className="group block">
-                    <div className="overflow-hidden rounded-2xl bg-white">
-                      <div className="relative aspect-[16/9] overflow-hidden">
-                        <img
-                          src={post.image}
-                          alt={post.title}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f0f]/80 to-transparent opacity-60" />
-                        <div className="absolute bottom-3 left-3 flex gap-2">
-                          {post.tags.map((tag) => (
-                            <Badge
-                              key={tag}
-                              variant="secondary"
-                              className="bg-[#f5f5f0]/50 text-foreground backdrop-blur-sm"
-                            >
-                              {tag}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="p-5">
-                        <h3 className="text-lg font-semibold leading-tight tracking-tight transition-colors duration-300 group-hover:text-foreground/70">
-                          {post.title}
-                        </h3>
-                        <p className="mt-2 line-clamp-2 text-sm text-muted">
-                          {post.excerpt}
-                        </p>
-                        <div className="mt-4 flex items-center justify-between border-t border-border/50 pt-4">
-                          <div className="flex items-center gap-2">
-                            <Avatar className="h-7 w-7 border border-border/50">
-                              <AvatarImage
-                                src={post.author.avatar}
-                                alt={post.author.name}
-                              />
-                              <AvatarFallback>
-                                {post.author.name[0]}
-                              </AvatarFallback>
-                            </Avatar>
-                            <div className="flex flex-col text-xs">
-                              <span className="font-medium">
-                                {post.author.name}
+                  <span>
+                    <span className="text-muted">Kategori: </span>
+                    {active}
+                  </span>
+                  <ChevronDown
+                    className="h-4 w-4 transition-transform duration-300"
+                    style={{ transform: open ? "rotate(180deg)" : undefined }}
+                    aria-hidden
+                  />
+                </button>
+                {open && (
+                  <ul
+                    id="blog-kategorier"
+                    className="absolute inset-x-0 top-full z-20 mt-2 overflow-hidden rounded-xl border border-foreground/[0.10] bg-white py-1 shadow-lg"
+                  >
+                    {options.map((tag) => (
+                      <li key={tag}>
+                        <button
+                          type="button"
+                          onClick={() => choose(tag)}
+                          onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
+                          aria-pressed={active === tag}
+                          className={`w-full px-4 py-3 text-left text-base ${
+                            active === tag
+                              ? "bg-foreground/[0.06] font-medium text-foreground"
+                              : "text-muted"
+                          }`}
+                        >
+                          {tag}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {/* Desktop: kategorilisten i sidebaren */}
+              <nav aria-label="Kategorier" className="mt-6 hidden lg:block">
+                <ul className="flex flex-col gap-1">
+                  {options.map((tag) => (
+                    <li key={tag}>
+                      <button
+                        type="button"
+                        onClick={() => setActive(tag)}
+                        aria-pressed={active === tag}
+                        className={`w-full rounded-xl px-4 py-3 text-left text-sm transition-colors duration-300 ${
+                          active === tag
+                            ? "bg-foreground/[0.06] font-medium text-foreground"
+                            : "text-muted hover:bg-foreground/[0.03] hover:text-foreground"
+                        }`}
+                      >
+                        {tag}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </aside>
+
+            {/* Artikler */}
+            <div>
+              {visible.length === 0 ? (
+                <div className="py-10">
+                  <p className="text-muted">Ingen artikler matcher din søgning.</p>
+                  <button
+                    onClick={() => {
+                      setActive(ALL);
+                      setQuery("");
+                    }}
+                    className="mt-4 text-sm font-medium text-foreground underline underline-offset-4"
+                  >
+                    Vis alle artikler
+                  </button>
+                </div>
+              ) : (
+                <ul>
+                  {visible.map((post) => (
+                    <li
+                      key={post.slug}
+                      className="border-b border-foreground/[0.08] py-10 first:pt-0 last:border-b-0"
+                    >
+                      {/* Billede til højre på desktop, øverst på mobil (teksten står først i koden) */}
+                      <article className="group flex flex-col-reverse gap-6 md:flex-row md:items-start md:gap-10">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex flex-wrap items-center gap-2">
+                            {post.tags.map((tag) => (
+                              <span
+                                key={tag}
+                                className="rounded-md bg-foreground/[0.06] px-2.5 py-1 text-[11px] font-medium uppercase tracking-[0.12em] text-foreground/70"
+                              >
+                                {tag}
                               </span>
-                              <span className="text-muted">{post.date}</span>
-                            </div>
+                            ))}
+                            <span className="inline-flex items-center gap-1.5 rounded-full bg-foreground/[0.04] px-2.5 py-1 text-[11px] text-muted">
+                              <Clock className="h-3 w-3" aria-hidden />
+                              {post.readTime} læsning
+                            </span>
                           </div>
-                          <div className="flex items-center gap-1 text-xs text-muted">
-                            <Clock className="h-3 w-3" />
-                            <span>{post.readTime}</span>
+                          <h2 className="mt-4 text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
+                            <Link
+                              href={post.href}
+                              className="transition-colors duration-300 hover:text-foreground/70"
+                            >
+                              {post.title}
+                            </Link>
+                          </h2>
+                          <p className="mt-3 max-w-[760px] text-base leading-relaxed text-muted">
+                            {post.excerpt}
+                          </p>
+                          <div className="mt-6 flex items-center gap-3">
+                            <Avatar className="h-8 w-8 border border-border/50">
+                              <AvatarImage src={post.author.avatar} alt="" />
+                              <AvatarFallback>{post.author.name[0]}</AvatarFallback>
+                            </Avatar>
+                            <span className="text-xs text-muted">
+                              Udgivet af{" "}
+                              <strong className="font-semibold text-foreground">
+                                {post.author.name}
+                              </strong>{" "}
+                              den {post.date}
+                            </span>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
+                        <Link
+                          href={post.href}
+                          tabIndex={-1}
+                          className="block aspect-[4/3] w-full shrink-0 overflow-hidden rounded-2xl md:w-[210px]"
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={post.image}
+                            alt={post.title}
+                            loading="lazy"
+                            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                          />
+                        </Link>
+                      </article>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
-          )}
-
-          {/* Load more */}
-          {hasMore && (
-            <div className="mt-14 text-center">
-              <button
-                onClick={() => setVisibleCount((prev) => prev + POSTS_PER_PAGE)}
-                className="rounded-full border border-foreground/[0.08] px-8 py-3 text-sm font-medium text-muted transition-all duration-300 hover:border-foreground hover:text-foreground"
-              >
-                Vis flere artikler
-              </button>
-            </div>
-          )}
-
-          {/* Empty state */}
-          {filtered.length === 0 && (
-            <div className="mt-20 text-center">
-              <p className="text-muted">
-                Ingen artikler fundet med tagget &ldquo;{activeTag}&rdquo;.
-              </p>
-              <button
-                onClick={() => { setActiveTag(null); setVisibleCount(POSTS_PER_PAGE); }}
-                className="mt-4 text-sm font-medium text-foreground underline underline-offset-4"
-              >
-                Vis alle artikler
-              </button>
-            </div>
-          )}
+          </motion.div>
         </Container>
 
         <div className="mt-32" />
