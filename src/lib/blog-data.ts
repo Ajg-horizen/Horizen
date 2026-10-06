@@ -24,6 +24,8 @@ export interface BlogPost {
   image: string;
   author: {
     name: string;
+    /** Fulde navn til Google (artikel-data), hvis det skal være længere end det viste navn. */
+    fullName?: string;
     title?: string;
     role: string;
     avatar: string;
@@ -61,6 +63,7 @@ export const blogPosts: BlogPost[] = [
       "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=500&fit=crop&q=80",
     author: {
       name: "José",
+      fullName: "Andreas José Glarbjerg",
       title: "CEO & Designer",
       role: "10+ års erfaring",
       avatar: "/staff/staff-jose-digital-design.jpg",
@@ -123,4 +126,22 @@ export function getRelatedArticles(currentSlug: string) {
 /** Get a single post by slug */
 export function getPostBySlug(slug: string) {
   return blogPosts.find((p) => p.slug === slug);
+}
+
+/**
+ * Forfatteren til artikel-data (Open Graph + Article JSON-LD), hentet fra samme
+ * sted som den synlige forfatter, så Google og læseren altid ser den samme.
+ */
+export function getArticleAuthor(slug: string) {
+  const author = getPostBySlug(slug)?.author;
+  const name = author?.fullName ?? author?.name ?? "Horizen";
+  return {
+    name,
+    schema: {
+      "@type": "Person",
+      name,
+      ...(author?.title && { jobTitle: author.title }),
+      worksFor: { "@type": "Organization", name: "Horizen", url: "https://horizen.dk" },
+    },
+  };
 }
