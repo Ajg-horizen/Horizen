@@ -23,7 +23,23 @@ function splitLabel(para: string): { label?: string; text: string } {
   return { text: para };
 }
 
-/** Kategorier i fast rækkefølge til oversigten (bibliotekets indholdsfortegnelse). */
+const categoryStyle: Record<SeoTechnique["category"], string> = {
+  Søgeord: "bg-blue-500/10 text-blue-600",
+  Indhold: "bg-emerald-500/10 text-emerald-600",
+  Teknisk: "bg-amber-500/10 text-amber-600",
+  Lokal: "bg-purple-500/10 text-purple-600",
+  "Data & måling": "bg-sky-500/10 text-sky-700",
+};
+
+function CategoryLabel({ cat }: { cat: SeoTechnique["category"] }) {
+  return (
+    <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${categoryStyle[cat]}`}>
+      {cat}
+    </span>
+  );
+}
+
+/** Kategorier i fast rækkefølge: oversigten og listen sorteres efter den. */
 const CATEGORY_ORDER: SeoTechnique["category"][] = [
   "Søgeord",
   "Indhold",
@@ -32,8 +48,10 @@ const CATEGORY_ORDER: SeoTechnique["category"][] = [
   "Data & måling",
 ];
 
-export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
+export default function TechniquesTab({ items: raw }: { items: SeoTechnique[] }) {
   const [open, setOpen] = useState<number | null>(0);
+  // Samlet pr. kategori (rækkefølgen i data.ts bevares inden for hver kategori)
+  const items = CATEGORY_ORDER.flatMap((cat) => raw.filter((t) => t.category === cat));
 
   return (
     <div>
@@ -60,7 +78,7 @@ export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
         <p className="text-xs font-semibold uppercase tracking-wider text-foreground/50">
           Oversigt · {items.length} {items.length === 1 ? "teknik" : "teknikker"}
         </p>
-        <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-4 space-y-4">
           {CATEGORY_ORDER.map((cat) => {
             const inCat = items
               .map((t, i) => ({ t, i }))
@@ -68,10 +86,13 @@ export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
             if (inCat.length === 0) return null;
             return (
               <div key={cat}>
-                <p className="text-xs font-medium text-foreground/40">{cat}</p>
-                <ul className="mt-2 space-y-1">
+                <CategoryLabel cat={cat} />
+                <ol className="mt-2 space-y-1.5 pl-1">
                   {inCat.map(({ t, i }) => (
-                    <li key={t.title}>
+                    <li key={t.title} className="flex gap-3 text-sm">
+                      <span className="w-5 shrink-0 text-right tabular-nums text-foreground/35">
+                        {i + 1}.
+                      </span>
                       <button
                         type="button"
                         onClick={() => {
@@ -82,13 +103,13 @@ export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
                               ?.scrollIntoView({ behavior: "smooth", block: "start" })
                           );
                         }}
-                        className="text-left text-sm text-foreground/80 underline-offset-2 hover:text-foreground hover:underline"
+                        className="text-left text-foreground/80 underline-offset-2 hover:text-foreground hover:underline"
                       >
                         {t.title}
                       </button>
                     </li>
                   ))}
-                </ul>
+                </ol>
               </div>
             );
           })}
@@ -110,9 +131,9 @@ export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
                 aria-expanded={isOpen}
                 className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left transition-colors hover:bg-foreground/[0.02]"
               >
-                <span>
-                  <span className="block text-base font-semibold">{t.title}</span>
-                  <span className="mt-0.5 block text-xs text-foreground/45">{t.category}</span>
+                <span className="flex flex-wrap items-center gap-3">
+                  <span className="text-base font-semibold">{t.title}</span>
+                  <CategoryLabel cat={t.category} />
                 </span>
                 <svg
                   viewBox="0 0 24 24"
