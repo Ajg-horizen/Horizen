@@ -12,6 +12,32 @@ const categoryStyle: Record<SeoTechnique["category"], string> = {
   "Data & måling": "bg-sky-500/10 text-sky-700",
 };
 
+/** Blogstatus pr. teknik: idé → planlagt → skrevet → udgivet */
+const blogStyle: Record<NonNullable<SeoTechnique["blog"]>["status"], { label: string; cls: string }> = {
+  idé: { label: "Blog: idé", cls: "bg-foreground/[0.05] text-foreground/50" },
+  planlagt: { label: "Blog: planlagt", cls: "bg-blue-500/10 text-blue-600" },
+  skrevet: { label: "Blog: skrevet", cls: "bg-amber-500/10 text-amber-600" },
+  udgivet: { label: "Blog: udgivet", cls: "bg-emerald-500/10 text-emerald-600" },
+};
+
+function BlogBadge({ blog }: { blog?: SeoTechnique["blog"] }) {
+  if (!blog) return null;
+  const { label, cls } = blogStyle[blog.status];
+  return <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${cls}`}>{label}</span>;
+}
+
+/**
+ * Mange afsnit starter med en etiket ("Hvad det er: …"). Den vises som en lille
+ * mellemoverskrift, så teksten kan skimmes. Kun korte etiketter uden punktum.
+ */
+function splitLabel(para: string): { label?: string; text: string } {
+  const i = para.indexOf(": ");
+  if (i > 0 && i <= 60 && !para.slice(0, i).includes(".")) {
+    return { label: para.slice(0, i), text: para.slice(i + 2) };
+  }
+  return { text: para };
+}
+
 /** Kategorier i fast rækkefølge til oversigten (bibliotekets indholdsfortegnelse). */
 const CATEGORY_ORDER: SeoTechnique["category"][] = [
   "Søgeord",
@@ -42,7 +68,11 @@ export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
         className="mb-8 rounded-2xl border border-foreground/[0.08] bg-background p-5"
       >
         <p className="text-xs font-semibold uppercase tracking-wider text-foreground/50">
-          Oversigt · {items.length} {items.length === 1 ? "teknik" : "teknikker"}
+          Oversigt · {items.length} {items.length === 1 ? "teknik" : "teknikker"} · {
+            items.filter((t) => t.blog?.status === "udgivet").length
+          } udgivet som blogindlæg · {
+            items.filter((t) => t.blog?.status === "planlagt" || t.blog?.status === "skrevet").length
+          } på vej
         </p>
         <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CATEGORY_ORDER.map((cat) => {
@@ -74,6 +104,11 @@ export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
                       >
                         {t.title}
                       </button>
+                      {t.blog && t.blog.status !== "idé" && (
+                        <span className="ml-2 align-middle">
+                          <BlogBadge blog={t.blog} />
+                        </span>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -105,6 +140,7 @@ export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
                   >
                     {t.category}
                   </span>
+                  <BlogBadge blog={t.blog} />
                 </span>
                 <svg
                   viewBox="0 0 24 24"
@@ -127,13 +163,37 @@ export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
 
               {isOpen && (
                 <div className="px-5 pb-5">
-                  <p className="text-sm font-medium">{t.summary}</p>
-                  <div className="mt-3 space-y-2.5">
-                    {t.body.map((para, j) => (
-                      <p key={j} className="text-sm leading-relaxed text-foreground/70">
-                        {para}
-                      </p>
-                    ))}
+                  <p className="max-w-3xl text-base font-medium leading-relaxed">{t.summary}</p>
+
+                  <div className="mt-4 max-w-3xl rounded-xl border border-foreground/[0.08] bg-background p-3">
+                    <p className="text-xs font-semibold uppercase tracking-wider text-foreground/50">
+                      Hvornår bruger vi det
+                    </p>
+                    <p className="mt-1 text-sm text-foreground/80">{t.whenToUse}</p>
+                  </div>
+
+                  {t.blog && (
+                    <p className="mt-3 text-sm text-foreground/60">
+                      <BlogBadge blog={t.blog} />
+                      {t.blog.url && (
+                        <a href={t.blog.url} className="ml-2 underline underline-offset-2 hover:text-foreground">
+                          Læs blogindlægget
+                        </a>
+                      )}
+                      {t.blog.note && <span className="ml-2">{t.blog.note}</span>}
+                    </p>
+                  )}
+
+                  <div className="mt-6 max-w-3xl space-y-5">
+                    {t.body.map((para, j) => {
+                      const { label, text } = splitLabel(para);
+                      return (
+                        <div key={j}>
+                          {label && <h4 className="mb-1 text-sm font-semibold">{label}</h4>}
+                          <p className="text-sm leading-relaxed text-foreground/70">{text}</p>
+                        </div>
+                      );
+                    })}
                   </div>
                   {(t.pros || t.cons) && (
                     <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -216,12 +276,6 @@ export default function TechniquesTab({ items }: { items: SeoTechnique[] }) {
                     </div>
                   )}
 
-                  <div className="mt-4 rounded-xl border border-foreground/[0.08] bg-background p-3">
-                    <p className="text-xs font-semibold uppercase tracking-wider text-foreground/50">
-                      Hvornår bruger vi det
-                    </p>
-                    <p className="mt-1 text-sm text-foreground/80">{t.whenToUse}</p>
-                  </div>
                 </div>
               )}
             </div>

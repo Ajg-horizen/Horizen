@@ -657,11 +657,18 @@ export type SeoTechnique = {
   /** Valgfri regler i praksis: hvad vi gør, og hvad vi ikke gør. */
   dos?: string[];
   donts?: string[];
+  /** Skal teknikken også være et blogindlæg på horizen.dk? Status + link, når det er udgivet. */
+  blog?: {
+    status: "idé" | "planlagt" | "skrevet" | "udgivet";
+    url?: string;
+    note?: string;
+  };
 };
 
 export const seoTechniques: SeoTechnique[] = [
   {
     title: "Long-tail-strategien",
+    blog: { status: "planlagt", note: "Spoke til pilleren 'Hvad er SEO'." },
     category: "Søgeord",
     summary:
       "En lille virksomhed vinder nedefra: start på lange, specifikke søgeord med lav konkurrence og klatr op efterhånden som autoriteten vokser.",
@@ -676,6 +683,7 @@ export const seoTechniques: SeoTechnique[] = [
   },
   {
     title: "Hub-and-spoke (indholdsklynger)",
+    blog: { status: "planlagt", note: "Spoke til pilleren 'Hvad er SEO'." },
     category: "Indhold",
     summary:
       "Hold service-siden (pengesiden) ren og bred, og ram long-tail-søgeord med separate guides der linker ind til den og bygger dens autoritet.",
@@ -690,6 +698,7 @@ export const seoTechniques: SeoTechnique[] = [
   },
   {
     title: "Content abuse: hvad Google straffer, og hvordan vi skriver om emner, der allerede er dækket",
+    blog: { status: "planlagt", note: "Spoke til pilleren 'Hvad er SEO'. Skrives med egne eksempler fra kundearbejdet." },
     category: "Indhold",
     summary:
       "Google straffer ikke, at et emne er skrevet om før. Google straffer indhold, der masseproduceres for at ranke og ikke tilføjer noget nyt. Vores svar er at bygge hver tekst på kundens egen erfaring.",
@@ -725,6 +734,7 @@ export const seoTechniques: SeoTechnique[] = [
   },
   {
     title: "Structured data & rich snippets (Schema.org)",
+    blog: { status: "planlagt", note: "Spoke til pilleren 'Hvad er SEO'." },
     category: "Teknisk",
     summary:
       "En blok JSON-kode i sidens kode der forklarer Google hvad siden handler om. Driver de forbedrede søgeresultater (stjerner, FAQ, priser) og hjælper Google forstå din virksomhed.",
@@ -775,6 +785,7 @@ export const seoTechniques: SeoTechnique[] = [
   },
   {
     title: "Static Site Generation (SSG)",
+    blog: { status: "idé", note: "Teknisk; måske som del af en artikel om hastighed." },
     category: "Teknisk",
     summary:
       "Siderne bygges til færdige HTML-filer på forhånd (ved deploy), så de serveres lynhurtigt. Et af de stærkeste tekniske fundamenter for SEO.",
@@ -807,6 +818,7 @@ export async function generateStaticParams() {
     ],
   },  {
     title: "Søgefunktion på sitet + søgeord i Google Analytics",
+    blog: { status: "idé" },
     category: "Data & måling",
     summary:
       "En søgning på sitet hjælper besøgende med at finde det, de leder efter. Sender vi søgeordene til Google Analytics, får vi samtidig besøgendes egne ord for, hvad de mangler.",
