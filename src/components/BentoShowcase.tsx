@@ -440,7 +440,7 @@ const devTechContent = (
       Tech stack
     </span>
     <div className="flex flex-wrap gap-1">
-      {["Next.js", "React", "TypeScript", "Tailwind", "Vercel", "Supabase"].map(
+      {["Next.js", "React", "TypeScript", "Tailwind", "Headless CMS", "Edge CDN", "PostgreSQL"].map(
         (tech) => (
           <span
             key={tech}

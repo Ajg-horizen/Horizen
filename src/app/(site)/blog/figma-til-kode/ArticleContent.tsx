@@ -29,7 +29,7 @@ function Content() {
       icon: "🔄",
       title: "Iteration & Feedback",
       description:
-        "Med preview-deploys på Vercel kan kunden se fremskridtet i realtid. Feedback integreres løbende, ikke som en eftertanke i slutningen af projektet.",
+        "Med automatiske preview-links for hver ændring kan kunden se fremskridtet i realtid. Feedback integreres løbende, ikke som en eftertanke i slutningen af projektet.",
     },
     {
       icon: "🚀",
@@ -72,7 +72,7 @@ function Content() {
           slutbrugerens performance lige højt:
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          {["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel", "Figma", "GitHub"].map(
+          {["Next.js", "React", "TypeScript", "Tailwind CSS", "Framer Motion", "CI/CD", "Figma", "GitHub"].map(
             (tech) => (
               <span
                 key={tech}
