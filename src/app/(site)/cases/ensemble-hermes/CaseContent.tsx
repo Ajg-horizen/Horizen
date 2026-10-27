@@ -78,7 +78,7 @@ const project = {
     { name: "Cursor", icon: MousePointerClickIcon },
     { name: "GitHub", icon: GitBranchIcon },
     { name: "CI/CD", icon: RocketIcon },
-    { name: "Sanity", icon: DatabaseIcon },
+    { name: "CMS", icon: DatabaseIcon },
     { name: "Adobe", icon: BrushIcon },
     { name: "Google", icon: GlobeIcon },
     { name: "Layers", icon: LayersIcon },
