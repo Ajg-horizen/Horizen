@@ -12,14 +12,14 @@
 
 export const MESSAGE_TEMPLATES = [
 	{
-		key: 'anmeldelser',
-		label: 'Anmeldelser og billeder',
-		hint: 'Beder kunden sende anmeldelseslinket til sine kunder og sende billeder af sine opgaver.',
-	},
-	{
 		key: 'sikkerhed',
 		label: 'Sikker kommunikation',
 		hint: 'Fortæl kunder og samarbejdspartnere om det verificerede mærke, og hvordan de tjekker en mail fra dig. Flere modtagere får hver deres mail med egen kode.',
+	},
+	{
+		key: 'anmeldelser',
+		label: 'Anmeldelser og billeder',
+		hint: 'Beder kunden sende anmeldelseslinket til sine kunder og sende billeder af sine opgaver.',
 	},
 	{
 		key: 'fri',

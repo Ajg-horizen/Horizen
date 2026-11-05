@@ -102,7 +102,8 @@ export default function MessagesTab({
 		reviewLink: defaults.reviewLink,
 		smsSign: defaults.smsSign,
 	}
-	const [template, setTemplate] = useState<MessageTemplate>(templates[0])
+	// Ingen skabelon valgt på forhånd, så man ikke sender den forkerte ved en fejl
+	const [template, setTemplate] = useState<MessageTemplate | null>(null)
 	const [to, setTo] = useState(defaults.to)
 	const [fields, setFields] = useState<MessageFields>(
 		defaultFields(templates[0], base),
@@ -116,14 +117,16 @@ export default function MessagesTab({
 
 	// forhåndsvisning med sidens egen adresse, så logo, portræt og QR-kode vises
 	const origin = typeof window === 'undefined' ? '' : window.location.origin
-	const mail = clientMessage({
-		template,
-		fields,
-		sender,
-		senderPhoto,
-		origin,
-		dashboardLink: dashboardLink ?? `${origin}/dashboard/seo`,
-	})
+	const mail = template
+		? clientMessage({
+				template,
+				fields,
+				sender,
+				senderPhoto,
+				origin,
+				dashboardLink: dashboardLink ?? `${origin}/dashboard/seo`,
+			})
+		: null
 
 	const set = <K extends keyof MessageFields>(k: K, v: MessageFields[K]) =>
 		setFields((f) => ({ ...f, [k]: v }))
@@ -158,6 +161,7 @@ export default function MessagesTab({
 						: ''),
 			)
 			setConfirm(false)
+			setTemplate(null)
 			router.refresh()
 		} catch (err) {
 			setState('error')
@@ -196,188 +200,194 @@ export default function MessagesTab({
 					)}
 				</div>
 				<p className="text-foreground/50 mt-2 text-xs">
-					{MESSAGE_TEMPLATES.find((t) => t.key === template)?.hint}
+					{template
+						? MESSAGE_TEMPLATES.find((t) => t.key === template)?.hint
+						: 'Vælg en skabelon for at skrive en besked.'}
 				</p>
 
-				<div className="mt-5 grid gap-4 sm:grid-cols-2">
-					<div>
-						<label htmlFor="msg-to" className={labelCls}>
-							Til
-						</label>
-						<input
-							id="msg-to"
-							type="text"
-							value={to}
-							onChange={(e) => setTo(e.target.value)}
-							placeholder="navn@firma.dk (flere adskilt med komma; de får hver deres mail)"
-							className={input}
-						/>
-					</div>
-					<div>
-						<label htmlFor="msg-name" className={labelCls}>
-							Modtagerens navn (tom giver bare "Hej")
-						</label>
-						<input
-							id="msg-name"
-							type="text"
-							value={fields.name}
-							onChange={(e) => set('name', e.target.value)}
-							placeholder="Fx Michael"
-							maxLength={60}
-							className={input}
-						/>
-					</div>
-				</div>
-
-				<div className="mt-4">
-					<label htmlFor="msg-heading" className={labelCls}>
-						Overskrift (og emne)
-					</label>
-					<input
-						id="msg-heading"
-						type="text"
-						value={fields.heading}
-						onChange={(e) => set('heading', e.target.value)}
-						maxLength={140}
-						className={input}
-					/>
-				</div>
-
-				<div className="mt-4">
-					<label htmlFor="msg-intro" className={labelCls}>
-						Tekst
-					</label>
-					<textarea
-						id="msg-intro"
-						value={fields.intro}
-						onChange={(e) => set('intro', e.target.value)}
-						rows={7}
-						className={`${input} leading-relaxed`}
-					/>
-					<p className="text-foreground/50 mt-1 text-xs">
-						En tom linje giver et nyt afsnit.
-					</p>
-				</div>
-
-				{template === 'anmeldelser' ? (
-					<div className="mt-4 grid gap-4 sm:grid-cols-2">
-						<div>
-							<label htmlFor="msg-review" className={labelCls}>
-								Link til anmeldelser
-							</label>
-							<input
-								id="msg-review"
-								type="url"
-								value={fields.reviewLink}
-								onChange={(e) => set('reviewLink', e.target.value)}
-								placeholder="https://g.page/r/…/review"
-								className={input}
-							/>
+				{template && mail && (
+					<>
+						<div className="mt-5 grid gap-4 sm:grid-cols-2">
+							<div>
+								<label htmlFor="msg-to" className={labelCls}>
+									Til
+								</label>
+								<input
+									id="msg-to"
+									type="text"
+									value={to}
+									onChange={(e) => setTo(e.target.value)}
+									placeholder="navn@firma.dk (flere adskilt med komma; de får hver deres mail)"
+									className={input}
+								/>
+							</div>
+							<div>
+								<label htmlFor="msg-name" className={labelCls}>
+									Modtagerens navn (tom giver bare "Hej")
+								</label>
+								<input
+									id="msg-name"
+									type="text"
+									value={fields.name}
+									onChange={(e) => set('name', e.target.value)}
+									placeholder="Fx Michael"
+									maxLength={60}
+									className={input}
+								/>
+							</div>
 						</div>
-						<div>
-							<label htmlFor="msg-sign" className={labelCls}>
-								Hilsen i SMS'en
+
+						<div className="mt-4">
+							<label htmlFor="msg-heading" className={labelCls}>
+								Overskrift (og emne)
 							</label>
 							<input
-								id="msg-sign"
+								id="msg-heading"
 								type="text"
-								value={fields.smsSign}
-								onChange={(e) => set('smsSign', e.target.value)}
-								placeholder="Fx Michael, Malerfirma Seitz"
+								value={fields.heading}
+								onChange={(e) => set('heading', e.target.value)}
+								maxLength={140}
 								className={input}
 							/>
 						</div>
-						<label className="text-foreground/70 flex items-center gap-2 text-sm sm:col-span-2">
-							<input
-								type="checkbox"
-								checked={fields.askPhotos}
-								onChange={(e) => set('askPhotos', e.target.checked)}
-							/>
-							Bed også om 10 billeder af kundens opgaver
-						</label>
-					</div>
-				) : template === 'fri' ? (
-					<div className="mt-4 grid gap-4 sm:grid-cols-2">
-						<div>
-							<label htmlFor="msg-btn" className={labelCls}>
-								Knap (valgfri)
-							</label>
-							<input
-								id="msg-btn"
-								type="text"
-								value={fields.buttonText}
-								onChange={(e) => set('buttonText', e.target.value)}
-								placeholder="Fx Se dashboardet"
-								className={input}
-							/>
-						</div>
-						<div>
-							<label htmlFor="msg-btn-link" className={labelCls}>
-								Knappens link
-							</label>
-							<input
-								id="msg-btn-link"
-								type="url"
-								value={fields.buttonLink}
-								onChange={(e) => set('buttonLink', e.target.value)}
-								placeholder="https://…"
-								className={input}
-							/>
-						</div>
-					</div>
-				) : null}
 
-				<div className="border-foreground/[0.08] bg-background mt-5 rounded-2xl border p-4 text-sm">
-					<p className={labelCls}>Forhåndsvisning</p>
-					<p className="text-foreground/50 mt-2">
-						Emne: <span className="text-foreground">{mail.subject}</span>
-					</p>
-					<iframe
-						title="Forhåndsvisning af beskeden"
-						srcDoc={mail.html}
-						// ingen scripts; same-origin så logo, portræt og QR-kode kan hentes
-						sandbox="allow-same-origin"
-						className="mt-3 h-[1100px] w-full rounded-xl border-0 bg-white"
-					/>
-				</div>
+						<div className="mt-4">
+							<label htmlFor="msg-intro" className={labelCls}>
+								Tekst
+							</label>
+							<textarea
+								id="msg-intro"
+								value={fields.intro}
+								onChange={(e) => set('intro', e.target.value)}
+								rows={7}
+								className={`${input} leading-relaxed`}
+							/>
+							<p className="text-foreground/50 mt-1 text-xs">
+								En tom linje giver et nyt afsnit.
+							</p>
+						</div>
 
-				<div className="mt-4 flex flex-wrap items-center gap-3">
-					{confirm ? (
-						<>
-							<span className="text-foreground text-sm">
-								Send til <strong>{to}</strong>?
-							</span>
-							<button
-								type="button"
-								onClick={send}
-								disabled={state === 'sending'}
-								className="bg-foreground text-background rounded-full px-5 py-2.5 text-sm font-medium transition-opacity disabled:opacity-40"
-							>
-								{state === 'sending' ? 'Sender…' : 'Ja, send nu'}
-							</button>
-							<button
-								type="button"
-								onClick={() => setConfirm(false)}
-								className="text-foreground/60 hover:text-foreground text-sm font-medium"
-							>
-								Annullér
-							</button>
-						</>
-					) : (
-						<button
-							type="button"
-							onClick={() => {
-								setConfirm(true)
-								setState('idle')
-								setNotice('')
-							}}
-							disabled={!to.trim() || !fields.intro.trim()}
-							className="bg-foreground text-background rounded-full px-5 py-2.5 text-sm font-medium transition-opacity disabled:opacity-40"
-						>
-							Send besked
-						</button>
-					)}
-				</div>
+						{template === 'anmeldelser' ? (
+							<div className="mt-4 grid gap-4 sm:grid-cols-2">
+								<div>
+									<label htmlFor="msg-review" className={labelCls}>
+										Link til anmeldelser
+									</label>
+									<input
+										id="msg-review"
+										type="url"
+										value={fields.reviewLink}
+										onChange={(e) => set('reviewLink', e.target.value)}
+										placeholder="https://g.page/r/…/review"
+										className={input}
+									/>
+								</div>
+								<div>
+									<label htmlFor="msg-sign" className={labelCls}>
+										Hilsen i SMS'en
+									</label>
+									<input
+										id="msg-sign"
+										type="text"
+										value={fields.smsSign}
+										onChange={(e) => set('smsSign', e.target.value)}
+										placeholder="Fx Michael, Malerfirma Seitz"
+										className={input}
+									/>
+								</div>
+								<label className="text-foreground/70 flex items-center gap-2 text-sm sm:col-span-2">
+									<input
+										type="checkbox"
+										checked={fields.askPhotos}
+										onChange={(e) => set('askPhotos', e.target.checked)}
+									/>
+									Bed også om 10 billeder af kundens opgaver
+								</label>
+							</div>
+						) : template === 'fri' ? (
+							<div className="mt-4 grid gap-4 sm:grid-cols-2">
+								<div>
+									<label htmlFor="msg-btn" className={labelCls}>
+										Knap (valgfri)
+									</label>
+									<input
+										id="msg-btn"
+										type="text"
+										value={fields.buttonText}
+										onChange={(e) => set('buttonText', e.target.value)}
+										placeholder="Fx Se dashboardet"
+										className={input}
+									/>
+								</div>
+								<div>
+									<label htmlFor="msg-btn-link" className={labelCls}>
+										Knappens link
+									</label>
+									<input
+										id="msg-btn-link"
+										type="url"
+										value={fields.buttonLink}
+										onChange={(e) => set('buttonLink', e.target.value)}
+										placeholder="https://…"
+										className={input}
+									/>
+								</div>
+							</div>
+						) : null}
+
+						<div className="border-foreground/[0.08] bg-background mt-5 rounded-2xl border p-4 text-sm">
+							<p className={labelCls}>Forhåndsvisning</p>
+							<p className="text-foreground/50 mt-2">
+								Emne: <span className="text-foreground">{mail.subject}</span>
+							</p>
+							<iframe
+								title="Forhåndsvisning af beskeden"
+								srcDoc={mail.html}
+								// ingen scripts; same-origin så logo, portræt og QR-kode kan hentes
+								sandbox="allow-same-origin"
+								className="mt-3 h-[1100px] w-full rounded-xl border-0 bg-white"
+							/>
+						</div>
+
+						<div className="mt-4 flex flex-wrap items-center gap-3">
+							{confirm ? (
+								<>
+									<span className="text-foreground text-sm">
+										Send til <strong>{to}</strong>?
+									</span>
+									<button
+										type="button"
+										onClick={send}
+										disabled={state === 'sending'}
+										className="bg-foreground text-background rounded-full px-5 py-2.5 text-sm font-medium transition-opacity disabled:opacity-40"
+									>
+										{state === 'sending' ? 'Sender…' : 'Ja, send nu'}
+									</button>
+									<button
+										type="button"
+										onClick={() => setConfirm(false)}
+										className="text-foreground/60 hover:text-foreground text-sm font-medium"
+									>
+										Annullér
+									</button>
+								</>
+							) : (
+								<button
+									type="button"
+									onClick={() => {
+										setConfirm(true)
+										setState('idle')
+										setNotice('')
+									}}
+									disabled={!to.trim() || !fields.intro.trim()}
+									className="bg-foreground text-background rounded-full px-5 py-2.5 text-sm font-medium transition-opacity disabled:opacity-40"
+								>
+									Send besked
+								</button>
+							)}
+						</div>
+					</>
+				)}
 				{notice && (
 					<p
 						className={
