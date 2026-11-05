@@ -29,8 +29,8 @@ export const runtime = 'nodejs'
  * /tjek-mail; en kopieret mail uden kendt kode er altså ikke fra Horizen.
  *
  * Afsender: den Horizen-medarbejder, der er logget ind (fx
- * "Andreas José · Horizen <ajg@horizen.dk>"), med svar-til og en kopi til
- * samme adresse. Kundens svar lander altså i Horizen-indbakken.
+ * "Andreas José · Horizen <ajg@horizen.dk>"), med svar-til samme adresse.
+ * Kundens svar lander altså i Horizen-indbakken. Ingen kopi (se nedenfor).
  *
  * Kræver HORIZEN_RESEND_API_KEY: Horizens egen Resend-nøgle, hvor horizen.dk
  * er verificeret (kundens RESEND_API_KEY kan ikke sende fra horizen.dk).
@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
 		: ''
 
 	// Én mail pr. modtager: hver får sin egen kontrolkode, og ingen kan se de
-	// andre modtagere. Kopien til afsenderen følger kun med den første.
+	// andre modtagere.
 	const sent: string[] = []
 	const failed: string[] = []
 	for (const [i, recipient] of to.entries()) {
@@ -133,7 +133,10 @@ export async function POST(request: NextRequest) {
 		const { data, error } = await resend.emails.send({
 			from: own ? `${sender || 'Horizen'} · Horizen <${own}>` : FALLBACK_FROM,
 			to: [recipient],
-			...(own && { replyTo: own, ...(i === 0 && { bcc: own }) }),
+			// Ingen kopi til afsenderen: kopien er samme mail i Resend, så åbnede
+			// afsenderen den, ville den stå som "Åbnet" hos modtageren. Historikken
+			// i fanen Beskeder viser i stedet alt, der er sendt.
+			...(own && { replyTo: own }),
 			subject: mail.subject,
 			html: mail.html,
 			text: mail.text,

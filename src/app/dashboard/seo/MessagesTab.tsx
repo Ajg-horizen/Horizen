@@ -152,7 +152,7 @@ export default function MessagesTab({
 			setState(data.failed?.length ? 'error' : 'sent')
 			const n = data.sent?.length ?? 0
 			setNotice(
-				`Sendt til ${n === 1 ? data.sent![0] : `${n} modtagere (én mail hver)`}. Du har fået en kopi.` +
+				`Sendt til ${n === 1 ? data.sent![0] : `${n} modtagere (én mail hver)`}. Den står nu under Sendt til kunden.` +
 					(data.failed?.length
 						? ` Kunne ikke sendes til: ${data.failed.join(', ')}.`
 						: ''),
@@ -174,7 +174,7 @@ export default function MessagesTab({
 				</p>
 				<p className="text-foreground/50 mt-1 text-sm">
 					Mailen kommer fra dig, og når kunden svarer, lander svaret i din
-					indbakke.
+					indbakke. Du får ingen kopi, så Åbnet kun viser modtagerens åbning.
 				</p>
 
 				<div className="mt-5 flex flex-wrap gap-2">
