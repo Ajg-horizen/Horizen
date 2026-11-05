@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { pathFromReferer, recordLead } from "@/lib/siteEvents";
+import { isTrafficSource } from "@/lib/trafficSource";
 
 const FROM = "Horizen Kontakt <noreply@horizen.dk>";
 const TO = "ajg@horizen.dk";
@@ -15,12 +17,13 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { name, email, company, topic, message } = body as {
+    const { name, email, company, topic, message, source } = body as {
       name?: string;
       email?: string;
       company?: string;
       topic?: string;
       message?: string;
+      source?: unknown;
     };
 
     if (!name || !email || !message) {
@@ -57,6 +60,13 @@ export async function POST(request: Request) {
         { status: 500 },
       );
     }
+
+    // Anonym tælling til SEO-dashboardet (Henvendelser) med besøgets kilde; fejler aldrig for brugeren
+    await recordLead(
+      "form",
+      pathFromReferer(request),
+      isTrafficSource(source) ? source : undefined,
+    ).catch(() => {});
 
     return NextResponse.json({ ok: true });
   } catch (err) {

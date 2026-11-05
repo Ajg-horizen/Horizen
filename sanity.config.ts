@@ -5,6 +5,7 @@ import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { apiVersion, projectId } from "@/sanity/env";
 import { schemaTypes } from "@/sanity/schemaTypes";
+import { StudioLayout } from "@/sanity/ui/StudioLayout";
 
 /**
  * Studio er indlejret på horizen.dk/admin, som på kundesiterne.
@@ -22,6 +23,8 @@ function workspace(dataset: "production" | "development", title: string): Worksp
     dataset,
     plugins: [structureTool(), visionTool({ defaultApiVersion: apiVersion })],
     schema: { types: schemaTypes },
+    // efter login sendes man tilbage til SEO-dashboardet, hvis man kom derfra
+    studio: { components: { layout: StudioLayout } },
   };
 }
 

@@ -1,15 +1,12 @@
-import { messagesClient } from "@/sanity/messages";
-import {
-  HORIZEN_PHONE,
-  normalizeCode,
-} from "@/app/(site)/dashboard/beskeder/messageText";
+import { writeClient } from '@/sanity/lib/writeClient'
+import { HORIZEN_PHONE, normalizeCode } from '@/app/dashboard/seo/messageText'
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 /**
- * Tjek af en mail fra Horizen (Andreas 5/11-2026). Hver besked fra siden
- * /dashboard/beskeder har en ægthedskode (fx H-7F3K-92QD) i mærket nederst. Her slår
+ * Tjek af en mail fra Horizen (Andreas 5/11-2026). Hver besked fra fanen
+ * "Beskeder" har en ægthedskode (fx H-7F3K-92QD) i mærket nederst. Her slår
  * kunden koden op: findes den, står afsender, dato og emne; findes den ikke,
  * er mailen ikke sendt af Horizen. Modtagerens mail vises kun delvist.
  *
@@ -17,70 +14,70 @@ export const dynamic = "force-dynamic";
  */
 
 type Found = {
-  sentAt: string;
-  sentTo: string;
-  sentBy?: string;
-  subject: string;
-};
+	sentAt: string
+	sentTo: string
+	sentBy?: string
+	subject: string
+}
 
 const escapeHtml = (s: string) =>
-  s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
+	s
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;')
 
 /** seitz8000@gmail.com → s•••••••@gmail.com */
 const mask = (emails: string) =>
-  emails
-    .split(/,\s*/)
-    .map((e) => {
-      const [user, domain] = e.split("@");
-      return domain
-        ? `${user[0]}${"•".repeat(Math.max(user.length - 1, 3))}@${domain}`
-        : e;
-    })
-    .join(", ");
+	emails
+		.split(/,\s*/)
+		.map((e) => {
+			const [user, domain] = e.split('@')
+			return domain
+				? `${user[0]}${'•'.repeat(Math.max(user.length - 1, 3))}@${domain}`
+				: e
+		})
+		.join(', ')
 
 export async function GET(request: Request) {
-  const raw = new URL(request.url).searchParams.get("kode") ?? "";
-  const code = normalizeCode(raw);
+	const raw = new URL(request.url).searchParams.get('kode') ?? ''
+	const code = normalizeCode(raw)
 
-  let found: Found | null = null;
-  if (code) {
-    try {
-      found = await messagesClient().fetch<Found | null>(
-        `*[_type == "seoClientMessage" && code == $code][0]{ sentAt, sentTo, sentBy, subject }`,
-        { code },
-        { cache: "no-store" },
-      );
-    } catch (err) {
-      console.error("[tjek-mail] Kunne ikke slå koden op:", err);
-    }
-  }
+	let found: Found | null = null
+	if (code) {
+		try {
+			found = await writeClient.fetch<Found | null>(
+				`*[_type == "seoClientMessage" && code == $code][0]{ sentAt, sentTo, sentBy, subject }`,
+				{ code },
+				{ cache: 'no-store' },
+			)
+		} catch (err) {
+			console.error('[tjek-mail] Kunne ikke slå koden op:', err)
+		}
+	}
 
-  const date = (iso: string) =>
-    new Date(iso).toLocaleString("da-DK", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      timeZone: "Europe/Copenhagen",
-    });
-  const phone = `<a href="tel:${HORIZEN_PHONE.replace(/\s/g, "")}">${HORIZEN_PHONE}</a>`;
+	const date = (iso: string) =>
+		new Date(iso).toLocaleString('da-DK', {
+			day: 'numeric',
+			month: 'long',
+			year: 'numeric',
+			hour: '2-digit',
+			minute: '2-digit',
+			timeZone: 'Europe/Copenhagen',
+		})
+	const phone = `<a href="tel:${HORIZEN_PHONE.replace(/\s/g, '')}">${HORIZEN_PHONE}</a>`
 
-  const result = !raw
-    ? ""
-    : found
-      ? `<div class="result ok"><img src="/email/horizen-maerke.gif" width="44" height="44" alt="">
+	const result = !raw
+		? ''
+		: found
+			? `<div class="result ok"><img src="/email/horizen-maerke.gif" width="44" height="44" alt="">
 <div><p class="t">Verificeret af Horizen</p>
-<p>Sendt af <strong>${escapeHtml(found.sentBy || "Horizen")}</strong> ${escapeHtml(date(found.sentAt))}<br>
+<p>Sendt af <strong>${escapeHtml(found.sentBy || 'Horizen')}</strong> ${escapeHtml(date(found.sentAt))}<br>
 til ${escapeHtml(mask(found.sentTo))}<br>Emne: ${escapeHtml(found.subject)}</p></div></div>`
-      : `<div class="result bad"><div><p class="t">Koden findes ikke</p>
-<p>Mailen er ikke sendt af Horizen, eller koden er skrevet forkert. Klik ikke på noget i mailen, og ring til ${phone}, hvis du er i tvivl.</p></div></div>`;
+			: `<div class="result bad"><div><p class="t">Koden findes ikke</p>
+<p>Mailen er ikke sendt af Horizen, eller koden er skrevet forkert. Klik ikke på noget i mailen, og ring til ${phone}, hvis du er i tvivl.</p></div></div>`
 
-  const html = `<!doctype html>
+	const html = `<!doctype html>
 <html lang="da">
 <head>
 <meta charset="utf-8">
@@ -120,13 +117,13 @@ ${result}
 <img class="logo" src="/email/horizen-logo.png" alt="Horizen">
 </main>
 </body>
-</html>`;
+</html>`
 
-  return new Response(html, {
-    headers: {
-      "Content-Type": "text/html; charset=utf-8",
-      "X-Robots-Tag": "noindex, nofollow",
-      "Cache-Control": "no-store",
-    },
-  });
+	return new Response(html, {
+		headers: {
+			'Content-Type': 'text/html; charset=utf-8',
+			'X-Robots-Tag': 'noindex, nofollow',
+			'Cache-Control': 'no-store',
+		},
+	})
 }
