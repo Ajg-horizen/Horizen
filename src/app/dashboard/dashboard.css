@@ -1,0 +1,445 @@
+/**
+ * Dashboard-stylesheet — BEVIDST selvstændigt.
+ *
+ * Dette er en egen Tailwind-indgang (@import 'tailwindcss') med sit eget @theme,
+ * så /dashboard IKKE arver eller afhænger af det offentlige tema i
+ * src/styles/app.css. Kun dashboard-layoutet importerer denne fil, og fordi
+ * /dashboard ligger uden for (frontend)-gruppen, indlæses det offentlige sitets
+ * CSS/header/footer aldrig her.
+ *
+ * Hele farve-hierarkiet bygges med FOREGROUND-OPACITET (kanter
+ * foreground/[0.08], svage flader foreground/[0.02], pills foreground/[0.04]).
+ * Lys og mørk tilstand skifter kun variablerne herunder (html[data-theme]);
+ * komponenterne er de samme. Kortene (afrundet bg-white) er glas, se
+ * "Glaskort" herunder. seo/_tokens.ts peger på de samme variabler.
+ */
+@import 'tailwindcss';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+@theme {
+	/* Dashboard-baggrund — bg-background */
+	--color-background: #f6f9fd;
+	/* Primær tekst — text-foreground, border-foreground/*, bg-foreground/* */
+	--color-foreground: #0f0f0f;
+	/* Dæmpet tekst — text-muted */
+	--color-muted: #6b6b6b;
+	/* Neutral kant-farve — border-border */
+	--color-border: #e0e0e0;
+	/* Popover/inputs — bg-popover */
+	--color-popover: #ffffff;
+	/* Kort (bg-white): glas i begge tilstande */
+	--color-white: rgb(255 255 255 / 0.72);
+
+	/* Bløde, store hjørner til bento-kortene */
+	--radius-2xl: 1.375rem;
+	--radius-3xl: 1.75rem;
+}
+
+/* Status-farver (StatusBadge m.fl.) som variabler, så de virker i begge tilstande */
+:root {
+	--accent: #059669;
+	--st-done-dot: #059669;
+	--st-done-bg: #ecfdf5;
+	--st-done-text: #047857;
+	--st-done-border: #a7f3d0;
+	--st-partial-dot: #d97706;
+	--st-partial-bg: #fffbeb;
+	--st-partial-text: #b45309;
+	--st-partial-border: #fde68a;
+	--st-missing-dot: #dc2626;
+	--st-missing-bg: #fef2f2;
+	--st-missing-text: #b91c1c;
+	--st-missing-border: #fecaca;
+	--st-later-dot: #9ca3af;
+	--st-later-bg: #f9fafb;
+	--st-later-text: #4b5563;
+	--st-later-border: #e5e7eb;
+	--st-info-bg: #e6f1fb;
+	--st-info-text: #0c447c;
+	--st-info-border: #b5d4f4;
+	--st-info-dot: #3b82f6;
+
+	/* Svag farveovergang, der stiger op fra bunden: lyserød, grøn, blå.
+	   Centrene ligger under skærmen og felterne er store, så farven spredes
+	   jævnt i stedet for at klumpe sig sammen i bundkanten. */
+	--glow-a: rgb(244 114 182 / 0.16);
+	--glow-a-size: 75rem 44rem;
+	--glow-a-at: 0% 118%;
+	--glow-b: rgb(96 165 250 / 0.17);
+	--glow-b-size: 75rem 44rem;
+	--glow-b-at: 100% 118%;
+	--glow-c: rgb(52 211 153 / 0.16);
+	--glow-c-size: 85rem 46rem;
+	--glow-c-at: 50% 122%;
+
+	/* Farver til ikoner (menu og nøglekort), så lys tilstand ikke bliver mat.
+	   I mørk tilstand er de neutrale (se herunder). */
+	--tone-blue: #2563eb;
+	--tone-green: #059669;
+	--tone-orange: #ea580c;
+	--tone-violet: #7c3aed;
+	--tone-pink: #db2777;
+	--tone-bg-alpha: 10%;
+	--card-shadow:
+		0 1px 2px rgb(0 0 0 / 0.015), 0 12px 32px -18px rgb(0 0 0 / 0.09);
+	--card-highlight: inset 0 1px 0 rgb(255 255 255 / 0.9);
+}
+
+:root[data-theme='dark'] {
+	color-scheme: dark;
+	--color-background: #08090a;
+	--color-foreground: #f2f2ee;
+	--color-muted: #9b9b96;
+	--color-border: #26282a;
+	--color-popover: #16181a;
+	--color-white: rgb(255 255 255 / 0.04);
+
+	--accent: #34d399;
+	--st-done-dot: #34d399;
+	--st-done-bg: rgb(52 211 153 / 0.12);
+	--st-done-text: #6ee7b7;
+	--st-done-border: rgb(52 211 153 / 0.25);
+	--st-partial-dot: #fbbf24;
+	--st-partial-bg: rgb(251 191 36 / 0.12);
+	--st-partial-text: #fcd34d;
+	--st-partial-border: rgb(251 191 36 / 0.25);
+	--st-missing-dot: #f87171;
+	--st-missing-bg: rgb(248 113 113 / 0.12);
+	--st-missing-text: #fca5a5;
+	--st-missing-border: rgb(248 113 113 / 0.25);
+	--st-later-dot: #9ca3af;
+	--st-later-bg: rgb(255 255 255 / 0.05);
+	--st-later-text: #c4c4c0;
+	--st-later-border: rgb(255 255 255 / 0.1);
+	--st-info-bg: rgb(96 165 250 / 0.12);
+	--st-info-text: #93c5fd;
+	--st-info-border: rgb(96 165 250 / 0.25);
+	--st-info-dot: #60a5fa;
+
+	--glow-a: rgb(52 211 153 / 0.16);
+	--glow-b: rgb(255 255 255 / 0.05);
+	--glow-c: rgb(96 165 250 / 0.1);
+	--glow-c-size: 44rem 32rem;
+	--glow-c-at: 45% 55%;
+	--glow-a-size: 60rem 40rem;
+	--glow-a-at: 85% -10%;
+	--glow-b-size: 50rem 36rem;
+	--glow-b-at: 100% 95%;
+
+	/* Ikonerne følger tekstfarven i mørk tilstand (uændret udtryk) */
+	--tone-blue: currentColor;
+	--tone-green: currentColor;
+	--tone-orange: currentColor;
+	--tone-violet: currentColor;
+	--tone-pink: currentColor;
+	--tone-bg-alpha: 0%;
+	--card-shadow: 0 18px 40px -20px rgb(0 0 0 / 0.35);
+	--card-highlight: inset 0 1px 0 rgb(255 255 255 / 0.06);
+}
+
+@layer base {
+	* {
+		min-width: 0;
+	}
+
+	/* Inter sættes af next/font i layout.tsx (--font-inter). */
+	body {
+		font-family:
+			var(--font-inter),
+			ui-sans-serif,
+			system-ui,
+			-apple-system,
+			'Segoe UI',
+			Roboto,
+			Helvetica,
+			Arial,
+			sans-serif;
+		/* Bløde lysfelter bag glaskortene */
+		background-image:
+			radial-gradient(
+				var(--glow-a-size) at var(--glow-a-at),
+				var(--glow-a),
+				transparent 60%
+			),
+			radial-gradient(
+				var(--glow-b-size) at var(--glow-b-at),
+				var(--glow-b),
+				transparent 60%
+			),
+			radial-gradient(
+				var(--glow-c-size) at var(--glow-c-at),
+				var(--glow-c),
+				transparent 65%
+			);
+		background-attachment: fixed;
+		transition:
+			background-color 0.3s ease,
+			color 0.3s ease;
+	}
+}
+
+/*
+ * Lys tilstand: farveovergangen fra bunden spejles i toppen (blå til venstre,
+ * lyserød til højre), så de to toner glider sammen mod midten.
+ */
+:root[data-theme='light'] body {
+	background-image:
+		radial-gradient(
+			var(--glow-b-size) at 0% -18%,
+			var(--glow-b),
+			transparent 60%
+		),
+		radial-gradient(
+			var(--glow-c-size) at 50% -22%,
+			var(--glow-c),
+			transparent 65%
+		),
+		radial-gradient(
+			var(--glow-a-size) at 100% -18%,
+			var(--glow-a),
+			transparent 60%
+		),
+		radial-gradient(
+			var(--glow-a-size) at var(--glow-a-at),
+			var(--glow-a),
+			transparent 60%
+		),
+		radial-gradient(
+			var(--glow-b-size) at var(--glow-b-at),
+			var(--glow-b),
+			transparent 60%
+		),
+		radial-gradient(
+			var(--glow-c-size) at var(--glow-c-at),
+			var(--glow-c),
+			transparent 65%
+		);
+}
+
+/*
+ * Glaskort. Alle kort på dashboardet er afrundede `bg-white`-flader:
+ *
+ *   - Overalt (fx menuen): blur over baggrunden og en blød skygge.
+ *   - I indholdet (`main`): "pop"-glas. Mere gennemsigtigt, stærkere blur og
+ *     en lysende gradient-kant, der fanger lyset øverst til venstre og toner
+ *     ud. Kanten er et ::before-lag med maske, så hjørnerne følger
+ *     border-radius. Reglerne ligger uden for @layer, så de vinder over
+ *     kortenes egne bg- og border-utilities.
+ */
+@layer components {
+	.bg-white:where(.rounded-2xl, .rounded-3xl, [class*='rounded-[']) {
+		/* Kun den almindelige: byggeriet tilføjer selv -webkit- til Safari. Står
+		   begge her, fjerner minimeringen den almindelige, og Chrome mister blur'en. */
+		backdrop-filter: blur(18px) saturate(140%);
+		box-shadow: var(--card-highlight), var(--card-shadow);
+	}
+}
+
+:root {
+	--pop-fill: linear-gradient(
+		160deg,
+		rgb(255 255 255 / 0.62),
+		rgb(255 255 255 / 0.3)
+	);
+	--pop-edge: linear-gradient(
+		140deg,
+		rgb(255 255 255 / 1),
+		rgb(255 255 255 / 0.75) 35%,
+		rgb(15 15 15 / 0.06) 70%,
+		rgb(255 255 255 / 0.95)
+	);
+	/* Kantens tykkelse (lys tilstand: lidt tykkere, så den står tydeligt) */
+	--pop-edge-width: 2px;
+	/* Lyst skær i overkanten og en svag skygge */
+	--pop-shadow:
+		0 1px 0 rgb(255 255 255 / 0.95) inset,
+		0 24px 50px -26px rgb(15 15 15 / 0.11);
+}
+:root[data-theme='dark'] {
+	/* Fyld og kant er dæmpet (ca. 64 % af den første udgave), så glasset ikke bliver for kraftigt */
+	--pop-fill: linear-gradient(
+		160deg,
+		rgb(255 255 255 / 0.048),
+		rgb(255 255 255 / 0.0128)
+	);
+	--pop-edge: linear-gradient(
+		140deg,
+		rgb(255 255 255 / 0.32),
+		rgb(255 255 255 / 0.064) 30%,
+		rgb(255 255 255 / 0.0192) 60%,
+		rgb(255 255 255 / 0.1408)
+	);
+	--pop-edge-width: 1px;
+	--pop-shadow:
+		0 1px 0 rgb(255 255 255 / 0.08) inset, 0 24px 60px -28px rgb(0 0 0 / 0.42);
+}
+
+main .bg-white:where(.rounded-2xl, .rounded-3xl, [class*='rounded-[']) {
+	position: relative;
+	isolation: isolate;
+	background: var(--pop-fill);
+	border-color: transparent;
+	backdrop-filter: blur(28px) saturate(170%);
+	box-shadow: var(--pop-shadow);
+}
+main .bg-white:where(.rounded-2xl, .rounded-3xl, [class*='rounded-['])::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	border-radius: inherit;
+	padding: var(--pop-edge-width);
+	background: var(--pop-edge);
+	-webkit-mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	pointer-events: none;
+}
+
+/*
+ * Svagt baggrunds-grid i lys tilstand (inspireret af horizen.dk's hero), tegnet
+ * i ren CSS: tynde grønlige streger, tonet ud i top og bund. Styrken styres af
+ * --grid-line, tætheden af --grid-size.
+ */
+:root[data-theme='light'] body::before {
+	--grid-line: rgb(5 150 105 / 0.045);
+	--grid-size: 16px;
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+	background-image:
+		linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+		linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+	background-size: var(--grid-size) var(--grid-size);
+	mask-image: linear-gradient(
+		to bottom,
+		transparent 0%,
+		black 12%,
+		black 88%,
+		transparent 100%
+	);
+	-webkit-mask-image: linear-gradient(
+		to bottom,
+		transparent 0%,
+		black 12%,
+		black 88%,
+		transparent 100%
+	);
+}
+
+/*
+ * Event horizon (kun mørk tilstand), tegnet i CSS: en kulsort planet rejser
+ * sig fra bunden af skærmen. Dens kant er en tynd, skarp lyslinje med en blød
+ * glød udenom (--hz-*-farverne), stærkest mod højre og tonet ud mod venstre (maske), som
+ * lys, der bryder over horisonten. Ingen billeder.
+ *
+ *   --hz-r   planetens radius
+ *   --hz-cy  planetens centrum under skærmens bund (buens top = cy - r)
+ */
+:root[data-theme='dark'] body::before {
+	--hz-r: 150vmax;
+	/* Kantens farver: kerne (lyslinjen), mellemtone og glød (r g b) */
+	--hz-core: 236 255 246;
+	--hz-mid: 110 231 183;
+	--hz-glow: 52 211 153;
+	/* Toppen af buen ligger 18 % af skærmhøjden over bunden */
+	--hz-cy: calc(100% + var(--hz-r) - 18vh);
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+	background:
+		/* Planeten: kulsort helt ud til kanten */
+		radial-gradient(
+			circle var(--hz-r) at 50% var(--hz-cy),
+			#030404 calc(var(--hz-r) - 1px),
+			transparent var(--hz-r)
+		),
+		/* Kanten: skarp lyslinje, så glød der toner ud */
+		radial-gradient(
+				circle calc(var(--hz-r) + 220px) at 50% var(--hz-cy),
+				transparent calc(var(--hz-r) - 2px),
+				rgb(var(--hz-core) / 0.95) var(--hz-r),
+				rgb(var(--hz-mid) / 0.55) calc(var(--hz-r) + 4px),
+				rgb(var(--hz-glow) / 0.22) calc(var(--hz-r) + 28px),
+				rgb(var(--hz-glow) / 0.08) calc(var(--hz-r) + 90px),
+				transparent calc(var(--hz-r) + 220px)
+			);
+	/* Lyset bryder stærkest mod højre og forsvinder mod venstre */
+	mask-image: linear-gradient(
+		100deg,
+		transparent 8%,
+		rgb(0 0 0 / 0.35) 38%,
+		#000 78%
+	);
+	-webkit-mask-image: linear-gradient(
+		100deg,
+		transparent 8%,
+		rgb(0 0 0 / 0.35) 38%,
+		#000 78%
+	);
+	opacity: 0.9;
+}
+
+/*
+ * Blød overgang, når man skifter side i menuen: diskret, men glidende.
+ *
+ * Hele siden glider op (transform), og alt uden for kortene toner ind. Selve
+ * kortene toner ikke: opacity < 1 på et kort eller en forælder gør det til
+ * "backdrop root", så browseren slår glassets blur fra under overgangen, og
+ * blur'en ville hakke ind til sidst.
+ */
+@keyframes dash-rise {
+	from {
+		transform: translateY(14px);
+	}
+}
+@keyframes dash-fade-in {
+	from {
+		opacity: 0;
+	}
+}
+/* Kun når brugeren ikke har bedt om mindre bevægelse */
+@media (prefers-reduced-motion: no-preference) {
+	.dash-fade {
+		animation: dash-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+	/* De største dele, der hverken er et kort eller rummer et */
+	:is(
+			.dash-fade,
+			.dash-fade
+				:has(.bg-white:is(.rounded-2xl, .rounded-3xl, [class*='rounded-[']))
+		)
+		> :not(
+			.bg-white:is(.rounded-2xl, .rounded-3xl, [class*='rounded-[']),
+			:has(.bg-white:is(.rounded-2xl, .rounded-3xl, [class*='rounded-[']))
+		) {
+		animation: dash-fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+}
+
+/* Sidens helbred: glidende bjælke, mens Google måler */
+@keyframes health-progress {
+	from {
+		transform: translateX(-100%);
+	}
+	to {
+		transform: translateX(300%);
+	}
+}
+.health-progress {
+	animation: health-progress 1.4s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+	.health-progress {
+		animation: none;
+		width: 100%;
+		opacity: 0.5;
+	}
+}

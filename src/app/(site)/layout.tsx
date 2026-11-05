@@ -7,6 +7,7 @@ import CalEmbed from "@/components/CalEmbed";
 import Script from "next/script";
 import { testimonials } from "@/lib/testimonials";
 import "./globals.css";
+import SiteTracking from "@/components/SiteTracking";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -186,6 +187,8 @@ export default function RootLayout({
           Spring til indhold
         </a>
         <SmoothScroll />
+        {/* anonym måling til SEO-dashboardet: henvendelser med kilde og AI-besøg */}
+        <SiteTracking />
         <ScrollToTop />
         {children}
         <script

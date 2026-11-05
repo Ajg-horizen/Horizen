@@ -1,5 +1,9 @@
-import { seoSnapshot } from "./documents/seo-snapshot";
-import { seoClientMessage } from "./documents/seo-client-message";
+import seoSnapshot from "./documents/seoSnapshot";
+import pageHealth from "./documents/pageHealth";
+import seoInboxItem from "./documents/seoInboxItem";
+import seoQuestionAnswer from "./documents/seoQuestionAnswer";
+import seoQuestionNotice from "./documents/seoQuestionNotice";
+import seoClientMessage from "./documents/seoClientMessage";
 import { servicePage } from "./documents/service-page";
 import { aiCitation } from "./blocks/ai-citation";
 import { centeredCta } from "./blocks/centered-cta";
@@ -14,6 +18,10 @@ import { sectionTOC } from "./blocks/section-toc";
 export const schemaTypes = [
   servicePage,
   seoSnapshot,
+  pageHealth,
+  seoInboxItem,
+  seoQuestionAnswer,
+  seoQuestionNotice,
   seoClientMessage,
   hero,
   sectionTOC,

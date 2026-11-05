@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import Container from "@/components/Container";
+import { landingSource } from "@/lib/trafficSource";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -35,7 +36,8 @@ export default function ContactPageContent() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        // besøgets kilde (Google Ads, organisk osv.) til dashboardets Henvendelser
+        body: JSON.stringify({ ...payload, source: landingSource() }),
       });
       if (!res.ok) throw new Error("Send fejlede");
       setStatus("sent");
