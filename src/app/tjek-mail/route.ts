@@ -95,7 +95,7 @@ til ${escapeHtml(mask(found.sentTo))}<br>Emne: ${escapeHtml(found.subject)}</p><
 	input { flex: 1; min-width: 0; border: 1px solid #d9d9d4; border-radius: 10px; padding: 12px 14px; font: 600 15px 'SF Mono', Menlo, Consolas, monospace; letter-spacing: .04em; text-transform: uppercase }
 	button { border: 0; border-radius: 10px; background: #0f0f0f; color: #fff; padding: 12px 20px; font: inherit;
 		font-weight: 600; cursor: pointer }
-	.result { display: flex; gap: 14px; align-items: flex-start; margin-top: 24px; border-radius: 12px; padding: 16px 18px }
+	.result { display: flex; gap: 14px; align-items: flex-start; margin-top: 20px; border-radius: 12px; padding: 16px 18px }
 	.result p { margin: 2px 0 0; font-size: 14px }
 	.result .t { margin: 0; font-weight: 700; font-size: 15px }
 	.ok { background: #eef6f1; border: 1px solid #bfe5d2 }
@@ -106,13 +106,20 @@ til ${escapeHtml(mask(found.sentTo))}<br>Emne: ${escapeHtml(found.subject)}</p><
 </head>
 <body>
 <main>
-<h1>Verificér en mail fra Horizen</h1>
+${
+	found
+		? // Koden er tjekket: kun svaret, ingen ny knap (man skal ikke trykke igen)
+			`<h1>Mailen er ægte</h1>
+${result}
+<p style="margin-top:16px;font-size:13px"><a href="/tjek-mail">Tjek en anden kode</a></p>`
+		: `<h1>Verificér en mail fra Horizen</h1>
 <p class="muted">Alle beskeder fra Horizen har en kontrolkode nederst i mailen. Skriv den her for at se, om mailen er ægte.</p>
+${result}
 <form method="get" action="/tjek-mail">
 <input name="kode" value="${escapeHtml(code || raw)}" placeholder="H-XXXX-XXXX" maxlength="20" autocomplete="off" aria-label="Kontrolkode">
-<button type="submit">Verificér</button>
-</form>
-${result}
+<button type="submit">${raw ? 'Prøv igen' : 'Verificér'}</button>
+</form>`
+}
 <p class="muted" style="margin-top:24px;font-size:13px">Er du i tvivl, så ring til Horizen på ${phone}, før du svarer eller klikker.</p>
 <img class="logo" src="/email/horizen-logo.png" alt="Horizen">
 </main>
