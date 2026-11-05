@@ -1,4 +1,5 @@
 import { seoSnapshot } from "./documents/seo-snapshot";
+import { seoClientMessage } from "./documents/seo-client-message";
 import { servicePage } from "./documents/service-page";
 import { aiCitation } from "./blocks/ai-citation";
 import { centeredCta } from "./blocks/centered-cta";
@@ -13,6 +14,7 @@ import { sectionTOC } from "./blocks/section-toc";
 export const schemaTypes = [
   servicePage,
   seoSnapshot,
+  seoClientMessage,
   hero,
   sectionTOC,
   aiCitation,
