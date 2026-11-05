@@ -172,7 +172,11 @@ async function getAnswers(): Promise<Record<string, SavedAnswer>> {
  * Fejler blødt: uden nøgle eller svar står der bare ingen status.
  */
 async function withMailStatus(rows: SentMessage[]): Promise<SentMessage[]> {
-	const key = process.env.HORIZEN_RESEND_API_KEY?.trim()
+	// Horizens nøgle; ellers sitets egen (på horizen.dk er det den samme konto).
+	// Nøgler med kun "Sending access" kan ikke læse status: så står der ingen.
+	const key =
+		process.env.HORIZEN_RESEND_API_KEY?.trim() ||
+		process.env.RESEND_API_KEY?.trim()
 	if (!key) return rows
 	const resend = new Resend(key)
 	return Promise.all(
