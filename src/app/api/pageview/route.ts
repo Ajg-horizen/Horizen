@@ -1,6 +1,8 @@
 import { cleanPath } from '@/lib/siteEvents'
 import { recordPageview, recordTime } from '@/lib/pageStats'
 import { isTrafficSource } from '@/lib/trafficSource'
+import { lookupCompany } from '@/lib/companyLookup'
+import { recordCompanyView } from '@/lib/companies'
 
 export const runtime = 'nodejs'
 
@@ -36,11 +38,17 @@ export async function POST(req: Request) {
 	if (path.startsWith('/dashboard') || path.startsWith('/admin')) return done
 
 	if (body.type === 'view') {
-		await recordPageview(
-			path,
-			body.landing === true,
-			isTrafficSource(body.source) ? body.source : 'direct',
-		)
+		const landing = body.landing === true
+		const source = isTrafficSource(body.source) ? body.source : 'direct'
+		// Virksomhed ud fra nettet (src/lib/companyLookup.ts). Vercel sætter selv
+		// x-forwarded-for til den besøgendes adresse; den gemmes ingen steder.
+		const ip = req.headers.get('x-forwarded-for')?.split(',')[0] ?? req.headers.get('x-real-ip')
+		await Promise.all([
+			recordPageview(path, landing, source),
+			process.env.VERCEL_ENV === 'production'
+				? lookupCompany(ip).then((c) => recordCompanyView(c, path, landing, source))
+				: null,
+		])
 	} else if (body.type === 'time' && typeof body.seconds === 'number') {
 		await recordTime(path, body.seconds)
 	}
