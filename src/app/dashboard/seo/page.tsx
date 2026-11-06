@@ -43,6 +43,8 @@ import {
 } from './SiteEventsSections'
 import VisitsTab from './VisitsTab'
 import { getVisits } from '@/lib/visits'
+import CompaniesTab from './CompaniesTab'
+import { getCompanies } from '@/lib/companies'
 import { LATER_META, STATUS_META } from './statusMeta'
 import SetupTab, { setupProgress } from './SetupTab'
 import HealthCheck from './HealthCheck'
@@ -1372,7 +1374,7 @@ export default async function SeoOverviewPage({
 	const answers = await getAnswers()
 	const noticeState = await getNoticeState()
 	const sentMessages = isHorizen ? await getSentMessages() : []
-	const [snapshots, seoCheckRun, leadRows, aiRows, searchTrend, pageHealth, visits] = await Promise.all([
+	const [snapshots, seoCheckRun, leadRows, aiRows, searchTrend, pageHealth, visits, companies] = await Promise.all([
 		getSnapshots(),
 		getSeoCheckRun(),
 		getSiteEvents<LeadEvent>('leadEvent', 'type, path, source, createdAt'),
@@ -1381,6 +1383,8 @@ export default async function SeoOverviewPage({
 		getPageHealth(),
 		// Besøg: egne tal uden cookies + GA4 for dagene før (src/lib/visits.ts)
 		getVisits(),
+		// Virksomheder ud fra netværket (src/lib/companies.ts)
+		getCompanies(),
 	])
 	const leadEvents = leadRows ?? []
 	const aiVisits = aiRows ?? []
@@ -1976,6 +1980,11 @@ export default async function SeoOverviewPage({
 							id: 'besoeg',
 							label: 'Besøg',
 							content: <VisitsTab visits={visits} isHorizen={isHorizen} />,
+						},
+						{
+							id: 'virksomheder',
+							label: 'Virksomheder',
+							content: <CompaniesTab overview={companies} />,
 						},
 						{
 							id: 'henvendelser',
