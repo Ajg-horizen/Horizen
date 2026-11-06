@@ -1846,7 +1846,7 @@ export default async function SeoOverviewPage({
 					href="#v=analytics"
 					className="rounded-full border border-foreground/[0.1] bg-white px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-foreground/[0.06]"
 				>
-					Se performance →
+					Se synlighed →
 				</a>
 			</div>
 
@@ -1935,7 +1935,7 @@ export default async function SeoOverviewPage({
 				{ id: 'overblik', label: 'Overblik', icon: 'home', content: overviewContent },
 				{
 					id: 'analytics',
-					label: 'Performance',
+					label: 'Synlighed',
 					icon: 'chart',
 					children: [
 						{
@@ -1943,21 +1943,11 @@ export default async function SeoOverviewPage({
 							label: 'SEO',
 							content: <AnalyticsTab snapshots={snapshots} searchTrend={searchTrend} />,
 						},
-						{
-							id: 'besoeg',
-							label: 'Besøg',
-							content: <VisitsTab visits={visits} isHorizen={isHorizen} />,
-						},
 						// Kunden ser først fanen, når der er aftalte mål; Horizen altid
 						...(goalMonths.length > 0 || isHorizen
 							? [{ id: 'maal', label: 'Mål og resultater', content: <GoalsTab /> }]
 							: []),
 						{ id: 'ai', label: 'AI-søgning', content: <AiSearchTab aiVisits={aiVisits} unreadable={siteEventsUnreadable} isHorizen={isHorizen} /> },
-						{
-							id: 'henvendelser',
-							label: 'Henvendelser',
-							content: <LeadsTab leadEvents={leadEvents} snapshots={snapshots} unreadable={siteEventsUnreadable} isHorizen={isHorizen} />,
-						},
 						{
 							id: 'helbred',
 							label: 'Sidens helbred',
@@ -1973,6 +1963,24 @@ export default async function SeoOverviewPage({
 									}
 								/>
 							),
+						},
+					],
+				},
+				{
+					// Hvad besøgerne gør på siden (Synlighed = om de finder os; Andreas 6/11-2026)
+					id: 'besoegende',
+					label: 'Besøgende',
+					icon: 'users',
+					children: [
+						{
+							id: 'besoeg',
+							label: 'Besøg',
+							content: <VisitsTab visits={visits} isHorizen={isHorizen} />,
+						},
+						{
+							id: 'henvendelser',
+							label: 'Henvendelser',
+							content: <LeadsTab leadEvents={leadEvents} snapshots={snapshots} unreadable={siteEventsUnreadable} isHorizen={isHorizen} />,
 						},
 					],
 				},
