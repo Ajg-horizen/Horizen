@@ -47,7 +47,12 @@ function Bar({ share }: { share: number }) {
 	)
 }
 
+/** Så mange sider vises, før "Vis alle sider" */
+const TOP_PAGES = 10
+
 function PeriodView({ period }: { period: Ga4Period }) {
+	const [allPages, setAllPages] = useState(false)
+	const pages = allPages ? period.pages : period.pages.slice(0, TOP_PAGES)
 	const kpis = [
 		{ label: 'Besøg', value: period.totals.visits.toLocaleString('da-DK'), hint: 'Besøg på sitet i perioden' },
 		{ label: 'Sidevisninger', value: period.totals.views.toLocaleString('da-DK'), hint: 'Sider set i alt' },
@@ -75,7 +80,7 @@ function PeriodView({ period }: { period: Ga4Period }) {
 						<p className="text-muted mt-3 text-sm">Ingen sidevisninger i perioden.</p>
 					) : (
 						<ul className="mt-2">
-							{period.pages.map((page) => (
+							{pages.map((page) => (
 								<li key={page.path} className="border-foreground/[0.06] border-b py-3 last:border-0">
 									<div className="flex items-baseline justify-between gap-3 text-sm">
 										<span className="text-foreground min-w-0 truncate font-medium" title={page.path}>
@@ -90,6 +95,15 @@ function PeriodView({ period }: { period: Ga4Period }) {
 								</li>
 							))}
 						</ul>
+					)}
+					{period.pages.length > TOP_PAGES && (
+						<button
+							type="button"
+							onClick={() => setAllPages((v) => !v)}
+							className="text-foreground/60 hover:text-foreground mt-3 text-xs font-medium transition-colors"
+						>
+							{allPages ? 'Vis færre' : `Vis alle ${period.pages.length} sider`}
+						</button>
 					)}
 				</div>
 
@@ -163,7 +177,7 @@ export default function VisitsTab({
 			</div>
 
 			{visits.status === 'ok' ? (
-				<PeriodView period={visits.periods[range]} />
+				<PeriodView key={range} period={visits.periods[range]} />
 			) : (
 				<div className={`mt-6 ${notice}`}>
 					<p className="text-foreground font-medium">Ingen besøgstal endnu.</p>

@@ -41,7 +41,7 @@ const CHANNEL_SOURCE: Record<string, TrafficSource> = {
 	Unassigned: 'direct',
 }
 
-const PAGE_LIMIT = 50
+const PAGE_LIMIT = 250
 
 type Row = {
 	dimensionValues?: { value?: string }[]

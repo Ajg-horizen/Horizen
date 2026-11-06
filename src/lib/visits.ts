@@ -18,7 +18,8 @@ import { TRAFFIC_SOURCES, type TrafficSource } from './trafficSource'
  * GA's kanaler er oversat til sitets egne kilder, så listen er den samme.
  */
 
-const PAGE_LIMIT = 15
+/** Alle sider sendes med; fanen viser de 10 mest sete og resten bag "Vis alle" */
+const PAGE_LIMIT = 200
 
 /** "ÅÅÅÅ-MM-DD" i dansk tid */
 function dayKey(d: Date): string {
