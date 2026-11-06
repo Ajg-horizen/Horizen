@@ -46,7 +46,8 @@ function vercelCli(argv, input) {
 // ── Credentials: fra JSON-fil (argument), Vercel (--vercel) eller env ──
 let CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID
 let CLIENT_SECRET = process.env.GOOGLE_OAUTH_CLIENT_SECRET
-if (VIA_VERCEL && (!CLIENT_ID || !CLIENT_SECRET)) {
+const jsonPath = args[0]
+if (VIA_VERCEL && !jsonPath && (!CLIENT_ID || !CLIENT_SECRET)) {
 	// Midlertidig fil med Production-værdierne; slettes med det samme
 	const tmp = join(mkdtempSync(join(tmpdir(), 'oauth-')), 'env')
 	try {
@@ -67,7 +68,6 @@ if (VIA_VERCEL && (!CLIENT_ID || !CLIENT_SECRET)) {
 		rmSync(dirname(tmp), { recursive: true, force: true })
 	}
 }
-const jsonPath = args[0]
 if (jsonPath) {
 	try {
 		const parsed = JSON.parse(readFileSync(jsonPath, 'utf8'))
@@ -80,7 +80,16 @@ if (jsonPath) {
 	}
 }
 if (!CLIENT_ID || !CLIENT_SECRET) {
-	console.error('Mangler client id/secret. Peg på JSON-filen, eller sæt env-vars.')
+	if (VIA_VERCEL)
+		console.error(
+			[
+				'Vercel gemmer klient-hemmeligheden skjult, så den kan ikke hentes derfra.',
+				'Google Cloud → APIs & Services → Credentials → OAuth-klienten → "Add secret" → Download JSON,',
+				'og kør så: node scripts/get-refresh-token.mjs --vercel ~/Downloads/client_secret_….json',
+				'(klienten og det nye token gemmes begge i Vercel).',
+			].join('\n'),
+		)
+	else console.error('Mangler client id/secret. Peg på JSON-filen, eller sæt env-vars.')
 	process.exit(1)
 }
 
@@ -135,13 +144,20 @@ const server = http.createServer(async (req, res) => {
 		}
 		if (VIA_VERCEL) {
 			try {
-				vercelCli(
-					['env', 'add', 'GOOGLE_OAUTH_REFRESH_TOKEN', 'production', '--sensitive', '--yes', '--force'],
-					tokens.refresh_token,
-				)
+				// Kom klienten fra en JSON-fil (ny hemmelighed), gemmes den også
+				const save = {
+					...(jsonPath && {
+						GOOGLE_OAUTH_CLIENT_ID: CLIENT_ID,
+						GOOGLE_OAUTH_CLIENT_SECRET: CLIENT_SECRET,
+					}),
+					GOOGLE_OAUTH_REFRESH_TOKEN: tokens.refresh_token,
+				}
+				for (const [key, value] of Object.entries(save)) {
+					vercelCli(['env', 'add', key, 'production', '--sensitive', '--yes', '--force'], value)
+					console.log(`✓ ${key} gemt i Vercel (Production)`)
+				}
 				res.end('Færdig! Luk dette vindue og gå tilbage til terminalen.')
-				console.log('\n✓ Det nye GOOGLE_OAUTH_REFRESH_TOKEN er gemt i Vercel (Production).')
-				console.log('  Udrul production igen, så det kommer i brug.\n')
+				console.log('\nFærdig. Udrul production igen, så det kommer i brug.\n')
 			} catch (err) {
 				res.end('Fejl: kunne ikke gemme i Vercel. Se terminalen.')
 				console.error(`\n✗ Kunne ikke gemme i Vercel: ${err.message}\n`)
