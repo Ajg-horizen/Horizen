@@ -1,19 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { GA4_RANGES, type Ga4Overview, type Ga4Period, type Ga4Range } from '@/lib/ga4-shared'
-import type { OwnVisits } from '@/lib/visits'
+import { GA4_RANGES, type Ga4Period, type Ga4Range, type VisitsOverview } from '@/lib/ga4-shared'
 
 /**
- * Fanen Performance → Besøg (Andreas 6/11-2026). To kilder i samme enkle form:
- *   - "Alle besøg": egne tællere uden cookies (src/lib/pageStats.ts), så ALLE
- *     besøgende tælles, også dem der siger nej i cookie-banneret.
- *   - "Google Analytics": GA4 (src/lib/ga4.ts), kun dem der har sagt ja, men
- *     med Googles egen kanalopdeling.
- * Tre tal øverst, de mest sete sider med andel og tid, og hvor besøgerne kom fra.
+ * Fanen Performance → Besøg (Andreas 6/11-2026): ét samlet billede af,
+ * hvilke sider der bliver set, hvor længe og hvor besøgene kom fra. Tallene
+ * er sitets egne (uden cookies, alle besøgende) fra den dag, tælleren startede,
+ * og Google Analytics for dagene før (src/lib/visits.ts). Her vælges kun periode.
  */
-
-type Source = 'own' | 'ga4'
 
 const card = 'rounded-2xl border border-foreground/[0.08] bg-white'
 const notice =
@@ -34,6 +29,13 @@ const pct = (v: number) =>
 /** "/" → "Forside", "/cases/acp" står som stien */
 const pageName = (path: string) => (path === '/' ? 'Forside' : path)
 
+const longDate = (day: string) =>
+	new Date(`${day}T12:00:00`).toLocaleDateString('da-DK', {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	})
+
 function Bar({ share }: { share: number }) {
 	return (
 		<div className="bg-foreground/[0.06] mt-2 h-1.5 w-full overflow-hidden rounded-full">
@@ -45,51 +47,12 @@ function Bar({ share }: { share: number }) {
 	)
 }
 
-function Switch<T extends string>({
-	value,
-	options,
-	onChange,
-}: {
-	value: T
-	options: { key: T; label: string }[]
-	onChange: (v: T) => void
-}) {
-	return (
-		<div className="border-foreground/[0.08] flex rounded-full border bg-white p-1">
-			{options.map((o) => (
-				<button
-					key={o.key}
-					type="button"
-					onClick={() => onChange(o.key)}
-					className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
-						value === o.key
-							? 'bg-foreground text-background'
-							: 'text-foreground/60 hover:text-foreground'
-					}`}
-				>
-					{o.label}
-				</button>
-			))}
-		</div>
-	)
-}
-
-function PeriodView({ period, source }: { period: Ga4Period; source: Source }) {
-	const own = source === 'own'
+function PeriodView({ period }: { period: Ga4Period }) {
 	const kpis = [
-		{
-			label: own ? 'Besøg' : 'Besøgende',
-			value: period.totals.users.toLocaleString('da-DK'),
-			hint: own ? 'Alle besøg, også uden cookies' : 'Forskellige personer med samtykke',
-		},
+		{ label: 'Besøg', value: period.totals.visits.toLocaleString('da-DK'), hint: 'Besøg på sitet i perioden' },
 		{ label: 'Sidevisninger', value: period.totals.views.toLocaleString('da-DK'), hint: 'Sider set i alt' },
-		{
-			label: own ? 'Tid pr. besøg' : 'Tid på sitet',
-			value: duration(period.totals.avgSeconds),
-			hint: own ? 'Gennemsnitlig aktiv tid pr. besøg' : 'Gennemsnitlig aktiv tid pr. besøgende',
-		},
+		{ label: 'Tid pr. besøg', value: duration(period.totals.avgSeconds), hint: 'Gennemsnitlig aktiv tid' },
 	]
-	const unit = own ? 'besøg' : 'besøgende'
 
 	return (
 		<>
@@ -144,7 +107,7 @@ function PeriodView({ period, source }: { period: Ga4Period; source: Source }) {
 									</div>
 									<Bar share={c.share} />
 									<p className="text-muted mt-1.5 text-xs tabular-nums">
-										{c.users.toLocaleString('da-DK')} {unit}
+										{c.visits.toLocaleString('da-DK')} besøg
 									</p>
 								</li>
 							))}
@@ -157,62 +120,18 @@ function PeriodView({ period, source }: { period: Ga4Period; source: Source }) {
 }
 
 export default function VisitsTab({
-	overview,
-	own,
+	visits,
 	isHorizen,
 }: {
-	overview: Ga4Overview
-	own: OwnVisits
+	visits: VisitsOverview
 	isHorizen: boolean
 }) {
 	const [range, setRange] = useState<Ga4Range>('thisMonth')
-	const [source, setSource] = useState<Source>(own.status === 'ok' ? 'own' : 'ga4')
 
-	const started =
-		own.status === 'ok' && own.startedAt
-			? new Date(own.startedAt).toLocaleDateString('da-DK', { day: 'numeric', month: 'long', year: 'numeric' })
-			: null
-
-	let body: React.ReactNode
-	if (source === 'own') {
-		body =
-			own.status === 'ok' ? (
-				<PeriodView period={own.periods[range]} source="own" />
-			) : (
-				<div className={`mt-6 ${notice}`}>
-					<p className="text-foreground font-medium">Ingen egne besøgstal endnu.</p>
-					<p className="text-muted mt-2">
-						De anonyme tællere starter, så snart sitet med tælleren er udrullet, og
-						de første besøg kommer ind. Indtil da kan du se Google Analytics.
-					</p>
-				</div>
-			)
-	} else if (overview.status === 'ok') {
-		body = <PeriodView period={overview.periods[range]} source="ga4" />
-	} else if (overview.status === 'off') {
-		body = (
-			<div className={`mt-6 ${notice}`}>
-				<p className="text-foreground font-medium">Google Analytics er ikke sat op her.</p>
-				{isHorizen && (
-					<p className="text-muted mt-2">
-						Sæt <code>GA4_PROPERTY_ID</code> i Vercel, slå Google Analytics Data API til,
-						og kør <code>node scripts/get-refresh-token.mjs --vercel</code>. Se fanen Opsætning.
-					</p>
-				)}
-			</div>
-		)
-	} else {
-		body = (
-			<div className={`mt-6 ${notice}`}>
-				<p className="text-foreground font-medium">Google Analytics kan ikke hentes lige nu.</p>
-				{isHorizen && (
-					<p className="text-muted mt-2 break-words">
-						GA4 svarede: <code>{overview.message}</code>
-					</p>
-				)}
-			</div>
-		)
-	}
+	const source =
+		visits.status === 'ok' && visits.ownSince
+			? `Tallene tælles af sitet selv uden cookies, så alle besøg kommer med, også dem der siger nej til cookies. Tællingen startede ${longDate(visits.ownSince)}${visits.gaUntil ? '; før den dag kommer tallene fra Google Analytics, som kun så dem med samtykke' : ''}.`
+			: 'Tallene kommer fra Google Analytics, som kun ser dem, der har sagt ja til cookies, indtil sitets egen tæller er i gang.'
 
 	return (
 		<div>
@@ -225,38 +144,46 @@ export default function VisitsTab({
 						De mest sete sider, hvor længe folk bliver, og hvor de kom fra.
 					</p>
 				</div>
-				<div className="flex flex-wrap gap-2">
-					<Switch
-						value={source}
-						options={[
-							{ key: 'own', label: 'Alle besøg' },
-							{ key: 'ga4', label: 'Google Analytics' },
-						]}
-						onChange={setSource}
-					/>
-					<Switch value={range} options={GA4_RANGES} onChange={setRange} />
+				<div className="border-foreground/[0.08] flex rounded-full border bg-white p-1">
+					{GA4_RANGES.map((r) => (
+						<button
+							key={r.key}
+							type="button"
+							onClick={() => setRange(r.key)}
+							className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
+								range === r.key
+									? 'bg-foreground text-background'
+									: 'text-foreground/60 hover:text-foreground'
+							}`}
+						>
+							{r.label}
+						</button>
+					))}
 				</div>
 			</div>
 
-			{body}
+			{visits.status === 'ok' ? (
+				<PeriodView period={visits.periods[range]} />
+			) : (
+				<div className={`mt-6 ${notice}`}>
+					<p className="text-foreground font-medium">Ingen besøgstal endnu.</p>
+					<p className="text-muted mt-2">
+						Tallene kommer, så snart de første besøg er talt.
+						{isHorizen &&
+							' Vil du have historik med fra før, så sæt GA4_PROPERTY_ID og Google-adgangen op (se fanen Opsætning).'}
+					</p>
+				</div>
+			)}
+
+			{isHorizen && visits.gaError && (
+				<p className="text-muted mt-4 max-w-3xl text-xs leading-relaxed break-words">
+					Google Analytics svarede ikke, så tallene fra før tællingen mangler: <code>{visits.gaError}</code>
+				</p>
+			)}
 
 			<p className="text-muted mt-4 max-w-3xl text-xs leading-relaxed">
-				<span className="font-medium">Sådan skal tallene læses:</span>{' '}
-				{source === 'own' ? (
-					<>
-						“Alle besøg” tælles anonymt af sitet selv, uden cookies og uden at gemme
-						noget om den besøgende, så alle kommer med, også dem der siger nej til
-						cookies. Et besøg er en ny fane på sitet; vi genkender ikke den samme person
-						igen. Tid er den tid, siden var synlig og i brug.
-						{started && ` Tallene er talt siden ${started}.`}
-					</>
-				) : (
-					<>
-						Google Analytics tæller kun besøgende, der har sagt ja til statistik-cookies.
-						Brug det til at se tendenser og Googles egen kanalopdeling; det præcise antal
-						besøg står under “Alle besøg”.
-					</>
-				)}
+				<span className="font-medium">Sådan skal tallene læses:</span> {source} Et besøg er en
+				ny fane på sitet. Tid er den tid, siden var synlig og i brug.
 			</p>
 		</div>
 	)

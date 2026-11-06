@@ -1,21 +1,22 @@
 /**
- * Typer og perioder til GA4-besøg, delt mellem serveren (src/lib/ga4.ts) og
- * fanen Besøg (VisitsTab.tsx), så Google-login-koden ikke kommer med i browseren.
+ * Typer og perioder til fanen Performance → Besøg, delt mellem serveren
+ * (src/lib/visits.ts, src/lib/ga4.ts) og fanen (VisitsTab.tsx), så
+ * Google-login-koden ikke kommer med i browseren.
  */
 
-export type Ga4Range = 'thisMonth' | 'lastMonth' | 'last90'
+export type Ga4Range = 'thisMonth' | 'lastMonth' | 'last3'
 
 export const GA4_RANGES: { key: Ga4Range; label: string }[] = [
 	{ key: 'thisMonth', label: 'Denne måned' },
 	{ key: 'lastMonth', label: 'Sidste måned' },
-	{ key: 'last90', label: 'Seneste 3 måneder' },
+	{ key: 'last3', label: 'Seneste 3 måneder' },
 ]
 
 export type Ga4Totals = {
-	users: number
-	sessions: number
+	/** Besøg (en ny fane på sitet / en GA4-session) */
+	visits: number
 	views: number
-	/** Gennemsnitlig aktiv tid pr. besøgende i sekunder */
+	/** Gennemsnitlig aktiv tid pr. besøg i sekunder */
 	avgSeconds: number
 }
 
@@ -24,10 +25,11 @@ export type Ga4Page = {
 	views: number
 	/** Andel af alle sidevisninger i perioden, 0-100 */
 	share: number
+	/** Gennemsnitlig aktiv tid pr. visning i sekunder */
 	avgSeconds: number
 }
 
-export type Ga4Channel = { key: string; label: string; users: number; share: number }
+export type Ga4Channel = { key: string; label: string; visits: number; share: number }
 
 export type Ga4Period = {
 	totals: Ga4Totals
@@ -35,7 +37,17 @@ export type Ga4Period = {
 	channels: Ga4Channel[]
 }
 
-export type Ga4Overview =
-	| { status: 'off' }
-	| { status: 'error'; message: string }
-	| { status: 'ok'; periods: Record<Ga4Range, Ga4Period> }
+/**
+ * Én samlet visning: egne tal uden cookies fra den dag, tælleren startede
+ * (ownSince), og Google Analytics for dagene før (gaUntil = sidste dag med
+ * GA-tal). Perioderne overlapper aldrig, så intet tælles dobbelt.
+ */
+export type VisitsOverview =
+	| { status: 'empty'; gaError?: string }
+	| {
+			status: 'ok'
+			periods: Record<Ga4Range, Ga4Period>
+			ownSince?: string
+			gaUntil?: string
+			gaError?: string
+	  }
