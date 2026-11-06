@@ -41,6 +41,8 @@ import {
 	type AiVisit,
 	type LeadEvent,
 } from './SiteEventsSections'
+import VisitsTab from './VisitsTab'
+import { fetchGa4Overview } from '@/lib/ga4'
 import { LATER_META, STATUS_META } from './statusMeta'
 import SetupTab, { setupProgress } from './SetupTab'
 import HealthCheck from './HealthCheck'
@@ -287,6 +289,7 @@ function getSetupAuto({
 		searchConsoleSite: has('SEARCH_CONSOLE_SITE'),
 		pagespeedKey: has('PAGESPEED_API_KEY'),
 		cronSecret: has('CRON_SECRET'),
+		ga4Data: has('GA4_PROPERTY_ID'),
 		horizenMail: has('HORIZEN_RESEND_API_KEY'),
 		snapshotDatasets: has('SEO_SNAPSHOT_DATASETS'),
 		snapshots: snapshots.length > 0,
@@ -1369,13 +1372,15 @@ export default async function SeoOverviewPage({
 	const answers = await getAnswers()
 	const noticeState = await getNoticeState()
 	const sentMessages = isHorizen ? await getSentMessages() : []
-	const [snapshots, seoCheckRun, leadRows, aiRows, searchTrend, pageHealth] = await Promise.all([
+	const [snapshots, seoCheckRun, leadRows, aiRows, searchTrend, pageHealth, visits] = await Promise.all([
 		getSnapshots(),
 		getSeoCheckRun(),
 		getSiteEvents<LeadEvent>('leadEvent', 'type, path, source, createdAt'),
 		getSiteEvents<AiVisit>('aiVisit', 'source, path, createdAt'),
 		getSearchTrend(),
 		getPageHealth(),
+		// Besøg fra GA4 (Performance → Besøg); { status: 'off' } uden GA4_PROPERTY_ID
+		fetchGa4Overview(),
 	])
 	const leadEvents = leadRows ?? []
 	const aiVisits = aiRows ?? []
@@ -1937,6 +1942,11 @@ export default async function SeoOverviewPage({
 							id: 'seo',
 							label: 'SEO',
 							content: <AnalyticsTab snapshots={snapshots} searchTrend={searchTrend} />,
+						},
+						{
+							id: 'besoeg',
+							label: 'Besøg',
+							content: <VisitsTab overview={visits} isHorizen={isHorizen} />,
 						},
 						// Kunden ser først fanen, når der er aftalte mål; Horizen altid
 						...(goalMonths.length > 0 || isHorizen

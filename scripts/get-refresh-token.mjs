@@ -48,7 +48,11 @@ if (!CLIENT_ID || !CLIENT_SECRET) {
 
 const PORT = 4321
 const REDIRECT_URI = `http://localhost:${PORT}`
-const SCOPE = 'https://www.googleapis.com/auth/webmasters.readonly'
+// Search Console + GA4 (fanen Performance → Besøg). Begge kun læseadgang.
+const SCOPE = [
+	'https://www.googleapis.com/auth/webmasters.readonly',
+	'https://www.googleapis.com/auth/analytics.readonly',
+].join(' ')
 const OUT_FILE = join(homedir(), 'Desktop', 'seo-vercel-env.txt')
 
 const authUrl =
