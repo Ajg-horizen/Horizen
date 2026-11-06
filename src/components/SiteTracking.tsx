@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import { detectAiSource } from '@/lib/aiSources'
 import { landingSource } from '@/lib/trafficSource'
 
@@ -12,12 +13,57 @@ import { landingSource } from '@/lib/trafficSource'
  *      med én lytter, så nye knapper og moduler kommer med automatisk. Hvert
  *      klik får besøgets kilde med (Google Ads, organisk osv.), aflæst på
  *      landingssiden og husket i hukommelsen (src/lib/trafficSource.ts).
- * Ingen cookies og intet gemt i browseren, så alle besøgende tælles.
+ *   3. Sidevisninger og aktiv tid pr. side (src/lib/pageStats.ts): én visning
+ *      pr. side, og tiden, siden var synlig, sendes, når man går videre eller
+ *      skjuler fanen. Første side i fanen tæller som et besøg med kilde.
+ * Ingen cookies og intet gemt i browseren, så alle besøgende tælles, også dem
+ * der siger nej i cookie-banneret.
  *
- * Horizen måler i GA4/Google Ads via GTM, så her sendes kun til dashboardets
- * egne tællere (se src/lib/siteEvents.ts).
+ * GA4/Google Ads kører via GTM efter samtykke (ConsentGtm.tsx), så her sendes
+ * kun til dashboardets egne tællere.
  */
 export default function SiteTracking() {
+	const pathname = usePathname()
+	const landed = useRef(false)
+
+	useEffect(() => {
+		const path = pathname || window.location.pathname
+		send(
+			'/api/pageview',
+			JSON.stringify({
+				type: 'view',
+				path,
+				landing: !landed.current,
+				source: landingSource(),
+			}),
+		)
+		landed.current = true
+
+		// Aktiv tid: tæller kun, mens fanen er synlig
+		let active = 0
+		let since = document.visibilityState === 'visible' ? Date.now() : 0
+		function flush() {
+			if (since) active += Date.now() - since
+			since = 0
+			const seconds = Math.round(active / 1000)
+			active = 0
+			if (seconds > 0)
+				send('/api/pageview', JSON.stringify({ type: 'time', path, seconds }))
+		}
+		function onVisibility() {
+			if (document.visibilityState === 'hidden') flush()
+			else since = Date.now()
+		}
+		document.addEventListener('visibilitychange', onVisibility)
+		window.addEventListener('pagehide', flush)
+		return () => {
+			document.removeEventListener('visibilitychange', onVisibility)
+			window.removeEventListener('pagehide', flush)
+			// Ny side (klientnavigation): send tiden for den forrige
+			flush()
+		}
+	}, [pathname])
+
 	useEffect(() => {
 		// Aflæs kilden nu, på landingssiden, før besøgeren klikker videre
 		landingSource()
