@@ -1,4 +1,5 @@
 import { createClient } from '@sanity/client'
+import { projectId } from '@/sanity/env'
 import { randomUUID } from 'node:crypto'
 import type { AiSource } from './aiSources'
 import type { TrafficSource } from './trafficSource'
@@ -90,7 +91,7 @@ async function saveEvent(
 	for (const ds of datasets) {
 		try {
 			await createClient({
-				projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+				projectId,
 				dataset: ds,
 				apiVersion: '2024-01-01',
 				token,

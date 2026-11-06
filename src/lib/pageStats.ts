@@ -1,4 +1,5 @@
 import { createClient, type Patch } from '@sanity/client'
+import { projectId } from '@/sanity/env'
 import type { TrafficSource } from './trafficSource'
 
 /**
@@ -67,7 +68,7 @@ async function write(
 	for (const ds of datasets) {
 		try {
 			const client = createClient({
-				projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+				projectId,
 				dataset: ds,
 				apiVersion: '2024-01-01',
 				token,

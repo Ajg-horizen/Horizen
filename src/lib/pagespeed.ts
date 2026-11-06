@@ -1,4 +1,5 @@
 import 'server-only'
+import { projectId } from '@/sanity/env'
 import { createClient } from '@sanity/client'
 import type {
 	HealthEntry,
@@ -156,7 +157,7 @@ export async function savePageHealth(
 	const written: string[] = []
 	for (const dataset of snapshotDatasets()) {
 		const sanity = createClient({
-			projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+			projectId,
 			dataset,
 			apiVersion: '2024-01-01',
 			token: process.env.SANITY_API_WRITE_TOKEN,
