@@ -30,8 +30,8 @@ function monthRange(month: string): { startDate: string; endDate: string } {
 	return { startDate: `${month}-01`, endDate: `${month}-${String(lastDay).padStart(2, '0')}` }
 }
 
-/** Bytter refresh token til et kortlivet access token. */
-async function getAccessToken(): Promise<string> {
+/** Bytter refresh token til et kortlivet access token (bruges også af src/lib/ga4.ts). */
+export async function getAccessToken(): Promise<string> {
 	const clientId = process.env.GOOGLE_OAUTH_CLIENT_ID
 	const clientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET
 	const refreshToken = process.env.GOOGLE_OAUTH_REFRESH_TOKEN

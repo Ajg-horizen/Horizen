@@ -18,6 +18,7 @@ export type SetupAutoKey =
 	| 'writeToken'
 	| 'dashboardLogin'
 	| 'gaId'
+	| 'ga4Data'
 	| 'googleOauth'
 	| 'searchConsoleSite'
 	| 'pagespeedKey'
@@ -200,6 +201,14 @@ export const setupSections: SetupSection[] = [
 				check:
 					'NEXT_PUBLIC_GA_ID er sat, og du ser dig selv i GA4 → Realtid efter accept.',
 				auto: 'gaId',
+			},
+			{
+				id: 'ga4-data',
+				title: 'Besøg i dashboardet (GA4_PROPERTY_ID)',
+				how: 'Sæt GA4_PROPERTY_ID til ejendommens ID (et tal: GA4 → Administrator → Ejendomsindstillinger) i Vercel Production. Slå Google Analytics Data API til i samme Google Cloud-projekt som Search Console, og kør node scripts/get-refresh-token.mjs igen, så Google-adgangen også dækker GA4 (analytics.readonly). Opdatér GOOGLE_OAUTH_REFRESH_TOKEN, og udrul igen.',
+				check: 'Performance → Besøg viser sider, tid og kanaler.',
+				auto: 'ga4Data',
+				optional: true,
 			},
 			{
 				id: 'ga4-samtykke',
