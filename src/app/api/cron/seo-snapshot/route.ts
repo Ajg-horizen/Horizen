@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { projectId } from '@/sanity/env'
 import { createClient } from '@sanity/client'
 import {
 	fetchSearchConsoleMonth,
@@ -79,7 +80,7 @@ export async function GET(request: Request) {
 		const written: string[] = []
 		for (const dataset of DATASETS) {
 			const sanity = createClient({
-				projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
+				projectId,
 				dataset,
 				apiVersion: '2024-01-01',
 				token: process.env.SANITY_API_WRITE_TOKEN,
