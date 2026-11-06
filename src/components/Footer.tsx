@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowUpRightIcon } from "lucide-react";
 import Container from "@/components/Container";
+import { resetConsent } from "@/lib/consent";
 
 const heartGrid = [
   [0,1,1,0,0,1,1,0],
@@ -197,6 +198,13 @@ export default function Footer() {
                 forbeholdes.
               </p>
               <span className="text-xs text-background/30">CVR 44637588</span>
+              <button
+                type="button"
+                onClick={resetConsent}
+                className="self-start text-xs text-background/30 transition-colors duration-300 hover:text-background sm:self-auto"
+              >
+                Cookie-indstillinger
+              </button>
             </div>
 
             <div className="flex items-center gap-2">

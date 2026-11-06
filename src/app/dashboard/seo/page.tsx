@@ -43,6 +43,7 @@ import {
 } from './SiteEventsSections'
 import VisitsTab from './VisitsTab'
 import { fetchGa4Overview } from '@/lib/ga4'
+import { getOwnVisits } from '@/lib/visits'
 import { LATER_META, STATUS_META } from './statusMeta'
 import SetupTab, { setupProgress } from './SetupTab'
 import HealthCheck from './HealthCheck'
@@ -1372,7 +1373,7 @@ export default async function SeoOverviewPage({
 	const answers = await getAnswers()
 	const noticeState = await getNoticeState()
 	const sentMessages = isHorizen ? await getSentMessages() : []
-	const [snapshots, seoCheckRun, leadRows, aiRows, searchTrend, pageHealth, visits] = await Promise.all([
+	const [snapshots, seoCheckRun, leadRows, aiRows, searchTrend, pageHealth, visits, ownVisits] = await Promise.all([
 		getSnapshots(),
 		getSeoCheckRun(),
 		getSiteEvents<LeadEvent>('leadEvent', 'type, path, source, createdAt'),
@@ -1381,6 +1382,8 @@ export default async function SeoOverviewPage({
 		getPageHealth(),
 		// Besøg fra GA4 (Performance → Besøg); { status: 'off' } uden GA4_PROPERTY_ID
 		fetchGa4Overview(),
+		// Egne besøgstal uden cookies (src/lib/pageStats.ts)
+		getOwnVisits(),
 	])
 	const leadEvents = leadRows ?? []
 	const aiVisits = aiRows ?? []
@@ -1946,7 +1949,7 @@ export default async function SeoOverviewPage({
 						{
 							id: 'besoeg',
 							label: 'Besøg',
-							content: <VisitsTab overview={visits} isHorizen={isHorizen} />,
+							content: <VisitsTab overview={visits} own={ownVisits} isHorizen={isHorizen} />,
 						},
 						// Kunden ser først fanen, når der er aftalte mål; Horizen altid
 						...(goalMonths.length > 0 || isHorizen

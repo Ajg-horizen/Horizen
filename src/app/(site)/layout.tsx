@@ -4,10 +4,11 @@ import ScrollToTop from "@/components/ScrollToTop";
 import SmoothScroll from "@/components/SmoothScroll";
 import BackToTopButton from "@/components/BackToTopButton";
 import CalEmbed from "@/components/CalEmbed";
-import Script from "next/script";
 import { testimonials } from "@/lib/testimonials";
 import "./globals.css";
 import SiteTracking from "@/components/SiteTracking";
+import ConsentGtm from "@/components/ConsentGtm";
+import CookieBanner from "@/components/CookieBanner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -203,15 +204,11 @@ export default function RootLayout({
         />
         <BackToTopButton />
         <CalEmbed />
-        {/* GA4 (G-HC4NR97H1P) og Google Ads kører via GTM-containeren. Indlæs
-            ikke gtag.js direkte ved siden af, så hentes GA-scriptet to gange. */}
-        {isProduction && (
-          <>
-            <Script id="gtm-init" strategy="lazyOnload">
-              {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-WFZ26CS4');`}
-            </Script>
-          </>
-        )}
+        {/* GA4 (G-HC4NR97H1P) og Google Ads kører via GTM, men først efter
+            samtykke i cookie-banneret (ConsentGtm). Indlæs ikke gtag.js direkte
+            ved siden af, så hentes GA-scriptet to gange. */}
+        {isProduction && <ConsentGtm />}
+        <CookieBanner />
       </body>
     </html>
   );
