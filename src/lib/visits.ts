@@ -18,7 +18,8 @@ import { TRAFFIC_SOURCES, type TrafficSource } from './trafficSource'
  * GA's kanaler er oversat til sitets egne kilder, så listen er den samme.
  */
 
-const PAGE_LIMIT = 15
+/** Alle sider sendes med; fanen viser de 10 mest sete og resten bag "Vis alle" */
+const PAGE_LIMIT = 200
 
 /** "ÅÅÅÅ-MM-DD" i dansk tid */
 function dayKey(d: Date): string {
@@ -115,7 +116,8 @@ function toPeriod(raw: RawVisits): Ga4Period {
 	}
 }
 
-async function getOwnMonths(months: string[]): Promise<TrafficMonth[]> {
+/** Alle egne måneds-dokumenter (ét pr. måned, så det er få) */
+async function getOwnMonths(): Promise<TrafficMonth[]> {
 	try {
 		return (
 			(await client
@@ -126,8 +128,8 @@ async function getOwnMonths(months: string[]): Promise<TrafficMonth[]> {
 					stega: false,
 				})
 				.fetch<TrafficMonth[]>(
-					`*[_id in $ids]{ month, startedAt, visits, views, seconds, timed, pages, sources }`,
-					{ ids: months.map((m) => `traffic.${m}`) },
+					`*[_type == "siteTraffic" && string::startsWith(_id, "traffic.")]{ month, startedAt, visits, views, seconds, timed, pages, sources }`,
+					{},
 					{ cache: 'no-store' },
 				)) ?? []
 		)
@@ -138,9 +140,7 @@ async function getOwnMonths(months: string[]): Promise<TrafficMonth[]> {
 }
 
 export async function getVisits(now = new Date()): Promise<VisitsOverview> {
-	const current = monthKey(now)
-	const months = [current, shiftMonth(current, -1), shiftMonth(current, -2)]
-	const own = await getOwnMonths(months)
+	const own = await getOwnMonths()
 	return combineVisits(own, now, ga4Configured() ? fetchGa4Raw : null)
 }
 
@@ -155,17 +155,21 @@ export async function combineVisits(
 ): Promise<VisitsOverview> {
 	const current = monthKey(now)
 	const today = dayKey(now)
-	const months = [current, shiftMonth(current, -1), shiftMonth(current, -2)]
+	const back = (n: number) => Array.from({ length: n }, (_, i) => shiftMonth(current, -i))
 
 	// Dagen, tælleren startede; GA bruges kun til og med dagen før
 	const startedAt = own.map((m) => m.startedAt).filter(Boolean).sort()[0]
 	const ownSince = startedAt ? dayKey(new Date(startedAt)) : undefined
 	const gaLast = ownSince ? dayBefore(ownSince) : today
 
-	const ranges: Record<Ga4Range, { start: string; end: string; months: string[] }> = {
+	const prev = shiftMonth(current, -1)
+	// "Alt": GA4 fra første dag, API'et kender (ejendommen har kun data fra oprettelsen)
+	const ranges: Record<Ga4Range, { start: string; end: string; months: string[] | 'all' }> = {
 		thisMonth: { start: `${current}-01`, end: today, months: [current] },
-		lastMonth: { start: `${months[1]}-01`, end: lastDayOf(months[1]), months: [months[1]] },
-		last3: { start: `${months[2]}-01`, end: today, months },
+		lastMonth: { start: `${prev}-01`, end: lastDayOf(prev), months: [prev] },
+		last3: { start: `${shiftMonth(current, -2)}-01`, end: today, months: back(3) },
+		last12: { start: `${shiftMonth(current, -11)}-01`, end: today, months: back(12) },
+		all: { start: '2015-08-14', end: today, months: 'all' },
 	}
 
 	let gaError: string | undefined
@@ -174,7 +178,9 @@ export async function combineVisits(
 	await Promise.all(
 		(Object.keys(ranges) as Ga4Range[]).map(async (key) => {
 			const r = ranges[key]
-			const parts = own.filter((m) => r.months.includes(m.month)).map(fromOwn)
+			const parts = own
+				.filter((m) => r.months === 'all' || r.months.includes(m.month))
+				.map(fromOwn)
 			const gaEnd = r.end < gaLast ? r.end : gaLast
 			if (fetchGa && r.start <= gaEnd) {
 				try {

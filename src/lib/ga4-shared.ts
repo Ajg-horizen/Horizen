@@ -4,12 +4,14 @@
  * Google-login-koden ikke kommer med i browseren.
  */
 
-export type Ga4Range = 'thisMonth' | 'lastMonth' | 'last3'
+export type Ga4Range = 'thisMonth' | 'lastMonth' | 'last3' | 'last12' | 'all'
 
 export const GA4_RANGES: { key: Ga4Range; label: string }[] = [
 	{ key: 'thisMonth', label: 'Denne måned' },
 	{ key: 'lastMonth', label: 'Sidste måned' },
-	{ key: 'last3', label: 'Seneste 3 måneder' },
+	{ key: 'last3', label: '3 måneder' },
+	{ key: 'last12', label: '12 måneder' },
+	{ key: 'all', label: 'Alt' },
 ]
 
 export type Ga4Totals = {
