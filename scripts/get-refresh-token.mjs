@@ -8,6 +8,10 @@
  * Forudsætning: en OAuth-klient (type "Web application") med redirect-URI
  * http://localhost:4321. Google giver dig en JSON-fil med id + secret.
  *
+ * Nemmest, når projektet allerede er koblet til Vercel (klienten findes dér):
+ *   node scripts/get-refresh-token.mjs --vercel
+ * Så hentes klienten fra Vercel, og det nye token gemmes direkte i Vercel.
+ *
  * Kør (peg på JSON-filen):
  *   node scripts/get-refresh-token.mjs ~/Desktop/client_secret_xxx.json
  *
@@ -20,16 +24,50 @@
  * importér filen i Vercel, og SLET så filen (den indeholder hemmeligheder).
  */
 import http from 'node:http'
-import { exec } from 'node:child_process'
-import { readFileSync, writeFileSync } from 'node:fs'
+import { exec, spawnSync } from 'node:child_process'
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { randomBytes } from 'node:crypto'
-import { homedir } from 'node:os'
-import { join } from 'node:path'
+import { homedir, tmpdir } from 'node:os'
+import { dirname, join } from 'node:path'
 
-// ── Credentials: fra JSON-fil (argument) eller env ──
+// ── --vercel: hent klienten fra Vercel og gem det nye token direkte dér ──
+// node scripts/get-refresh-token.mjs --vercel   (kør i projektmappen, koblet til Vercel)
+// Klient-id/-hemmelighed læses fra Production, og GOOGLE_OAUTH_REFRESH_TOKEN
+// overskrives i Production. Intet skrives til skrivebordet.
+const VIA_VERCEL = process.argv.includes('--vercel')
+const args = process.argv.slice(2).filter((a) => !a.startsWith('--'))
+
+function vercelCli(argv, input) {
+	const r = spawnSync('vercel', argv, { input, encoding: 'utf8' })
+	if (r.status !== 0) throw new Error((r.stderr || r.stdout || '').trim().split('\n').slice(-3).join(' '))
+	return r.stdout
+}
+
+// ── Credentials: fra JSON-fil (argument), Vercel (--vercel) eller env ──
 let CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID
 let CLIENT_SECRET = process.env.GOOGLE_OAUTH_CLIENT_SECRET
-const jsonPath = process.argv[2]
+if (VIA_VERCEL && (!CLIENT_ID || !CLIENT_SECRET)) {
+	// Midlertidig fil med Production-værdierne; slettes med det samme
+	const tmp = join(mkdtempSync(join(tmpdir(), 'oauth-')), 'env')
+	try {
+		vercelCli(['env', 'pull', '--environment=production', '--yes', tmp])
+		const vars = Object.fromEntries(
+			readFileSync(tmp, 'utf8')
+				.split('\n')
+				.map((l) => l.match(/^([A-Z0-9_]+)="?(.*?)"?$/))
+				.filter(Boolean)
+				.map((m) => [m[1], m[2]]),
+		)
+		CLIENT_ID = vars.GOOGLE_OAUTH_CLIENT_ID
+		CLIENT_SECRET = vars.GOOGLE_OAUTH_CLIENT_SECRET
+	} catch (err) {
+		console.error(`Kunne ikke hente klienten fra Vercel: ${err.message}`)
+		process.exit(1)
+	} finally {
+		rmSync(dirname(tmp), { recursive: true, force: true })
+	}
+}
+const jsonPath = args[0]
 if (jsonPath) {
 	try {
 		const parsed = JSON.parse(readFileSync(jsonPath, 'utf8'))
@@ -93,6 +131,21 @@ const server = http.createServer(async (req, res) => {
 				tokens,
 			)
 			server.close()
+			return
+		}
+		if (VIA_VERCEL) {
+			try {
+				vercelCli(
+					['env', 'add', 'GOOGLE_OAUTH_REFRESH_TOKEN', 'production', '--sensitive', '--yes', '--force'],
+					tokens.refresh_token,
+				)
+				res.end('Færdig! Luk dette vindue og gå tilbage til terminalen.')
+				console.log('\n✓ Det nye GOOGLE_OAUTH_REFRESH_TOKEN er gemt i Vercel (Production).')
+				console.log('  Udrul production igen, så det kommer i brug.\n')
+			} catch (err) {
+				res.end('Fejl: kunne ikke gemme i Vercel. Se terminalen.')
+				console.error(`\n✗ Kunne ikke gemme i Vercel: ${err.message}\n`)
+			}
 			return
 		}
 		const cronSecret = randomBytes(24).toString('hex')
