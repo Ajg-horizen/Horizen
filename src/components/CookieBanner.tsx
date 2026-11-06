@@ -13,13 +13,13 @@ import {
  * Cookie-banner (Andreas 6/11-2026). Google Analytics og Google Ads (via GTM,
  * src/components/ConsentGtm.tsx) kører først efter et ja. "Kun nødvendige"
  * står lige så synligt som "Accepter alle", og valget kan altid ændres via
- * "Cookie-indstillinger" i footeren. Den anonyme måling uden cookies
- * (SiteTracking) nævnes åbent, fordi den kører uanset valget.
+ * "Cookie-indstillinger" i footeren. Banneret holdes kort og generelt
+ * (Andreas 6/11-2026); detaljerne står under "Vælg selv".
  */
 
 const T = {
-  title: "Cookies på horizen.dk",
-  body: "Vi tæller besøg anonymt uden cookies, så vi kan se, hvilke sider der bliver læst. Siger du ja, bruger vi også Google Analytics og Google Ads, som sætter cookies. Du kan altid ændre dit valg under “Cookie-indstillinger” nederst på siden.",
+  title: "Vi bruger cookies",
+  body: "Vi bruger cookies for at give dig den bedste oplevelse og gøre siden bedre. Du kan altid ændre dit valg under “Cookie-indstillinger” nederst på siden.",
   acceptAll: "Accepter alle",
   rejectAll: "Kun nødvendige",
   choose: "Vælg selv",
