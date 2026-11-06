@@ -204,8 +204,8 @@ const step = (n: number, title: string) =>
 const P = `margin:16px 0 0;font-size:15px;line-height:1.6`
 const SMALL = `margin:8px 0 0;font-size:12px;line-height:1.5;color:${FAINT}`
 
-/** Mærket "Verificeret af Horizen" med kontrolkode og link til tjek-siden. */
-function verifyBadge({
+/** Mærket "Verificeret af Horizen" med kontrolkode og link til tjek-siden (også i noticeText.ts). */
+export function verifyBadge({
 	gif,
 	code,
 	verifyUrl,

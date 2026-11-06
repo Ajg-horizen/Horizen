@@ -6,7 +6,8 @@ export const dynamic = 'force-dynamic'
 
 /**
  * Tjek af en mail fra Horizen (Andreas 5/11-2026). Hver besked fra fanen
- * "Beskeder" har en ægthedskode (fx H-7F3K-92QD) i mærket nederst. Her slår
+ * "Beskeder" og hver mail om nye spørgsmål (seoQuestionNotice, fra 6/11-2026)
+ * har en ægthedskode (fx H-7F3K-92QD) i mærket nederst. Her slår
  * kunden koden op: findes den, står afsender, dato og emne; findes den ikke,
  * er mailen ikke sendt af Horizen. Modtagerens mail vises kun delvist.
  *
@@ -47,7 +48,7 @@ export async function GET(request: Request) {
 	if (code) {
 		try {
 			found = await writeClient.fetch<Found | null>(
-				`*[_type == "seoClientMessage" && code == $code][0]{ sentAt, sentTo, sentBy, subject }`,
+				`*[_type in ["seoClientMessage", "seoQuestionNotice"] && code == $code][0]{ sentAt, sentTo, sentBy, subject }`,
 				{ code },
 				{ cache: 'no-store' },
 			)

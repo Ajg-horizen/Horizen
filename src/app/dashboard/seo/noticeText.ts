@@ -1,14 +1,19 @@
 /**
- * Mailen om nye spørgsmål i SEO-dashboardet. Uden andre afhængigheder, så både
- * panelet i dashboardet (forhåndsvisning) og POST /api/seo-question-notify
- * (afsendelse) bruger præcis samme mail.
+ * Mailen om nye spørgsmål i SEO-dashboardet. Kun afhængig af messageText.ts
+ * (mærket), så både panelet i dashboardet (forhåndsvisning) og POST
+ * /api/seo-question-notify (afsendelse) bruger præcis samme mail.
  *
  * Opbygning efter Andreas' reference (Sanitys mails, 1/11-2026): Horizen-logo
  * øverst, et hvidt kort med tynd kant, afsenderens billede og navn, en stor
  * overskrift, kort tekst, én mørk knap og en diskret bundtekst. Bygget med
  * tabeller og inline-stil, så den holder i Gmail og Outlook. Spørgsmålene står
  * ikke i mailen; de besvares i dashboardet.
+ *
+ * Som alle mails fra Horizen har den mærket "Verificeret af Horizen" med
+ * kontrolkode og "Pas på falske mails" (Andreas 6/11-2026).
  */
+
+import { HORIZEN_PHONE, verifyBadge } from './messageText'
 
 const escapeHtml = (s: string) =>
 	s
@@ -40,6 +45,8 @@ export function noticeMail({
 	sender,
 	senderPhoto,
 	origin,
+	code,
+	verifyBase,
 }: {
 	count: number
 	/** Kundens navn, fx "Ramin" (tomt giver bare "Hej") */
@@ -52,6 +59,10 @@ export function noticeMail({
 	senderPhoto?: string
 	/** Sidens adresse, så logo og billede kan hentes af mailprogrammet */
 	origin: string
+	/** Ægthedskoden (messageCode), laves først ved afsendelse; uden står en pladsholder */
+	code?: string
+	/** Adressen til tjek-siden (SEO_VERIFY_URL); standard er sidens egen /tjek-mail */
+	verifyBase?: string
 }) {
 	const what = count === 1 ? 'et nyt spørgsmål' : `${count} nye spørgsmål`
 	const firstName = sender.trim().split(/\s+/)[0] || 'Horizen'
@@ -64,6 +75,7 @@ export function noticeMail({
 	const button = 'Se spørgsmålene'
 	const from = `Spørgsmål fra ${firstName}`
 	const abs = (src: string) => (/^https?:\/\//.test(src) ? src : origin + src)
+	const verifyUrl = verifyBase?.trim() || `${origin}/tjek-mail`
 
 	const text = [
 		greeting,
@@ -72,9 +84,17 @@ export function noticeMail({
 		link,
 		'',
 		how,
+		...(code
+			? [
+					'',
+					`Verificeret af Horizen. Kontrolkode ${code}: ${verifyUrl}?kode=${code}`,
+				]
+			: []),
 		'',
 		'Venlig hilsen',
 		...(sender.trim() ? [sender, 'Horizen'] : ['Horizen']),
+		'',
+		`Pas på falske mails: Jeg opkræver aldrig andet end det, vi har aftalt, og jeg beder aldrig om kortoplysninger eller adgangskoder på mail. Får du en mail om betaling eller et abonnement, der ikke passer med vores aftale, også fra andre, så se bort fra den eller ring til mig først: ${HORIZEN_PHONE}. Mine mails har altid en kontrolkode, som du kan tjekke på ${verifyUrl}.`,
 	].join('\n')
 
 	const avatar = senderPhoto
@@ -113,6 +133,13 @@ export function noticeMail({
 </tr></table>
 <p style="margin:32px 0 0;font-size:13px;line-height:1.6;color:${MUTED}">${escapeHtml(how)}</p>
 <p style="margin:24px 0 0;font-size:15px;line-height:1.6">Venlig hilsen<br>${sender.trim() ? `<strong>${escapeHtml(sender)}</strong><br><span style="color:${MUTED}">Horizen</span>` : '<strong>Horizen</strong>'}</p>
+${verifyBadge({ gif: abs('/email/horizen-maerke.gif'), code, verifyUrl })}
+</td></tr>
+<tr><td style="padding:24px 0 0">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+<td bgcolor="#1a1a18" style="border:1px solid #3a3a36;border-radius:12px;padding:16px 20px;font-family:${FONT};font-size:13px;line-height:1.6;color:#d6d6d0;background:#1a1a18">
+<strong style="color:#ffffff">Pas på falske mails.</strong> Jeg opkræver aldrig andet end det, vi har aftalt, og jeg beder aldrig om kortoplysninger eller adgangskoder på mail. Får du en mail om betaling eller et abonnement, der ikke passer med vores aftale, også fra andre, så se bort fra den eller ring til mig først: <a href="tel:${HORIZEN_PHONE.replace(/\s/g, '')}" style="color:#ffffff;font-weight:600;text-decoration:none;white-space:nowrap">${HORIZEN_PHONE}</a>. Mine mails er altid verificeret med en kontrolkode, som du kan tjekke.
+</td></tr></table>
 </td></tr>
 <tr><td align="center" style="padding-top:32px;font-family:${FONT};font-size:14px">
 ${footerLink('https://horizen.dk', 'Horizen')}${dot}${footerLink(link, 'SEO-dashboard')}${dot}${footerLink('https://horizen.dk/kontakt', 'Kontakt')}
