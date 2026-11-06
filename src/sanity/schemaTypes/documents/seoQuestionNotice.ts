@@ -23,6 +23,12 @@ export default defineType({
 			type: 'string',
 		}),
 		defineField({ name: 'sentBy', title: 'Sendt af', type: 'string' }),
+		defineField({
+			name: 'code',
+			title: 'Kontrolkode',
+			type: 'string',
+			description: 'Ægthedskoden i mærket nederst i mailen (slås op på /tjek-mail)',
+		}),
 		defineField({ name: 'subject', title: 'Emne', type: 'string' }),
 		defineField({ name: 'count', title: 'Antal spørgsmål', type: 'number' }),
 		defineField({

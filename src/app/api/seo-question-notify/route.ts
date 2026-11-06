@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
+import { randomBytes, randomUUID } from 'node:crypto'
 import { Resend } from 'resend'
 import { writeClient } from '@/sanity/lib/writeClient'
 import {
@@ -13,7 +14,7 @@ import {
 	pendingQuestions,
 	type NoticeState,
 } from '@/app/dashboard/seo/noticeMail'
-import { senderProfile } from '@/app/dashboard/seo/messageText'
+import { messageCode, senderProfile } from '@/app/dashboard/seo/messageText'
 
 export const runtime = 'nodejs'
 
@@ -24,7 +25,9 @@ export const runtime = 'nodejs'
  *
  * { to, name, dryRun: true } giver emne og tekst uden at sende.
  * { to, name } sender via Resend og gemmer en seoQuestionNotice med de spørgsmål,
- * beskeden omfattede, så de ikke tæller som nye igen.
+ * beskeden omfattede, så de ikke tæller som nye igen. Som beskederne har mailen
+ * en ægthedskode (gemmes på beskeden, privat id "seo-notice.…"), som kunden kan
+ * slå op på /tjek-mail.
  *
  * Kun Horizen-rollen (Sanity-login med horizen.dk-mail). Uden
  * DASHBOARD_SESSION_SECRET er det kun åbent lokalt, som dashboardet selv.
@@ -102,6 +105,8 @@ export async function POST(request: NextRequest) {
 		.slice(0, 60)
 	const origin = new URL(request.url).origin
 	const link = `${origin}/dashboard/seo#v=spoergsmaal`
+	// Ægthedskoden laves kun ved rigtig afsendelse (forhåndsvisning: pladsholder)
+	const code = body.dryRun === true ? undefined : messageCode(randomBytes(8))
 	const mail = noticeMail({
 		count: questions.length,
 		name,
@@ -110,6 +115,8 @@ export async function POST(request: NextRequest) {
 		// portræt af afsenderen (fx /email/andreas.jpg); uden vises initialer
 		senderPhoto: profile.photo,
 		origin,
+		code,
+		verifyBase: process.env.SEO_VERIFY_URL,
 	})
 
 	if (body.dryRun === true) {
@@ -154,11 +161,13 @@ export async function POST(request: NextRequest) {
 	const sentAt = new Date().toISOString()
 	try {
 		await writeClient.create({
+			_id: `seo-notice.${randomUUID()}`,
 			_type: 'seoQuestionNotice',
 			sentAt,
 			sentTo: to.join(', '),
 			sentToName: name,
 			sentBy: sender || 'Lokal test',
+			code,
 			subject: mail.subject,
 			count: questions.length,
 			questionKeys: questions.map(questionKey),
