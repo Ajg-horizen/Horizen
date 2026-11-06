@@ -45,6 +45,7 @@ const CHANNEL_LABELS: Record<string, string> = {
 	SMS: 'SMS',
 	'Mobile Push Notifications': 'Push-beskeder',
 	Audio: 'Lyd',
+	'AI Assistant': 'AI-assistenter (ChatGPT m.fl.)',
 	Unassigned: 'Ukendt',
 }
 
@@ -160,6 +161,8 @@ export async function fetchGa4Overview(now = new Date()): Promise<Ga4Overview> {
 						share: channelUsers ? (num(r, 0) / channelUsers) * 100 : 0,
 					}
 				})
+				// kanaler uden besøgende i perioden vises ikke
+				.filter((c) => c.users > 0)
 				.sort((a, b) => b.users - a.users)
 
 			const pages = (pageReports[i]?.rows ?? []).map((r) => {
