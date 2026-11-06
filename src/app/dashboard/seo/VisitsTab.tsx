@@ -158,7 +158,7 @@ export default function VisitsTab({
 						De mest sete sider, hvor længe folk bliver, og hvor de kom fra.
 					</p>
 				</div>
-				<div className="border-foreground/[0.08] flex rounded-full border bg-white p-1">
+				<div className="border-foreground/[0.08] flex flex-wrap rounded-full border bg-white p-1">
 					{GA4_RANGES.map((r) => (
 						<button
 							key={r.key}
