@@ -3,6 +3,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { TAB_NAV_EVENT } from './TabLink'
 import HorizenLogo from './HorizenLogo'
+import OwnershipNote from './OwnershipNote'
 
 /**
  * App-skal til SEO-dashboardet: svævende, afrundet glaspanel til venstre med
@@ -434,6 +435,7 @@ export default function DashboardShell({
 					<span className="text-[11px]">Powered by</span>
 					<HorizenLogo className="h-[11px] w-auto" />
 				</a>
+				<OwnershipNote />
 			</div>
 		</div>
 	)
