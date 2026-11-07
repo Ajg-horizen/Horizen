@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { groq } from 'next-sanity'
 import { client } from '@/sanity/lib/client'
 import { headers } from 'next/headers'
+import { after } from 'next/server'
 import {
 	DASHBOARD_EMAIL_HEADER,
 	DASHBOARD_NAME_HEADER,
@@ -11,6 +12,13 @@ import {
 import DashboardTabs from './DashboardTabs'
 import PagesTabs from './PagesTabs'
 import NewTaskButton from './NewTaskButton'
+import LoginActivity from './LoginActivity'
+import {
+	exampleLogins,
+	getDashboardLogins,
+	recordDashboardVisit,
+	summarizeLogins,
+} from '@/lib/dashboardLogins'
 import OpgaverPanel from './OpgaverPanel'
 import UsageMeter from './UsageMeter'
 import DashboardShell, { type ShellItem } from './DashboardShell'
@@ -1370,6 +1378,14 @@ export default async function SeoOverviewPage({
 	)
 	const asClient = (await searchParams).som === 'kunde'
 	const isHorizen = viewer === 'horizen' && !asClient
+	// Kundens besøg (kun Horizen ser dem, ikonet øverst til højre): gemmes
+	// efter svaret, så siden ikke venter. Horizen selv logges aldrig.
+	const viewerEmail = requestHeaders.get(DASHBOARD_EMAIL_HEADER) ?? ''
+	if (viewer === 'kunde' && viewerEmail)
+		after(() => recordDashboardVisit(viewerName, viewerEmail))
+	const loginLog = isHorizen ? await getDashboardLogins() : []
+	const loginExample = isHorizen && !loginLog.length && process.env.NODE_ENV !== 'production'
+	const loginSummary = summarizeLogins(loginExample ? exampleLogins() : loginLog)
 	const inbox = await getInboxItems()
 	const answers = await getAnswers()
 	const noticeState = await getNoticeState()
@@ -1922,7 +1938,12 @@ export default async function SeoOverviewPage({
 			brand={BRAND}
 			signedInAs={viewerName || undefined}
 			updatedLabel={dataUpdatedLabel}
-			action={<NewTaskButton items={openTasks} />}
+			action={
+				<>
+					{isHorizen && <LoginActivity summary={loginSummary} example={loginExample} />}
+					<NewTaskButton items={openTasks} />
+				</>
+			}
 			notice={
 				viewer === 'horizen' &&
 				(asClient ? (
