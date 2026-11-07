@@ -26,7 +26,7 @@ export default function OwnershipNote() {
 			<button
 				type="button"
 				onClick={() => setOpen(true)}
-				className="text-foreground/25 hover:text-foreground/60 mt-2 block px-3 text-[11px] transition-colors"
+				className="text-foreground/25 hover:text-foreground/60 mt-1 block px-3 text-[9px] transition-colors"
 			>
 				Betingelser
 			</button>
