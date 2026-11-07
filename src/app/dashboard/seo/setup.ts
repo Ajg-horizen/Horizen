@@ -293,6 +293,12 @@ export const setupSections: SetupSection[] = [
 				how: 'Google Business Profile → Rediger profil → Websted: sæt adressen til https://kunde.dk/?utm_source=gbp&utm_medium=organic. Ellers tæller klik fra profilen som organisk søgning under Henvendelser → Hvor kom de fra?',
 				check: 'Linket på profilen åbner sitet med ?utm_source=gbp.',
 			},
+			{
+				id: 'maaling-ingen-genindlaesning',
+				title: 'Siden genindlæser ikke sig selv',
+				how: 'Åbn forsiden på det live domæne i et privat vindue (ikke logget ind på dashboardet), og lad den stå i 30 sekunder. <SanityLive> må kun køre i draft mode (src/ui/VisualEditingControls.tsx). Ellers kan besøgstællerens egne skrivninger til Sanity få siden til at genindlæse sig selv i ring og tælle hundredvis af falske besøg (ACP, november 2026). SEO-tjekket fanger det som sanity-live-public.',
+				check: 'Ingen genindlæsning på 30 sekunder, og Performance → Besøg stiger kun med ét besøg.',
+			},
 		],
 	},
 	{

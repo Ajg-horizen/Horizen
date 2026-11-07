@@ -1,4 +1,6 @@
 import { cleanPath } from '@/lib/siteEvents'
+import { cookies, draftMode } from 'next/headers'
+import { SESSION_COOKIE } from '@/lib/dashboard-session'
 import { recordPageview, recordTime } from '@/lib/pageStats'
 import { isTrafficSource } from '@/lib/trafficSource'
 import { lookupCompany } from '@/lib/companyLookup'
@@ -36,6 +38,10 @@ export async function POST(req: Request) {
 	const path = cleanPath(body.path)
 	// Det interne dashboard og Studio tælles ikke
 	if (path.startsWith('/dashboard') || path.startsWith('/admin')) return done
+	// Vores egne besøg tælles heller ikke: logget ind på SEO-dashboardet
+	// (dash_session gælder hele sitet i 7 dage, også for kunden) eller en side
+	// set gennem Studio/Presentation (draft mode)
+	if ((await cookies()).has(SESSION_COOKIE) || (await draftMode()).isEnabled) return done
 
 	if (body.type === 'view') {
 		const landing = body.landing === true
