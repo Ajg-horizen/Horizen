@@ -165,12 +165,45 @@ const sections: Section[] = [
       {
         type: "list",
         items: [
-          "Kunden ejer sin hjemmeside, sit indhold, sin kildekode og sit domæne.",
+          "Kunden ejer sin hjemmeside, sit indhold, sin kildekode og sit domæne, jf. dog afsnittet om Horizens interne værktøjer og arbejdsmetoder.",
           "Rettighederne til det udførte arbejde overgår til kunden ved fuld betaling.",
           "Ved samarbejdets ophør udleveres alt relevant materiale, herunder kildekode, filer, adgange og logins, på kundens anmodning, således at kunden frit kan råde herover.",
           "Kunden får altid sin hjemmeside med, men selve overdragelsen og overflytningen, herunder det hertil forbundne tidsforbrug, afregnes særskilt på timebasis efter gældende timepris.",
           "Undtaget herfra er tredjepartskomponenter og licenser, der er underlagt egne vilkår.",
         ],
+      },
+    ],
+  },
+  {
+    heading: "Horizens interne værktøjer og arbejdsmetoder",
+    blocks: [
+      {
+        type: "p",
+        text: "Horizen anvender i sit arbejde en række værktøjer, systemer og metoder, som Horizen har udviklet til brug i egen drift. Disse tilhører Horizen og indgår ikke i det, kunden erhverver. Det omfatter blandt andet:",
+      },
+      {
+        type: "list",
+        items: [
+          "SEO-dashboards, rapporteringsværktøjer og automatiseret dataindsamling, eksempelvis månedlige opgørelser fra Google Search Console.",
+          "Værktøjer til at modtage, prioritere og følge op på opgaver, herunder ad hoc-opgaver, samt statusvisninger i hjemmesidens CMS.",
+          "Skabeloner, arbejdsgange, tjeklister og øvrige metoder til planlægning, udvikling, optimering og vedligeholdelse.",
+        ],
+      },
+      {
+        type: "p",
+        text: "Værktøjerne kan være tilgængelige for kunden, så længe samarbejdet består, eksempelvis via hjemmesiden eller CMS'et. Adgangen er en del af Horizens ydelse og ophører ved samarbejdets ophør. Ved overdragelse af hjemmesiden fjerner Horizen værktøjerne fra løsningen, inden den udleveres.",
+      },
+      {
+        type: "p",
+        text: "Horizens udvikling, videreudvikling og vedligeholdelse af værktøjerne, herunder SEO-dashboardet, sker for Horizens egen regning. Den tid, Horizen bruger hertil, modregnes ikke i kundens timer, retainer eller øvrige aftale og faktureres ikke kunden.",
+      },
+      {
+        type: "p",
+        text: "Kunden får fortsat hele den leverede hjemmeside med, herunder frontend, CMS og indhold, samt de resultater, der er opnået i samarbejdet. Kundens egne data, eksempelvis i Google Search Console og Google Analytics, tilhører fortsat kunden.",
+      },
+      {
+        type: "p",
+        text: "Generelle komponenter, kode og know-how, som Horizen anvender på tværs af kunder, forbliver Horizens. Kunden opnår en tidsubegrænset ret til at anvende disse som en del af den leverede hjemmeside, men ikke ret til at videresælge dem eller anvende dem i andre sammenhænge.",
       },
     ],
   },
@@ -368,7 +401,7 @@ export default function HandelsbetingelserPage() {
           <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
             Handelsbetingelser
           </h1>
-          <p className="mt-4 text-sm text-muted">Senest opdateret: 11. august 2026</p>
+          <p className="mt-4 text-sm text-muted">Senest opdateret: 7. november 2026</p>
         </header>
 
         <div className="mt-12 space-y-12">
