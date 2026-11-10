@@ -34,7 +34,19 @@ export default defineType({
 			name: 'resendId',
 			title: 'Resend-id',
 			type: 'string',
-			description: 'Bruges til at hente, om mailen er leveret og åbnet',
+			description: 'Resends id for mailen; webhooken finder beskeden ud fra det',
+		}),
+		defineField({
+			name: 'mailStatus',
+			title: 'Status i Resend',
+			type: 'string',
+			description:
+				'Sættes af Resend via /api/resend-webhook (leveret, åbnet, kom ikke frem …)',
+		}),
+		defineField({
+			name: 'mailStatusAt',
+			title: 'Status opdateret',
+			type: 'datetime',
 		}),
 		defineField({ name: 'html', title: 'Mailen (HTML)', type: 'text' }),
 	],

@@ -26,7 +26,6 @@ import ActivityByMonth, { ActivityKindTag } from './ActivityByMonth'
 import TabLink from './TabLink'
 import QuestionAnswer, { type SavedAnswer } from './QuestionAnswer'
 import QuestionNotice from './QuestionNotice'
-import { Resend } from 'resend'
 import MessagesTab, { type SentMessage } from './MessagesTab'
 import { senderProfile } from './messageText'
 import { NOTICE_STATE_QUERY, pendingQuestions, type NoticeState } from './noticeMail'
@@ -179,32 +178,11 @@ async function getAnswers(): Promise<Record<string, SavedAnswer>> {
 }
 
 /**
- * Status fra Resend (leveret, åbnet, kom ikke frem) for de nyeste beskeder.
- * "Åbnet" kræver, at åbningssporing er slået til for horizen.dk i Resend.
- * Fejler blødt: uden nøgle eller svar står der bare ingen status.
+ * Alt sendt til kunden: beskeder (fanen Beskeder) og beskeder om spørgsmål; fejler blødt.
+ * Status (leveret, åbnet, kom ikke frem) gemmes af Resend via
+ * /api/resend-webhook, så dashboardet aldrig selv spørger Resend. Det gav 401
+ * i Resend-loggen, fordi nøglen kun må sende (Andreas 10/11-2026).
  */
-async function withMailStatus(rows: SentMessage[]): Promise<SentMessage[]> {
-	// Horizens nøgle; ellers sitets egen (på horizen.dk er det den samme konto).
-	// Nøgler med kun "Sending access" kan ikke læse status: så står der ingen.
-	const key =
-		process.env.HORIZEN_RESEND_API_KEY?.trim() ||
-		process.env.RESEND_API_KEY?.trim()
-	if (!key) return rows
-	const resend = new Resend(key)
-	return Promise.all(
-		rows.map(async (row, i) => {
-			if (!row.resendId || i >= 20) return row
-			try {
-				const { data } = await resend.emails.get(row.resendId)
-				return { ...row, status: data?.last_event }
-			} catch {
-				return row
-			}
-		}),
-	)
-}
-
-/** Alt sendt til kunden: beskeder (fanen Beskeder) og beskeder om spørgsmål; fejler blødt. */
 async function getSentMessages(): Promise<SentMessage[]> {
 	try {
 		const rows = await client
@@ -217,12 +195,13 @@ async function getSentMessages(): Promise<SentMessage[]> {
 			.fetch<SentMessage[]>(
 				`*[_type in ["seoClientMessage", "seoQuestionNotice"] && defined(sentAt)] | order(sentAt desc)[0...100]{
 					"kind": select(_type == "seoClientMessage" => "besked", "spoergsmaal"),
-					sentAt, sentTo, sentToName, sentBy, subject, html, count, resendId
+					sentAt, sentTo, sentToName, sentBy, subject, html, count, resendId,
+					"status": mailStatus
 				}`,
 				{},
 				{ cache: 'no-store' },
 			)
-		return await withMailStatus(rows ?? [])
+		return rows ?? []
 	} catch (err) {
 		console.error('[dashboard] Kunne ikke hente sendte beskeder:', err)
 		return []
