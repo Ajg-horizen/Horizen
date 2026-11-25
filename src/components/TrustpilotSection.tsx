@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import TestimonialAvatar from "@/components/TestimonialAvatar";
+import TestimonialCompany from "@/components/TestimonialCompany";
 import { fadeInUp } from "@/lib/animations";
 import { testimonials } from "@/lib/testimonials";
 
@@ -74,7 +75,13 @@ export default function TrustpilotSection() {
                 <div>
                   <p className="text-sm font-semibold">{displayName}</p>
                   {displaySub && (
-                    <p className="text-xs text-muted">{displaySub}</p>
+                    <p className="text-xs text-muted">
+                      {t.author.company ? (
+                        <TestimonialCompany author={t.author} />
+                      ) : (
+                        displaySub
+                      )}
+                    </p>
                   )}
                 </div>
               </div>

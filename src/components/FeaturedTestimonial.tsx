@@ -1,8 +1,10 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import Container from "@/components/Container";
 import TestimonialAvatar from "@/components/TestimonialAvatar";
+import TestimonialCompany from "@/components/TestimonialCompany";
 import { fadeInUp } from "@/lib/animations";
 import { getFeaturedTestimonial, type Testimonial } from "@/lib/testimonials";
 
@@ -40,10 +42,23 @@ export function TestimonialBody({
   // Label-hierarki: navn som hovedlinje, role/company/location som subtitle.
   // Fallback til company hvis navn ikke findes (undgå tom hovedlinje).
   const mainLabel = author.name || author.company || "";
-  const subtitleParts = author.name
-    ? [author.role, author.company, author.location]
-    : [author.role, author.location];
-  const subtitle = subtitleParts.filter(Boolean).join(", ");
+  // Firmanavnet vises som link til kundens hjemmeside, hvis den findes.
+  const subtitleParts: ReactNode[] = (
+    author.name
+      ? [author.role, author.company ? "company" : undefined, author.location]
+      : [author.role, author.location]
+  )
+    .filter(Boolean)
+    .map((part) =>
+      part === "company" ? (
+        <TestimonialCompany key="company" author={author} />
+      ) : (
+        <span key={part}>{part}</span>
+      ),
+    );
+  const subtitle = subtitleParts.length
+    ? subtitleParts.flatMap((node, i) => (i ? [", ", node] : [node]))
+    : null;
 
   const outerAlign =
     align === "center"

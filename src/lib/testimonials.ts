@@ -22,6 +22,8 @@ export type Testimonial = {
     company?: string;
     location?: string;
     photo?: string;
+    /** Kundens egen hjemmeside. Firmanavnet vises som link dertil (almindeligt link, ikke nofollow: ægte kunde, ægte anmeldelse). */
+    website?: string;
   };
   source: TestimonialSource;
   featured?: boolean;
@@ -50,6 +52,7 @@ export const testimonials: Testimonial[] = [
       name: "Michael Seitz",
       role: "Malermester",
       company: "Malerfirma Seitz",
+      website: "https://malerfirma-seitz.dk",
       photo: "/Clients/seitz-profil.webp",
     },
     source: "trustpilot",
@@ -70,6 +73,7 @@ export const testimonials: Testimonial[] = [
     author: {
       name: "Anne Sofie Pedersen",
       company: "Nordic Influence",
+      website: "https://nordic-influence.dk",
     },
     source: "trustpilot",
   },
@@ -81,6 +85,7 @@ export const testimonials: Testimonial[] = [
     author: {
       name: "Ditte Gade Jakobsen",
       company: "NEVER ANOTHER",
+      website: "https://neveranother.dk",
       photo: "/Clients/Ditte-never-another.webp",
     },
     source: "trustpilot",
@@ -94,6 +99,7 @@ export const testimonials: Testimonial[] = [
       name: "Tatiana",
       role: "Projektleder",
       company: "Tandsundhed Uden Grænser",
+      website: "https://dhwb.dk",
       photo: "/Clients/Tatiana-TUG.webp",
     },
     source: "trustpilot",
@@ -118,6 +124,7 @@ export const testimonials: Testimonial[] = [
     author: {
       name: "Rebecca Fuglsig",
       company: "Ensemble Hermes",
+      website: "https://ensemblehermes.dk",
       photo: "/Clients/Rebecca-Hermes.webp",
     },
     source: "trustpilot",
