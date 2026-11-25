@@ -73,7 +73,6 @@ export const testimonials: Testimonial[] = [
     author: {
       name: "Anne Sofie Pedersen",
       company: "Nordic Influence",
-      website: "https://nordic-influence.dk",
     },
     source: "trustpilot",
   },
