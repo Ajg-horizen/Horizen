@@ -8,6 +8,22 @@ import { schemaTypes } from "@/sanity/schemaTypes";
 import { StudioLayout } from "@/sanity/ui/StudioLayout";
 
 /**
+ * Typer, som kun SEO-dashboardet skriver (fra SanityPress-templaten). De kan
+ * ikke oprettes med "+" i Studio og vises ikke i søgningen.
+ */
+const dashboardOnlyTypes = [
+  "seoQuestionAnswer",
+  "seoQuestionNotice",
+  "seoClientMessage",
+  "seoSnapshot",
+  "pageHealth",
+  "seoTodoSeen",
+  "seoTodoDone",
+  "seoMonthlyChecklist",
+  "seoDirectoryChecklist",
+];
+
+/**
  * Studio er indlejret på horizen.dk/admin, som på kundesiterne.
  *
  * To arbejdsområder mod samme projekt:
@@ -22,7 +38,15 @@ function workspace(dataset: "production" | "development", title: string): Worksp
     projectId,
     dataset,
     plugins: [structureTool(), visionTool({ defaultApiVersion: apiVersion })],
-    schema: { types: schemaTypes },
+    schema: {
+      types: schemaTypes.map((t) =>
+        dashboardOnlyTypes.includes(t.name)
+          ? ({ ...t, __experimental_omnisearch_visibility: false } as typeof t)
+          : t,
+      ),
+      templates: (templates) =>
+        templates.filter(({ schemaType }) => !dashboardOnlyTypes.includes(schemaType)),
+    },
     // efter login sendes man tilbage til SEO-dashboardet, hvis man kom derfra
     studio: { components: { layout: StudioLayout } },
   };

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { pathFromReferer, recordLead } from "@/lib/siteEvents";
 
 const FROM = "Horizen Godt formål <noreply@horizen.dk>";
 const TO = "ajg@horizen.dk";
@@ -109,6 +110,9 @@ export async function POST(request: Request) {
         { status: 500 },
       );
     }
+
+    // Anonym tælling til SEO-dashboardet (Henvendelser); fejler aldrig for brugeren
+    await recordLead("form", pathFromReferer(request)).catch(() => {});
 
     return NextResponse.json({ ok: true });
   } catch (err) {

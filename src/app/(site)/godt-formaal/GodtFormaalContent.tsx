@@ -61,8 +61,8 @@ export default function GodtFormaalContent() {
     <>
       <Container as="section" size="site" className="pt-32 pb-12 md:pt-40">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
           className="max-w-3xl"
@@ -99,10 +99,10 @@ export default function GodtFormaalContent() {
         <div className="grid gap-10 lg:grid-cols-5">
           {/* Form */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, delay: 0.1 }}
+            transition={{ duration: 0.7}}
             className="lg:col-span-3"
           >
             <form
@@ -277,10 +277,10 @@ export default function GodtFormaalContent() {
 
           {/* Info */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.7}}
             className="lg:col-span-2"
           >
             <div className="rounded-3xl border border-foreground/10 bg-foreground/[0.02] p-8 md:p-10">

@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DynamicIslandTOC from "@/components/DynamicIslandTOC";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import { LinkIcon, CheckIcon, ChevronRight, ArrowLeft, ArrowRight } from "lucide-react";
 import Container from "@/components/Container";
 
@@ -303,7 +303,7 @@ export default function ArticleLayout({
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               custom={0}
-              variants={fadeInUp}
+              variants={fadeIn}
               className="mb-10 flex flex-wrap items-end justify-between gap-4"
             >
               <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
@@ -329,7 +329,7 @@ export default function ArticleLayout({
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: "-50px" }}
-                  variants={fadeInUp}
+                  variants={fadeIn}
                 >
                   <Link href={article.href} className="group block">
                     <div className="overflow-hidden rounded-2xl aspect-[16/9]">

@@ -86,7 +86,7 @@ const cardVariants = {
 const gridVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.06 },
+    transition: { staggerChildren: 0 },
   },
 };
 
@@ -143,8 +143,8 @@ export default function ServicesSection() {
     <Container as="section" size="site" className="py-32" id="services">
       <div>
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
           className="mb-10"

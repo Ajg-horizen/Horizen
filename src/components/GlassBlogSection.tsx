@@ -11,8 +11,8 @@ export default function GlassBlogSection() {
   return (
     <Container as="section" size="site" className="pt-10 pb-32">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.7 }}
         className="mb-10"
@@ -37,10 +37,10 @@ export default function GlassBlogSection() {
         {blogPosts.slice(0, 3).map((post, i) => (
           <motion.div
             key={post.slug}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ delay: i * 0.15, duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }}
+            transition={{ duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }}
             className="flex"
           >
             <GlassBlogCard

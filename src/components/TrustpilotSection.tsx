@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import TestimonialAvatar from "@/components/TestimonialAvatar";
 import TestimonialCompany from "@/components/TestimonialCompany";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import { testimonials } from "@/lib/testimonials";
 
 function TrustpilotStars({ count, bare = false }: { count: number; bare?: boolean }) {
@@ -43,7 +43,7 @@ export default function TrustpilotSection() {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         custom={0}
-        variants={fadeInUp}
+        variants={fadeIn}
         className="mb-10 flex flex-col items-center justify-center gap-2"
       >
         <div className="flex items-center gap-1.5">

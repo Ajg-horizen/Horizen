@@ -7,7 +7,7 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import { TextScramble } from "@/components/ui/text-scramble";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import {
   stickyClasses,
   type ProcessBlock as ProcessBlockData,
@@ -24,7 +24,7 @@ function ProcessCard({ item, index }: { item: ProcessStep; index: number }) {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
-      variants={fadeInUp}
+      variants={fadeIn}
       className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 transition-colors duration-500 hover:border-white/[0.15] hover:bg-white/[0.06]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -108,7 +108,7 @@ export default function ProcessBlock({
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           custom={0}
-          variants={fadeInUp}
+          variants={fadeIn}
           className="mb-16"
         >
           <ScrambleEyebrow className="text-white/40">{data.eyebrow}</ScrambleEyebrow>

@@ -15,6 +15,7 @@ import {
 	messageCode,
 	senderProfile,
 } from '@/app/dashboard/seo/messageText'
+import { clientRecipients } from '@/app/dashboard/seo/data'
 
 export const runtime = 'nodejs'
 
@@ -80,6 +81,21 @@ export async function POST(request: NextRequest) {
 		)
 	}
 
+	// Regel (Andreas 10/11-2026): kun faste modtagere fra data.ts. Alt andet
+	// afvises, så en mail aldrig sendes til en anden kundes adresse ved en fejl.
+	const allowed = new Set(clientRecipients.map((r) => r.email.toLowerCase()))
+	const unknown = to.filter((e) => !allowed.has(e.toLowerCase()))
+	if (!allowed.size || unknown.length) {
+		return NextResponse.json(
+			{
+				error: allowed.size
+					? `Ikke en fast modtager på dette dashboard: ${unknown.join(', ')}. Tilføj adressen i clientRecipients i data.ts.`
+					: 'Ingen faste modtagere på dette dashboard. Tilføj dem i clientRecipients i data.ts.',
+			},
+			{ status: 400 },
+		)
+	}
+
 	const fields = cleanFields(body.fields)
 	if (!fields.intro) {
 		return NextResponse.json({ error: 'Skriv en tekst' }, { status: 400 })
@@ -127,7 +143,7 @@ export async function POST(request: NextRequest) {
 	// andre modtagere.
 	const sent: string[] = []
 	const failed: string[] = []
-	for (const [i, recipient] of to.entries()) {
+	for (const recipient of to) {
 		const code = messageCode(randomBytes(8))
 		const mail = build(code)
 		const { data, error } = await resend.emails.send({

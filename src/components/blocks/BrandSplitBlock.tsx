@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import type { BrandSplitBlock as BrandSplitBlockData } from "@/lib/services";
 import dynamic from "next/dynamic";
 
@@ -38,7 +38,7 @@ export default function BrandSplitBlock({
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           custom={0}
-          variants={fadeInUp}
+          variants={fadeIn}
         >
           <ScrambleEyebrow>{data.eyebrow}</ScrambleEyebrow>
           <h2 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Container from "@/components/Container";
 import TestimonialAvatar from "@/components/TestimonialAvatar";
 import TestimonialCompany from "@/components/TestimonialCompany";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import { getFeaturedTestimonial, type Testimonial } from "@/lib/testimonials";
 
 function TrustpilotStars({ count }: { count: number }) {
@@ -79,7 +79,7 @@ export function TestimonialBody({
       whileInView="visible"
       viewport={{ once: true, margin: "-100px" }}
       custom={0}
-      variants={fadeInUp}
+      variants={fadeIn}
       className={`max-w-3xl mx-auto ${outerAlign}`}
     >
       <div className={`mb-8 flex ${flexAlign}`}>

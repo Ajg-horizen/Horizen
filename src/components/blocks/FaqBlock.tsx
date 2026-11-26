@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDownIcon } from "lucide-react";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import type { FaqBlock as FaqBlockData, FaqItem } from "@/lib/services";
 
 function FaqRow({ item, index }: { item: FaqItem; index: number }) {
@@ -17,7 +17,7 @@ function FaqRow({ item, index }: { item: FaqItem; index: number }) {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
-      variants={fadeInUp}
+      variants={fadeIn}
       className="border-b border-foreground/[0.06]"
     >
       <button
@@ -70,7 +70,7 @@ export default function FaqBlock({
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           custom={0}
-          variants={fadeInUp}
+          variants={fadeIn}
         >
           <ScrambleEyebrow>{data.eyebrow}</ScrambleEyebrow>
           <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">

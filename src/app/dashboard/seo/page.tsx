@@ -21,18 +21,23 @@ import {
 } from '@/lib/dashboardLogins'
 import OpgaverPanel from './OpgaverPanel'
 import UsageMeter from './UsageMeter'
+import BuyHours from './BuyHours'
+import SendSolvedMessage from './SendSolvedMessage'
 import DashboardShell, { type ShellItem } from './DashboardShell'
 import ActivityByMonth, { ActivityKindTag } from './ActivityByMonth'
 import TabLink from './TabLink'
 import QuestionAnswer, { type SavedAnswer } from './QuestionAnswer'
-import QuestionNotice from './QuestionNotice'
+import WorkspaceNotice from './WorkspaceNotice'
+import TodoCard, { type TodoDone, type TodoSeen } from './TodoCard'
+import FindingsTab from './FindingsTab'
 import MessagesTab, { type SentMessage } from './MessagesTab'
 import { senderProfile } from './messageText'
-import { NOTICE_STATE_QUERY, pendingQuestions, type NoticeState } from './noticeMail'
 import SeoCheckStatus, { type SeoCheckRun } from './SeoCheckStatus'
 import TechniquesTab from './TechniquesTab'
 import SeoMapTab from './SeoMapTab'
 import FocusNow from './FocusNow'
+import MonthlyChecklist, { ChecklistCard, type ChecklistDone, type ChecklistHistory } from './MonthlyChecklist'
+import DirectoryChecklist, { type DirectoryMark } from './DirectoryChecklist'
 import GoalsByMonth from './GoalsByMonth'
 import ServiceCatalog from './ServiceCatalog'
 import { ActionList, TechnicalList } from './WorkLists'
@@ -44,24 +49,34 @@ import {
 	AiVisitsSection,
 	LeadsSection,
 	NoLeadsYet,
+	SeasonSection,
 	SiteEventsUnreadable,
 	type AiVisit,
 	type LeadEvent,
+	uniqueLeads,
+	isInquiry,
 } from './SiteEventsSections'
 import VisitsTab from './VisitsTab'
+import { SEASON_HAS_DATA, seasonDataNote, seasonUpdateDue } from './season'
+import { LockedTab, SeoInterestButton } from './SeoLocked'
 import { getVisits } from '@/lib/visits'
 import CompaniesTab from './CompaniesTab'
 import { getCompanies } from '@/lib/companies'
 import { LATER_META, STATUS_META } from './statusMeta'
 import SetupTab, { setupProgress } from './SetupTab'
+import { getClientQuestions, getClientTodos } from './clientItems'
 import HealthCheck from './HealthCheck'
+import KlippekortOrders, { exampleOrders, orderStatusOf } from './KlippekortOrders'
 import { OPTIMIZE_SUBJECT, type HealthEntry } from './helbred/types'
 import { exampleHistory } from './helbred/example'
 import type { SetupAutoKey } from './setup'
 import {
 	actionItems,
-	clientQuestions,
+	findings,
+	todoIntro,
 	clientMessageDefaults,
+	clientRecipients,
+	clientMessageDrafts,
 	questionKey,
 	focusItems,
 	goalMonths,
@@ -84,7 +99,19 @@ import {
 	pastAdhocActivity,
 	recentActivity,
 	recurringTasks,
+	checklistFor,
+	checklistHours,
 	retainerHours,
+	retainerFor,
+	seoIntroFor,
+	retainerEndsAfter,
+	hourModel,
+	seoAgreement,
+	seoPackageId,
+	specialDeal,
+	showSeoOffer,
+	klippekortStatus,
+	brand,
 	setupChecked,
 	roadmap,
 	searchConsoleTips,
@@ -124,8 +151,8 @@ export const metadata: Metadata = {
 // Ad hoc-opgaver fra Sanity vises uden at siden skal genbygges.
 export const dynamic = 'force-dynamic'
 
-/** Kundens navn og domæne i toppen og i hilsenen. Udfyld pr. kunde. */
-const BRAND = { client: 'Horizen', domain: 'horizen.dk' }
+/** Kundens navn og domæne i toppen og i hilsenen. Udfyldes pr. kunde i data.ts (brand). */
+const BRAND = brand
 
 /* ─── Ad hoc-opgaver fra Sanity ─────────────────────────────── */
 
@@ -133,6 +160,7 @@ type InboxRow = InboxItem & { updatedAt?: string }
 
 const INBOX_QUERY = groq`*[_type == "seoInboxItem"] | order(receivedAt desc){
 	_id, subject, message, fromName, fromEmail, receivedAt, status, priority, handling, estimateHours,
+	orderHours, orderPrice, orderStatus, seoInterest,
 	"updatedAt": _updatedAt
 }`
 
@@ -146,7 +174,9 @@ async function getInboxItems(): Promise<InboxRow[]> {
 				perspective: 'published',
 				stega: false,
 			})
-			.fetch<InboxRow[]>(INBOX_QUERY)
+			// Ingen cache: en ny opgave eller bestilling skal stå her med det samme,
+			// også hvis mailen om den ikke kommer frem.
+			.fetch<InboxRow[]>(INBOX_QUERY, {}, { cache: 'no-store' })
 		return rows ?? []
 	} catch (err) {
 		console.error('[dashboard] Kunne ikke hente SEO-opgaver:', err)
@@ -173,6 +203,58 @@ async function getAnswers(): Promise<Record<string, SavedAnswer>> {
 		return Object.fromEntries((rows ?? []).map((r) => [r.key, { text: r.answer, by: r.by ?? '', at: r.at }]))
 	} catch (err) {
 		console.error('[dashboard] Kunne ikke hente svar:', err)
+		return {}
+	}
+}
+
+/** Opgaver fra "Din to-do", som kunden har markeret som gjort (seoTodoDone), pr. id; fejler blødt til {}. */
+async function getTodosDone(): Promise<Record<string, TodoDone>> {
+	try {
+		const rows = await client
+			.withConfig({
+				token: process.env.SANITY_API_READ_TOKEN,
+				useCdn: false,
+				perspective: 'published',
+				stega: false,
+			})
+			.fetch<
+				{ id: string; note?: string; by?: string; at: string; consent?: boolean; linkNotes?: { label: string; text: string }[] }[]
+			>(
+				groq`*[_type == "seoTodoDone" && defined(doneAt)]{ "id": todoId, note, "by": doneBy, "at": doneAt, consent, "linkNotes": linkNotes[]{ label, text } }`,
+				{},
+				// aldrig fra cachen: en ny markering skal ses ved næste besøg
+				{ cache: 'no-store' },
+			)
+		return Object.fromEntries(
+			(rows ?? []).map((r) => [
+				r.id,
+				{ note: r.note ?? '', by: r.by ?? '', at: r.at, consent: r.consent === true, linkNotes: r.linkNotes ?? [] },
+			]),
+		)
+	} catch (err) {
+		console.error('[dashboard] Kunne ikke hente to-do:', err)
+		return {}
+	}
+}
+
+/** Nye opgaver, som kunden har set og lagt på sin to-do-liste (seoTodoSeen), pr. id; fejler blødt til {}. */
+async function getTodosSeen(): Promise<Record<string, TodoSeen>> {
+	try {
+		const rows = await client
+			.withConfig({
+				token: process.env.SANITY_API_READ_TOKEN,
+				useCdn: false,
+				perspective: 'published',
+				stega: false,
+			})
+			.fetch<{ id: string; by?: string; at: string }[]>(
+				groq`*[_type == "seoTodoSeen" && defined(seenAt)]{ "id": todoId, "by": seenBy, "at": seenAt }`,
+				{},
+				{ cache: 'no-store' },
+			)
+		return Object.fromEntries((rows ?? []).map((r) => [r.id, { by: r.by ?? '', at: r.at }]))
+	} catch (err) {
+		console.error('[dashboard] Kunne ikke hente sete opgaver:', err)
 		return {}
 	}
 }
@@ -208,20 +290,57 @@ async function getSentMessages(): Promise<SentMessage[]> {
 	}
 }
 
-/** Hvad der er sendt af beskeder om spørgsmål, og hvad der er besvaret; fejler blødt. */
-async function getNoticeState(): Promise<NoticeState> {
+/**
+ * Den måned, tjeklisten gælder for, i dansk tid ('ÅÅÅÅ-MM'). Listen starter
+ * forfra den 3., når månedens tal fra Search Console er hentet (cron den 3.);
+ * den 1. og 2. hører stadig til forrige måneds gennemgang.
+ */
+function checklistMonthCph(now = new Date()): string {
+	const [y, m, d] = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Copenhagen', year: 'numeric', month: '2-digit', day: '2-digit' })
+		.format(now)
+		.split('-')
+		.map(Number)
+	const date = new Date(Date.UTC(y, m - 1 - (d < 3 ? 1 : 0), 1))
+	return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}`
+}
+
+/** Datoen, hvor næste tjekliste starter: den 3. i måneden efter `month`. */
+function nextChecklistStart(month: string): string {
+	const [y, m] = month.split('-').map(Number)
+	return new Date(Date.UTC(y, m, 3)).toLocaleDateString('da-DK', { day: 'numeric', month: 'long', timeZone: 'UTC' })
+}
+
+/** Månedens tjekliste (seoMonthlyChecklist) for de seneste måneder; fejler blødt. */
+async function getChecklists(): Promise<{ month: string; done: ChecklistDone[] }[]> {
 	try {
-		return await client
-			.withConfig({
-				token: process.env.SANITY_API_READ_TOKEN,
-				useCdn: false,
-				perspective: 'published',
-				stega: false,
-			})
-			.fetch<NoticeState>(NOTICE_STATE_QUERY, {}, { cache: 'no-store' })
+		const rows = await client
+			.withConfig({ token: process.env.SANITY_API_READ_TOKEN, useCdn: false, perspective: 'raw', stega: false })
+			.fetch<{ month: string; done: ChecklistDone[] | null }[]>(
+				`*[_type == "seoMonthlyChecklist" && defined(month)] | order(month desc)[0...12]{ month, "done": done[]{ stepId, doneAt, doneBy } }`,
+				{},
+				{ cache: 'no-store' },
+			)
+		return (rows ?? []).map((r) => ({ month: r.month, done: r.done ?? [] }))
 	} catch (err) {
-		console.error('[dashboard] Kunne ikke hente beskeder om spørgsmål:', err)
-		return {}
+		console.error('[dashboard] Kunne ikke hente tjeklisten:', err)
+		return []
+	}
+}
+
+/** Profiler og kataloger (seoDirectoryChecklist, ét dokument); fejler blødt. */
+async function getDirectoryMarks(): Promise<DirectoryMark[]> {
+	try {
+		const rows = await client
+			.withConfig({ token: process.env.SANITY_API_READ_TOKEN, useCdn: false, perspective: 'raw', stega: false })
+			.fetch<DirectoryMark[] | null>(
+				`*[_id == "seo-directories.status"][0].items[]{ stepId, status, at, by }`,
+				{},
+				{ cache: 'no-store' },
+			)
+		return (rows ?? []).filter((r) => r?.stepId && r?.at)
+	} catch (err) {
+		console.error('[dashboard] Kunne ikke hente profiler og kataloger:', err)
+		return []
 	}
 }
 
@@ -440,27 +559,176 @@ function copenhagenMonth(now = new Date()) {
 }
 
 /** Rund måler for månedens timer (bento-kort ved siden af Fokus nu) */
-function UsageGauge() {
+type Balance = { total: number; used: number; left: number }
+
+function UsageGauge({
+	viewerName,
+	balance,
+	latestOrder,
+	isHorizen = false,
+}: {
+	viewerName?: string
+	balance: Balance
+	latestOrder?: InboxItem
+	isHorizen?: boolean
+}) {
+	if (hourModel === 'klippekort')
+		return <KlippekortGauge viewerName={viewerName} balance={balance} latestOrder={latestOrder} isHorizen={isHorizen} />
 	const { monthKey, monthName, daysLeft } = copenhagenMonth()
 	const used = monthlyUsage[monthKey] ?? 0
 	const extra = monthlyExtra[monthKey] ?? 0
-	const over = used > retainerHours
+	const base = retainerFor(monthKey)
+	// Introtilbud (Andreas 25/11-2026): bonustimer oven i rammen, lilla på kortet
+	const intro = base > 0 ? seoIntroFor(monthKey) : null
+	const bonus = intro?.hours ?? 0
+	const total = base + bonus
+	const over = used > total
+	// Køb flere timer: fremhævet knap, når rammen er brugt eller der ikke
+	// længere er en fast aftale; ellers et diskret link.
+	const usedUp = total === 0 || used >= total
+	const lastMonth = monthKey === retainerEndsAfter
 	return (
 		<div className="flex h-full flex-col rounded-3xl border border-foreground/[0.08] bg-white p-6">
-			<span className="text-[11px] font-medium tracking-[0.14em] text-foreground/55 uppercase">
-				Timer i {monthName}
-			</span>
-			<UsageMeter used={used} total={retainerHours} />
+			<GaugeHeader title={`${seoAgreement ? 'SEO-timer' : 'Timer'} i ${monthName}`} model="Fast aftale" />
+			<UsageMeter used={used} total={total} />
+			{intro && <IntroHours base={base} bonus={bonus} used={used} start={intro.start} end={intro.end} />}
 			<div className="mt-auto space-y-1 text-center text-xs text-foreground/55">
 				<p>
 					{over ? (
-						<span style={{ color: 'var(--st-missing-text)' }}>Rammen er overskredet med {(used - retainerHours).toLocaleString('da-DK')} t</span>
+						<span style={{ color: 'var(--st-missing-text)' }}>Rammen er overskredet med {(used - total).toLocaleString('da-DK')} t</span>
 					) : (
-						`${used.toLocaleString('da-DK')} af ${retainerHours.toLocaleString('da-DK')} timer brugt`
+						`${used.toLocaleString('da-DK')} af ${total.toLocaleString('da-DK')} timer brugt`
 					)}
 					{extra > 0 && <span style={{ color: 'var(--st-done-text)' }}> · +{extra.toLocaleString('da-DK')} t ekstra uden beregning</span>}
 				</p>
-				<p>Nulstiller om {daysLeft} {daysLeft === 1 ? 'dag' : 'dage'}</p>
+				<p>
+					{total === 0
+						? 'Ingen faste timer i aftalen'
+						: lastMonth
+							? `Aftalen slutter om ${daysLeft} ${daysLeft === 1 ? 'dag' : 'dage'}`
+							: `Nulstiller om ${daysLeft} ${daysLeft === 1 ? 'dag' : 'dage'}`}
+				</p>
+				{/* Under hinanden med luft, så de to knapper ikke klistrer sammen */}
+				<div className="flex flex-col items-center gap-3">
+					<BuyHours signedInAs={viewerName} emphasis={usedUp} label="Køb flere udviklingstimer" />
+					{showSeoOffer && <SeoInterestButton variant="link" from="Timer" signedInAs={viewerName} />}
+				</div>
+			</div>
+		</div>
+	)
+}
+
+const INTRO_PURPLE = '#a78bfa'
+const introDate = (iso: string) =>
+	new Date(`${iso}T12:00:00Z`).toLocaleDateString('da-DK', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
+
+/**
+ * Introtilbuddet på timekortet (Andreas 25/11-2026): én klods pr. time, de
+ * almindelige timer i grøn og bonustimerne i lilla. Bonustimerne står først
+ * og bruges først (Andreas 25/11-2026: "vi tager altid dem, vi har givet,
+ * først"); brugte timer er dæmpet. Perioden står med start- og slutdato, så
+ * både kunden og Horizen kan se, hvornår bonussen stopper.
+ */
+function IntroHours({ base, bonus, used, start, end }: { base: number; bonus: number; used: number; start: string; end: string }) {
+	const n = Math.ceil(base + bonus)
+	return (
+		<div className="mb-4 space-y-2 text-center">
+			<div className="flex flex-wrap justify-center gap-1" aria-hidden="true">
+				{Array.from({ length: n }, (_, i) => {
+					const isBonus = i < bonus
+					const color = isBonus ? INTRO_PURPLE : 'rgb(52 211 153)'
+					const spent = i < used
+					return (
+						<span
+							key={i}
+							className="h-2.5 w-4 rounded-sm"
+							style={{
+								background: spent ? `color-mix(in srgb, ${color} 25%, transparent)` : color,
+								outline: spent ? `1px solid color-mix(in srgb, ${color} 45%, transparent)` : undefined,
+							}}
+						/>
+					)
+				})}
+			</div>
+			<p className="text-xs text-foreground/70">
+				<span className="font-medium" style={{ color: INTRO_PURPLE }}>
+					{bonus.toLocaleString('da-DK')} t introtilbud
+				</span>{' '}
+				+ {base.toLocaleString('da-DK')} t
+			</p>
+			<p className="text-[11px] text-foreground/50">
+				Introtilbud {introDate(start)} – {introDate(end)}
+			</p>
+		</div>
+	)
+}
+
+/**
+ * Øverst i timekortet: titel til venstre, og i højre hjørne hvilken model kunden
+ * er på (Klippekort / Fast aftale). SEO-pakken står i mærket på Overblik.
+ */
+function GaugeHeader({ title, model }: { title: string; model: string }) {
+	const pill = 'rounded-full border border-foreground/[0.1] px-2 py-0.5 text-[10px] font-medium text-foreground/60'
+	return (
+		<div className="flex flex-wrap items-start justify-between gap-2">
+			<span className="text-[11px] font-medium tracking-[0.14em] text-foreground/55 uppercase">{title}</span>
+			<span className="flex flex-wrap justify-end gap-1">
+				<span className={pill}>{model}</span>
+			</span>
+		</div>
+	)
+}
+
+/**
+ * Klippekort (fra TUG, Andreas 19/11-2026): timer tilbage af de købte timer.
+ * Ingen måned og ingen nulstilling; timerne bruges, når kunden har brug for
+ * dem. Kunden ser kun antal timer på en bestilling, aldrig beløb.
+ */
+function KlippekortGauge({
+	viewerName,
+	balance,
+	latestOrder,
+	isHorizen,
+}: {
+	viewerName?: string
+	balance: Balance
+	latestOrder?: InboxItem
+	isHorizen?: boolean
+}) {
+	const { total, used, left } = balance
+	const fmt = (n: number) => n.toLocaleString('da-DK')
+	const latestStatus = latestOrder && orderStatusOf(latestOrder)
+	const statusText: Record<string, string> = { bestilt: 'bestilt', faktureret: 'faktura sendt', betalt: 'på klippekortet', annulleret: 'annulleret' }
+	return (
+		<div className="flex h-full flex-col rounded-3xl border border-foreground/[0.08] bg-white p-6">
+			<GaugeHeader title="Timer" model="Klippekort" />
+			<UsageMeter used={used} total={total} caption={total > 0 ? 'timer tilbage af klippekort' : 'timer'} />
+			<div className="mt-auto space-y-1 text-center text-xs text-foreground/55">
+				<p>
+					{total > 0
+						? `${fmt(used)} af ${fmt(total)} købte timer brugt`
+						: 'Ingen timer endnu'}
+				</p>
+				{latestOrder && latestStatus !== 'betalt' && latestStatus !== 'annulleret' ? (
+					// Bestilling på vej: kunden kan se, at den er kommet igennem (uden beløb).
+					// Kun Horizen får et link til oversigten under Kun Horizen → Klippekort.
+					<p>
+						{isHorizen ? (
+							<a href="#v=klippekort" className="underline underline-offset-2 hover:text-foreground">
+								{latestOrder.orderHours} {latestOrder.orderHours === 1 ? 'time' : 'timer'} {statusText[latestStatus ?? 'bestilt']}
+							</a>
+						) : (
+							`${latestOrder.orderHours} ${latestOrder.orderHours === 1 ? 'time' : 'timer'} ${statusText[latestStatus ?? 'bestilt']}`
+						)}
+					</p>
+				) : (
+					<p>Timerne bruges, når I har brug for dem</p>
+				)}
+				{/* Under hinanden med luft, så de to knapper ikke klistrer sammen */}
+				<div className="flex flex-col items-center gap-3">
+					<BuyHours signedInAs={viewerName} emphasis={left === 0} label={total > 0 ? 'Køb flere udviklingstimer' : 'Køb udviklingstimer'} />
+					{showSeoOffer && <SeoInterestButton variant="link" from="Timer" signedInAs={viewerName} />}
+				</div>
 			</div>
 		</div>
 	)
@@ -582,25 +850,31 @@ function SectionHeading({
 	eyebrow,
 	title,
 	description,
+	action,
 }: {
 	eyebrow: string
 	title: string
 	description?: string
+	/** Valgfri knap i højre side (fx "Send besked" på Aktivitet) */
+	action?: ReactNode
 }) {
 	return (
-		<div className="mb-8">
-			<span className="text-[11px] font-medium tracking-[0.14em] text-foreground/55 uppercase">
-				{eyebrow}
-			</span>
-			<h2
-				className="mt-2 text-2xl font-semibold tracking-tight text-foreground md:text-[1.75rem]"
-				style={{ lineHeight: 1.1 }}
-			>
-				{title}
-			</h2>
-			{description && (
-				<p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted">{description}</p>
-			)}
+		<div className="mb-8 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+			<div className="min-w-0">
+				<span className="text-[11px] font-medium tracking-[0.14em] text-foreground/55 uppercase">
+					{eyebrow}
+				</span>
+				<h2
+					className="mt-2 text-2xl font-semibold tracking-tight text-foreground md:text-[1.75rem]"
+					style={{ lineHeight: 1.1 }}
+				>
+					{title}
+				</h2>
+				{description && (
+					<p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted">{description}</p>
+				)}
+			</div>
+			{action && <div className="shrink-0">{action}</div>}
 		</div>
 	)
 }
@@ -1107,6 +1381,47 @@ function LeadsTab({
 	)
 }
 
+/**
+ * Fanen Synlighed → Sæsoner: hvornår der søges efter kundens ydelser, til
+ * planlægning af SEO og kampagner, med henvendelserne ovenpå (fra Miljøkontoret 20/11-2026).
+ * Sæsondata ligger i season.ts og udfyldes pr. kunde.
+ */
+function SeasonTab({
+	leadEvents,
+	unreadable,
+	isHorizen,
+}: {
+	leadEvents: LeadEvent[]
+	unreadable: boolean
+	isHorizen: boolean
+}) {
+	return (
+		<div className="space-y-6">
+			<SectionHeading
+				eyebrow="Sæsoner"
+				title="Hvornår søger folk efter jeres ydelser?"
+				description={seasonDataNote()}
+			/>
+			{seasonUpdateDue() && (
+				<span className="-mt-5 inline-flex rounded-full border border-amber-500/30 bg-amber-500/[0.12] px-2.5 py-1 text-xs font-medium text-foreground">
+					Sæsontallene skal opdateres
+				</span>
+			)}
+			{/* Kun Horizen: påmindelse om at lægge kundens egne sæsontal ind */}
+			{!SEASON_HAS_DATA && isHorizen && (
+				<p className="rounded-2xl border border-foreground/[0.08] bg-foreground/[0.03] px-5 py-3 text-xs text-foreground/60">
+					Kun Horizen: fanen er tom, indtil kundens ydelser og søgetal er lagt ind i <code>src/app/dashboard/seo/season.ts</code>.
+				</p>
+			)}
+			{unreadable ? (
+				<SiteEventsUnreadable isHorizen={isHorizen} />
+			) : (
+				<SeasonSection events={leadEvents} now={new Date().toISOString()} />
+			)}
+		</div>
+	)
+}
+
 function AnalyticsTab({
 	snapshots,
 	searchTrend,
@@ -1355,8 +1670,19 @@ export default async function SeoOverviewPage({
 		viewerName,
 		process.env.SEO_SENDER_PHOTO,
 	)
-	const asClient = (await searchParams).som === 'kunde'
+	// ?som=kunde = Horizen ser som kunden; ?som=kunde-uden-seo = som en kunde uden SEO-aftale
+	const som = (await searchParams).som
+	const asClient = som === 'kunde' || som === 'kunde-uden-seo'
 	const isHorizen = viewer === 'horizen' && !asClient
+	// Uden SEO-aftale er de faner, Horizen selv måler og analyserer, låst (model B
+	// "smagsprøve", Andreas 20/11-2026). Data måles stadig; kun visningen er låst.
+	// Er SEO-aftalen aktiv i denne visning? (Horizen kan se "som kunde uden SEO-aftale")
+	const hasSeo = seoAgreement && som !== 'kunde-uden-seo'
+	// Særaftale = fuld adgang uden en SEO-pakke (se specialDeal i data.ts)
+	const fullAccess = specialDeal && som !== 'kunde-uden-seo'
+	const seoLocked = !isHorizen && !hasSeo && !fullAccess
+	// Månedens tjekliste: ved alle SEO-aftaler og særaftaler. Et redskab, ikke et løfte
+	const showChecklist = hasSeo || fullAccess
 	// Kundens besøg (kun Horizen ser dem, ikonet øverst til højre): gemmes
 	// efter svaret, så siden ikke venter. Horizen selv logges aldrig.
 	const viewerEmail = requestHeaders.get(DASHBOARD_EMAIL_HEADER) ?? ''
@@ -1367,7 +1693,14 @@ export default async function SeoOverviewPage({
 	const loginSummary = summarizeLogins(loginExample ? exampleLogins() : loginLog)
 	const inbox = await getInboxItems()
 	const answers = await getAnswers()
-	const noticeState = await getNoticeState()
+	// Opgaver og spørgsmål: data.ts + dem, der er oprettet i Studio (Andreas 16/11-2026)
+	const clientTodos = await getClientTodos()
+	const clientQuestions = await getClientQuestions()
+	const todosDone = await getTodosDone()
+	const todosSeen = await getTodosSeen()
+	const checklistMonth = checklistMonthCph()
+	const checklists = await getChecklists()
+	const directoryMarks = await getDirectoryMarks()
 	const sentMessages = isHorizen ? await getSentMessages() : []
 	const [snapshots, seoCheckRun, leadRows, aiRows, searchTrend, pageHealth, visits, companies] = await Promise.all([
 		getSnapshots(),
@@ -1387,11 +1720,23 @@ export default async function SeoOverviewPage({
 	const setupAuto = getSetupAuto({ snapshots, leadEvents, seoCheckRun })
 	const setup = setupProgress(setupAuto, setupChecked)
 	// Åbne opgaver → "Ad hoc"-fanen; løste → Aktivitet.
-	const openTasks: InboxItem[] = inbox.filter((t) => t.status !== 'loest')
+	// Bestillinger af klippekort-timer står under Kun Horizen → Klippekort, ikke
+	// blandt opgaverne og ikke i aktivitetsloggen. SEO-interesser ("Få en
+	// SEO-aftale") går som mail til Horizen og står kun blandt opgaverne for Horizen
+	// (SEO-typerne er skjult i Studio-menuen), ikke for kunden.
+	const hourOrders = inbox.filter((t) => t.orderHours)
+	const taskInbox = inbox.filter((t) => !t.orderHours && (isHorizen || !t.seoInterest))
+	const paidOrderHours = hourOrders
+		.filter((o) => orderStatusOf(o) === 'betalt')
+		.reduce((a, o) => a + (o.orderHours ?? 0), 0)
+	const balance = klippekortStatus(paidOrderHours)
+	// Lokalt (uden bestillinger i production) vises eksempler under Kun Horizen → Klippekort
+	const orderExample = isHorizen && !hourOrders.length && process.env.NODE_ENV !== 'production'
+	const openTasks: InboxItem[] = taskInbox.filter((t) => t.status !== 'loest')
 	// Løste opgaver som egen tidslinje (dato = seneste ændring = "løst"-tidspunkt).
 	// Opgaver, som en post i pastAdhocActivity allerede beskriver, vises ikke igen.
 	const describedTasks = new Set(pastAdhocActivity.map((e) => e.taskId).filter(Boolean))
-	const solvedTaskEntries: ActivityEntry[] = inbox
+	const solvedTaskEntries: ActivityEntry[] = taskInbox
 		.filter((t) => t.status === 'loest' && !describedTasks.has(t._id))
 		.map((t) => ({
 			date: (t.updatedAt ?? t.receivedAt ?? lastUpdated).slice(0, 10),
@@ -1659,6 +2004,8 @@ export default async function SeoOverviewPage({
 				eyebrow="Samlet oversigt"
 				title="Alt der er sket, samlet"
 				description="SEO-arbejde og udvikling af sitet i én tidslinje, måned for måned. Mærket ved hver post viser, hvad der er SEO, og hvad der er udvikling. Nyeste øverst."
+				// Kun Horizen: send "Opgaverne er løst" direkte herfra (fra TUG, Andreas 19/11-2026)
+				action={isHorizen ? <SendSolvedMessage recipients={clientRecipients} /> : undefined}
 			/>
 			<WorkSplit months={workSplit} />
 			<ActivityByMonth items={mergedActivity} />
@@ -1713,107 +2060,345 @@ export default async function SeoOverviewPage({
 		/>
 	)
 
+	/* ── Fane: Profiler og kataloger (ved opstart og én gang om året) ── */
+	const directoriesTab = (
+		<div className="space-y-12">
+			<SectionHeading
+				eyebrow="Profiler og kataloger"
+				title="Jeres profiler på Google, Krak og de andre kataloger"
+				description="Den faste rute gennem jeres profiler på kort, i kataloger og på sociale medier. Gennemgås, når vi starter, og derefter én gang om året."
+			/>
+			<DirectoryChecklist initial={directoryMarks} editable={isHorizen} />
+		</div>
+	)
+
 	/* ── Fane: Løbende drift (den månedlige SEO-motor) ── */
+	const checklistPhases = checklistFor(checklistMonth)
+	const checklistHistory: ChecklistHistory[] = checklists
+		.filter((c) => c.month < checklistMonth)
+		.map((c) => {
+			const ids = new Set(checklistFor(c.month).flatMap((p) => p.steps.map((st) => st.id)))
+			return {
+				month: formatMonth(c.month),
+				done: c.done.filter((d) => ids.has(d.stepId)).length,
+				total: ids.size,
+			}
+		})
 	const driftTab = (
 		<div className="space-y-12">
 			<SectionHeading
 				eyebrow="Løbende drift"
-				title="Den månedlige SEO-motor"
-				description={driftIntro}
+				title="Månedens tjekliste"
+				description="Den faste rute gennem den månedlige SEO-gennemgang. Klik på et trin for at se, hvad det dækker."
 			/>
-			{DRIFT_GROUPS.map((group) => {
-				const items = recurringTasks.filter((t) => t.discipline === group.discipline)
-				if (items.length === 0) return null
-				return (
-					<div key={group.discipline}>
-						<div className="mb-1 flex items-baseline gap-3">
-							<h3 className="text-xl font-medium tracking-[-0.02em] text-foreground">{group.title}</h3>
-							<span className="text-sm text-muted">({items.length})</span>
-						</div>
-						<p className="mb-5 text-sm text-muted">{group.description}</p>
-						<div className="grid gap-4 md:grid-cols-2">
-							{items.map((task) => (
-								<RecurringTaskRow key={task.title} task={task} />
-							))}
-						</div>
+			{showChecklist ? (
+				<MonthlyChecklist
+					month={checklistMonth}
+					monthLabel={formatMonth(checklistMonth)}
+					phases={checklistPhases}
+					initialDone={checklists.find((c) => c.month === checklistMonth)?.done ?? []}
+					editable={isHorizen}
+					hours={checklistHours}
+					history={checklistHistory}
+				/>
+			) : (
+				// Uden månedlig gennemgang: tjeklisten vises roligt og kan ikke bruges (fra TUG, Andreas 19/11-2026).
+				// Venlig tone (Andreas 20/11-2026): vi snakker aldrig ned til kunden.
+				<div className="space-y-4">
+					<p className="rounded-2xl border border-foreground/[0.08] bg-foreground/[0.03] px-5 py-4 text-sm text-foreground/70">
+						Her kan I se de trin, vi går igennem, når vi laver en månedlig SEO-gennemgang. Den hører til vores
+						SEO-pakker, og I er altid velkomne til at spørge, hvis I kunne tænke jer den.
+					</p>
+					<div inert className="pointer-events-none opacity-45 grayscale select-none">
+						<MonthlyChecklist
+							month={checklistMonth}
+							monthLabel={formatMonth(checklistMonth)}
+							phases={checklistPhases}
+							initialDone={[]}
+							editable={false}
+							hours={checklistHours}
+							history={[]}
+						/>
 					</div>
-				)
-			})}
+				</div>
+			)}
+			<FoldSection title="Den månedlige SEO-motor" summary={driftIntro}>
+				<div className="space-y-12 pt-4">
+					{DRIFT_GROUPS.map((group) => {
+						const items = recurringTasks.filter((t) => t.discipline === group.discipline)
+						if (items.length === 0) return null
+						return (
+							<div key={group.discipline}>
+								<div className="mb-1 flex items-baseline gap-3">
+									<h3 className="text-xl font-medium tracking-[-0.02em] text-foreground">{group.title}</h3>
+									<span className="text-sm text-muted">({items.length})</span>
+								</div>
+								<p className="mb-5 text-sm text-muted">{group.description}</p>
+								<div className="grid gap-4 md:grid-cols-2">
+									{items.map((task) => (
+										<RecurringTaskRow key={task.title} task={task} />
+									))}
+								</div>
+							</div>
+						)
+					})}
+				</div>
+			</FoldSection>
 		</div>
 	)
 
+	const isAnswered = (q: (typeof clientQuestions)[number]) => Boolean(q.answer || answers[questionKey(q)])
+	const openQuestionList = clientQuestions.filter((q) => !isAnswered(q))
+	const answeredQuestionList = clientQuestions.filter(isAnswered)
+
+	/* Ét spørgsmål som foldbart kort. Besvarede vises mindre og afdæmpede
+	   under "Besvaret", som historik (Andreas 16/11-2026). */
+	const renderQuestion = (q: (typeof clientQuestions)[number], i: number) => {
+		const answered = isAnswered(q)
+		const status = answered
+			? { label: 'Besvaret', dot: 'color-mix(in srgb, var(--color-foreground) 30%, transparent)' }
+			: { label: 'Venter på dit svar', dot: 'var(--st-partial-dot)' }
+		return (
+		<li key={q.question} className="rounded-3xl border border-foreground/[0.08] bg-white">
+			<details name="spoergsmaal" className="group">
+			<summary className={`flex cursor-pointer list-none items-start gap-3 [&::-webkit-details-marker]:hidden ${answered ? 'p-4 md:px-5' : 'p-5 md:p-6'}`}>
+				<span
+					className={`flex shrink-0 items-center justify-center rounded-full bg-foreground/[0.06] font-medium text-foreground ${answered ? 'h-6 w-6 text-xs text-foreground/55' : 'h-7 w-7 text-sm'}`}
+				>
+					{answered ? (
+						<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+							<path d="M5 12.5l4.5 4.5L19 7.5" />
+						</svg>
+					) : (
+						i + 1
+					)}
+				</span>
+				<span className="min-w-0 flex-1">
+					<span className="flex flex-wrap items-center gap-x-3 gap-y-1">
+						<span className="text-xs font-medium tracking-[0.14em] text-foreground/50 uppercase">{q.area}</span>
+						<span className="flex items-center gap-1.5 text-xs text-foreground/55">
+							<span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: status.dot }} />
+							{status.label}
+						</span>
+					</span>
+					<span
+						className={`mt-1.5 block leading-snug ${answered ? 'text-sm text-foreground/70' : 'text-base font-medium text-foreground'}`}
+					>
+						{q.question}
+					</span>
+				</span>
+				<svg
+					width="18"
+					height="18"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					strokeWidth="2"
+					strokeLinecap="round"
+					strokeLinejoin="round"
+					aria-hidden
+					className="mt-1 shrink-0 text-foreground/45 transition-transform group-open:rotate-180"
+				>
+					<path d="m6 9 6 6 6-6" />
+				</svg>
+			</summary>
+			<div className={answered ? 'px-4 pb-4 md:px-5' : 'px-5 pb-5 md:px-6 md:pb-6'}>
+			{q.askedAt && (
+				<p className="text-foreground/40 text-xs">
+					Sendt{' '}
+					{new Date(q.askedAt).toLocaleDateString('da-DK', { day: 'numeric', month: 'long', year: 'numeric' })}
+				</p>
+			)}
+			{/* Forklaringen i en lyseblå boks, så den skiller sig ud */}
+			<div
+				className="mt-3 rounded-2xl border p-4"
+				style={{ backgroundColor: 'var(--st-info-bg)', borderColor: 'var(--st-info-border)' }}
+			>
+				<p className="text-xs font-semibold tracking-[0.14em] uppercase" style={{ color: 'var(--st-info-text)' }}>
+					Derfor spørger vi
+				</p>
+				<p className="mt-1.5 text-sm leading-relaxed text-foreground/90">{q.context}</p>
+			</div>
+			{!q.answer && (
+				<QuestionAnswer questionKey={questionKey(q)} saved={answers[questionKey(q)]} />
+			)}
+			{/* Svaret neutralt og afdæmpet: den blå forklaring skal dominere,
+			    og grøn her gav for mange farver */}
+			{q.answer && (
+				<div
+					className="mt-4 rounded-2xl border border-foreground/[0.08] p-4"
+					style={{ backgroundColor: 'color-mix(in srgb, var(--color-foreground) 3%, transparent)' }}
+				>
+					<p className="text-xs font-medium tracking-[0.14em] text-foreground/45 uppercase">
+						Svar ·{' '}
+						{new Date(q.answer.date).toLocaleDateString('da-DK', {
+							day: 'numeric',
+							month: 'long',
+							year: 'numeric',
+					})}
+				</p>
+				<p className="mt-1.5 text-sm leading-relaxed text-foreground/75">{q.answer.text}</p>
+			</div>
+			)}
+			</div>
+			</details>
+		</li>
+		)
+	}
+
 	/* ── Fane: Spørgsmål til kunden ── */
 	// samlet besked til kunden om nye spørgsmål (kun Horizen ser den)
-	const pending = pendingQuestions(noticeState)
 	const questionsTab = (
 		<div>
-			{isHorizen && (
-				<QuestionNotice
-					count={pending.length}
-					sender={sender.name}
-					senderPhoto={sender.photo}
-					defaultName={noticeState.last?.sentToName || process.env.SEO_CLIENT_NOTIFY_NAME?.trim() || ''}
-					defaultTo={noticeState.last?.sentTo || process.env.SEO_CLIENT_NOTIFY_TO?.trim() || ''}
-					last={noticeState.last}
-				/>
-			)}
-			{clientQuestions.length === 0 && (
+			{/* Reglen for arbejdsrummet: Spørgsmål = vi skal bruge din viden, du
+			    svarer med ord. Din to-do = du gør noget. */}
+			<SectionHeading
+				eyebrow="Spørgsmål"
+				title="Her har vi brug for din viden"
+				description="Fold et spørgsmål ud, og skriv svaret direkte under det. Det kan altid rettes bagefter."
+			/>
+			{/* Andreas 16/11: én generel besked i stedet for "Send besked om N
+			    spørgsmål". Åbner Beskeder med "Nyt i dit arbejdsrum" valgt. */}
+			{isHorizen && <WorkspaceNotice />}
+			{openQuestionList.length === 0 && (
 				<div className="rounded-3xl border border-foreground/[0.08] bg-white p-8 text-center">
 					<p className="text-sm text-muted">
 						Ingen åbne spørgsmål lige nu. Dukker der noget op, vi ikke kan afgøre selv, skriver vi det her.
 					</p>
 				</div>
 			)}
-			<ol className="space-y-4">
-				{clientQuestions.map((q, i) => (
-					<li key={q.question} className="rounded-3xl border border-foreground/[0.08] bg-white p-6">
-						<div className="mb-3 flex items-center gap-3">
-							<span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-foreground/[0.06] text-sm font-medium text-foreground">
-								{i + 1}
-							</span>
-							<span className="text-xs font-medium tracking-[0.14em] text-foreground/50 uppercase">{q.area}</span>
-							{q.askedAt && (
-								<span className="text-foreground/40 ms-auto text-xs">
-									Spurgt{' '}
-									{new Date(q.askedAt).toLocaleDateString('da-DK', { day: 'numeric', month: 'long', year: 'numeric' })}
-								</span>
-							)}
-						</div>
-						<p className="text-base leading-snug font-medium text-foreground">{q.question}</p>
-						<p className="mt-2 text-sm leading-relaxed text-muted">{q.context}</p>
-						{!q.answer && (
-							<QuestionAnswer questionKey={questionKey(q)} saved={answers[questionKey(q)]} />
-						)}
-						{q.answer && (
-							<div
-								className="mt-4 rounded-2xl p-4"
-								style={{ backgroundColor: STATUS_META.done.bg, border: `1px solid ${STATUS_META.done.border}` }}
-							>
-								<p
-									className="text-xs font-medium tracking-[0.14em] uppercase"
-									style={{ color: STATUS_META.done.text }}
-								>
-									Svar ·{' '}
-									{new Date(q.answer.date).toLocaleDateString('da-DK', {
-										day: 'numeric',
-										month: 'long',
-										year: 'numeric',
-									})}
-								</p>
-								<p className="mt-1.5 text-sm leading-relaxed text-foreground">{q.answer.text}</p>
-							</div>
-						)}
-					</li>
-				))}
+			{/* Foldbare spørgsmål: kun spørgsmål og status ses sammenfoldet; ét
+			    åbent ad gangen (details med fælles name). */}
+			<ol className="space-y-3">
+				{openQuestionList.map((q, i) => renderQuestion(q, i))}
 			</ol>
+			{answeredQuestionList.length > 0 && (
+				<section className="mt-10">
+					<p className="mb-3 px-1 text-xs font-medium tracking-[0.14em] text-foreground/45 uppercase">
+						Besvaret ({answeredQuestionList.length})
+					</p>
+					<ol className="space-y-2">
+						{answeredQuestionList.map((q, i) => renderQuestion(q, i))}
+					</ol>
+				</section>
+			)}
+		</div>
+	)
+
+	/* ── Faner: Nye opgaver (Indbakke) + Jeres opgaver (Opgaver) (Andreas 15/11 + 16/11-2026) ──
+	   Indbakken viser kun det nye. "Set, læg på min liste" flytter en opgave til
+	   Opgaver → Jeres opgaver, som kunden tager i sit eget tempo; klarede ligger nederst
+	   under "Klaret". Rækkefølgen i data.ts er prioriteten. */
+	const isTodoDone = (id: string) => Boolean(todosDone[id] || clientTodos.find((t) => t.id === id)?.closed)
+	const indexedTodos = clientTodos.map((t, i) => ({ t, i }))
+	const newTodoList = indexedTodos.filter(({ t }) => !isTodoDone(t.id) && !todosSeen[t.id])
+	const listTodoList = indexedTodos.filter(({ t }) => !isTodoDone(t.id) && todosSeen[t.id])
+	// Historik: senest klarede øverst (Andreas 16/11-2026)
+	const doneAt = (id: string) => todosDone[id]?.at ?? clientTodos.find((t) => t.id === id)?.closed?.date ?? ''
+	const doneTodoList = indexedTodos
+		.filter(({ t }) => isTodoDone(t.id))
+		.sort((a, b) => doneAt(b.t.id).localeCompare(doneAt(a.t.id)))
+	const openTodos = newTodoList.length + listTodoList.length
+	const newTodos = newTodoList.length
+	const listTodos = listTodoList.length
+	// "Vigtigst nu": de første på listen vises tydeligt, resten er foldet sammen
+	const TOP_TODOS = 3
+	// Ubesvarede spørgsmål: tallet ved "Spørgsmål", så kunden kan se, at der
+	// ligger noget (Andreas 16/11-2026: ellers tror han, den er tom).
+	const openQuestions = openQuestionList.length
+	const todoCard = ({ t }: { t: (typeof clientTodos)[number] }, n: number) => (
+		<TodoCard key={t.id} todo={t} index={n} done={todosDone[t.id]} seen={todosSeen[t.id]} />
+	)
+	const smallHeading = (text: string) => (
+		<p className="mb-3 px-1 text-xs font-medium tracking-[0.14em] text-foreground/45 uppercase">{text}</p>
+	)
+
+	const newTodosTab = (
+		<div>
+			<SectionHeading
+				eyebrow="Nye opgaver"
+				title="Nyt fra os"
+				description={'Fold en opgave ud for at se, hvad den handler om. Tryk "Set, læg på min liste", så flytter den over på din liste under Opgaver → Jeres opgaver, og den tager du, når du har tid.'}
+			/>
+			{newTodos === 0 ? (
+				<div className="rounded-3xl border border-foreground/[0.08] bg-white p-8 text-center">
+					<p className="text-sm text-muted">
+						Ingen nye opgaver lige nu. Dem, du har set, ligger under Opgaver → Jeres opgaver.
+					</p>
+				</div>
+			) : (
+				<ol className="space-y-4">{newTodoList.map((x, n) => todoCard(x, n))}</ol>
+			)}
+			{listTodos > 0 && (
+				<a
+					href="#v=opgaver&s=jeres-opgaver"
+					className="group mt-6 inline-flex items-center gap-2 px-1 text-sm font-medium text-foreground/70 hover:text-foreground"
+				>
+					Gå til Jeres opgaver ({listTodos})
+					<span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+				</a>
+			)}
+		</div>
+	)
+
+	const todoTab = (
+		<div>
+			<SectionHeading
+				eyebrow="Jeres opgaver"
+				title="Det, du har lagt på din liste"
+				description={'Tag opgaverne, når du har tid. Fold en opgave ud for at se, hvad vi har brug for, og tryk på knappen, når den er klaret.'}
+			/>
+			{listTodos > 0 ? (
+				<div
+					className="mb-6 rounded-3xl border p-6"
+					style={{ backgroundColor: 'var(--st-partial-bg)', borderColor: 'var(--st-partial-border)' }}
+				>
+					<p className="text-xs font-medium tracking-[0.14em] uppercase" style={{ color: 'var(--st-partial-text)' }}>
+						{listTodos === 1 ? '1 opgave på listen' : `${listTodos} opgaver på listen`}
+					</p>
+					<p className="mt-2 text-sm leading-relaxed text-foreground/85">{todoIntro}</p>
+				</div>
+			) : (
+				<div className="mb-6 rounded-3xl border border-foreground/[0.08] bg-white p-8 text-center">
+					<p className="text-sm text-muted">
+						{newTodos > 0
+							? 'Listen er tom. Når du har set en ny opgave, lægger den sig her.'
+							: 'Der er ikke noget på din liste lige nu.'}
+					</p>
+				</div>
+			)}
+			{listTodos > TOP_TODOS && smallHeading('Vigtigst nu')}
+			{listTodos > 0 && (
+				<ol className="space-y-4">{listTodoList.slice(0, TOP_TODOS).map((x, n) => todoCard(x, n))}</ol>
+			)}
+			{listTodos > TOP_TODOS && (
+				<details className="group/rest mt-6">
+					<summary className="flex cursor-pointer list-none items-center gap-2 px-1 text-xs font-medium tracking-[0.14em] text-foreground/55 uppercase [&::-webkit-details-marker]:hidden">
+						Resten af listen ({listTodos - TOP_TODOS})
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden className="transition-transform group-open/rest:rotate-180">
+							<path d="m6 9 6 6 6-6" />
+						</svg>
+					</summary>
+					<ol className="mt-3 space-y-4">
+						{listTodoList.slice(TOP_TODOS).map((x, n) => todoCard(x, n + TOP_TODOS))}
+					</ol>
+				</details>
+			)}
+			{doneTodoList.length > 0 && (
+				<section className="mt-10">
+					{smallHeading(`Klaret (${doneTodoList.length})`)}
+					<ol className="space-y-2">{doneTodoList.map((x, n) => todoCard(x, n))}</ol>
+				</section>
+			)}
 		</div>
 	)
 
 	// "Nyt siden sidst"-prikker på fanerne: værdien ændrer sig, når der kommer nyt.
-	// Tomme lister giver ingen prik.
-	const questionsNotify = clientQuestions.length
-		? `q${clientQuestions.length}-a${clientQuestions.filter((q) => q.answer || answers[questionKey(q)]).length}`
-		: undefined
+	// Tomme lister giver ingen prik. Arbejdsrummet dækker både spørgsmål og to-do.
+	const questionsNotify =
+		clientQuestions.length || clientTodos.length
+			? `q${clientQuestions.length}-a${clientQuestions.filter((q) => q.answer || answers[questionKey(q)]).length}-t${clientTodos.length}-d${clientTodos.length - openTodos}`
+			: undefined
 	const loggedActivity = [...recentActivity, ...pastAdhocActivity]
 	const activityNotify = loggedActivity.length
 		? `${loggedActivity.length}-${loggedActivity.reduce((m, e) => (e.date > m ? e.date : m), '')}`
@@ -1824,8 +2409,190 @@ export default async function SeoOverviewPage({
 	const latestSnap = snapshots[0]
 	const prevSnap = snapshots[1]
 	const pctChange = (a?: number, b?: number) => (a != null && b ? ((a - b) / b) * 100 : null)
-	const leadsThisMonth = leadEvents.filter((e) => e.createdAt.startsWith(currentMonthKey)).length
+	// Klik på book tid og til kontakt tælles ikke som henvendelser (isInquiry)
+	const leadsThisMonth = uniqueLeads(leadEvents).filter((e) => isInquiry(e) && e.createdAt.startsWith(currentMonthKey)).length
 	const aiThisMonth = aiVisits.filter((e) => e.createdAt.startsWith(currentMonthKey)).length
+	const companiesThisMonth = companies?.periods?.thisMonth?.companies?.length ?? 0
+	const locked = (tab: ReactNode) => (seoLocked ? undefined : tab)
+	const lockedTabs = {
+		maal: (
+			<LockedTab
+				eyebrow="Mål og resultater"
+				title="Aftalte mål, fulgt måned for måned"
+				points={[
+					'Konkrete mål for synlighed og henvendelser, aftalt med jer',
+					'Status hver måned: er vi på vej, eller skal planen justeres?',
+					'Resultaterne samlet ét sted, så I kan se, hvad indsatsen giver',
+				]}
+				preview="list"
+				signedInAs={viewerName || undefined}
+			/>
+		),
+		ai: (
+			<LockedTab
+				eyebrow="AI-søgning"
+				title="Bliver I fundet via ChatGPT og andre AI-tjenester?"
+				teaser={
+					aiThisMonth > 0 ? (
+						<>
+							Der er kommet <strong>{aiThisMonth} {aiThisMonth === 1 ? 'besøg' : 'besøg'}</strong> fra AI-tjenester som ChatGPT og Perplexity i {monthLabel}.
+						</>
+					) : (
+						<>Vi måler, hvor mange der finder jer via AI-tjenester som ChatGPT og Perplexity.</>
+					)
+				}
+				points={[
+					'Hvilke AI-tjenester der sender besøgende til jer',
+					'Hvilke sider de lander på, måned for måned',
+					'Hvordan I bliver nævnt i AI-svar, og hvad vi gør for at blive det oftere',
+				]}
+				preview="chart"
+				signedInAs={viewerName || undefined}
+			/>
+		),
+		saeson: (
+			<LockedTab
+				eyebrow="Sæsoner"
+				title="Hvornår søger folk efter jeres ydelser?"
+				teaser={<>Se, hvornår der søges mest efter hver af jeres ydelser, så kampagner og indhold kører, før søgningerne topper.</>}
+				points={[
+					'Årshjul med søgninger pr. måned for hver ydelse',
+					'Hvornår en kampagne bør starte',
+					'Jeres henvendelser lagt oven på sæsonen, så I kan se, om et fald skyldes årstiden',
+				]}
+				preview="grid"
+				signedInAs={viewerName || undefined}
+			/>
+		),
+		virksomheder: (
+			<LockedTab
+				eyebrow="Virksomheder"
+				title="Hvilke virksomheder besøger jer?"
+				teaser={
+					companiesThisMonth > 0 ? (
+						<>
+							<strong>{companiesThisMonth} {companiesThisMonth === 1 ? 'virksomhed' : 'virksomheder'}</strong> har besøgt jeres hjemmeside i {monthLabel}.
+						</>
+					) : (
+						<>Vi måler, hvilke virksomheder der besøger jeres hjemmeside.</>
+					)
+				}
+				points={[
+					'Navnene på de virksomheder, der har besøgt jer',
+					'Hvilke sider de har kigget på, og hvor længe',
+					'Hvem der kommer igen, så I ved, hvem der er varme emner',
+				]}
+				preview="list"
+				signedInAs={viewerName || undefined}
+			/>
+		),
+		plan: (
+			<LockedTab
+				eyebrow="Plan"
+				title="Planen for jeres SEO"
+				teaser={<>Hvad vi gør, i hvilken rækkefølge, og hvorfor, så I altid kan se, hvor indsatsen er på vej hen.</>}
+				points={[
+					'Prioriteret plan måned for måned',
+					'Hvad der er gjort, og hvad der er det næste',
+					'Begrundelsen bag hvert skridt',
+				]}
+				preview="list"
+				signedInAs={viewerName || undefined}
+			/>
+		),
+		sider: (
+			<LockedTab
+				eyebrow="Sider & søgeord"
+				title="Hvilke søgninger skal hver side findes på?"
+				teaser={<>Hver side får sine egne søgeord, valgt ud fra, hvad jeres kunder faktisk søger efter.</>}
+				points={[
+					'Søgeord pr. side med søgetal og konkurrence',
+					'Status for hver side: hvad er gjort, og hvad mangler',
+					'Sikring af, at jeres egne sider ikke konkurrerer om de samme søgninger',
+				]}
+				preview="list"
+				signedInAs={viewerName || undefined}
+			/>
+		),
+		teknisk: (
+			<LockedTab
+				eyebrow="Teknisk SEO"
+				title="Er hjemmesiden teknisk i orden for Google?"
+				teaser={<>Vi gennemgår det tekniske, som Google lægger vægt på: hastighed, fejl, struktur og data om jeres virksomhed.</>}
+				points={[
+					'Liste over tekniske punkter med status',
+					'Hvad der er rettet, og hvad der står for tur',
+					'Automatisk SEO-tjek af alle sider',
+				]}
+				preview="list"
+				signedInAs={viewerName || undefined}
+			/>
+		),
+		drift: (
+			<LockedTab
+				eyebrow="Løbende drift"
+				title="Det faste månedlige SEO-arbejde"
+				teaser={<>Hver måned gennemgår vi tallene, søgeordene og hjemmesiden efter en fast tjekliste.</>}
+				points={[
+					'Månedens tjekliste med status for hvert trin',
+					'Det tilbagevendende arbejde, der bygger synlighed over tid',
+					'Fund fra gennemgangen og det næste skridt',
+				]}
+				preview="list"
+				signedInAs={viewerName || undefined}
+			/>
+		),
+		kataloger: (
+			<LockedTab
+				eyebrow="Profiler og kataloger"
+				title="Står I det samme alle steder?"
+				teaser={<>Google stoler mere på jer, når navn, adresse og telefon står ens på Google, Bing, Apple, Krak og de andre kataloger.</>}
+				points={[
+					'En fast rute gennem jeres profiler på kort, i kataloger og på sociale medier',
+					'Status for hvert punkt, så I kan se, hvad der er på plads',
+					'Et tjek én gang om året, og med det samme, når I ændrer noget',
+				]}
+				preview="list"
+				signedInAs={viewerName || undefined}
+			/>
+		),
+		muligheder: (
+			<LockedTab
+				eyebrow="Muligheder"
+				title="Hvad kan give jer endnu mere synlighed?"
+				teaser={<>Forslag til nye sider, indhold og tiltag, vi ser muligheder i for jeres hjemmeside.</>}
+				points={[
+					'Konkrete forslag med vores vurdering af effekten',
+					'Groft tidsoverslag på hvert forslag',
+					'Det, der kan tilkøbes ud over den faste aftale',
+				]}
+				preview="grid"
+				signedInAs={viewerName || undefined}
+			/>
+		),
+		henvendelser: (
+			<LockedTab
+				eyebrow="Henvendelser"
+				title="Hvornår og hvorfra kommer jeres henvendelser?"
+				teaser={
+					leadsThisMonth > 0 ? (
+						<>
+							I har fået <strong>{leadsThisMonth} {leadsThisMonth === 1 ? 'henvendelse' : 'henvendelser'}</strong> via hjemmesiden i {monthLabel}.
+						</>
+					) : (
+						<>Vi måler opkald, mails og formularer fra jeres hjemmeside.</>
+					)
+				}
+				points={[
+					'Hver henvendelse med dag og klokkeslæt',
+					'Om I ligger foran eller bagud i forhold til sidste måned',
+					'Hvor de kom fra (Google, annoncer, AI) og fra hvilke sider',
+				]}
+				preview="chart"
+				signedInAs={viewerName || undefined}
+			/>
+		),
+	}
 	const snapMonth = latestSnap
 		? new Date(`${latestSnap.month}-01T00:00:00`).toLocaleDateString('da-DK', { month: 'long' })
 		: null
@@ -1840,6 +2607,24 @@ export default async function SeoOverviewPage({
 					<p className="mt-2 text-sm text-foreground/55">
 						Her er status på SEO-arbejdet for {BRAND.domain}. {dataUpdatedLabel}
 					</p>
+					{/* Kundens SEO-pakke med emblem; kun ved en aktiv SEO-aftale. Klik = se pakken
+					    eller opgradere (Andreas 20/11-2026: på Overblik, det første kunden ser) */}
+					{hasSeo && (
+						<div className="mt-4">
+							<SeoInterestButton variant="badge" currentId={seoPackageId} currentHours={retainerHours} from="Overblik" signedInAs={viewerName || undefined} />
+						</div>
+					)}
+					{/* Særaftale: kun Horizen ser mærket, så vi kan se, hvad kunden kører på */}
+					{!hasSeo && fullAccess && isHorizen && (
+						<div className="mt-4">
+							<span
+								className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/[0.08] px-3 py-1.5 text-xs font-medium text-foreground"
+								title="Kun Horizen ser dette mærke"
+							>
+								Særaftale
+							</span>
+						</div>
+					)}
 				</div>
 				<a
 					href="#v=analytics"
@@ -1848,6 +2633,40 @@ export default async function SeoOverviewPage({
 					Se synlighed →
 				</a>
 			</div>
+
+			{/* Det, der venter på kunden, øverst og tydeligt, men kompakt: ellers
+			    opdager kunden ikke to-do-listen */}
+			{openTodos > 0 && (
+				<a
+					href={newTodos > 0 ? '#v=arbejdsrum&s=nye-opgaver' : '#v=opgaver&s=jeres-opgaver'}
+					className="group mb-6 flex flex-wrap items-center gap-4 rounded-3xl border p-4 transition-colors md:flex-nowrap md:p-5"
+					style={{ backgroundColor: 'var(--st-partial-bg)', borderColor: 'var(--st-partial-border)' }}
+				>
+					<span
+						className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-lg font-semibold tabular-nums"
+						style={{ backgroundColor: 'var(--st-partial-dot)', color: '#1a1a1a' }}
+					>
+						{openTodos}
+					</span>
+					<span className="min-w-0 flex-1 basis-48">
+						<span className="block text-base font-semibold text-foreground">
+							{openTodos === 1 ? '1 opgave venter på dig' : `${openTodos} opgaver venter på dig`}
+						</span>
+						<span className="mt-0.5 block text-sm text-foreground/65">
+							{clientTodos
+								.filter((t) => !isTodoDone(t.id))
+								.map((t) => t.area)
+								.join(' · ')}
+						</span>
+					</span>
+					<span
+						className="w-full shrink-0 rounded-full px-5 py-2.5 text-center text-sm font-medium transition-transform group-hover:translate-x-0.5 md:w-auto"
+						style={{ backgroundColor: 'var(--color-foreground)', color: 'var(--color-background)' }}
+					>
+						Se din to-do →
+					</span>
+				</a>
+			)}
 
 			<div className="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
 				<StatCard
@@ -1886,9 +2705,24 @@ export default async function SeoOverviewPage({
 				<div className="lg:col-span-2">
 					<FocusNow items={focusItems} />
 				</div>
-				{/* Horizen har ingen timeaftale med sig selv: uden timer ingen måler */}
-				{retainerHours > 0 && <UsageGauge />}
+				{/* Horizens eget site: ingen timeaftale med sig selv, så ingen timemåler og intet timekøb */}
+				{retainerHours > 0 && (
+					<UsageGauge viewerName={viewerName || undefined} balance={balance} latestOrder={hourOrders[0]} isHorizen={isHorizen} />
+				)}
 			</div>
+
+			{/* Ved alle SEO-aftaler og særaftaler (Andreas 20/11-2026) */}
+			{showChecklist && (
+				<div className="mt-4">
+					<ChecklistCard
+						monthLabel={formatMonth(checklistMonth)}
+						phases={checklistPhases}
+						done={checklists.find((c) => c.month === checklistMonth)?.done ?? []}
+						hours={checklistHours}
+						nextStart={nextChecklistStart(checklistMonth)}
+					/>
+				</div>
+			)}
 
 			<div className="mt-4">
 				<LatestActivity entries={mergedActivity.slice(0, 4)} />
@@ -1927,10 +2761,24 @@ export default async function SeoOverviewPage({
 				viewer === 'horizen' &&
 				(asClient ? (
 					<div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-foreground/[0.08] bg-white px-5 py-3 text-sm">
-						<span className="text-foreground/70">Du ser dashboardet, som kunden ser det.</span>
-						<a href="?" className="font-medium text-foreground underline underline-offset-2">
-							Tilbage til Horizen-visning
-						</a>
+						<span className="text-foreground/70">
+							Du ser dashboardet, som kunden ser det
+							{hasSeo ? '' : fullAccess ? ' med særaftale' : ' uden en SEO-aftale'}.
+						</span>
+						<span className="flex flex-wrap gap-4">
+							{/* Kun når kunden har en SEO-aftale: så kan Horizen se, hvordan det ser ud uden */}
+							{seoAgreement && (
+								<a
+									href={som === 'kunde-uden-seo' ? '?som=kunde' : '?som=kunde-uden-seo'}
+									className="text-foreground/70 underline underline-offset-2"
+								>
+									{som === 'kunde-uden-seo' ? 'Se med SEO-aftale' : 'Se uden SEO-aftale'}
+								</a>
+							)}
+							<a href="?" className="font-medium text-foreground underline underline-offset-2">
+								Tilbage til Horizen-visning
+							</a>
+						</span>
 					</div>
 				) : null)
 			}
@@ -1948,10 +2796,19 @@ export default async function SeoOverviewPage({
 							content: <AnalyticsTab snapshots={snapshots} searchTrend={searchTrend} />,
 						},
 						// Kunden ser først fanen, når der er aftalte mål; Horizen altid
-						...(goalMonths.length > 0 || isHorizen
-							? [{ id: 'maal', label: 'Mål og resultater', content: <GoalsTab /> }]
+						...(goalMonths.length > 0 || isHorizen || seoLocked
+							? [{ id: 'maal', label: 'Mål og resultater', locked: seoLocked, content: locked(<GoalsTab />) ?? lockedTabs.maal }]
 							: []),
-						{ id: 'ai', label: 'AI-søgning', content: <AiSearchTab aiVisits={aiVisits} unreadable={siteEventsUnreadable} isHorizen={isHorizen} /> },
+						{ id: 'ai', label: 'AI-søgning', locked: seoLocked, content: locked(<AiSearchTab aiVisits={aiVisits} unreadable={siteEventsUnreadable} isHorizen={isHorizen} />) ?? lockedTabs.ai },
+						// Uden kundens egne sæsontal er fanen tom (ingen eksempeltal, Andreas 20/11-2026)
+						{
+							id: 'saeson',
+							label: 'Sæsoner',
+							locked: seoLocked,
+							content:
+								locked(<SeasonTab leadEvents={leadEvents} unreadable={siteEventsUnreadable} isHorizen={isHorizen} />) ??
+								lockedTabs.saeson,
+						},
 						{
 							id: 'helbred',
 							label: 'Sidens helbred',
@@ -1984,12 +2841,16 @@ export default async function SeoOverviewPage({
 						{
 							id: 'virksomheder',
 							label: 'Virksomheder',
-							content: <CompaniesTab overview={companies} />,
+							locked: seoLocked,
+							content: locked(<CompaniesTab overview={companies} />) ?? lockedTabs.virksomheder,
 						},
 						{
 							id: 'henvendelser',
 							label: 'Henvendelser',
-							content: <LeadsTab leadEvents={leadEvents} snapshots={snapshots} unreadable={siteEventsUnreadable} isHorizen={isHorizen} />,
+							locked: seoLocked,
+							content:
+								locked(<LeadsTab leadEvents={leadEvents} snapshots={snapshots} unreadable={siteEventsUnreadable} isHorizen={isHorizen} />) ??
+								lockedTabs.henvendelser,
 						},
 					],
 				},
@@ -1998,8 +2859,37 @@ export default async function SeoOverviewPage({
 					id: 'opgaver',
 					label: 'Opgaver',
 					icon: 'tasks',
-					meta: openTasks.length ? String(openTasks.length) : undefined,
-					content: <OpgaverPanel items={openTasks} signedInAs={viewerName || undefined} />,
+					meta: openTasks.length + listTodos ? String(openTasks.length + listTodos) : undefined,
+					// Vores opgaver = det, kunden har bedt os om; Jeres opgaver = kundens
+					// liste fra Indbakken (Andreas 16/11-2026). #v=opgaver lander på Vores.
+					children: [
+						{
+							id: 'vores-opgaver',
+							label: openTasks.length ? `Vores opgaver (${openTasks.length})` : 'Vores opgaver',
+							content: (
+								<OpgaverPanel
+									items={openTasks}
+									signedInAs={viewerName || undefined}
+									hours={
+										hourModel === 'klippekort'
+											? { ...balance, monthName: monthLabel, kind: 'klippekort' }
+											: retainerFor(currentMonthKey) > 0
+											? {
+													total: retainerFor(currentMonthKey) + (seoIntroFor(currentMonthKey)?.hours ?? 0),
+													used: monthlyUsage[currentMonthKey] ?? 0,
+													monthName: monthLabel,
+												}
+											: undefined
+									}
+								/>
+							),
+						},
+						{
+							id: 'jeres-opgaver',
+							label: listTodos ? `Jeres opgaver (${listTodos})` : 'Jeres opgaver',
+							content: todoTab,
+						},
+					],
 				},
 				{
 					id: 'aktivitet',
@@ -2010,12 +2900,30 @@ export default async function SeoOverviewPage({
 					notifyValue: activityNotify,
 				},
 				{
-					id: 'spoergsmaal',
-					label: 'Spørgsmål',
-					icon: 'question',
-					content: questionsTab,
+					// Kundens eget rum: spørgsmål, vi har brug for svar på, og ting, vi har
+					// brug for, at kunden gør. Gamle links til #v=spoergsmaal lander på
+					// Spørgsmål (første underpunkt).
+					id: 'arbejdsrum',
+					label: 'Indbakke',
+					icon: 'inbox',
+					alias: ['spoergsmaal', 'indbakke'],
+					// Tallet tæller kun det nye: ubesvarede spørgsmål og nye opgaver (Andreas 16/11-2026)
+					meta: newTodos + openQuestions ? String(newTodos + openQuestions) : undefined,
+					metaTone: 'attention',
 					notifyKey: 'seo-dashboard-questions-seen',
 					notifyValue: questionsNotify,
+					children: [
+						{
+							id: 'spoergsmaal-liste',
+							label: openQuestions ? `Spørgsmål (${openQuestions})` : 'Spørgsmål',
+							content: questionsTab,
+						},
+						{
+							id: 'nye-opgaver',
+							label: newTodos ? `Nye opgaver (${newTodos})` : 'Nye opgaver',
+							content: newTodosTab,
+						},
+					],
 				},
 				{
 					// "Strategi": det, vi gør for kunden (planen, siderne, teknikken, det
@@ -2024,18 +2932,30 @@ export default async function SeoOverviewPage({
 					label: 'Strategi',
 					icon: 'folder',
 					alias: ['status'],
+					// Hele Strategi indgår i SEO-aftalen (Andreas 20/11-2026). Selve punktet ser
+					// normalt ud, så kunden klikker ind; underpunkterne er låst.
 					children: [
-						{ id: 'plan', label: 'Plan', content: planTab },
-						{ id: 'sider', label: 'Sider & søgeord', content: pagesTab },
-						{ id: 'teknisk', label: 'Teknisk SEO', content: technicalWithStatus },
-						{ id: 'drift', label: 'Løbende drift', content: driftTab },
-						{ id: 'tilkoeb', label: 'Muligheder', content: addonTab },
+						{ id: 'plan', label: 'Plan', locked: seoLocked, content: locked(planTab) ?? lockedTabs.plan },
+						{ id: 'sider', label: 'Sider & søgeord', locked: seoLocked, content: locked(pagesTab) ?? lockedTabs.sider },
+						{ id: 'teknisk', label: 'Teknisk SEO', locked: seoLocked, content: locked(technicalWithStatus) ?? lockedTabs.teknisk },
+						{ id: 'drift', label: 'Løbende drift', locked: seoLocked, content: locked(driftTab) ?? lockedTabs.drift },
+						{ id: 'kataloger', label: 'Profiler & kataloger', locked: seoLocked, content: locked(directoriesTab) ?? lockedTabs.kataloger },
+						{ id: 'tilkoeb', label: 'Muligheder', locked: seoLocked, content: locked(addonTab) ?? lockedTabs.muligheder },
 					],
 				},
 				// Horizens værktøjskasse: vises kun, når Horizen er logget ind.
 				...(isHorizen
 					? ([
 							{ id: 'komigang', label: 'Kom i gang', icon: 'rocket', bottom: true, content: launchTab },
+							{
+								// Fund og løse ender (Andreas 15/11-2026); kunden ser det ikke
+								id: 'register',
+								label: 'Fund-register',
+								icon: 'folder',
+								meta: String(findings.filter((f) => f.status === 'aaben' || f.status === 'venter').length || '') || undefined,
+								bottom: true,
+								content: <FindingsTab items={findings} />,
+							},
 							{
 								id: 'beskeder',
 								label: 'Beskeder',
@@ -2047,7 +2967,27 @@ export default async function SeoOverviewPage({
 										sender={sender.name}
 										senderPhoto={sender.photo}
 										defaults={clientMessageDefaults}
+										recipients={clientRecipients}
+										drafts={clientMessageDrafts}
 										sent={sentMessages}
+									/>
+								),
+							},
+							// Klippekort: saldo + alle bestillinger af timer. Kun Horizen
+							// (Andreas 19/11-2026: kunden skal ikke se, hvad de har brugt i kroner).
+							// Bestillingen gemmes før mailene, så den står her, også hvis en mail fejler.
+							{
+								id: 'klippekort',
+								label: 'Klippekort',
+								icon: 'ticket',
+								meta: String(hourOrders.filter((o) => ['bestilt', 'faktureret'].includes(orderStatusOf(o))).length || '') || undefined,
+								bottom: true,
+								content: (
+									<KlippekortOrders
+										orders={orderExample ? exampleOrders() : hourOrders}
+										balance={balance}
+										signedInAs={viewerName || undefined}
+										example={orderExample}
 									/>
 								),
 							},
@@ -2089,8 +3029,11 @@ export default async function SeoOverviewPage({
 			footer={
 				// Intern note: kun til Horizen, kunden ser den ikke
 				isHorizen && (
-					<div className="rounded-2xl border border-foreground/[0.08] bg-foreground/[0.02] p-6">
-						<p className="text-sm leading-relaxed text-muted">
+					<div
+						className="rounded-2xl border border-foreground/10 p-6"
+						style={{ backgroundColor: 'color-mix(in srgb, var(--color-foreground) 5%, var(--color-background))' }}
+					>
+						<p className="text-sm leading-relaxed text-foreground/85">
 							<span className="font-medium text-foreground">Bemærk:</span> Denne side er intern. Den
 							er ikke indekseret af søgemaskiner og ikke linket fra resten af sitet. Indholdet
 							opdateres manuelt i data.ts ved hver SEO-ændring.

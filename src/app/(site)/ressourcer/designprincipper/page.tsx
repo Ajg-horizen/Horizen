@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DEFAULT_OG_IMAGE } from "@/lib/og";
 import DesignprincipperOverview from "./DesignprincipperOverview";
 
 const title = "Designprincipper | Horizen";
@@ -18,11 +19,13 @@ export const metadata: Metadata = {
     siteName: "Horizen",
     locale: "da_DK",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
+    images: [DEFAULT_OG_IMAGE.url],
   },
 };
 

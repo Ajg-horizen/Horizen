@@ -54,3 +54,23 @@ export default function TabLink({
 		</button>
 	)
 }
+
+/** Samme genvej som TabLink, men til de mørke kort (Henvendelser, Sæsoner). */
+export function DarkTabLink({ to, children }: { to: Record<string, string>; children: ReactNode }) {
+	return (
+		<button
+			type="button"
+			onClick={() => {
+				gotoTab(to)
+				requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: 'smooth' }))
+			}}
+			className="group inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-medium transition-colors"
+			style={{ backgroundColor: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.85)' }}
+		>
+			{children}
+			<span className="transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true">
+				→
+			</span>
+		</button>
+	)
+}

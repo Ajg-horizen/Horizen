@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getAllServiceSlugs } from "@/lib/services";
 import { designPrinciples } from "@/lib/design-principles";
 import { isPublished } from "@/components/principle-content";
+import { visibleCases, caseHref } from "@/lib/cases";
 
 const BASE = "https://horizen.dk";
 
@@ -10,13 +11,15 @@ const staticRoutes = [
   "/kontakt",
   "/blog",
   "/ressourcer/designprincipper",
-  "/cases/bettrplans",
-  "/cases/od-biler-pro",
-  "/cases/tandsundhed-uden-graenser",
+  "/cases",
+  // Alle cases fra den fælles liste (også Ensemble Hermes, der manglede før)
+  ...visibleCases.filter((c) => !c.noCasePage).map(caseHref),
   "/cases/never-another",
   "/blog/ai-webdesign",
   "/blog/figma-til-kode",
   "/blog/seo-fejl-2026",
+  "/blog/hvad-er-seo",
+  "/godt-formaal",
   "/handelsbetingelser",
 ];
 

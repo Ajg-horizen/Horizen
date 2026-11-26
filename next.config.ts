@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Dansk 404 for ukendte adresser (src/app/global-not-found.tsx). Kræves,
+  // fordi sitet og Studio har hver sit root-layout.
+  experimental: {
+    globalNotFound: true,
+  },
   images: {
     remotePatterns: [
       {

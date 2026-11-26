@@ -18,7 +18,7 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
-import { fadeInUp, fadeUp } from "@/lib/animations";
+import { fadeIn, fadeUp } from "@/lib/animations";
 import Container from "@/components/Container";
 import { TestimonialBody } from "@/components/FeaturedTestimonial";
 import { getTestimonial } from "@/lib/testimonials";
@@ -266,7 +266,7 @@ export default function CaseContent() {
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               custom={0}
-              variants={fadeInUp}
+              variants={fadeIn}
             >
               <ScrambleEyebrow>Udfordringen</ScrambleEyebrow>
               <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
@@ -278,7 +278,7 @@ export default function CaseContent() {
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               custom={1}
-              variants={fadeInUp}
+              variants={fadeIn}
             >
               <p className="text-base text-muted leading-relaxed">
                 Ensemble Hermes er et samlet team, der længe havde brugt Wix. Men
@@ -303,7 +303,7 @@ export default function CaseContent() {
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
                 custom={0}
-                variants={fadeInUp}
+                variants={fadeIn}
               >
                 <ScrambleEyebrow>Løsningen</ScrambleEyebrow>
                 <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
@@ -315,7 +315,7 @@ export default function CaseContent() {
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
                 custom={1}
-                variants={fadeInUp}
+                variants={fadeIn}
               >
                 <p className="text-base text-muted leading-relaxed">
                   Derfor udviklede vi i fællesskab en side fra bunden, bygget
@@ -345,7 +345,7 @@ export default function CaseContent() {
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               custom={0}
-              variants={fadeInUp}
+              variants={fadeIn}
               className="max-w-2xl"
             >
               <ScrambleEyebrow className="text-xs font-medium tracking-[0.3em] text-white/40 uppercase">
@@ -383,7 +383,7 @@ export default function CaseContent() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: "-50px" }}
-                  variants={fadeInUp}
+                  variants={fadeIn}
                   className="rounded-2xl border border-white/[0.08] bg-white/[0.04] p-6"
                 >
                   <p className="text-lg font-semibold">{pillar.title}</p>
@@ -399,7 +399,7 @@ export default function CaseContent() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              variants={fadeUp}
+              variants={fadeIn}
               className="mt-12"
             >
               <p className="text-white/60 leading-relaxed">
@@ -425,7 +425,7 @@ export default function CaseContent() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             custom={0}
-            variants={fadeInUp}
+            variants={fadeIn}
             className="mb-14 max-w-2xl"
           >
             <ScrambleEyebrow>Hvad vi leverede</ScrambleEyebrow>
@@ -444,7 +444,7 @@ export default function CaseContent() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: "-50px" }}
-                  variants={fadeInUp}
+                  variants={fadeIn}
                   className="flex gap-5 rounded-2xl border border-foreground/[0.06] bg-accent/30 p-6"
                 >
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-foreground">
@@ -480,7 +480,7 @@ export default function CaseContent() {
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               custom={0}
-              variants={fadeInUp}
+              variants={fadeIn}
             >
               <ScrambleEyebrow>Tech stack</ScrambleEyebrow>
               <h2 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
@@ -503,7 +503,7 @@ export default function CaseContent() {
               whileInView="visible"
               viewport={{ once: true, margin: "-100px" }}
               custom={1}
-              variants={fadeInUp}
+              variants={fadeIn}
             >
               <ScrambleEyebrow>{"Værktøjer"}</ScrambleEyebrow>
               <h2 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
@@ -538,7 +538,7 @@ export default function CaseContent() {
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             custom={0}
-            variants={fadeInUp}
+            variants={fadeIn}
             className="mb-10"
           >
             <ScrambleEyebrow>Mere arbejde</ScrambleEyebrow>
@@ -547,7 +547,7 @@ export default function CaseContent() {
                 Andre cases
               </h2>
               <Link
-                href="/#cases"
+                href="/cases"
                 className="group flex items-center gap-1.5 text-sm font-medium text-muted transition-colors duration-300 hover:text-foreground"
               >
                 Se alle
@@ -564,7 +564,7 @@ export default function CaseContent() {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-50px" }}
-                variants={fadeInUp}
+                variants={fadeIn}
               >
                 <Link href={item.href} className="group block">
                   <div className="overflow-hidden rounded-2xl bg-accent aspect-[4/3]">

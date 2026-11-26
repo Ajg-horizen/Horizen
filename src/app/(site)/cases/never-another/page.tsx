@@ -4,7 +4,7 @@ import CaseContent from "./CaseContent";
 const title = "Never Another | Branding & Webdesign | Horizen";
 const description =
   "Never Another. Branding og webdesign der balancerer det visuelle udtryk med en stærk teknisk grundstruktur.";
-const ogImage = "/graphics/Hero-image-branding-services.webp";
+const ogImage = "/og/horizen-og.jpg";
 
 export const metadata: Metadata = {
   title,
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     siteName: "Horizen",
     locale: "da_DK",
     type: "website",
-    images: [{ url: ogImage, width: 1200, height: 630, alt: "Never Another case" }],
+    images: [{ url: ogImage, alt: "Never Another case" }],
   },
   twitter: {
     card: "summary_large_image",

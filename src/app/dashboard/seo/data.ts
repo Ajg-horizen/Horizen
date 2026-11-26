@@ -1,3 +1,5 @@
+import type { MessageDraft } from './messageText'
+
 /**
  * SEO-overblik, data (internt) — TEMPLATE-DEFAULT.
  *
@@ -129,6 +131,7 @@ export type BuildPage = {
 export type ActivityEntry = {
 	date: string
 	title: string
+	/** **fed** markerer det vigtige, ++grøn++ en forbedring; \n giver nyt afsnit. */
 	description: string
 	/** Valgfri opgavetid (timer) — vises som markør på ad hoc-poster. */
 	hours?: number
@@ -139,6 +142,12 @@ export type ActivityEntry = {
 	 * overstyre, fx en ad hoc-opgave, der reelt var SEO.
 	 */
 	kind?: ActivityKind
+	/**
+	 * Valgfri gul boks under beskrivelsen: noget, vi skal tage hensyn til og
+	 * holde øje med, fx en Google-opdatering, der kan flytte placeringerne.
+	 * Første linje vises fremhævet som overskrift.
+	 */
+	notice?: string
 	/** _id på den løste opgave i Studio, som posten beskriver (så den ikke står to gange). */
 	taskId?: string
 }
@@ -168,6 +177,33 @@ export type InboxItem = {
 	fromName?: string
 	fromEmail?: string
 	receivedAt?: string
+	/** Køb af klippekort-timer: antal timer, pris ekskl. moms og status */
+	orderHours?: number
+	orderPrice?: number
+	orderStatus?: OrderStatus
+	/** "Få en SEO-aftale" / "Opgradér": pakken, fx "Vækst" eller "Vækst → Profil" */
+	seoInterest?: string
+}
+
+/** Status på en bestilling af klippekort-timer (sættes af Horizen i Studio) */
+export type OrderStatus = 'bestilt' | 'faktureret' | 'betalt' | 'annulleret'
+
+/**
+ * Kundens navn og domæne: toppen og hilsenen i dashboardet, afsenderen på
+ * bestillinger af klippekort-timer og mailen om dem. Udfyld pr. kunde.
+ */
+export const brand = {
+	client: 'Horizen',
+	domain: 'horizen.dk',
+	/**
+	 * Kundens logo øverst i mailen, når kunden bestiller timer. PNG, fordi Gmail
+	 * ikke viser SVG. Lav den med `node scripts/make-email-logo.mjs <logo.svg>`,
+	 * som skriver public/email/kunde-logo.png og bredde/højde, der skal stå her.
+	 * Tom = kundens navn som tekst i stedet for logo.
+	 */
+	emailLogo: '' as string,
+	emailLogoWidth: 200,
+	emailLogoHeight: 42,
 }
 
 /** Fast placeholder-dato. Bump denne (og opdatér indholdet) ved hver SEO-ændring;
@@ -183,6 +219,334 @@ export const lastUpdated = '2026-11-05'
 export const retainerHours = 0 // Horizens eget site: ingen timeaftale
 export const monthlyUsage: Record<string, number> = {}
 export const monthlyExtra: Record<string, number> = {}
+
+/**
+ * Sidste måned med fast retainer ('ÅÅÅÅ-MM'), hvis aftalen slutter; null =
+ * løbende aftale. Efter den måned er rammen 0, og måleren viser "Ingen faste
+ * timer i aftalen". Skift samtidig hourModel til 'klippekort'.
+ */
+export const retainerEndsAfter: string | null = null
+
+/** Månedens timeramme (0 efter retainerEndsAfter) */
+export function retainerFor(monthKey: string) {
+	return retainerEndsAfter && monthKey > retainerEndsAfter ? 0 : retainerHours
+}
+
+/* ─── Klippekort (købte timer) ────────────────────────────────
+ *
+ * Hvad timemåleren på Overblik viser:
+ * - 'retainer': den faste ramme pr. måned ("Timer i november"). Standard.
+ * - 'klippekort': timer tilbage af de købte timer. Timerne bruges, når kunden
+ *   har brug for dem, og nulstilles ikke hver måned.
+ * Kunden kan købe timer fra dashboardet i begge tilfælde ("Køb flere timer"
+ * under måleren). Bestillingen gemmes som en opgave i Sanity med antal, pris
+ * og status, og Horizen sætter status i Studio: Bestilt → Faktura sendt →
+ * Betalt. "Betalt" lægger timerne på klippekortet. Oversigten står under
+ * Kun Horizen → Klippekort, så kunden ikke ser en liste over beløb.
+ */
+// Standard for nye kunder (Andreas 20/11-2026): klippekort med 0 timer, dvs.
+// ingen aftale om timer endnu. Kortet viser "Ingen timer endnu" og ingen
+// nulstilling. Sæt 'retainer', når kunden har en fast månedlig ramme (retainerHours).
+// Horizens eget site: ingen timeaftale med sig selv, så ingen timemåler (page.tsx)
+export const hourModel = 'retainer' as 'klippekort' | 'retainer'
+
+/**
+ * SEO-AFTALE: ÉN indstilling styrer det hele (Andreas 20/11-2026).
+ *
+ * null = ingen SEO-aftale. Det er standarden for nye kunder. Når kunden har
+ * skrevet under, sættes værdien til pakkens id fra seoPackages længere nede:
+ * 'start' | 'vaekst' | 'profil' | 'foerende' | 'enterprise'. Så åbner alt sig.
+ *
+ * Med en SEO-aftale åbnes (uden står de grå med lås og en smagsprøve):
+ *   Synlighed: Mål og resultater, AI-søgning, Sæsoner
+ *   Besøgende: Virksomheder, Henvendelser
+ *   Strategi: Plan, Sider & søgeord, Teknisk SEO, Løbende drift, Muligheder
+ *   Overblik: kortet "Månedens gennemgang" (månedens tjekliste)
+ * Altid åbent: Overblik, Synlighed → SEO og Sidens helbred, Besøgende → Besøg,
+ * Opgaver, Aktivitet og Indbakke. Alt måles i baggrunden uanset aftale.
+ *
+ * Når en aftale kommer i hus, skal ud over denne værdi også: season.ts udfyldes
+ * med kundens ydelser og søgetal (uden dem er fanen tom), og mål aftales til
+ * "Mål og resultater". Timerne (hourModel ovenfor) er udviklingstimer og har
+ * ikke noget med SEO-aftalen at gøre.
+ */
+export const seoPackageId: 'start' | 'vaekst' | 'profil' | 'foerende' | 'enterprise' | null = null
+
+/** Har kunden en SEO-aftale? Afledt af seoPackageId; ret den, ikke denne. */
+export const seoAgreement: boolean = seoPackageId !== null
+
+/**
+ * SÆRAFTALE (Andreas 20/11-2026): kunder fra før pakkerne, som har fuld adgang
+ * til dashboardet uden en SEO-pakke.
+ *
+ * null = ingen særaftale (standard). Med en særaftale:
+ *   - alle faner er åbne, som med en SEO-pakke
+ *   - kunden ser intet pakkemærke, men "Få en SEO-aftale" står stadig, så de
+ *     kan gå over på en pakke
+ *   - kun Horizen ser et lille mærke "Særaftale" på Overblik (ingen note: kunden
+ *     må aldrig kunne se, hvorfor de har en særaftale)
+ *   - Månedens tjekliste er der, som ved alle SEO-aftaler: et redskab, vi kan
+ *     bruge, ikke et løfte om en gennemgang hver måned (Andreas 20/11-2026)
+ * Sætter kunden over på en pakke: sæt seoPackageId og specialDeal = false.
+ */
+// Horizens eget site: alle faner åbne uden SEO-pakke
+export const specialDeal: boolean = true
+
+/**
+ * Skjul "Få en SEO-aftale" (Andreas 20/11-2026). Til særaftale-kunder, der
+ * allerede får SEO på deres faste timer (fx ACP og Seitz): de skal ikke tilbydes
+ * en pakke, og flere timer købes med "Køb flere udviklingstimer". Pakkerne
+ * gælder nye kunder. false = linket står, når kunden ikke har en SEO-pakke.
+ */
+// Horizens eget site: Horizen tilbyder ikke sig selv en SEO-aftale
+export const seoOfferHidden: boolean = true
+
+/** Om "Få en SEO-aftale" vises: kun uden SEO-pakke, og når det ikke er slået fra */
+export const showSeoOffer: boolean = !seoAgreement && !seoOfferHidden
+
+/**
+ * Klippekort-timer købt UDEN om dashboardet (fx aftalt på et møde), fx
+ * { date: '2026-12-02', hours: 10 }. Bestillinger fra dashboardet tæller
+ * automatisk med, når de står som "Betalt" i Studio.
+ */
+export const klippekortKoeb: { date: string; hours: number; note?: string }[] = []
+
+/**
+ * Brugte klippekort-timer pr. måned (nøgle = 'ÅÅÅÅ-MM'). Holdes adskilt fra
+ * monthlyUsage, så retainer-timer ikke trækkes fra klippekortet.
+ */
+export const klippekortForbrug: Record<string, number> = {}
+
+/** Klippekortets saldo: købt, brugt og tilbage. `paidOrders` = betalte bestillinger fra dashboardet (timer). */
+export function klippekortStatus(paidOrders = 0) {
+	const total = klippekortKoeb.reduce((a, k) => a + k.hours, 0) + paidOrders
+	const used = Object.values(klippekortForbrug).reduce((a, b) => a + b, 0)
+	return { total, used, left: Math.max(0, total - used) }
+}
+
+/**
+ * Timer til klippekortet, som kunden kan købe fra dashboardet: en skyder fra
+ * 1 til 20 timer, 900 kr./time (templatens grundpris; ret pr. kunde). Fra 10
+ * timer gives 10 % rabat, ved 20 timer 20 %. Højst 20 timer pr. bestilling.
+ * Prisen regnes igen på serveren (src/lib/hourOrderMail.ts), og der betales
+ * ikke på sitet: Horizen sender en faktura.
+ */
+export const hourPackages = {
+	pricePerHour: 900,
+	min: 1,
+	max: 20,
+	/** Udgangspunkt på skyderen */
+	start: 10,
+	/** Genvejskort over skyderen */
+	presets: [1, 10, 20],
+	/** Rabattrin: fra så mange timer gælder rabatten (højeste trin vinder) */
+	tiers: [
+		{ from: 10, discount: 0.1 },
+		{ from: 20, discount: 0.2 },
+	],
+	note: 'Priserne er ekskl. moms. Timerne bruges på rettelser, nye funktioner og SEO på hjemmesiden.',
+}
+
+/**
+ * SEO-pakker (Andreas 20/11-2026): SEO sælges som faste pakker, ikke timer.
+ * Udviklingstimer holdes adskilt og sælges som timer (hourPackages ovenfor).
+ * Vises i vinduet "Interesseret i en SEO-aftale" på de låste faner
+ * (SeoLocked.tsx). Priser pr. måned ekskl. moms; ret pr. kunde her.
+ * `hours` er pakkens ANBEFALEDE timer om måneden og vises for kunden
+ * (Andreas 25/11-2026, prototype): kunden kan skrue timerne op og ned i
+ * vinduet i stedet for at springe til en anden pakke. Se seoPackagePrice.
+ *
+ * Ingen faste kvoter på indhold (Andreas 20/11-2026): nye sider og blogindlæg
+ * laves, når de giver mest effekt, så pakkerne beskrives med det tekniske
+ * SEO-arbejde, ikke med "ét blogindlæg om måneden". Lov aldrig placeringer som
+ * "nummer ét": resultatet afhænger også af, hvor meget konkurrenterne investerer.
+ */
+export type SeoPackage = {
+	id: string
+	name: string
+	/** Pris pr. måned ekskl. moms; null = efter aftale */
+	price: number | null
+	/** Vises foran prisen, fx "Fra" */
+	pricePrefix?: string
+	fits: string
+	includes: string[]
+	badge?: string
+	hours?: number
+}
+
+/**
+ * Ingen binding (Andreas 20/11-2026): en måneds opsigelse, og vi ANBEFALER at
+ * give det mindst recommendedMonths, før resultatet vurderes. Det tunge arbejde
+ * i starten (analyse og opsætning) dækkes af en opstart, som står i tilbuddet.
+ */
+export const seoPackageTerms = {
+	recommendedMonths: 6,
+	noticeMonths: 1,
+	note: 'Priser pr. måned ekskl. moms. Opstart og eventuelle udviklingstimer står i tilbuddet.',
+}
+
+/**
+ * SEO-timeprisen (Andreas 25/11-2026): samme 900 kr. som udviklingstimerne.
+ * Alle pakkepriser er timer × timepris, så regnestykket altid går op, også når
+ * kunden skruer timerne op eller ned.
+ */
+export const seoHourPrice = hourPackages.pricePerHour
+
+export const seoPackages: SeoPackage[] = [
+	{
+		id: 'start',
+		name: 'Start',
+		price: 3 * seoHourPrice,
+		fits: 'Til den lokale virksomhed, der vil findes i sit eget område, fx én by. Passer bedst, hvor konkurrencen lokalt er til at overskue.',
+		includes: [
+			'Teknisk SEO-tjek hver måned: fejl, døde links og sider, Google ikke kan finde',
+			'Core Web Vitals: hastigheden, som Google selv måler',
+			'Lokal SEO: Google-profilen og ens kontaktoplysninger overalt',
+			'Titler og beskrivelser, der matcher det, jeres kunder søger efter',
+			'Fuld adgang til SEO-dashboardet',
+		],
+		hours: 3,
+	},
+	{
+		id: 'vaekst',
+		name: 'Vækst',
+		price: 6 * seoHourPrice,
+		badge: 'Mest valgt',
+		fits: 'Til virksomheden, der vil ud over sit lokalområde: flere byer, flere ydelser eller hele landet. Valget for de fleste, når lokal synlighed ikke er nok.',
+		includes: [
+			'Alt i Start',
+			'Strukturerede data (schema): Google forstår, hvem I er, og hvad I tilbyder',
+			'Intern linkstruktur: styrken samles på de sider, der skal sælge',
+			'Søgeintention: hver side svarer på det, folk faktisk leder efter',
+			'Synlighed i AI-søgning som ChatGPT, Perplexity og Googles AI-svar',
+		],
+		hours: 6,
+	},
+	{
+		id: 'profil',
+		name: 'Profil',
+		price: 12 * seoHourPrice,
+		fits: 'Til virksomheden, der vil stå stærkt på landsplan eller i en hel region, eller er i en branche med hård konkurrence.',
+		includes: [
+			'Alt i Vækst',
+			'Indeksering og crawl: Google bruger tiden på de rigtige sider',
+			'Kannibalisering: jeres egne sider konkurrerer ikke om de samme søgninger',
+			'E-E-A-T: den ekspertise og troværdighed, Google belønner',
+			'Linkprofil og omtale fra relevante sider',
+			'Statusmøde hver måned',
+		],
+		hours: 12,
+	},
+	{
+		id: 'foerende',
+		name: 'Førende',
+		price: 20 * seoHourPrice,
+		fits: 'Til virksomheden med store ambitioner: mange sider og ydelser eller en større webshop, hvor det tekniske skal sidde lige i skabet.',
+		includes: [
+			'Alt i Profil',
+			'Konkurrent- og SERP-overvågning hver måned',
+			'Konverteringsoptimering: flere besøgende bliver til henvendelser',
+			'Strategimøde hvert kvartal',
+			'Førsteprioritet på opgaver',
+		],
+		hours: 20,
+	},
+	{
+		id: 'enterprise',
+		name: 'Enterprise',
+		price: 30000,
+		pricePrefix: 'Fra',
+		fits: 'Til de helt store sites med hundredvis eller tusindvis af sider, fx store webshops, og til flere markeder eller sprog.',
+		includes: [
+			'Alt i Førende',
+			'Hreflang og SEO på flere sprog og markeder',
+			'Teknisk SEO på store sites: crawl-budget, logfiler og migreringer',
+			'Fast kontaktperson og et team efter behov',
+			'Strategi og mål aftalt med ledelsen',
+		],
+	},
+]
+
+/**
+ * Justérbare timer i SEO-pakkerne (Andreas 25/11-2026, prototype): "så trækker
+ * vi bare en time fra". Prisen er timer × seoHourPrice, så samme pakke med
+ * færre timer bliver billigere uden rabat på timeprisen.
+ */
+export const seoHourStep = 1
+/**
+ * Laveste antal timer i en pakke (Andreas 25/11-2026): lige over pakken under,
+ * så ingen kan få fx Profils indhold til Starts pris ved at skrue ned.
+ * Den mindste pakke kan højst gå ned til seoHourFloor.
+ */
+export const seoHourFloor = 2
+export function seoHourMin(p: SeoPackage) {
+	const prev = seoPackages[seoPackages.indexOf(p) - 1]
+	return prev?.hours ? prev.hours + seoHourStep : seoHourFloor
+}
+/** Højeste antal timer i en pakke: lige under næste pakke (ellers +10 t) */
+export function seoHourMax(p: SeoPackage) {
+	const next = seoPackages[seoPackages.indexOf(p) + 1]
+	if (!p.hours) return 0
+	return next?.hours ? next.hours - seoHourStep : p.hours + 10
+}
+export function seoPackagePrice(p: SeoPackage, hours = p.hours): number | null {
+	if (p.price == null || !p.hours || hours == null) return p.price
+	return hours * seoHourPrice
+}
+
+/**
+ * Introtilbud (Andreas 25/11-2026, model C "bonustimer"): nye kunder får 30 %
+ * flere timer de første 6 måneder til samme pris. Ingen rabat i kroner, så
+ * prisen er den samme hele vejen, og der kommer intet prischok i måned 7.
+ * Gælder ved de anbefalede timer eller flere, ikke når kunden skruer ned.
+ * Ikke ved opgradering af en eksisterende aftale. Sæt percent: 0 for at slå fra.
+ */
+export const seoIntroBonus = { percent: 0.3, months: 6 }
+
+/** Bonustimer om måneden i introperioden (hele timer, mindst 1); 0 = ingen */
+export function seoBonusHours(p: SeoPackage, hours = p.hours): number {
+	if (!seoIntroBonus.percent || !p.hours || hours == null || hours < p.hours) return 0
+	return Math.max(1, Math.round(hours * seoIntroBonus.percent))
+}
+
+/**
+ * Introtilbuddet for en kunde MED aftale (Andreas 25/11-2026). Sæt
+ * seoAgreementStart ('ÅÅÅÅ-MM-DD'), når aftalen begynder; så regner dashboardet
+ * selv resten ud. Perioden er de seoIntroBonus.months kalendermåneder fra
+ * startmåneden, og bonustimerne stopper automatisk bagefter.
+ * Bonustimerne LÅSES til det, kunden startede med: seoIntroBonusAgreed, eller
+ * (null) regnet ud fra pakken og retainerHours. Skruer kunden op undervejs,
+ * er de nye timer almindelige, betalte timer. Vises på timekortet på Overblik
+ * som lilla timer med start- og slutdato.
+ */
+export const seoAgreementStart: string | null = null
+export const seoIntroBonusAgreed: number | null = null
+
+const addMonths = (key: string, n: number) => {
+	const [y, m] = key.split('-').map(Number)
+	const d = new Date(Date.UTC(y, m - 1 + n, 1))
+	return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}`
+}
+
+/** Introtilbuddet i en given måned ('ÅÅÅÅ-MM'); null = intet tilbud den måned */
+export function seoIntroFor(monthKey: string): { hours: number; start: string; end: string } | null {
+	if (!seoAgreementStart || !seoIntroBonus.months) return null
+	const pkg = seoPackages.find((p) => p.id === seoPackageId)
+	const hours = seoIntroBonusAgreed ?? (pkg ? seoBonusHours(pkg, retainerHours) : 0)
+	if (!hours) return null
+	const startMonth = seoAgreementStart.slice(0, 7)
+	const lastMonth = addMonths(startMonth, seoIntroBonus.months - 1)
+	if (monthKey < startMonth || monthKey > lastMonth) return null
+	// Sidste dag i den sidste måned
+	const [y, m] = lastMonth.split('-').map(Number)
+	const end = new Date(Date.UTC(y, m, 0)).toISOString().slice(0, 10)
+	return { hours, start: seoAgreementStart, end }
+}
+
+/** Rabatten for et antal timer (0, 0,1 eller 0,2) */
+export function hourDiscount(hours: number) {
+	return hourPackages.tiers.reduce((d, t) => (hours >= t.from ? t.discount : d), 0)
+}
 
 /**
  * Hvor mange af månedens timer (monthlyUsage) der gik til udvikling af sitet
@@ -652,6 +1016,11 @@ export const launchPlan: LaunchPhase[] = [
 				detail:
 					'URL-inspektion på de vigtigste sider → "Anmod om indeksering". Fremskynder at Google ser dem.',
 			},
+			{
+				title: 'Opret Bing Webmaster Tools + indsend sitemap',
+				detail:
+					'Importér sitet fra Search Console, og indsend sitemap.xml bagefter, for importen tager det ikke med. Dækker også DuckDuckGo, Yahoo og Copilot.',
+			},
 		],
 	},
 	{
@@ -660,6 +1029,11 @@ export const launchPlan: LaunchPhase[] = [
 		intro:
 			'Nu kan vi skabe resultater på rigtige tal i stedet for gæt. Det er her den løbende SEO (typisk tilkøb) for alvor begynder.',
 		steps: [
+			{
+				title: 'Tjek at Bing har indekseret sitet',
+				detail:
+					'URL-inspektion af forsiden i Bing Webmaster Tools og en søgning på firmanavnet på bing.com. Ved en relancering: viser Bing stadig gamle adresser, og sender de videre til de nye?',
+			},
 			{
 				title: 'Læs Search Console',
 				detail:
@@ -982,6 +1356,11 @@ export const buildPages: BuildPage[] = [
  */
 export const recentActivity: ActivityEntry[] = [
 	{
+		"date": "2026-11-21",
+		"title": "Hjemmesiden er meldt ind hos Bing",
+		"description": "Jeg har meldt hjemmesiden ind i Bing Webmaster Tools, Microsofts udgave af Google Search Console, og sendt Bing en liste over alle sidens 48 sider (sitemap). Bings søgeresultater bruges også af DuckDuckGo, Yahoo og Microsoft Copilot, og ChatGPT henter en del af sine søgninger fra Bing. Når Bing kender alle siderne, kan de også dukke op dér. Fra nu af kan jeg følge, hvordan horizen.dk klarer sig på Bing. De første tal kommer i løbet af et par dage.",
+	},
+	{
 		"date": "2026-08-12",
 		"title": "Forside: notifikations-popup live (designprincipper + gratis hjemmeside)",
 		"description": "Roterende popup nederst til højre (tablet og op, 1×/session): to notifikationer der veksler — Designprincipper → /ressourcer/designprincipper og 'Gratis hjemmeside?' → /godt-formaal. Baseline for at måle om den driver trafik til designprincipperne, øger returbesøg og spreder gratis-hjemmeside-tilbuddet. NB: alle 30 designprincipper gik også live dagen før (11/8), så et udslag kan skyldes begge."
@@ -1069,7 +1448,9 @@ export const recentActivity: ActivityEntry[] = [
  * når punktet er tjekket. Punkter med automatisk tjek behøver ikke stå her.
  * Eksempel: { 'gsc-property': '2026-10-14' }
  */
-export const setupChecked: Record<string, string> = {}
+export const setupChecked: Record<string, string> = {
+	'bing': '2026-11-21', // Bing Webmaster Tools: oprettet og sitemap indsendt
+}
 
 /**
  * Udvikling af sitet (ad hoc): nye funktioner, Studio og rettelser, der IKKE
@@ -1122,6 +1503,14 @@ export type SeoSnapshot = {
  * Udfyld pr. kunde; null = ingen markering.
  */
 export const siteLaunchDate: string | null = '2026-05-08'
+
+/**
+ * Sidste dag, tallene fra Google Analytics må bruges på fanen Performance →
+ * Besøg ('ÅÅÅÅ-MM-DD'), hvis GA's tal efter den dag ikke er retvisende. Dagene
+ * frem til sitets egen tæller udelades så, og fanen siger det. null = GA bruges
+ * frem til dagen før tælleren startede.
+ */
+export const ga4Until: string | null = null
 
 export const analyticsNote =
 	'Tallene hentes automatisk den 3. i hver måned fra Google Search Console (første gang typisk ~30 dage efter launch, når der er data). Indtil da står felterne tomme med vilje, så der ikke vises opdigtede tal.'
@@ -1223,6 +1612,14 @@ export const recurringTasks: RecurringTask[] = [
 		discipline: 'analysis',
 	},
 	{
+		category: 'Måling',
+		title: 'SERP-tjek af søgeintent',
+		description:
+			'Søg på de vigtigste søgeord (de valgte og dem på side 2) og se, hvad Google faktisk viser øverst: et kort med lokale firmaer, prissider, guides, AI-svar eller noget helt andet. Passer det ikke med den side, vi har bygget, justerer vi siden eller skifter søgeord. Google har allerede afgjort, hvad folk mener med en søgning, så vi læser det i stedet for at gætte.',
+		cadence: 'monthly',
+		discipline: 'analysis',
+	},
+	{
 		category: 'Analyse',
 		title: 'Konkurrentovervågning',
 		description:
@@ -1262,6 +1659,20 @@ export type SeoTechnique = {
 };
 
 export const seoTechniques: SeoTechnique[] = [
+  {
+    title: "SERP-tjek: hvad viser Google?",
+    category: "Søgeord",
+    summary:
+      "Før vi vælger eller vurderer et søgeord, ser vi på Googles første side. Den viser, hvad folk mener med søgningen (søgeintent).",
+    whenToUse:
+      "Hver måned i data-gennemgangen for de 5-10 vigtigste søgeord, og altid før et nyt søgeord vælges til en side.",
+    body: [
+      "SERP står for Search Engine Results Page, altså Googles resultatside. Et SERP-tjek betyder, at man søger på ordet og ser, hvilken slags resultater der ligger øverst. Det er standard i SEO, fordi ordet alene ikke fortæller, hvad folk vil.",
+      "Resultaterne afslører søgeintent: et kort med lokale firmaer betyder, at folk vil købe i nærheden. Prissider betyder, at de sammenligner pris. Guides og 'Folk spørger også om' betyder, at de vil vide noget. Et AI-svar øverst betyder, at simple spørgsmål bliver besvaret direkte, og at færre klikker videre.",
+      "Eksempel: et ord kan lyde som en ydelse, man sælger, mens Google mest viser guides og gør-det-selv-råd. Et andet ord kan ligne et spørgsmål, mens Google viser lokale firmaer og en prisside øverst. Begge fund ændrer, hvad siden skal svare på.",
+      "Sådan gør vi: tag de valgte søgeord og dem, der ligger på side 2. Notér typen af resultater øverst (lokalt kort, prisside, guide, AI-svar, andet) og sammenlign med vores side. Passer det ikke, justerer vi siden eller vælger et mere præcist søgeord. Værktøj: Ubersuggest (SERP-analyse) eller en privat søgning på google.dk.",
+    ],
+  },
   {
     title: "Long-tail-strategien",
     category: "Søgeord",
@@ -2007,12 +2418,9 @@ export const seoMap: SeoMapArea[] = [
 
 /* ─── Spørgsmål til kunden ──────────────────────────────────────
  * Åbne beslutninger, som kun kunden kan afgøre (hensigt, prioritering, fakta).
- * Vises på fanen "Spørgsmål til <clientName>" med en prik, når der er kommet
- * nye spørgsmål eller svar siden sidst. Skriv svaret ind som `answer`, når
- * spørgsmålet er afklaret; det vises som note under spørgsmålet. */
-
-/** Kundens fornavn eller firmanavn, bruges i fanens titel. */
-export const clientName = 'Horizen'
+ * Vises på fanen "Spørgsmål" med en prik, når der er kommet nye spørgsmål
+ * eller svar siden sidst. Skriv svaret ind som `answer`, når spørgsmålet er
+ * afklaret; det vises som note under spørgsmålet. */
 
 /**
  * Udfyldes på forhånd i fanen "Beskeder" (kun Horizen), så hver besked ikke
@@ -2026,11 +2434,36 @@ export const clientMessageDefaults = {
 	smsSign: '',
 }
 
+/**
+ * FASTE MODTAGERE (regel, Andreas 10/11-2026): beskeder fra fanen "Beskeder"
+ * kan KUN sendes til adresserne her. Man vælger dem fra en liste og kan ikke
+ * skrive en adresse selv, så en mail aldrig ryger til en anden kundes adresse
+ * ved en fejl. /api/seo-message afviser alt, der ikke står her. Tom liste =
+ * ingen kan sendes. `name` udfylder "Hej …" i mailen.
+ */
+export const clientRecipients: { email: string; name: string }[] = [
+	// Udfyld pr. kunde, fx { email: 'info@kunde.dk', name: 'Fornavn' },
+]
+
+/**
+ * Færdige beskeder i fanen "Beskeder" (kun Horizen), som egne knapper under
+ * "Klar til afsendelse" (fra Miljøkontoret, Andreas 10/11-2026: "så jeg bare
+ * kan trykke på den og sende den afsted"). Et tryk vælger skabelonen og
+ * udfylder felterne, så Horizen kun skal tjekke og trykke send. En kladde
+ * forsvinder af sig selv, når en besked med samme overskrift er sendt.
+ * Er der kun én, er den valgt på forhånd. Tom liste = ingen kladder.
+ *
+ * Eksempel på formatet:
+ * { id: 'moede-2026-11-10', label: 'Opsummering af mødet 10. november',
+ *   template: 'moede', fields: { heading: '…', intro: '…' } }
+ */
+export const clientMessageDrafts: MessageDraft[] = []
+
 export type ClientQuestion = {
 	/** Fast nøgle til svaret, kunden gemmer i dashboardet (seoQuestionAnswer).
 	 * Uden id bruges en nøgle ud fra spørgsmålets tekst. Ret ikke id, når der er svaret. */
 	id?: string
-	/** Hvornår spørgsmålet blev stillet ('ÅÅÅÅ-MM-DD'); vises som "Spurgt [dato]". */
+	/** Hvornår spørgsmålet blev sendt til kunden ('ÅÅÅÅ-MM-DD'); vises som "Sendt [dato]". */
 	askedAt?: string
 	area: string
 	question: string
@@ -2054,8 +2487,135 @@ export function questionKey(q: ClientQuestion) {
 	)
 }
 
-// EKSEMPLER: erstat med projektets egne spørgsmål (tom liste = "Ingen åbne spørgsmål").
+/**
+ * Spørgsmål til kunden. Tom ved lancering: nye spørgsmål oprettes i Studio
+ * ("+" → "Spørgsmål til kunden"). Gamle kan stå her i formatet:
+ * { area: 'Ydelser', question: '…?', context: 'Hvorfor vi spørger', answer?: { date, text } }
+ * Tom liste = "Ingen åbne spørgsmål".
+ */
 export const clientQuestions: ClientQuestion[] = []
+
+/* ─── Din to-do: det, vi har brug for, at kunden gør ───────────
+ *
+ * Ny opgave lander i Indbakke → "Nye opgaver". Kunden trykker "Set, læg på min
+ * liste" (seoTodoSeen), og så står den under Opgaver → "Jeres opgaver"
+ * (Andreas 16/11-2026). Opgaverne er adskilt fra spørgsmålene.
+ * Spørgsmål = vi skal bruge kundens viden (kunden svarer med ord). To-do =
+ * kunden skal gøre noget. Hver opgave siger, hvorfor den er vigtig, og hvad vi
+ * har gjort klar, så den kan klares på få minutter. Kunden trykker "Det er
+ * gjort" (gemmes i Sanity som seoTodoDone via POST /api/seo-todo), og Horizen
+ * kan se datoen og følge op. `id` må ikke ændres, når en opgave er markeret
+ * som gjort.
+ */
+export type ClientTodo = {
+	id: string
+	/** Hvornår opgaven blev sendt til kunden ('ÅÅÅÅ-MM-DD'); vises som "Sendt [dato]". */
+	askedAt: string
+	area: string
+	title: string
+	/** Hvorfor det er vigtigt, i kundens sprog. */
+	why: string
+	/** Det, vi har gjort klar, eller hvordan det gøres, trin for trin. */
+	steps?: string[]
+	/** Tekst, kunden kan kopiere med én knap (fx en SMS til kunderne). */
+	copyText?: { label: string; text: string }
+	/** Overskrift over feltet (uden står "Skriv her"). Feltet vises kun med notePlaceholder. */
+	noteLabel?: string
+	/** Felt til en bemærkning, fx kontaktinfo eller rettelser (placeholder-teksten). */
+	notePlaceholder?: string
+	/** Kort forklaring under feltets overskrift. */
+	noteHelp?: string
+	/**
+	 * Flueben, der skal sættes, før en udfyldt bemærkning kan gemmes (fx "De har
+	 * sagt ja til, at Horizen kontakter dem"). Gemmes som `consent`.
+	 */
+	noteConsent?: string
+	/**
+	 * Links, kunden skal åbne (fx afsnit på sitet); åbner i en ny fane. Med
+	 * `ask` får hvert link sit eget lille svarfelt (gemmes som linkNotes).
+	 */
+	links?: { label: string; href: string; hint?: string; ask?: string }[]
+	/**
+	 * Hvilken slags opgave (Andreas 16/11-2026). Styrer knappen og status:
+	 * 'handling' (standard): "Det er gjort" → Gjort
+	 * 'laes': kun til orientering: "Set" lukker den helt → Set
+	 * 'godkend': noget kunden skal godkende fagligt: "Godkendt" → Godkendt
+	 */
+	kind?: 'handling' | 'laes' | 'godkend'
+	/** Egen knaptekst, hvis typen ikke passer (sjældent). */
+	doneLabel?: string
+	/** Lukket af Horizen uden for dashboardet (fx klaret i telefonen). */
+	closed?: { date: string; text: string }
+}
+
+/** Teksten i boksen øverst i "Jeres opgaver" (Andreas 16/11-2026: kort, generel og uden pres). */
+export const todoIntro =
+	'Der venter nogle opgaver til dig i forbindelse med vores fælles indsats.'
+
+// Tom liste = "Der er ikke noget, du skal gøre lige nu", og ingen gul bjælke
+// på Overblik. Eksempel på formatet:
+//
+// {
+// 	id: 'anmeldelser-google',
+// 	askedAt: '2026-01-01',
+// 	area: 'Anmeldelser på Google',
+// 	title: 'Bed 3-5 faste kunder om en anmeldelse på Google',
+// 	why: 'Anmeldelser er en af de vigtigste ting for at komme med på Googles kort over lokale firmaer, og AI-tjenester bruger dem også, når de anbefaler et firma.',
+// 	steps: [
+// 		'Vælg 3-5 kunder, der har været glade for samarbejdet.',
+// 		'Kopiér beskeden herunder og send den som SMS eller mail. Skift [navn] ud med kundens navn.',
+// 	],
+// 	copyText: {
+// 		label: 'Kopiér beskeden',
+// 		text: 'Hej [navn]. Tak for et godt samarbejde. Vil du skrive et par ord på Google om, hvordan I oplevede det? Det tager et minut: [link til jeres Google-profil]',
+// 	},
+// 	time: '15 min',
+// },
+export const clientTodos: ClientTodo[] = []
+
+/* ─── Fund-register (kun Horizen, Andreas 15/11-2026) ───────────
+ *
+ * Det ENE sted for fund og løse ender: alt, der er fundet (fx i månedens
+ * gennemgang) eller står åbent efter en session, med dato for, hvornår det
+ * blev fundet, og hvornår det blev løst. Vises under "Kun Horizen" →
+ * Fund-register; kunden ser det ikke. Opdateres i tjeklistens trin 14 og ved
+ * afslutning af hver session. Klarede punkter bliver stående (historik).
+ * Kundens review-kalender har kun datoerne og henviser hertil.
+ */
+export type FindingStatus = 'aaben' | 'venter' | 'udskudt' | 'klaret'
+export type FindingCategory =
+	| 'Indhold'
+	| 'Teknik'
+	| 'Google-profil'
+	| 'Autoritet'
+	| 'Måling'
+	| 'Kundeønske'
+	| 'Dashboard'
+	| 'Drift'
+
+export type Finding = {
+	id: string
+	title: string
+	/** Hvornår det blev fundet ('ÅÅÅÅ-MM-DD'). */
+	foundAt: string
+	/** Hvor det kom fra, fx "Gennemgang nov. 2026, trin 6". */
+	source: string
+	category: FindingCategory
+	owner: 'Horizen' | 'Andreas' | 'Michael'
+	status: FindingStatus
+	/** Hvad det kræver, eller hvad det venter på / hvorfor det er udskudt. */
+	note?: string
+	/** Når det er klaret ('ÅÅÅÅ-MM-DD') + hvad der blev gjort. */
+	doneAt?: string
+	doneNote?: string
+}
+
+export const findings: Finding[] = [
+	// Eksempel (fjern kommentaren og ret til):
+	// { id: 'side-h1', title: 'Siden mangler søgeord i hovedoverskriften', foundAt: '2026-11-15', source: 'Gennemgang nov. 2026, trin 5', category: 'Indhold', owner: 'Horizen', status: 'aaben', note: 'Hvad det kræver, eller hvad det venter på.' },
+	// Klaret: status: 'klaret', doneAt: 'ÅÅÅÅ-MM-DD', doneNote: 'Hvad der blev gjort.'
+]
+
 
 /* ─── Katalog over mulige nye sider (tilkøb) ────────────────────
  * Sider, kunden selv har ønsket eller vi har foreslået, som ligger uden for den
@@ -2097,3 +2657,82 @@ export const serviceCatalogFoundationHours = 10
 
 // EKSEMPLER: erstat med projektets eget katalog (tom liste = sektionen skjules).
 export const serviceCatalog: CatalogCategory[] = []
+
+/* ─── Månedens tjekliste (Andreas 10/11-2026) ─────────────────
+ *
+ * Den faste rute gennem den månedlige SEO-gennemgang, fra top til bund.
+ * Fluebenene gemmes pr. måned i Sanity (seoMonthlyChecklist, kun via
+ * dashboardet, aldrig i Studio) og starter forfra den 3. i måneden.
+ * Horizen sætter flueben; kunden kan se dem (dokumentation for de
+ * 2-3 timer af retaineren, der er afsat til gennemgangen).
+ * `id` må ikke ændres, når en måned er i gang (fluebenene peger på det).
+ */
+export type ChecklistStep = {
+	id: string
+	title: string
+	minutes: number
+	description: string
+	/** Kun hver 3. måned (jan, apr, jul, okt). */
+	quarterly?: boolean
+	/** Kun én gang om året, i denne måned (1-12) */
+	yearlyMonth?: number
+}
+
+export type ChecklistPhase = { title: string; steps: ChecklistStep[] }
+
+/**
+ * Afsat til gennemgangen hver måned (Andreas 10/11-2026): 2 timer til at
+ * gennemgå data og kontrollere, at alt er korrekt, op til 3, hvis vi finder
+ * fejl, der skal rettes.
+ */
+export const checklistHours = '2-3'
+
+export const monthlyChecklist: ChecklistPhase[] = [
+	{
+		title: 'Data',
+		steps: [
+			{ id: 'snapshot', title: 'Månedens tal er hentet', minutes: 5, description: 'Tjek, at månedens tal fra Google Search Console er landet i dashboardet: klik, visninger, klikrate og placering, sammenlignet med måneden før.' },
+			{ id: 'search-console', title: 'Search Console: fejl, indeksering og sitemap', minutes: 15, description: 'Er alle sider med i Google? Nye fejl, 404-sider eller sider, Google har valgt fra? Er sitemap læst for nylig?' },
+			{ id: 'bing', title: 'Bing: indeksering, fejl og AI-svar', minutes: 10, description: 'I Bing Webmaster Tools: er sitemap læst for nylig, er der nye fejl, og er alle sider med? Vi noterer klik og visninger fra Bing, og hvor ofte Copilot nævner sitet (AI Performance). Bing driver også DuckDuckGo, Yahoo og Copilot, og ChatGPT henter en del af sine søgninger fra Bing.' },
+			{ id: 'udvikling', title: 'Klik og visninger: hvad steg, og hvad faldt', minutes: 5, description: 'Hvilke sider og søgninger gik frem eller tilbage, og hvorfor? Store udsving undersøges, og vi tjekker, om Google har lavet en opdatering i måneden, så vi ikke retter noget, der ikke er i stykker.' },
+			{ id: 'henvendelser', title: 'Henvendelser: kom der kunder fra Google?', minutes: 10, description: 'Under Besøgende → Henvendelser: hvor mange formularer, opkald og mails kom der, og fra hvilke sider? Stiger visningerne, mens henvendelserne står stille, er det siderne, der skal arbejdes med, ikke placeringerne.' },
+		],
+	},
+	{
+		title: 'Søgeord',
+		steps: [
+			{ id: 'quick-wins', title: 'Quick wins: søgninger på plads 5-15', minutes: 20, description: 'Søgninger tæt på toppen, hvor små justeringer af titel, tekst eller interne links kan løfte siden op på side 1.' },
+			{ id: 'serp', title: 'SERP-tjek af søgeintent', minutes: 30, description: 'Søg på de vigtigste søgeord og se, hvad Google viser øverst: kort med lokale firmaer, prissider, guides eller AI-svar. Passer det ikke med vores side, justerer vi siden eller skifter søgeord. Står der et AI-svar øverst, ser vi, om sitet bliver nævnt i det.' },
+			{ id: 'uventede', title: 'Uventede søgninger, vi dukker op på', minutes: 15, description: 'Relevante søgninger, sitet bliver vist på uden at have valgt dem. Skal en eksisterende side styrkes, eller skal der en ny side til?' },
+			{ id: 'saesontal', title: 'Sæsontal er opdateret', minutes: 15, yearlyMonth: 11, description: 'Én gang om året: hent nye månedstal i Ubersuggest (Danmark) for ét primært søgeord pr. ydelse, og opdatér tallene og datoen i src/app/dashboard/seo/season.ts. Så passer årshjulet under Synlighed → Sæsoner og kampagnerådene til året, der kommer.' },
+			{ id: 'valgte', title: 'Holder de valgte søgeord?', minutes: 5, description: 'Klarer sidernes valgte søgeord sig som forventet? Planen rettes efter de rigtige tal, og vi tjekker, at to af vores egne sider ikke konkurrerer om den samme søgning.' },
+		],
+	},
+	{
+		title: 'Site og lokal synlighed',
+		steps: [
+			{ id: 'teknik', title: 'Teknisk tjek: SEO-tjek, hastighed og døde links', minutes: 15, description: 'Automatisk SEO-tjek af alle sider, sidehastighed, døde links og strukturerede data. Har vi mistet links fra andre sider?' },
+			{ id: 'google-profil', title: 'Google-profil: anmeldelser og opslag', minutes: 15, description: 'Nye anmeldelser besvaret, et opslag eller billede, og navn, adresse og telefon ens overalt.' },
+			{ id: 'konkurrenter', title: 'Konkurrent- og strategitjek', minutes: 40, quarterly: true, description: 'Hvad rangerer konkurrenterne på, og hvilke emner bør vi tage før dem? Og det store spørgsmål: går vi stadig efter de rigtige ting? Kun hver 3. måned.' },
+		],
+	},
+	{
+		title: 'Plan og rapport',
+		steps: [
+			{ id: 'handling', title: 'Én handling pr. fund: planen', minutes: 20, description: 'Hvert fund fra gennemgangen får ét konkret næste skridt. Planen gælder nu: vi går i gang med det samme, når der ikke er mere presserende opgaver eller ønsker fra dig, så alt er ryddet op, inden tjeklisten starter forfra.' },
+			{ id: 'rapport', title: 'Rapport og aktivitetslog', minutes: 20, description: 'Månedens udvikling og det, vi har gjort, skrives ind i dashboardet.' },
+			{ id: 'oprydning', title: 'Oprydning i arbejdsfilerne', minutes: 5, description: 'Midlertidige noter ryddes op, og det, der skal bruges igen, flyttes ind i planen.' },
+			{ id: 'register', title: 'Fund-registeret er opdateret', minutes: 10, description: 'Alle fund fra gennemgangen er skrevet ind i Horizens fund-register med dato, og det, der er løst, har fået en slutdato. Så kan vi se fra måned til måned, hvad der er fundet, hvad der er løst, og hvad der har ligget for længe.' },
+		],
+	},
+]
+
+/** Trinene for en given måned ('ÅÅÅÅ-MM'); konkurrenttjekket kun hver 3. måned. */
+export function checklistFor(month: string): ChecklistPhase[] {
+	const m = Number(month.slice(5, 7))
+	const quarter = m % 3 === 1
+	return monthlyChecklist.map((p) => ({
+		...p,
+		steps: p.steps.filter((s) => (!s.quarterly || quarter) && (!s.yearlyMonth || s.yearlyMonth === m)),
+	}))
+}

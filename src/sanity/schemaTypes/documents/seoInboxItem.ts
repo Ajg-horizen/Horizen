@@ -11,6 +11,10 @@ import { VscInbox } from 'react-icons/vsc'
  *   sendt → godkendt → i gang → løst  (eller blokeret, hvis noget venter).
  * Løste opgaver flyttes automatisk over i dashboardets Aktivitets-log.
  *
+ * Bestillinger af klippekort-timer gemmes også her (med orderHours/orderPrice/
+ * orderStatus) og vises i dashboardet under Kun Horizen → Klippekort, ikke
+ * blandt opgaverne.
+ *
  * NB: det interne `name` (seoInboxItem) må ikke ændres — API-endpoint og
  * dashboard-query afhænger af det. Kun visningsnavnet er "SEO-opgave".
  */
@@ -38,15 +42,15 @@ export default defineType({
 		}),
 		defineField({
 			name: 'handling',
-			title: 'Timeramme (kundens valg)',
+			title: 'Håndtering (kundens valg)',
 			description:
-				'Hvor mange timer må vi bruge på opgaven, før vi spørger? Op til 5/10 timer = forhåndsgodkendt, gå bare i gang. Ellers giver vi et tidsoverslag først.',
+				'"Gå bare i gang" (standard) = gå i gang og brug af retaineren; ser opgaven ud til at tage over 5 timer, sendes et overslag først. Ellers ønsker kunden et tidsoverslag, før vi går i gang.',
 			type: 'string',
 			initialValue: 'timer5',
 			options: {
 				list: [
-					{ title: 'Op til 5 timer', value: 'timer5' },
-					{ title: 'Op til 10 timer', value: 'timer10' },
+					{ title: 'Gå bare i gang', value: 'timer5' },
+					{ title: 'Op til 10 timer (ældre valg)', value: 'timer10' },
 					{ title: 'Giv et tidsoverslag først', value: 'estimat' },
 				],
 				layout: 'radio',
@@ -67,6 +71,50 @@ export default defineType({
 				],
 				layout: 'radio',
 			},
+		}),
+		// Køb af klippekort-timer fra dashboardet ("Køb flere timer", fra TUG
+		// 19/11-2026). Felterne vises kun på bestillinger. Sæt "Betalt", når
+		// fakturaen er betalt: så kommer timerne på kundens klippekort i dashboardet.
+		defineField({
+			name: 'orderStatus',
+			title: 'Bestilling af timer: status',
+			description:
+				'Vises i dashboardet under Kun Horizen → Klippekort. "Betalt" lægger timerne på kundens klippekort.',
+			type: 'string',
+			initialValue: 'bestilt',
+			hidden: ({ document }) => !document?.orderHours,
+			options: {
+				list: [
+					{ title: 'Bestilt (faktura ikke sendt)', value: 'bestilt' },
+					{ title: 'Faktura sendt', value: 'faktureret' },
+					{ title: 'Betalt (timerne er på klippekortet)', value: 'betalt' },
+					{ title: 'Annulleret', value: 'annulleret' },
+				],
+				layout: 'radio',
+			},
+		}),
+		defineField({
+			// "Få en SEO-aftale" / "Opgradér" fra dashboardet (20/11-2026): står ikke
+			// blandt kundens ad hoc-opgaver, men Horizen får en mail og kan følge op her
+			name: 'seoInterest',
+			title: 'SEO-interesse (pakke)',
+			type: 'string',
+			readOnly: true,
+			hidden: ({ document }) => !document?.seoInterest,
+		}),
+		defineField({
+			name: 'orderHours',
+			title: 'Bestilling af timer: antal',
+			type: 'number',
+			readOnly: true,
+			hidden: ({ document }) => !document?.orderHours,
+		}),
+		defineField({
+			name: 'orderPrice',
+			title: 'Bestilling af timer: pris ekskl. moms (kr.)',
+			type: 'number',
+			readOnly: true,
+			hidden: ({ document }) => !document?.orderHours,
 		}),
 		defineField({
 			name: 'estimateHours',
@@ -94,8 +142,10 @@ export default defineType({
 			priority: 'priority',
 			status: 'status',
 			receivedAt: 'receivedAt',
+			orderHours: 'orderHours',
+			orderStatus: 'orderStatus',
 		},
-		prepare({ title, fromName, priority, status, receivedAt }) {
+		prepare({ title, fromName, priority, status, receivedAt, orderHours, orderStatus }) {
 			const statusLabel: Record<string, string> = {
 				sendt: '● Sendt',
 				godkendt: '→ Godkendt',
@@ -111,7 +161,17 @@ export default defineType({
 			const date = receivedAt
 				? new Date(receivedAt).toLocaleDateString('da-DK')
 				: ''
-			const bits = [statusLabel[status] || status, prio[priority], date, fromName]
+			const orderLabel: Record<string, string> = {
+				bestilt: '● Bestilt',
+				faktureret: '◐ Faktura sendt',
+				betalt: '✓ Betalt',
+				annulleret: '⨯ Annulleret',
+			}
+			// Bestilling af timer: bestillingens status i stedet for opgavens
+			const first = orderHours
+				? orderLabel[orderStatus || 'bestilt']
+				: statusLabel[status] || status
+			const bits = [first, orderHours ? null : prio[priority], date, fromName]
 				.filter(Boolean)
 				.join(' · ')
 			return { title: title || '(intet emne)', subtitle: bits }

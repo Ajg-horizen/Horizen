@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, animate, useMotionValue, useInView } from "framer-motion";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import type {
   DesignTokensBlock as DesignTokensBlockData,
   DesignMaturityScore,
@@ -106,7 +106,7 @@ function AnimatedScore({
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
-      variants={fadeInUp}
+      variants={fadeIn}
       className="flex flex-col items-center gap-3"
     >
       <div className="relative h-28 w-28">
@@ -176,7 +176,7 @@ export default function DesignTokensBlock({
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         custom={0}
-        variants={fadeInUp}
+        variants={fadeIn}
         className="mb-14 max-w-3xl"
       >
         <ScrambleEyebrow>{data.eyebrow}</ScrambleEyebrow>
@@ -199,7 +199,7 @@ export default function DesignTokensBlock({
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           custom={0}
-          variants={fadeInUp}
+          variants={fadeIn}
           className="rounded-xl border border-foreground/[0.08] bg-[#0f0f0f] overflow-hidden shadow-2xl"
         >
           <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
@@ -293,7 +293,7 @@ export default function DesignTokensBlock({
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           custom={0.2}
-          variants={fadeInUp}
+          variants={fadeIn}
         >
           <div className="grid grid-cols-2 gap-8 max-w-sm mx-auto">
             {data.maturityScores.map((metric, i) => (

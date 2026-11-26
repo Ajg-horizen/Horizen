@@ -8,7 +8,7 @@ import { blogPosts } from "@/lib/blog-data";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import Container from "@/components/Container";
 
 /**
@@ -58,7 +58,7 @@ export default function BlogOverview() {
       <main className="min-h-screen bg-background pt-32">
         <Container size="site">
           {/* Header */}
-          <motion.div initial="hidden" animate="visible" custom={0} variants={fadeInUp}>
+          <motion.div initial="hidden" animate="visible" custom={0} variants={fadeIn}>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">
               Indsigt & Artikler
             </p>
@@ -75,7 +75,7 @@ export default function BlogOverview() {
             initial="hidden"
             animate="visible"
             custom={0.2}
-            variants={fadeInUp}
+            variants={fadeIn}
             className="mt-12 grid gap-10 lg:grid-cols-[280px_1fr] lg:gap-20"
           >
             {/* Søgning + kategorier */}

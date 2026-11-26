@@ -5,7 +5,8 @@ import {
 	sessionSecret,
 	verifySession,
 } from '@/lib/dashboard-session'
-import { clientQuestions, questionKey } from '@/app/dashboard/seo/data'
+import { questionKey } from '@/app/dashboard/seo/data'
+import { getClientQuestions } from '@/app/dashboard/seo/clientItems'
 
 export const runtime = 'nodejs'
 
@@ -58,7 +59,8 @@ export async function POST(request: NextRequest) {
 	}
 
 	const key = typeof body.key === 'string' ? body.key : ''
-	const question = clientQuestions.find((q) => questionKey(q) === key)
+	// data.ts + spørgsmål oprettet i Studio
+	const question = (await getClientQuestions()).find((q) => questionKey(q) === key)
 	if (!question) {
 		return NextResponse.json({ error: 'Ukendt spørgsmål' }, { status: 400 })
 	}

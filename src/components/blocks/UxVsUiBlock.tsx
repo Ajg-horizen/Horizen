@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import type { UxVsUiBlock as UxVsUiBlockData } from "@/lib/services";
 
 const LENS_SIZE = 80;
@@ -242,7 +242,7 @@ export default function UxVsUiBlock({
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         custom={0}
-        variants={fadeInUp}
+        variants={fadeIn}
         className="mb-14 max-w-2xl"
       >
         <ScrambleEyebrow>{data.eyebrow}</ScrambleEyebrow>
@@ -265,7 +265,7 @@ export default function UxVsUiBlock({
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          variants={fadeInUp}
+          variants={fadeIn}
           className="group flex flex-col gap-4 rounded-2xl border border-foreground/[0.08] bg-background p-5 transition-colors duration-500 hover:border-foreground/[0.18] md:p-6"
         >
           <div className="flex items-center justify-between">
@@ -298,7 +298,7 @@ export default function UxVsUiBlock({
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          variants={fadeInUp}
+          variants={fadeIn}
           className="group flex flex-col gap-4 rounded-2xl border border-foreground/[0.08] bg-background p-5 transition-colors duration-500 hover:border-foreground/[0.18] md:p-6"
         >
           <div className="flex items-center justify-between">

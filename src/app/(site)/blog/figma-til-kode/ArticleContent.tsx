@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import ArticleLayout from "@/components/ArticleLayout";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import { getPostBySlug, getRelatedArticles } from "@/lib/blog-data";
 
 function Content() {
@@ -46,7 +46,7 @@ function Content() {
         whileInView="visible"
         viewport={{ once: true }}
         custom={0}
-        variants={fadeInUp}
+        variants={fadeIn}
       >
         <p className="text-lg leading-relaxed text-muted-foreground">
           At gå fra et smukt Figma-design til en produktionsklar hjemmeside er
@@ -61,7 +61,7 @@ function Content() {
         whileInView="visible"
         viewport={{ once: true }}
         custom={1}
-        variants={fadeInUp}
+        variants={fadeIn}
         className="mt-12"
       >
         <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
@@ -90,7 +90,7 @@ function Content() {
         whileInView="visible"
         viewport={{ once: true }}
         custom={2}
-        variants={fadeInUp}
+        variants={fadeIn}
         className="mt-16"
       >
         <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
@@ -106,7 +106,7 @@ function Content() {
             whileInView="visible"
             viewport={{ once: true }}
             custom={i}
-            variants={fadeInUp}
+            variants={fadeIn}
             className="flex gap-5 rounded-2xl bg-accent/50 p-6"
           >
             <span className="text-2xl shrink-0">{step.icon}</span>
@@ -126,7 +126,7 @@ function Content() {
         whileInView="visible"
         viewport={{ once: true }}
         custom={2}
-        variants={fadeInUp}
+        variants={fadeIn}
         className="my-16 border-l-2 border-foreground pl-6 md:pl-8"
       >
         <p className="text-xl font-medium leading-snug tracking-tight md:text-2xl">
@@ -143,7 +143,7 @@ function Content() {
         whileInView="visible"
         viewport={{ once: true }}
         custom={3}
-        variants={fadeInUp}
+        variants={fadeIn}
       >
         <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
           Resultatet

@@ -10,8 +10,8 @@ export default function GradientCtaBlock({ data }: { data: GradientCtaBlockData 
     <Container as="section" size="site" noPadding className="px-4 py-16 md:px-6 lg:px-8">
       <InfiniteGrid className="rounded-2xl border border-white/[0.10] bg-gradient-to-b from-[#1e1e1e] via-foreground to-[#080808] md:rounded-3xl">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
           className="px-6 py-14 text-center md:px-10 md:py-18"

@@ -84,7 +84,7 @@ export const setupSections: SetupSection[] = [
 			{
 				id: 'horizen-mail',
 				title: 'Mails fra Horizen (Beskeder og spørgsmål)',
-				how: 'Sæt HORIZEN_RESEND_API_KEY (Horizens egen Resend-nøgle, hvor horizen.dk er verificeret) i Vercel Production. Kører med node scripts/setup-dashboard-env.mjs. Udfyld clientMessageDefaults i data.ts (kundens navn, mail, anmeldelseslink og SMS-hilsen).',
+				how: 'Sæt HORIZEN_RESEND_API_KEY (Horizens egen Resend-nøgle, hvor horizen.dk er verificeret) i Vercel Production. Kører med node scripts/setup-dashboard-env.mjs. Udfyld clientRecipients i data.ts med kundens faste mailadresser (kun dem kan der sendes til, så en mail aldrig ryger til en forkert kunde) og clientMessageDefaults (anmeldelseslink og SMS-hilsen).',
 				check: 'En besked fra fanen Beskeder lander hos modtageren fra din horizen.dk-adresse, og du får en kopi.',
 				auto: 'horizenMail',
 			},
@@ -204,9 +204,9 @@ export const setupSections: SetupSection[] = [
 			},
 			{
 				id: 'ga4-data',
-				title: 'Besøg i dashboardet (GA4_PROPERTY_ID)',
-				how: 'Sæt GA4_PROPERTY_ID til ejendommens ID (et tal: GA4 → Administrator → Ejendomsindstillinger) i Vercel Production. Slå Google Analytics Data API til i samme Google Cloud-projekt som Search Console, og kør node scripts/get-refresh-token.mjs igen, så Google-adgangen også dækker GA4 (analytics.readonly). Opdatér GOOGLE_OAUTH_REFRESH_TOKEN, og udrul igen.',
-				check: 'Performance → Besøg viser sider, tid og kanaler.',
+				title: 'Historik fra Google Analytics i fanen Besøg (GA4_PROPERTY_ID)',
+				how: 'Fanen Besøg tæller selv alle besøg uden cookies fra udrulningen. Vil du have historikken fra før med: sæt GA4_PROPERTY_ID til ejendommens ID (et tal: GA4 → Administrator → Ejendomsindstillinger) i Vercel Production, slå Google Analytics Data API til i samme Google Cloud-projekt som Search Console, og kør node scripts/get-refresh-token.mjs --vercel <klient-JSON>, så Google-adgangen også dækker GA4. Udrul igen bagefter.',
+				check: 'Performance → Besøg viser også måneder fra før tællingen startede.',
 				auto: 'ga4Data',
 				optional: true,
 			},
@@ -306,9 +306,15 @@ export const setupSections: SetupSection[] = [
 		items: [
 			{
 				id: 'bing',
-				title: 'Bing Webmaster Tools',
-				how: 'Importér sitet fra Search Console og indsend sitemap. ChatGPT-søgning og Copilot bygger i høj grad på Bings indeks.',
-				check: 'Sitet står som verificeret i Bing.',
+				title: 'Bing Webmaster Tools oprettet og sitemap indsendt',
+				how: 'bing.com/webmasters → tilføj sitet med "Importér fra Google Search Console". Importen tager IKKE sitemappet med, så bagefter: Sitemaps → Submit sitemap → https://kunde.dk/sitemap.xml. Bing driver også DuckDuckGo, Yahoo og Copilot, og ChatGPT-søgning bygger i høj grad på Bings indeks.',
+				check: 'Sitet står i Bing, og sitemappet har status "Processing" eller "Success".',
+			},
+			{
+				id: 'bing-indekseret',
+				title: 'Bing har indekseret sitet',
+				how: 'Ca. en uge efter: URL Inspection på forsiden i Bing Webmaster Tools, og søg på firmanavnet på bing.com. Ved en relancering: tjek, at Bing ikke stadig viser de gamle adresser, og at de gamle sender videre (308) til de nye. Brug ikke "site:"-søgning på Bing, den viser forkerte resultater for nye domæner.',
+				check: 'Forsiden står som "Indexed successfully", og firmanavnet giver sitet øverst på Bing.',
 			},
 			{
 				id: 'ai-crawlere',
@@ -415,6 +421,12 @@ export const setupSections: SetupSection[] = [
 				title: 'Kunden har fået adgang',
 				how: 'Send kunden adressen /dashboard/seo, brugernavn og kode.',
 				check: 'Kunden har logget ind og set fanerne.',
+			},
+			{
+				id: 'dashboard-klippekort',
+				title: 'Klippekort: navn, logo og pris',
+				how: 'Udfyld brand i data.ts (kundens navn og domæne). Lav logoet til mails med node scripts/make-email-logo.mjs <logo.svg>, og sæt emailLogo og størrelsen. Tjek hourPackages.pricePerHour (900 kr. som standard) og hourModel (retainer eller klippekort). HORIZEN_RESEND_API_KEY sættes af setup-dashboard-env.mjs.',
+				check: 'Testmailene fra npx tsx --env-file=.env.local scripts/test-klippekort-mails.ts viser kundens logo og den rigtige pris. Kun til Horizen.',
 			},
 		],
 	},

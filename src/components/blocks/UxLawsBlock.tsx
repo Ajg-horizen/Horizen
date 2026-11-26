@@ -9,7 +9,7 @@
 import { motion } from "framer-motion";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import type { UxLawsBlock as UxLawsBlockData, UxLaw } from "@/lib/services";
 
 function LawCard({ law, index }: { law: UxLaw; index: number }) {
@@ -19,7 +19,7 @@ function LawCard({ law, index }: { law: UxLaw; index: number }) {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-50px" }}
-      variants={fadeInUp}
+      variants={fadeIn}
       className="group relative flex flex-col gap-4 rounded-2xl border border-foreground/[0.08] bg-background p-6 transition-colors duration-500 hover:border-foreground/[0.18] md:p-8"
     >
       <div className="flex items-center justify-between">
@@ -73,7 +73,7 @@ export default function UxLawsBlock({
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         custom={0}
-        variants={fadeInUp}
+        variants={fadeIn}
         className="mb-14 max-w-2xl"
       >
         <ScrambleEyebrow>{data.eyebrow}</ScrambleEyebrow>

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import type { MonthlyWorkBlock as MonthlyWorkBlockData } from "@/lib/services";
 
 export default function MonthlyWorkBlock({ id, data }: { id?: string; data: MonthlyWorkBlockData }) {
@@ -17,7 +17,7 @@ export default function MonthlyWorkBlock({ id, data }: { id?: string; data: Mont
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           custom={0}
-          variants={fadeInUp}
+          variants={fadeIn}
         >
           <ScrambleEyebrow>{data.eyebrow}</ScrambleEyebrow>
           <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
@@ -35,7 +35,7 @@ export default function MonthlyWorkBlock({ id, data }: { id?: string; data: Mont
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-30px" }}
-              variants={fadeInUp}
+              variants={fadeIn}
               className="mt-6 text-sm font-medium text-muted"
             >
               {data.note}
@@ -53,7 +53,7 @@ export default function MonthlyWorkBlock({ id, data }: { id?: string; data: Mont
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-30px" }}
-                variants={fadeInUp}
+                variants={fadeIn}
                 className="flex flex-col gap-3 overflow-hidden rounded-xl border border-foreground/[0.06] p-5 transition-colors duration-300 hover:border-foreground/[0.12] hover:bg-foreground/[0.02]"
               >
                 <div className="flex items-center justify-between gap-3">

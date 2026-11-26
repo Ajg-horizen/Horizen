@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DEFAULT_OG_IMAGE } from "@/lib/og";
 import { Inter, Playfair_Display } from "next/font/google";
 import ScrollToTop from "@/components/ScrollToTop";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -37,21 +38,14 @@ export const metadata: Metadata = {
     siteName: "Horizen",
     locale: "da_DK",
     type: "website",
-    images: [
-      {
-        url: "/graphics/Hero-image-branding-services.webp",
-        width: 1200,
-        height: 630,
-        alt: "Horizen",
-      },
-    ],
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: "Horizen, digitalt design bureau",
     description:
       "Digitalt design bureau med 8+ års erfaring. Hjemmesider, branding, UI/UX og webudvikling drevet af erfaring og forstærket af AI.",
-    images: ["/graphics/Hero-image-branding-services.webp"],
+    images: [DEFAULT_OG_IMAGE.url],
   },
 };
 
@@ -138,7 +132,9 @@ const organizationSchema = {
     const tp = testimonials.filter((t) => t.source === "trustpilot");
     return {
       "@type": "AggregateRating",
-      ratingValue: (tp.reduce((sum, t) => sum + t.rating, 0) / tp.length).toFixed(1),
+      ratingValue: (
+        tp.reduce((sum, t) => sum + t.rating, 0) / tp.length
+      ).toFixed(1),
       reviewCount: tp.length,
       bestRating: 5,
       worstRating: 1,
@@ -182,7 +178,10 @@ export default function RootLayout({
   const isProduction = process.env.NODE_ENV === "production";
 
   return (
-    <html lang="da" className={`${inter.variable} ${playfair.variable} h-full antialiased`}>
+    <html
+      lang="da"
+      className={`${inter.variable} ${playfair.variable} h-full antialiased`}
+    >
       <body className="min-h-full flex flex-col">
         <a href="#main" className="skip-link">
           Spring til indhold
@@ -195,7 +194,9 @@ export default function RootLayout({
         <script
           id="schema-organization"
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
         />
         <script
           id="schema-website"
