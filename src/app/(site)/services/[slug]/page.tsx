@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DEFAULT_OG_IMAGE } from "@/lib/og";
 import { notFound } from "next/navigation";
 import { getService, getAllServiceSlugs } from "@/lib/services";
 import { getServiceContent } from "@/sanity/service-content";
@@ -16,13 +17,16 @@ async function resolveService(slug: string) {
   const content = await getServiceContent(slug);
   const source = content ?? getService(slug);
   if (!source) return null;
-  return { content, metadata: source.metadata, heroImage: getHeroImage(source.blocks) };
+  return {
+    content,
+    metadata: source.metadata,
+    heroImage: getHeroImage(source.blocks),
+  };
 }
 
 function getHeroImage(blocks: readonly { type: string }[]): string | undefined {
   const heroBlock = blocks.find((b) => b.type === "hero") as
-    | { type: "hero"; image?: { src?: string } }
-    | undefined;
+    { type: "hero"; image?: { src?: string } } | undefined;
   return heroBlock?.image?.src;
 }
 
@@ -34,8 +38,11 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = await resolveService(slug);
   if (!service) return {};
-  const heroImage =
-    service.heroImage ?? "/graphics/Hero-image-branding-services.webp";
+  const heroImage = service.heroImage ?? DEFAULT_OG_IMAGE.url;
+  // AVIF vises ikke af Facebook/LinkedIn; så bruges standardbilledet.
+  const shareImage = heroImage.endsWith(".avif")
+    ? DEFAULT_OG_IMAGE.url
+    : heroImage;
   const { title, description } = service.metadata;
   return {
     title,
@@ -50,20 +57,13 @@ export async function generateMetadata({
       siteName: "Horizen",
       locale: "da_DK",
       type: "website",
-      images: [
-        {
-          url: heroImage,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
+      images: [{ url: shareImage, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [heroImage],
+      images: [shareImage],
     },
   };
 }

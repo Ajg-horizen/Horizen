@@ -46,7 +46,7 @@ const navigation: Record<string, FooterLink[]> = {
     { name: "AI Search", href: "/services/ai-search" },
   ],
   virksomhed: [
-    { name: "Cases", href: "/cases", disabled: true },
+    { name: "Case studies", href: "/cases" },
     { name: "Blog", href: "/blog" },
     { name: "Godt formål", href: "/godt-formaal" },
     { name: "Kontakt", href: "/kontakt" },

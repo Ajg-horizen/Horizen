@@ -30,8 +30,6 @@ export const metadata: Metadata = {
     images: [
       {
         url: ogImage,
-        width: 1200,
-        height: 630,
         alt: "Hvad er SEO? Byg fundamentet i den rigtige rækkefølge",
       },
     ],

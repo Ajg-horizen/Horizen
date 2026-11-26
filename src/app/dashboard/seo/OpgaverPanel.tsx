@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { LuCheck as Check, LuClock as Clock, LuZap as Zap } from 'react-icons/lu'
 import { accent, ink, muted, white, withAlpha } from './_tokens'
 import { StructuredText } from './StructuredText'
 import type {
@@ -64,17 +65,127 @@ const PRIORITY_META: Record<
 	lav: { label: 'Lav', color: withAlpha(ink, 0.4), rank: 2 },
 }
 
-const HANDLING_META: Record<InboxHandling, { label: string }> = {
-	timer5: { label: 'Op til 5 timer' },
-	timer10: { label: 'Op til 10 timer' },
-	estimat: { label: 'Ønsker tidsoverslag' },
+/**
+ * Håndtering. "Gå bare i gang" (timer5) er standard: vi går i gang og bruger
+ * af retaineren, og kun hvis opgaven ser ud til at tage over 5 timer, vender
+ * vi tilbage med et overslag. timer10 vælges ikke længere, men ældre opgaver
+ * kan have den, så den skal stadig kunne vises.
+ */
+/** Farver pr. håndtering: grøn = vi går i gang, blå = vi venter på jeres ok. */
+const GO_TONE = {
+	bg: 'var(--st-done-bg)',
+	text: 'var(--st-done-text)',
+	border: 'var(--st-done-border)',
+	dot: 'var(--st-done-dot)',
+}
+const WAIT_TONE = {
+	bg: 'var(--st-info-bg)',
+	text: 'var(--st-info-text)',
+	border: 'var(--st-info-border)',
+	dot: 'var(--st-info-dot)',
 }
 
-const HANDLING_CHOICES: { value: InboxHandling; label: string }[] = [
-	{ value: 'timer5', label: 'Op til 5 timer' },
-	{ value: 'timer10', label: 'Op til 10 timer' },
-	{ value: 'estimat', label: 'Giv et tidsoverslag' },
+const HANDLING_META: Record<
+	InboxHandling,
+	{ label: string; tone: typeof GO_TONE; Icon: typeof Zap }
+> = {
+	timer5: { label: 'Vi går bare i gang', tone: GO_TONE, Icon: Zap },
+	timer10: { label: 'Vi går bare i gang', tone: GO_TONE, Icon: Zap },
+	// Neutral formulering: kortet kan også være godkendt eller løst.
+	estimat: { label: 'Tidsoverslag først', tone: WAIT_TONE, Icon: Clock },
+}
+
+const HANDLING_CHOICES: {
+	value: InboxHandling
+	title: string
+	text: string
+	badge?: string
+}[] = [
+	{
+		value: 'timer5',
+		title: 'Gå bare i gang',
+		// Teksten bygges i GoAheadText ud fra månedens timer.
+		text: '',
+		badge: 'Standard',
+	},
+	{
+		value: 'estimat',
+		title: 'Giv et tidsoverslag først',
+		text: 'Vi går ikke i gang endnu. I får et overslag over timerne, og vi starter først, når I har sagt ok.',
+	},
 ]
+
+/** Månedens retainer-timer (fra data.ts: retainerHours + monthlyUsage). */
+export type RetainerHours = {
+	total: number
+	used: number
+	monthName: string
+	/** 'klippekort' = købte timer uden månedsramme (fra dec. 2026) */
+	kind?: 'retainer' | 'klippekort'
+}
+
+const fmtHours = (n: number) => n.toLocaleString('da-DK', { maximumFractionDigits: 1 })
+
+/**
+ * Teksten i "Gå bare i gang": grænsen er kundens månedlige timer, og kunden
+ * ser, hvor mange der er tilbage, før de vælger. Tallene er kun rigtige, når
+ * monthlyUsage i data.ts er opdateret.
+ */
+function GoAheadText({ hours }: { hours?: RetainerHours }) {
+	if (!hours) {
+		return (
+			<>
+				Vi går i gang med det samme og bruger af jeres timer. Bliver opgaven
+				stor, hører I fra os først.
+			</>
+		)
+	}
+	const left = Math.max(0, hours.total - hours.used)
+	if (hours.kind === 'klippekort') {
+		return left > 0 ? (
+			<>
+				Vi går i gang med det samme og trækker timerne fra klippekortet.{' '}
+				<strong className="font-semibold" style={{ color: ink }}>
+					I har {fmtHours(left)} {left === 1 ? 'time' : 'timer'} tilbage på klippekortet.
+				</strong>{' '}
+				Bliver opgaven større end det, hører I fra os først.
+			</>
+		) : (
+			<>
+				<strong className="font-semibold" style={{ color: ink }}>
+					Der er ingen timer på klippekortet lige nu.
+				</strong>{' '}
+				Vi vender tilbage med et tidsoverslag, før vi går i gang.
+			</>
+		)
+	}
+	return (
+		<>
+			Vi går i gang med det samme og bruger af jeres timer.{' '}
+			<strong className="font-semibold" style={{ color: ink }}>
+				{left > 0
+					? `I har ${fmtHours(left)} af ${fmtHours(hours.total)} timer tilbage i ${hours.monthName}.`
+					: `Alle ${fmtHours(hours.total)} timer i ${hours.monthName} er brugt.`}
+			</strong>{' '}
+			Bliver opgaven større end jeres {fmtHours(hours.total)} månedlige timer,
+			hører I fra os først.
+		</>
+	)
+}
+
+/** Lille farvet mærke på opgavekortet, så man straks kan se håndteringen. */
+function HandlingTag({ handling }: { handling: InboxHandling }) {
+	const { label, tone, Icon } = HANDLING_META[handling] ?? HANDLING_META.timer5
+	return (
+		<span
+			className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium"
+			style={{ backgroundColor: tone.bg, color: tone.text, border: `1px solid ${tone.border}` }}
+		>
+			<Icon aria-hidden className="h-3 w-3" strokeWidth={2.25} />
+			{label}
+		</span>
+	)
+}
 
 function StatusBadge({ status }: { status: InboxStatus }) {
 	const m = STATUS_META[status] ?? STATUS_META.sendt
@@ -133,11 +244,7 @@ function TaskCard({ item }: { item: InboxItem }) {
 
 			<div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
 				<PriorityTag priority={item.priority} />
-				{item.handling && (
-					<span className="text-xs" style={{ color: muted }}>
-						{HANDLING_META[item.handling].label}
-					</span>
-				)}
+				{item.handling && <HandlingTag handling={item.handling} />}
 				{typeof item.estimateHours === 'number' && (
 					<span className="text-xs" style={{ color: muted }}>
 						Estimat: {item.estimateHours} t
@@ -247,12 +354,14 @@ function DraftCard({
 	onChange,
 	onRemove,
 	autoFocus,
+	hours,
 }: {
 	draft: Draft
 	number: number
 	onChange: (patch: Partial<Draft>) => void
 	onRemove: () => void
 	autoFocus: boolean
+	hours?: RetainerHours
 }) {
 	const messageRef = useRef<HTMLTextAreaElement>(null)
 	const subjectRef = useRef<HTMLInputElement>(null)
@@ -381,20 +490,91 @@ function DraftCard({
 				})}
 			</div>
 
-			{/* Timeramme — hvor mange timer må vi bruge før vi spørger */}
-			<div className="mt-2 flex flex-wrap items-center gap-1.5">
-				<span className="mr-1 text-xs font-medium" style={{ color: muted }}>
-					Timeramme
+			{/* Håndtering: "Gå bare i gang" er valgt på forhånd */}
+			<div className="mt-5">
+				<span className="text-xs font-medium" style={{ color: muted }}>
+					Hvordan skal vi gribe den an?
 				</span>
-				{HANDLING_CHOICES.map((h) => (
-					<ChoicePill
-						key={h.value}
-						active={draft.handling === h.value}
-						onClick={() => onChange({ handling: h.value })}
-					>
-						{h.label}
-					</ChoicePill>
-				))}
+				<div
+					className="mt-2 grid gap-3 sm:grid-cols-2"
+					role="radiogroup"
+					aria-label="Hvordan skal vi gribe den an?"
+				>
+					{HANDLING_CHOICES.map((h) => {
+						const active = draft.handling === h.value
+						const { tone, Icon } = HANDLING_META[h.value]
+						return (
+							<button
+								key={h.value}
+								type="button"
+								role="radio"
+								aria-checked={active}
+								onClick={() => onChange({ handling: h.value })}
+								className="relative flex items-start gap-3 rounded-2xl p-4 text-left transition-colors"
+								style={
+									active
+										? {
+												backgroundColor: tone.bg,
+												border: `1.5px solid ${tone.dot}`,
+											}
+										: {
+												backgroundColor: 'transparent',
+												border: `1.5px solid ${withAlpha(ink, 0.12)}`,
+											}
+								}
+							>
+								<span
+									aria-hidden
+									className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+									style={{
+										backgroundColor: active ? tone.dot : withAlpha(ink, 0.06),
+										color: active ? white : withAlpha(ink, 0.5),
+									}}
+								>
+									<Icon className="h-4 w-4" strokeWidth={2.25} />
+								</span>
+								<span className="min-w-0 flex-1">
+									<span className="flex flex-wrap items-center gap-2">
+										<span
+											className="text-sm font-semibold"
+											style={{ color: active ? tone.text : ink }}
+										>
+											{h.title}
+										</span>
+										{h.badge && (
+											<span
+												className="rounded-full px-2 py-0.5 text-[0.65rem] font-medium tracking-wide uppercase"
+												style={{
+													backgroundColor: withAlpha(ink, 0.06),
+													color: withAlpha(ink, 0.6),
+												}}
+											>
+												{h.badge}
+											</span>
+										)}
+									</span>
+									<span
+										className="mt-1 block text-xs leading-relaxed"
+										style={{ color: muted }}
+									>
+										{h.value === 'timer5' ? <GoAheadText hours={hours} /> : h.text}
+									</span>
+								</span>
+								<span
+									aria-hidden
+									className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full"
+									style={
+										active
+											? { backgroundColor: tone.dot, color: white }
+											: { border: `1.5px solid ${withAlpha(ink, 0.2)}` }
+									}
+								>
+									{active && <Check className="h-3 w-3" strokeWidth={3} />}
+								</span>
+							</button>
+						)
+					})}
+				</div>
 			</div>
 		</div>
 	)
@@ -419,10 +599,13 @@ function takeNewTaskSignal() {
 export default function OpgaverPanel({
 	items: initial,
 	signedInAs,
+	hours,
 }: {
 	items: InboxItem[]
 	/** Navnet fra Sanity-login. Er det kendt, spørges der ikke om afsender. */
 	signedInAs?: string
+	/** Månedens retainer-timer; vises i "Gå bare i gang". Uden retainer: udelades. */
+	hours?: RetainerHours
 }) {
 	const [items, setItems] = useState<InboxItem[]>(initial)
 	const [drafts, setDrafts] = useState<Draft[]>([])
@@ -531,8 +714,9 @@ export default function OpgaverPanel({
 					style={{ color: muted }}
 				>
 					Løbende ønsker og opgaver kan skrives her — SEO, indhold, nye sider,
-					grafik eller andre tilføjelser til sitet. Vælg en prioritet og en
-					timeramme, så tager vi fat.
+					grafik eller andre tilføjelser til sitet. Som udgangspunkt går vi bare
+					i gang og bruger af jeres timer. Fylder en opgave mere end jeres
+					månedlige timer, spørger vi først.
 				</p>
 			</div>
 
@@ -573,7 +757,7 @@ export default function OpgaverPanel({
 						Nyt
 					</span>
 					I behøver ikke sende én opgave ad gangen. Tilføj alle de opgaver, I har,
-					og send dem samlet. Hver opgave får sin egen prioritet og timeramme.
+					og send dem samlet. Hver opgave får sin egen prioritet.
 				</p>
 
 				{sentCount > 0 && (
@@ -599,6 +783,7 @@ export default function OpgaverPanel({
 							onChange={(patch) => update(d.key, patch)}
 							onRemove={() => setDrafts((prev) => prev.filter((x) => x.key !== d.key))}
 							autoFocus={focusKey === d.key}
+							hours={hours}
 						/>
 					))}
 				</div>

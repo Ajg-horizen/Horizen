@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { DEFAULT_OG_IMAGE } from "@/lib/og";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Container from "@/components/Container";
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
     siteName: "Horizen",
     locale: "da_DK",
     type: "website",
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary",
@@ -401,7 +403,9 @@ export default function HandelsbetingelserPage() {
           <h1 className="text-4xl font-semibold tracking-tight md:text-5xl">
             Handelsbetingelser
           </h1>
-          <p className="mt-4 text-sm text-muted">Senest opdateret: 7. november 2026</p>
+          <p className="mt-4 text-sm text-muted">
+            Senest opdateret: 7. november 2026
+          </p>
         </header>
 
         <div className="mt-12 space-y-12">

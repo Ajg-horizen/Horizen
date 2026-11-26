@@ -5,7 +5,7 @@ import { motion, useInView, useReducedMotion } from "framer-motion";
 import { SparklesIcon } from "lucide-react";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import type { AiCitationBlock as AiCitationBlockData } from "@/lib/services";
 
 type Phase = "typingQ" | "thinking" | "typingA" | "done";
@@ -201,7 +201,7 @@ export default function AiCitationBlock({ id, data }: { id?: string; data: AiCit
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           custom={0}
-          variants={fadeInUp}
+          variants={fadeIn}
         >
           <ScrambleEyebrow>{data.eyebrow}</ScrambleEyebrow>
           <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
@@ -221,7 +221,7 @@ export default function AiCitationBlock({ id, data }: { id?: string; data: AiCit
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
           custom={1}
-          variants={fadeInUp}
+          variants={fadeIn}
           className="rounded-2xl bg-[#0f0f0f] p-6 text-[#f5f5f0] sm:p-8"
         >
           <AiChatDemo
@@ -246,7 +246,7 @@ export default function AiCitationBlock({ id, data }: { id?: string; data: AiCit
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-30px" }}
-                    variants={fadeInUp}
+                    variants={fadeIn}
                     className="flex items-center gap-3"
                   >
                     <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-white/[0.06]">

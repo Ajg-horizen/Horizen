@@ -9,8 +9,12 @@ import { landingSource } from '@/lib/trafficSource'
  * Anonym måling til SEO-dashboardet (se src/lib/siteEvents.ts):
  *   1. Besøg fra en AI-tjeneste (ChatGPT, Perplexity osv.) tælles én gang, når
  *      besøgeren lander. Klik videre har sitet selv som referrer og tælles ikke.
- *   2. Klik på telefonnumre (tel:) og mailadresser (mailto:) overalt på sitet,
- *      med én lytter, så nye knapper og moduler kommer med automatisk. Hvert
+ *   2. Klik på telefonnumre (tel:), mailadresser (mailto:), "Book tid"-knapper
+ *      (alt med data-cal-link eller et cal.com-link) og knapper/links til
+ *      kontaktsiden ("Start et projekt", "Kontakt", "Book en gratis audit" osv.)
+ *      overalt på sitet, med én lytter, så nye knapper og moduler kommer med
+ *      automatisk. Gennemførte bookinger meldes fra CalEmbed.tsx med
+ *      hændelsen BOOKED_EVENT og sendes herfra. Hvert
  *      klik får besøgets kilde med (Google Ads, organisk osv.), aflæst på
  *      landingssiden og husket i hukommelsen (src/lib/trafficSource.ts).
  *   3. Sidevisninger og aktiv tid pr. side (src/lib/pageStats.ts): én visning
@@ -22,6 +26,24 @@ import { landingSource } from '@/lib/trafficSource'
  * GA4/Google Ads kører via GTM efter samtykke (ConsentGtm.tsx), så her sendes
  * kun til dashboardets egne tællere.
  */
+/** Booking-knapperne åbner Cal.com-popup'en via data-cal-link (CalEmbed.tsx). */
+const BOOKING = '[data-cal-link], a[href^="https://cal.com/"], a[href^="https://app.cal.com/"]'
+/** Knapper og links til kontaktsiden (relative og fulde adresser). */
+const CONTACT =
+	'a[href="/kontakt"], a[href^="/kontakt?"], a[href^="/kontakt#"], a[href^="https://horizen.dk/kontakt"], a[href^="https://www.horizen.dk/kontakt"]'
+/** Sendes på window fra CalEmbed.tsx, når en booking er gennemført i popup'en. */
+export const BOOKED_EVENT = 'horizen:booked'
+
+type ClickType = 'phone' | 'email' | 'booking' | 'contact'
+
+function clickType(el: Element): ClickType {
+	const href = el.getAttribute('href') ?? ''
+	if (href.startsWith('tel:')) return 'phone'
+	if (href.startsWith('mailto:')) return 'email'
+	if (el.matches(BOOKING)) return 'booking'
+	return 'contact'
+}
+
 export default function SiteTracking() {
 	const pathname = usePathname()
 	const landed = useRef(false)
@@ -79,21 +101,33 @@ export default function SiteTracking() {
 	useEffect(() => {
 		function onClick(e: MouseEvent) {
 			const link = (e.target as Element | null)?.closest?.(
-				'a[href^="tel:"], a[href^="mailto:"]',
+				`a[href^="tel:"], a[href^="mailto:"], ${BOOKING}, ${CONTACT}`,
 			)
 			if (!link) return
-			const type = link.getAttribute('href')!.startsWith('tel:')
-				? 'phone'
-				: 'email'
+			const type = clickType(link)
 			const path = window.location.pathname
 			send(
 				'/api/lead',
 				JSON.stringify({ type, path, source: landingSource() }),
 			)
 		}
+		// Gennemført booking i Cal.com-popup'en (CalEmbed.tsx)
+		function onBooked() {
+			send(
+				'/api/lead',
+				JSON.stringify({
+					type: 'booked',
+					path: window.location.pathname,
+					source: landingSource(),
+				}),
+			)
+		}
 		document.addEventListener('click', onClick, { capture: true })
-		return () =>
+		window.addEventListener(BOOKED_EVENT, onBooked)
+		return () => {
 			document.removeEventListener('click', onClick, { capture: true })
+			window.removeEventListener(BOOKED_EVENT, onBooked)
+		}
 	}, [])
 
 	return null

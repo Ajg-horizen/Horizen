@@ -85,16 +85,69 @@ function MonthEntries({ entries }: { entries: ActivityEntry[] }) {
 								)}
 							</div>
 							<p
-								className="mt-1.5 text-sm leading-relaxed"
+								className="mt-1.5 text-sm leading-relaxed whitespace-pre-line"
 								style={{ color: muted }}
 							>
-								{entry.description}
+								{withBold(entry.description)}
 							</p>
+							{entry.notice && <Notice text={entry.notice} />}
 						</div>
 					</li>
 				)
 			})}
 		</ol>
+	)
+}
+
+/** Gul boks på et indslag (`notice`): første linje er overskriften, resten brødtekst. */
+/**
+ * Beskrivelser er ren tekst, men **dobbelte stjerner** markerer det vigtige
+ * (højst én kort markering pr. indslag), og ++dobbelte plusser++ markerer en
+ * forbedring (fx et bedre tal), som vises grønt. Linjeskift (\n) vises som
+ * afsnit, fx i mødereferater. Fra Miljøkontoret (Andreas 18/10-2026).
+ */
+function withBold(text: string) {
+	return text.split(/(\*\*.+?\*\*|\+\+.+?\+\+)/g).map((part, i) => {
+		if (part.startsWith('**') && part.endsWith('**'))
+			return (
+				<strong key={i} className="font-medium">
+					{part.slice(2, -2)}
+				</strong>
+			)
+		if (part.startsWith('++') && part.endsWith('++'))
+			return (
+				<strong key={i} className="font-medium" style={{ color: 'var(--st-done-text)' }}>
+					{part.slice(2, -2)}
+				</strong>
+			)
+		return part
+	})
+}
+
+function Notice({ text }: { text: string }) {
+	const [heading, ...rest] = text.split('\n')
+	return (
+		<div
+			role="note"
+			className="mt-3 rounded-xl border px-4 py-3 text-sm leading-relaxed"
+			style={{
+				backgroundColor: 'var(--st-partial-bg)',
+				borderColor: 'var(--st-partial-border)',
+				color: 'var(--st-partial-text)',
+			}}
+		>
+			<p className="flex items-center gap-2 font-semibold">
+				<span
+					aria-hidden
+					className="h-2 w-2 shrink-0 rounded-full"
+					style={{ backgroundColor: 'var(--st-partial-dot)' }}
+				/>
+				{heading}
+			</p>
+			{rest.length > 0 && (
+				<p className="mt-1 whitespace-pre-line">{withBold(rest.join('\n'))}</p>
+			)}
+		</div>
 	)
 }
 

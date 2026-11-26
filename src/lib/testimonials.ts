@@ -10,6 +10,18 @@
  * komponenter.
  */
 
+/**
+ * Horizens samlede bedømmelse, som Trustpilot selv viser den.
+ * Tjek og opdatér tallene på profilen, når der kommer nye anmeldelser.
+ */
+export const TRUSTPILOT = {
+  url: "https://dk.trustpilot.com/review/horizen.dk",
+  score: 4.5,
+  count: 13,
+  label: "Fremragende",
+  checkedAt: "2026-11-26",
+} as const;
+
 export type TestimonialSource = "trustpilot" | "direct" | "interview";
 
 export type Testimonial = {
@@ -130,9 +142,43 @@ export const testimonials: Testimonial[] = [
   },
 ];
 
+/**
+ * Anmeldelser, der kun vises på den enkelte case-side (ikke i forsidens
+ * slider, på service-siderne eller i sitets strukturerede data).
+ */
+export const caseOnlyTestimonials: Testimonial[] = [
+  {
+    id: "ann-sofie-hos-dam",
+    quote:
+      "Der er styr på det! Horizen er effektive og åbne for idéer. Det er tydeligt at mærke, at de har masser af passion og erfaring.",
+    rating: 5,
+    author: {
+      name: "Ann-Sofie Dam",
+      role: "Kropsterapeut",
+      company: "Hos Dam",
+      website: "https://www.hosdam.dk",
+      photo: "/Clients/ann-sofie-hos-dam.webp",
+    },
+    source: "trustpilot",
+  },
+  {
+    id: "ramin-acp",
+    quote: "God og hurtig service. Mega glad for min nye hjemmeside.",
+    rating: 5,
+    author: {
+      name: "Ramin Agerli",
+      company: "ACP",
+      website: "https://www.ac-p.dk",
+    },
+    source: "trustpilot",
+  },
+];
+
 /** Hent testimonial efter id — throw hvis ikke fundet, så build-time catches det. */
 export function getTestimonial(id: string): Testimonial {
-  const t = testimonials.find((x) => x.id === id);
+  const t = [...testimonials, ...caseOnlyTestimonials].find(
+    (x) => x.id === id,
+  );
   if (!t) throw new Error(`Testimonial not found: ${id}`);
   return t;
 }

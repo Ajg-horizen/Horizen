@@ -142,9 +142,14 @@ export default function VisitsTab({
 }) {
 	const [range, setRange] = useState<Ga4Range>('thisMonth')
 
+	// Dagene mellem Google Analytics og sitets egen tæller, der er udeladt (data.ts → ga4Until)
+	const gap =
+		visits.status === 'ok' && visits.ownSince && visits.gaUntil
+			? Math.round((Date.parse(visits.ownSince) - Date.parse(visits.gaUntil)) / 86_400_000) - 1
+			: 0
 	const source =
 		visits.status === 'ok' && visits.ownSince
-			? `Tallene tælles af sitet selv uden cookies, så alle besøg kommer med, også dem der siger nej til cookies. Tællingen startede ${longDate(visits.ownSince)}${visits.gaUntil ? '; før den dag kommer tallene fra Google Analytics, som kun så dem med samtykke' : ''}.`
+			? `Tallene tælles af sitet selv uden cookies, så alle besøg kommer med, også dem der siger nej til cookies. Tællingen startede ${longDate(visits.ownSince)}${visits.gaUntil ? (gap > 0 ? `; til og med ${longDate(visits.gaUntil)} kommer tallene fra Google Analytics, som kun så dem med samtykke. ${gap === 1 ? 'Dagen' : `De ${gap} dage`} imellem er udeladt, fordi tallene ikke var retvisende` : '; før den dag kommer tallene fra Google Analytics, som kun så dem med samtykke') : ''}.`
 			: 'Tallene kommer fra Google Analytics, som kun ser dem, der har sagt ja til cookies, indtil sitets egen tæller er i gang.'
 
 	return (

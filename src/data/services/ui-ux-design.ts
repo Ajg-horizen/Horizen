@@ -102,7 +102,6 @@ export const uiUxDesign: ServicePage = {
             "Bruger-interviews, konkurrentanalyse, eksisterende data. Vi finder ud af hvem brugeren er, hvad de prøver at opnå, og hvor de bliver bremset i dag.",
           icon: SearchIcon,
           accent: "#00b67a",
-          link: { href: "/marketing/seo", label: "Bruger-research" },
         },
         {
           step: "02",

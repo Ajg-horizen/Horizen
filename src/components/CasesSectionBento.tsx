@@ -1,146 +1,35 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { fadeIn } from "@/lib/animations";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
 import Container from "@/components/Container";
+import LazyCaseVideo from "@/components/LazyCaseVideo";
+import { homepageCases, caseHref } from "@/lib/cases";
+import HoverCaseVideo from "@/components/HoverCaseVideo";
 
-type CaseCard = {
-  title: string;
-  subtitle: string;
-  image: string;
-  /** Mindre varianter af billedet, så mobilen ikke henter originalen. */
-  srcSet?: string;
-  /** Valgfri baggrundsvideo til kortet. Billedet bruges som poster/fallback. */
-  video?: string;
-  logo: string;
-  href: string;
-  comingSoon?: boolean;
-  team: { name: string; avatar: string }[];
-};
+// Mobil: ét kort pr. række. Tablet: to pr. række. Desktop: 3 + 3.
+const CARD_SIZES = "(min-width: 1024px) 40vw, (min-width: 768px) 50vw, 100vw";
+// Tredje rækkes kort er bredere (7 eller 5 af 12 kolonner).
+const WIDE_CARD_SIZES = "(min-width: 768px) 60vw, 100vw";
 
-const cases: CaseCard[] = [
-  {
-    title: "BettrPlans",
-    subtitle: "Webdesign · Branding · Visuel identitet",
-    image: "/cases/BettrPlans-Case-Image-01.webp",
-    srcSet: "/cases/BettrPlans-Case-Image-01-800w.webp 800w, /cases/BettrPlans-Case-Image-01.webp 1159w",
-    logo: "/Bomærker/BettrPlans-Bomærke-hvid.svg",
-    href: "/cases/bettrplans",
-    team: [
-      { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
-      { name: "Ludvig", avatar: "/staff/staff-kommunikation-og-salg-Ludvig.webp" },
-      { name: "Anne-Sofie", avatar: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp" },
-    ],
-  },
-  {
-    title: "OD Pro",
-    subtitle: "Webdesign · Udvikling",
-    image: "/cases/OD-Cases-image-car.webp",
-    srcSet: "/cases/OD-Cases-image-car-800w.webp 800w, /cases/OD-Cases-image-car-1600w.webp 1600w, /cases/OD-Cases-image-car.webp 6144w",
-    logo: "/Bomærker/Bomærke-OD-biler.svg",
-    href: "/cases/od-biler-pro",
-    team: [
-      { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
-      { name: "Johanne", avatar: "/staff/staff-Web-udvikler-designer-Johanne-horizen.avif" },
-      { name: "Sebastian", avatar: "/staff/staff-.Sebastian-Meta-facebook.jpg" },
-    ],
-  },
-  {
-    title: "Ensemble Hermes",
-    subtitle: "Webdesign · UI/UX · Redesign",
-    image: "/cases/Case-Hermes.webp",
-    srcSet: "/cases/Case-Hermes-800w.webp 800w, /cases/Case-Hermes.webp 1280w",
-    logo: "/Bomærker/Ensemble-hermes-bookmark-white.svg",
-    href: "/cases/ensemble-hermes",
-    team: [
-      { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
-      { name: "Anne-Sofie", avatar: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp" },
-    ],
-  },
-  {
-    title: "Tandsundhed Uden Grænser",
-    subtitle: "Webdesign · CMS · Udvikling",
-    image: "/cases/Tand-sundhed-hero-image-1600w.webp",
-    video: "/video/Tandsundhed-UI.mp4",
-    logo: "/Bomærker/TUG-Bomærke-hvid.svg",
-    href: "/cases/tandsundhed-uden-graenser",
-    team: [
-      { name: "José", avatar: "/staff/staff-jose-digital-design.jpg" },
-      { name: "Johanne", avatar: "/staff/staff-Web-udvikler-designer-Johanne-horizen.avif" },
-      { name: "Anne-Sofie", avatar: "/staff/staff-Marketing-ansvarlig-Anne-Sofie.webp" },
-      { name: "Ludvig", avatar: "/staff/staff-kommunikation-og-salg-Ludvig.webp" },
-    ],
-  },
+// Desktop (12 kolonner): to rækker med tre lige store kort (4+4+4) og en
+// tredje række med to kort, hvor venstre er bredest (7+5).
+// Tablet: to kort pr. række (tredje række 7+5). Mobil: ét.
+const SPANS = [
+  ...Array.from({ length: 6 }, () => "md:col-span-6 lg:col-span-4"),
+  "md:col-span-7",
+  "md:col-span-5",
 ];
-
-// Kortene fylder hele bredden på mobil og 5-7 af 12 kolonner fra md.
-const CARD_SIZES = "(min-width: 768px) 60vw, 100vw";
-
-/**
- * Baggrundsvideo, der først henter filen, når kortet nærmer sig skærmen.
- * Indtil da vises posteren, præcis som mens en video indlæses.
- */
-function LazyCaseVideo({ src, poster, label }: { src: string; poster: string; label: string }) {
-  const ref = useRef<HTMLVideoElement>(null);
-  const [inView, setInView] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "300px" }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <video
-      ref={ref}
-      src={inView ? src : undefined}
-      poster={poster}
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload="none"
-      aria-label={label}
-      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-    />
-  );
-}
-
-// 12-col bento "Z"-pattern: 7+5 / 5+7 — visuelt vægtskifte mellem rækkerne.
-const SPANS = ["md:col-span-7", "md:col-span-5", "md:col-span-5", "md:col-span-7"];
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: i * 0.12,
-      duration: 0.7,
-      ease: [0.215, 0.61, 0.355, 1] as const,
-    },
-  }),
-};
 
 export default function CasesSectionBento() {
   return (
     <Container as="section" size="site" className="py-32" id="cases">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.7 }}
         className="mb-10"
@@ -150,12 +39,19 @@ export default function CasesSectionBento() {
           <h2 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
             Cases
           </h2>
-          {/* "Se alle cases" — skjult indtil cases-oversigtsside er klar */}
+          <Link
+            href="/cases"
+            className="group/all mb-1 hidden shrink-0 items-center gap-2 text-sm font-semibold sm:inline-flex"
+          >
+            Se alle cases
+            <ArrowRightIcon className="size-4 transition-transform duration-300 group-hover/all:translate-x-1" />
+          </Link>
         </div>
       </motion.div>
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-12">
-        {cases.map((c, i) => {
+        {/* Forsidens fire cases vælges i HOMEPAGE_CASES (src/lib/cases.ts). Resten ligger på /cases. */}
+        {homepageCases.slice(0, SPANS.length).map((c, i) => {
           const cardClassName = `group relative block h-full min-h-[340px] overflow-hidden rounded-2xl bg-foreground/[0.04] md:min-h-[420px] xl:min-h-[520px] 2xl:min-h-[620px] ${c.comingSoon ? "cursor-default" : ""}`;
           const cardInner = (
             <>
@@ -169,10 +65,20 @@ export default function CasesSectionBento() {
                 <img
                   src={c.image}
                   srcSet={c.srcSet}
-                  sizes={c.srcSet ? CARD_SIZES : undefined}
-                  alt={`${c.title}, ${c.subtitle} af Horizen`}
+                  sizes={c.srcSet ? (i >= 6 ? WIDE_CARD_SIZES : CARD_SIZES) : undefined}
+                  alt={c.imageAlt ?? `${c.title}, ${c.subtitle} af Horizen`}
                   loading="lazy"
+                  style={
+                    c.imagePosition
+                      ? { objectPosition: c.imagePosition }
+                      : undefined
+                  }
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                />
+              )}
+              {c.hoverVideo && (
+                <HoverCaseVideo src={c.hoverVideo} backdrop={c.hoverVideoBackdrop}
+                  label={`${c.title}, video af hjemmesiden`}
                 />
               )}
 
@@ -187,19 +93,6 @@ export default function CasesSectionBento() {
                 </div>
               )}
 
-              <div className="absolute top-4 right-4 flex -space-x-1.5 md:top-5 md:right-5">
-                {c.team.map((m) => (
-                  <img
-                    key={m.name}
-                    src={m.avatar}
-                    alt={m.name}
-                    title={m.name}
-                    loading="lazy"
-                    className="size-6 rounded-full border border-white/40 bg-background object-cover md:size-7"
-                  />
-                ))}
-              </div>
-
               <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 md:p-6">
                 <div className="flex min-w-0 items-center gap-3">
                   <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-foreground">
@@ -212,7 +105,7 @@ export default function CasesSectionBento() {
                       />
                     ) : (
                       <span className="text-xs font-semibold text-white/80">
-                        {c.title.charAt(0)}
+                        {c.initials ?? c.title.charAt(0)}
                       </span>
                     )}
                   </div>
@@ -238,12 +131,12 @@ export default function CasesSectionBento() {
 
           return (
             <motion.div
-              key={c.href}
+              key={caseHref(c)}
               custom={i}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
-              variants={fadeInUp}
+              variants={fadeIn}
               className={SPANS[i]}
             >
               {c.comingSoon ? (
@@ -251,7 +144,7 @@ export default function CasesSectionBento() {
                   {cardInner}
                 </div>
               ) : (
-                <Link href={c.href} className={cardClassName}>
+                <Link href={caseHref(c)} className={cardClassName}>
                   {cardInner}
                 </Link>
               )}
@@ -259,6 +152,14 @@ export default function CasesSectionBento() {
           );
         })}
       </div>
+
+      <Link
+        href="/cases"
+        className="mt-8 inline-flex items-center gap-2 text-sm font-semibold sm:hidden"
+      >
+        Se alle cases
+        <ArrowRightIcon className="size-4" />
+      </Link>
     </Container>
   );
 }

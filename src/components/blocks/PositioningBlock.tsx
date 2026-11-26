@@ -5,7 +5,7 @@ import { Star } from "lucide-react";
 import Image from "next/image";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import { stickyClasses, type PositioningBlock as PositioningBlockData } from "@/lib/services";
 
 export default function PositioningBlock({
@@ -39,7 +39,7 @@ export default function PositioningBlock({
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             custom={0}
-            variants={fadeInUp}
+            variants={fadeIn}
           >
             <ScrambleEyebrow>{data.eyebrow}</ScrambleEyebrow>
             <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
@@ -57,7 +57,7 @@ export default function PositioningBlock({
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             custom={1}
-            variants={fadeInUp}
+            variants={fadeIn}
             className="space-y-5"
           >
             {data.paragraphs.map((p, i) => (

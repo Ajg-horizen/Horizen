@@ -1,4 +1,5 @@
 import { NextResponse, after, type NextRequest } from 'next/server'
+import { randomBytes, randomUUID } from 'node:crypto'
 import { Resend } from 'resend'
 import { writeClient } from '@/sanity/lib/writeClient'
 import { escapeHtml, structuredTextToHtml } from '@/app/dashboard/seo/richtext'
@@ -7,6 +8,17 @@ import {
 	sessionSecret,
 	verifySession,
 } from '@/lib/dashboard-session'
+import {
+	hourQuote,
+	ORDER_SENDER_EMAIL,
+	orderNotificationMail,
+	orderReceiptMail,
+	orderTaskText,
+	parseOrderHours,
+	type HourQuote,
+} from '@/lib/hourOrderMail'
+import { messageCode } from '@/app/dashboard/seo/messageText'
+import { parseSeoInterest, seoInterestReceiptMail, type SeoInterest } from '@/lib/seoInterestMail'
 
 export const runtime = 'nodejs'
 
@@ -28,6 +40,13 @@ export const runtime = 'nodejs'
  *
  * Indtaget hærdes let: honeypot, rate-limit og længdegrænser. Mailen sendes
  * best-effort via Resend, HVIS RESEND_API_KEY er sat (se sendNotification).
+ *
+ * Køb af klippekort-timer ({ order: { hours } }, fra TUG 19/11-2026): prisen
+ * regnes her på serveren, og bestillingen gemmes som seoInboxItem med
+ * orderHours/orderPrice/orderStatus "bestilt", FØR der sendes mails, så en
+ * mail, der fejler, aldrig skjuler en bestilling. Derefter en besked til
+ * Horizen (kunden som afsender) og en kvittering med kontrolkode til den, der
+ * bestilte (gemmes som seoClientMessage, så /tjek-mail kan bekræfte koden).
  *
  * Kræver SANITY_API_WRITE_TOKEN (Editor-token) i miljøet for at kunne gemme.
  */
@@ -55,6 +74,19 @@ const NOTIFY_FROM =
 	process.env.CONTACT_FROM_EMAIL ||
 	'SEO-overblik <kontakt@send.dit-domæne.dk>'
 
+/**
+ * Kvitteringen ved timekøb kommer fra Andreas som under "Beskeder": med
+ * HORIZEN_RESEND_API_KEY fra horizen.dk-adressen, ellers fra kundens
+ * verificerede afsender-adresse (NOTIFY_FROM) med Andreas' navn.
+ */
+function orderSender() {
+	const horizenKey = process.env.HORIZEN_RESEND_API_KEY?.trim()
+	const address = horizenKey
+		? ORDER_SENDER_EMAIL
+		: (NOTIFY_FROM.match(/<([^>]+)>/)?.[1] ?? NOTIFY_FROM.trim())
+	return { key: horizenKey || process.env.RESEND_API_KEY, from: `Andreas José · Horizen <${address}>` }
+}
+
 /* ── Simpel in-memory rate-limit pr. instans ── */
 const WINDOW_MS = 5 * 60_000
 const MAX_IN_WINDOW = 40
@@ -73,8 +105,8 @@ const PRIORITY_LABEL: Record<Priority, string> = {
 }
 
 const HANDLING_LABEL: Record<Handling, string> = {
-	timer5: 'Op til 5 timer (forhåndsgodkendt — gå bare i gang)',
-	timer10: 'Op til 10 timer (forhåndsgodkendt)',
+	timer5: 'Gå bare i gang (bruger af retaineren; over 5 timer spørger vi først)',
+	timer10: 'Op til 10 timer (forhåndsgodkendt, ældre valg)',
 	estimat: 'Ønsker et tidsoverslag først',
 }
 
@@ -88,15 +120,22 @@ async function sendNotification(opts: {
 	to: string
 	subject: string
 	html: string
-}) {
-	const key = process.env.RESEND_API_KEY
+	replyTo?: string
+	text?: string
+	/** Anden Resend-nøgle end RESEND_API_KEY (fx HORIZEN_RESEND_API_KEY) */
+	key?: string
+}): Promise<string | undefined> {
+	const { key: ownKey, ...mail } = opts
+	const key = ownKey || process.env.RESEND_API_KEY
 	if (!key) {
 		console.warn('[seo-task] RESEND_API_KEY mangler — sender ikke notifikation')
 		return
 	}
 	try {
 		const resend = new Resend(key)
-		await resend.emails.send(opts)
+		const { data, error } = await resend.emails.send(mail)
+		if (error) console.error('[seo-task] Resend fejlede:', error)
+		return data?.id
 	} catch (err) {
 		console.error('[seo-task] Resend notifikation fejlede:', err)
 	}
@@ -141,6 +180,30 @@ export async function POST(request: NextRequest) {
 		return NextResponse.json({ ok: true, items: [] })
 	}
 
+	// Køb af klippekort-timer: prisen regnes her på serveren, og opgaven bygges
+	// ud fra den, ikke ud fra browserens tekst.
+	let quote: HourQuote | null = null
+	if (body.order != null) {
+		const hours = parseOrderHours((body.order as Record<string, unknown>)?.hours)
+		if (hours == null) {
+			return NextResponse.json({ error: 'Ugyldigt antal timer' }, { status: 400 })
+		}
+		quote = hourQuote(hours)
+		body.tasks = [{ ...orderTaskText(quote), priority: 'hoej', handling: 'timer5' }]
+	}
+
+	// SEO-interesse / opgradering (forslag A, 20/11-2026): pakke og pris slås op
+	// her, og opgaven bygges ud fra dem, ikke ud fra browserens tekst.
+	let interest: SeoInterest | null = null
+	if (body.seoInterest != null) {
+		const who = (typeof body.from === 'string' ? body.from : '').trim().slice(0, MAX_FROM) || 'Kunden'
+		interest = parseSeoInterest(body.seoInterest, who)
+		if (!interest) {
+			return NextResponse.json({ error: 'Ukendt pakke' }, { status: 400 })
+		}
+		body.tasks = [{ subject: interest.subject, message: interest.message, priority: 'hoej', handling: 'estimat' }]
+	}
+
 	const rawTasks = Array.isArray(body.tasks) ? body.tasks : [body]
 	if (rawTasks.length > MAX_TASKS) {
 		return NextResponse.json(
@@ -169,12 +232,24 @@ export async function POST(request: NextRequest) {
 	const fromEmail = session?.email ?? ''
 	const receivedAt = new Date().toISOString()
 
+	// Bestillinger af timer kræver et gyldigt dashboard-login (når login er slået
+	// til), så ingen udefra kan oprette en bestilling via API'et. Lokalt uden
+	// DASHBOARD_SESSION_SECRET kan flowet stadig testes.
+	if (quote && secret && !session) {
+		return NextResponse.json({ error: 'Log ind for at bestille timer' }, { status: 401 })
+	}
+
 	// Alle opgaver gemmes i én transaktion: enten kommer de alle med, eller ingen.
 	const docs = valid.map((t) => ({
 		_id: crypto.randomUUID(),
 		_type: 'seoInboxItem',
 		...t,
 		status: 'sendt',
+		// Timekøb: gemmes med antal, pris og egen status, så bestillingen står i
+		// dashboardet (Kun Horizen → Klippekort), også hvis mailen ikke kommer frem.
+		...(quote && { orderHours: quote.hours, orderPrice: quote.price, orderStatus: 'bestilt' }),
+		// SEO-interesse: står ikke blandt kundens ad hoc-opgaver (se page.tsx)
+		...(interest && { seoInterest: interest.label }),
 		fromName,
 		fromEmail,
 		receivedAt,
@@ -210,15 +285,55 @@ export async function POST(request: NextRequest) {
 			`,
 		)
 		.join('<hr>')
-	after(() =>
-		sendNotification({
+	if (quote) {
+		const q = quote
+		const origin = new URL(request.url).origin
+		// Kontrolkode som under Beskeder; kvitteringen gemmes som seoClientMessage,
+		// så koden kan slås op på /tjek-mail og mailen står i fanen Beskeder.
+		const code = fromEmail ? messageCode(randomBytes(8)) : undefined
+		const ctx = { origin, code, verifyBase: process.env.SEO_VERIFY_URL }
+		const notice = orderNotificationMail(q, { name: fromName, email: fromEmail }, ctx)
+		const receipt = orderReceiptMail(q, { name: fromName }, ctx)
+		const sender = orderSender()
+		after(async () => {
+			// Beskeden til Horizen kommer fra kunden (NOTIFY_FROM); svar går til personen
+			await sendNotification({ from: NOTIFY_FROM, to, ...(fromEmail && { replyTo: fromEmail }), ...notice })
+			// Kvittering til den, der bestilte (kun ved Sanity-login, hvor e-mailen
+			// kommer fra den signerede cookie). Svar går til Horizen.
+			if (!fromEmail || !code) return
+			const resendId = await sendNotification({ ...sender, to: fromEmail, replyTo: to, ...receipt })
+			if (!resendId) return
+			try {
+				await writeClient.create({
+					_id: `seo-message.${randomUUID()}`,
+					_type: 'seoClientMessage',
+					sentAt: new Date().toISOString(),
+					sentTo: fromEmail,
+					sentToName: fromName,
+					sentBy: 'Automatisk (klippekort)',
+					template: 'fri',
+					code,
+					resendId,
+					subject: receipt.subject,
+					html: receipt.html,
+				})
+			} catch (err) {
+				console.error('[seo-task] Kunne ikke gemme kvitteringen:', err)
+			}
+		})
+	} else after(async () => {
+		await sendNotification({
 			from: NOTIFY_FROM,
 			to,
-			subject: many
-				? `${valid.length} nye ad hoc-opgaver`
-				: `Ny ad hoc-opgave (${PRIORITY_LABEL[valid[0].priority]})`,
+			// SEO-interesse får sit eget emne, så den ikke drukner i ad hoc-opgaverne
+			subject: interest
+				? valid[0].subject
+				: many
+					? `${valid.length} nye ad hoc-opgaver`
+					: `Ny ad hoc-opgave (${PRIORITY_LABEL[valid[0].priority]})`,
+			...(fromEmail && interest && { replyTo: fromEmail }),
 			html: `
-				<h2>${many ? `${valid.length} nye SEO-opgaver` : 'Ny SEO-opgave'} i dashboardet</h2>
+				<h2>${interest ? (interest.current ? 'Ønske om opgradering af SEO-aftalen' : 'Ny interesse for en SEO-aftale') : many ? `${valid.length} nye SEO-opgaver` : 'Ny SEO-opgave'} i dashboardet</h2>
 				${
 					fromName
 						? `<p><strong>Fra:</strong> ${escapeHtml(fromName)}${
@@ -229,10 +344,19 @@ export async function POST(request: NextRequest) {
 				<hr>
 				${taskHtml}
 				<hr>
-				<p style="color:#666;font-size:12px">Åbn Studio → SEO-opgaver for at godkende/triagere.</p>
+				<p style="color:#666;font-size:12px">${
+					interest
+						? 'Kontakt kunden inden for 1-2 hverdage. Kunden har fået en kvittering, hvis de var logget ind.'
+						: 'Åbn Studio → SEO-opgaver for at godkende/triagere.'
+				}</p>
 			`,
-		}),
-	)
+		})
+		// Kvittering til kunden ved SEO-interesse (kun ved login, hvor e-mailen er kendt).
+		// Svar går til Horizen.
+		if (interest && fromEmail) {
+			await sendNotification({ ...orderSender(), to: fromEmail, replyTo: to, ...seoInterestReceiptMail(interest, { name: fromName }) })
+		}
+	})
 
 	return NextResponse.json({
 		ok: true,

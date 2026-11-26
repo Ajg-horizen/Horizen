@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     siteName: "Horizen",
     locale: "da_DK",
     type: "website",
-    images: [{ url: ogImage, width: 1200, height: 630, alt: "BettrPlans case" }],
+    images: [{ url: ogImage, alt: "BettrPlans case" }],
   },
   twitter: {
     card: "summary_large_image",

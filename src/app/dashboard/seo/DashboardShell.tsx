@@ -2,8 +2,10 @@
 
 import { useEffect, useState, type ReactNode } from 'react'
 import { TAB_NAV_EVENT } from './TabLink'
+import { LockIcon, SEO_LOCK_HINT } from './SeoLocked'
 import HorizenLogo from './HorizenLogo'
 import OwnershipNote from './OwnershipNote'
+import Vinternat, { useJul } from './Vinternat'
 
 /**
  * App-skal til SEO-dashboardet: svævende, afrundet glaspanel til venstre med
@@ -21,7 +23,13 @@ import OwnershipNote from './OwnershipNote'
  * udgaven (#v=analytics&r=ai, #v=status&w=plan) oversættes automatisk.
  */
 
-export type ShellSub = { id: string; label: string; content: ReactNode }
+export type ShellSub = {
+	id: string
+	label: string
+	content: ReactNode
+	/** Kun med SEO-aftale: grå med lås og hover-tekst, men stadig klikbar (viser smagsprøven) */
+	locked?: boolean
+}
 
 export type ShellItem = {
 	id: string
@@ -29,6 +37,8 @@ export type ShellItem = {
 	icon: IconName
 	/** Lille tekst efter navnet, fx "7/32". */
 	meta?: string
+	/** 'attention': vis `meta` som en gul pille (noget venter på kunden). */
+	metaTone?: 'attention'
 	content?: ReactNode
 	children?: ShellSub[]
 	/** Placér nederst under "Kun Horizen" (Kom i gang, Værktøjer, Opsætning). */
@@ -52,14 +62,20 @@ type IconName =
 	| 'chart'
 	| 'users'
 	| 'question'
+	| 'inbox'
 	| 'activity'
 	| 'tasks'
 	| 'settings'
 	| 'mail'
+	| 'ticket'
 	| 'sun'
 	| 'moon'
+	| 'snowflake'
+	| 'snowflakeOff'
 
 const ICONS: Record<IconName, ReactNode> = {
+	// Klippekort (Kun Horizen)
+	ticket: <path d="M4 7.5A1.5 1.5 0 0 1 5.5 6h13A1.5 1.5 0 0 1 20 7.5V10a2 2 0 0 0 0 4v2.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 16.5V14a2 2 0 0 0 0-4zM14.5 6v12" />,
 	back: <path d="M9 14 4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11" />,
 	pen: <path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16zM13.5 6.5l4 4" />,
 	folder: (
@@ -104,6 +120,12 @@ const ICONS: Record<IconName, ReactNode> = {
 			<circle cx="18" cy="18" r="2" />
 		</>
 	),
+	inbox: (
+		<>
+			<path d="M22 12h-6l-2 3h-4l-2-3H2" />
+			<path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
+		</>
+	),
 	mail: (
 		<>
 			<rect x="3" y="5" width="18" height="14" rx="2" />
@@ -117,6 +139,15 @@ const ICONS: Record<IconName, ReactNode> = {
 		</>
 	),
 	moon: <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" />,
+	snowflake: (
+		<path d="M12 2v20M3.3 7l17.4 10M20.7 7 3.3 17M9.5 4 12 6l2.5-2M9.5 20l2.5-2 2.5 2" />
+	),
+	snowflakeOff: (
+		<>
+			<path d="M12 2v20M3.3 7l17.4 10M20.7 7 3.3 17" opacity="0.45" />
+			<path d="m4 4 16 16" />
+		</>
+	),
 }
 
 /**
@@ -129,6 +160,7 @@ const ICON_TONE: Partial<Record<IconName, string>> = {
 	activity: 'var(--tone-orange)',
 	tasks: 'var(--tone-green)',
 	question: 'var(--tone-violet)',
+	inbox: 'var(--tone-violet)',
 	folder: 'var(--tone-pink)',
 }
 
@@ -201,6 +233,28 @@ function ThemeToggle() {
 			title={theme === 'dark' ? 'Lys tilstand' : 'Mørk tilstand'}
 		>
 			<Icon name={theme === 'dark' ? 'sun' : 'moon'} />
+		</button>
+	)
+}
+
+/**
+ * Slå juleeffekterne (Vinternat) fra og til. Vises kun i juletiden; valget
+ * huskes i browseren.
+ */
+function JulToggle() {
+	const { season, on, set } = useJul()
+	if (!season) return null
+	const label = on ? 'Slå juleeffekter fra' : 'Slå juleeffekter til'
+	return (
+		<button
+			type="button"
+			onClick={() => set(!on)}
+			className={`${on ? 'text-foreground/80' : 'text-foreground/45'} hover:text-foreground flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors ${glass}`}
+			aria-pressed={on}
+			aria-label={label}
+			title={label}
+		>
+			<Icon name={on ? 'snowflake' : 'snowflakeOff'} />
 		</button>
 	)
 }
@@ -296,6 +350,12 @@ export default function DashboardShell({
 
 	const top = nav.filter((n) => !n.bottom)
 	const bottom = nav.filter((n) => n.bottom)
+	// "Kun Horizen" starter altid foldet sammen og foldes ud ved klik (Andreas
+	// 16/11-2026: fylder for meget på en lille skærm og bruges sjældent).
+	// Sammenfoldet vises kun det punkt, man står på.
+	const [horizenOpen, setHorizenOpen] = useState(false)
+	const toggleHorizen = () => setHorizenOpen((open) => !open)
+	const bottomShown = horizenOpen ? bottom : bottom.filter((n) => n.id === active)
 	const initial = (brand.client.match(/\p{L}/u)?.[0] ?? '·').toUpperCase()
 
 	const navLink = (n: ShellItem) => {
@@ -338,11 +398,19 @@ export default function DashboardShell({
 								aria-label="Nyt"
 							/>
 						)}
-						{n.meta && (
-							<span className="text-[11px] tabular-nums opacity-60">
-								{n.meta}
-							</span>
-						)}
+						{n.meta &&
+							(n.metaTone === 'attention' ? (
+								<span
+									className="flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-semibold tabular-nums"
+									style={{ backgroundColor: 'var(--st-partial-dot)', color: '#1a1a1a' }}
+								>
+									{n.meta}
+								</span>
+							) : (
+								<span className="text-[11px] tabular-nums opacity-60">
+									{n.meta}
+								</span>
+							))}
 					</button>
 				)}
 				{isActive && n.children && (
@@ -356,6 +424,7 @@ export default function DashboardShell({
 							<SubLink
 								key={c.id}
 								on={c.id === subId}
+								locked={c.locked}
 								onClick={() => go(n.id, c.id)}
 							>
 								{c.label}
@@ -395,10 +464,30 @@ export default function DashboardShell({
 			{/* Kun Horizen (vises kun for Horizen-login) */}
 			{bottom.length > 0 && (
 				<div className="mb-2">
-					<p className="text-foreground/40 mb-2 px-3 text-[10px] font-medium tracking-[0.16em] uppercase">
+					<button
+						type="button"
+						onClick={toggleHorizen}
+						aria-expanded={horizenOpen}
+						className="text-foreground/40 hover:text-foreground/70 mb-2 flex w-full items-center gap-1.5 px-3 text-[10px] font-medium tracking-[0.16em] uppercase transition-colors"
+					>
 						Kun Horizen
-					</p>
-					<ul className="space-y-1">{bottom.map(navLink)}</ul>
+						{!horizenOpen && <span className="tracking-normal normal-case">({bottom.length})</span>}
+						<svg
+							width="12"
+							height="12"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							aria-hidden
+							className={`ml-auto transition-transform ${horizenOpen ? 'rotate-180' : ''}`}
+						>
+							<path d="m6 9 6 6 6-6" />
+						</svg>
+					</button>
+					{bottomShown.length > 0 && <ul className="space-y-1">{bottomShown.map(navLink)}</ul>}
 				</div>
 			)}
 			{/* Tilbage til Studio: lige over stregen, samme sted for alle */}
@@ -442,6 +531,8 @@ export default function DashboardShell({
 
 	return (
 		<div className="min-h-screen lg:grid lg:grid-cols-[288px_1fr]">
+			<Vinternat />
+
 			{/* Menu: svævende glaspanel på desktop */}
 			<aside className="sticky top-0 hidden h-screen p-4 pr-0 lg:block">
 				{sidebar}
@@ -507,6 +598,7 @@ export default function DashboardShell({
 							</span>
 						)}
 						<div className="ml-auto flex items-center gap-2">
+							<JulToggle />
 							<ThemeToggle />
 							{action}
 						</div>
@@ -528,10 +620,12 @@ export default function DashboardShell({
 
 function SubLink({
 	on,
+	locked,
 	onClick,
 	children,
 }: {
 	on: boolean
+	locked?: boolean
 	onClick: () => void
 	children: ReactNode
 }) {
@@ -541,13 +635,17 @@ function SubLink({
 				type="button"
 				onClick={onClick}
 				aria-current={on ? 'page' : undefined}
-				className={`w-full rounded-xl px-3 py-1.5 text-left text-[13px] transition-colors ${
+				title={locked ? SEO_LOCK_HINT : undefined}
+				className={`flex w-full items-center justify-between gap-2 rounded-xl px-3 py-1.5 text-left text-[13px] transition-colors ${
 					on
 						? 'bg-foreground/[0.08] text-foreground font-medium'
-						: 'text-foreground/55 hover:bg-foreground/[0.04] hover:text-foreground'
+						: locked
+							? 'text-foreground/30 hover:bg-foreground/[0.03] hover:text-foreground/50'
+							: 'text-foreground/55 hover:bg-foreground/[0.04] hover:text-foreground'
 				}`}
 			>
-				{children}
+				<span>{children}</span>
+				{locked && <LockIcon className="size-3 shrink-0 opacity-70" />}
 			</button>
 		</li>
 	)

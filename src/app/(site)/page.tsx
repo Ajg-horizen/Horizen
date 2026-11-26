@@ -1,36 +1,30 @@
 import type { Metadata } from "next";
+import { DEFAULT_OG_IMAGE } from "@/lib/og";
 import HomeClient from "./HomeClient";
 
 export const metadata: Metadata = {
   title: "Digitalt design bureau i Aarhus, Horizen",
   description:
-    "Digitalt design bureau med 8+ års erfaring. Vi laver hjemmesider, branding og UI/UX. AI er ikke en undskyldning for at arbejde mindre. Det er værktøjet, der gør, at vi kan levere mere.",
+    "Digitalt design bureau i Aarhus med 8+ års erfaring. Vi laver hjemmesider, branding og UI/UX, og AI er værktøjet, der gør, at vi kan levere mere.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Digitalt design bureau i Aarhus, Horizen",
     description:
-      "Digitalt design bureau med 8+ års erfaring. Vi laver hjemmesider, branding og UI/UX. AI er ikke en undskyldning for at arbejde mindre. Det er værktøjet, der gør, at vi kan levere mere.",
+      "Digitalt design bureau i Aarhus med 8+ års erfaring. Vi laver hjemmesider, branding og UI/UX, og AI er værktøjet, der gør, at vi kan levere mere.",
     url: "/",
     siteName: "Horizen",
     locale: "da_DK",
     type: "website",
-    images: [
-      {
-        url: "/graphics/Hero-image-branding-services.webp",
-        width: 1200,
-        height: 630,
-        alt: "Horizen, digitalt design bureau",
-      },
-    ],
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: "Digitalt design bureau i Aarhus, Horizen",
     description:
-      "Digitalt design bureau med 8+ års erfaring. Vi laver hjemmesider, branding og UI/UX. AI er ikke en undskyldning for at arbejde mindre. Det er værktøjet, der gør, at vi kan levere mere.",
-    images: ["/graphics/Hero-image-branding-services.webp"],
+      "Digitalt design bureau i Aarhus med 8+ års erfaring. Vi laver hjemmesider, branding og UI/UX, og AI er værktøjet, der gør, at vi kan levere mere.",
+    images: [DEFAULT_OG_IMAGE.url],
   },
 };
 

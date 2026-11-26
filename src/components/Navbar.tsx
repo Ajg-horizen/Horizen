@@ -14,6 +14,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
 function ListItem({
@@ -183,6 +184,15 @@ export default function Navbar({ alwaysVisible = false }: { alwaysVisible?: bool
                       ))}
                     </ul>
                   </NavigationMenuContent>
+                </NavigationMenuItem>
+
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    asChild
+                    className={`${navigationMenuTriggerStyle()} flex-row hover:bg-transparent focus:bg-transparent data-[active=true]:bg-transparent`}
+                  >
+                    <Link href="/cases">Case studies</Link>
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
 
               </NavigationMenuList>

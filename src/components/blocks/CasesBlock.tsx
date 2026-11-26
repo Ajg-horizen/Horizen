@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import type { CasesBlock as CasesBlockData } from "@/lib/services";
 
 export default function CasesBlock({
@@ -22,7 +22,7 @@ export default function CasesBlock({
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         custom={0}
-        variants={fadeInUp}
+        variants={fadeIn}
         className="mb-10"
       >
         <ScrambleEyebrow>{data.eyebrow}</ScrambleEyebrow>
@@ -31,7 +31,7 @@ export default function CasesBlock({
             {data.heading}
           </h2>
           <Link
-            href={data.allCasesHref ?? "/#cases"}
+            href={data.allCasesHref ?? "/cases"}
             className="group flex items-center gap-1.5 text-sm font-medium text-muted transition-colors duration-300 hover:text-foreground"
           >
             Alle cases
@@ -48,7 +48,7 @@ export default function CasesBlock({
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            variants={fadeInUp}
+            variants={fadeIn}
           >
             <Link href={item.href} className="group block">
               <div className="relative overflow-hidden rounded-2xl bg-accent aspect-[4/3]">

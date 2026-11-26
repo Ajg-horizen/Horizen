@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { PrincipleIllustration } from "@/components/principle-illustrations";
 import { isPublished } from "@/components/principle-content";
 import { illustrationBg } from "@/lib/principle-bg";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import {
   designPrinciples,
   type PrincipleCategory,
@@ -51,7 +51,7 @@ export default function DesignprincipperOverview() {
             initial="hidden"
             animate="visible"
             custom={0}
-            variants={fadeInUp}
+            variants={fadeIn}
           >
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted">
               Ressourcer

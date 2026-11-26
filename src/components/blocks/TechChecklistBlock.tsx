@@ -4,14 +4,20 @@ import { motion } from "framer-motion";
 import { CheckIcon } from "lucide-react";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
-import { fadeInUp } from "@/lib/animations";
-import { stickyClasses, type TechChecklistBlock as TechChecklistBlockData } from "@/lib/services";
+import { fadeIn } from "@/lib/animations";
+import {
+  stickyClasses,
+  type TechChecklistBlock as TechChecklistBlockData,
+} from "@/lib/services";
 import dynamic from "next/dynamic";
 import { orbits } from "@/components/ui/orbit-animation";
 
-const OrbitAnimation = dynamic(() => import("@/components/ui/orbit-animation"), {
-  ssr: false,
-});
+const OrbitAnimation = dynamic(
+  () => import("@/components/ui/orbit-animation"),
+  {
+    ssr: false,
+  },
+);
 
 export default function TechChecklistBlock({
   data,
@@ -37,22 +43,33 @@ export default function TechChecklistBlock({
         clipPath: "inset(0 -100vmax)",
       }}
     >
-      <Container size="site" className={hasChecklist ? "py-20 md:py-28 lg:py-36" : "py-24 md:py-32 lg:py-40"}>
-        <div className={`grid gap-12 md:grid-cols-[1fr_1.2fr] md:gap-16 ${hasChecklist ? "items-start" : "items-center"}`}>
+      <Container
+        size="site"
+        className={
+          hasChecklist ? "py-20 md:py-28 lg:py-36" : "py-24 md:py-32 lg:py-40"
+        }
+      >
+        <div
+          className={`grid gap-12 md:grid-cols-[1fr_1.2fr] md:gap-16 ${hasChecklist ? "items-start" : "items-center"}`}
+        >
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             custom={0}
-            variants={fadeInUp}
+            variants={fadeIn}
           >
-            <ScrambleEyebrow className="text-white/40">{data.eyebrow}</ScrambleEyebrow>
+            <ScrambleEyebrow className="text-white/40">
+              {data.eyebrow}
+            </ScrambleEyebrow>
             <h2 className="mt-4 text-2xl font-bold tracking-tight md:text-3xl">
               {data.heading.lead}
               {data.heading.mutedTail && (
                 <>
                   <br />
-                  <span className="text-white/40">{data.heading.mutedTail}</span>
+                  <span className="text-white/40">
+                    {data.heading.mutedTail}
+                  </span>
                 </>
               )}
             </h2>
@@ -63,10 +80,10 @@ export default function TechChecklistBlock({
             {/* Visibility growth chart — only for checklist variant */}
             {hasChecklist && (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.6, delay: 0.3 }}
+                transition={{ duration: 0.6 }}
                 className="mt-8 rounded-xl border border-white/[0.06] bg-white/[0.03] p-5"
               >
                 <div className="flex items-center justify-between mb-4">
@@ -112,13 +129,41 @@ export default function TechChecklistBlock({
                   ))}
 
                   <defs>
-                    <linearGradient id="visGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="rgb(0, 182, 122)" stopOpacity="0.25" />
-                      <stop offset="100%" stopColor="rgb(0, 182, 122)" stopOpacity="0" />
+                    <linearGradient
+                      id="visGradient"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop
+                        offset="0%"
+                        stopColor="rgb(0, 182, 122)"
+                        stopOpacity="0.25"
+                      />
+                      <stop
+                        offset="100%"
+                        stopColor="rgb(0, 182, 122)"
+                        stopOpacity="0"
+                      />
                     </linearGradient>
-                    <linearGradient id="flatGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="rgb(201, 162, 39)" stopOpacity="0.12" />
-                      <stop offset="100%" stopColor="rgb(201, 162, 39)" stopOpacity="0" />
+                    <linearGradient
+                      id="flatGradient"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop
+                        offset="0%"
+                        stopColor="rgb(201, 162, 39)"
+                        stopOpacity="0.12"
+                      />
+                      <stop
+                        offset="100%"
+                        stopColor="rgb(201, 162, 39)"
+                        stopOpacity="0"
+                      />
                     </linearGradient>
                   </defs>
 
@@ -200,7 +245,7 @@ export default function TechChecklistBlock({
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: "-20px" }}
-                  variants={fadeInUp}
+                  variants={fadeIn}
                   className="flex items-center gap-3 py-3 border-b border-white/[0.06] last:border-0"
                 >
                   <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#00b67a]/20">
@@ -227,7 +272,10 @@ export default function TechChecklistBlock({
                 ))}
               </div>
               <div className="hidden md:flex items-center justify-center md:scale-[0.85] lg:scale-100 origin-center">
-                <OrbitAnimation items={data.orbitItems} centerLabel={data.orbitCenterLabel} />
+                <OrbitAnimation
+                  items={data.orbitItems}
+                  centerLabel={data.orbitCenterLabel}
+                />
               </div>
             </>
           )}

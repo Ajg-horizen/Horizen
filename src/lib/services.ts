@@ -175,7 +175,7 @@ export type CasesBlock = {
   type: "cases";
   eyebrow: string;
   heading: string;
-  /** Link til "alle cases"-knap. Default: "/#cases". */
+  /** Link til "alle cases"-knap. Default: "/cases". */
   allCasesHref?: string;
   cases: CaseItem[];
 };

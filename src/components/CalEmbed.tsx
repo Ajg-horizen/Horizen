@@ -23,6 +23,12 @@ export default function CalEmbed() {
             events.forEach(function (e) { window.removeEventListener(e, start, true); });
             Cal("init", "15min", {origin:"https://app.cal.com"});
             Cal.ns["15min"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+            // Gennemført booking i popup'en: SiteTracking.tsx tæller den anonymt
+            // til SEO-dashboardet (Henvendelser → Bookinger). Ombookinger og
+            // testbookinger har andre hændelsesnavne og tælles ikke.
+            Cal.ns["15min"]("on", { action: "bookingSuccessfulV2", callback: function () {
+              window.dispatchEvent(new Event("horizen:booked"));
+            } });
             var s = document.querySelector('script[src="https://app.cal.com/embed/embed.js"]');
             if (s) s.addEventListener("load", function () { ready = true; });
           }

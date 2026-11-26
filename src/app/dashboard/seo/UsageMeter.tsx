@@ -41,9 +41,12 @@ const fmt = (n: number) =>
 export default function UsageMeter({
 	used,
 	total,
+	caption,
 }: {
 	used: number
 	total: number
+	/** Teksten under tallet; standard "timer tilbage af {total}" */
+	caption?: string
 }) {
 	const left = Math.max(0, total - used)
 	// Andel af rammen, der er tilbage (1 = fuld ring)
@@ -116,7 +119,7 @@ export default function UsageMeter({
 					{shown}
 				</span>
 				<span className="text-foreground/55 mt-1 text-xs">
-					timer tilbage af {fmt(total)}
+					{caption ?? `timer tilbage af ${fmt(total)}`}
 				</span>
 			</div>
 		</div>

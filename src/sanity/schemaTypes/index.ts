@@ -4,6 +4,12 @@ import seoInboxItem from "./documents/seoInboxItem";
 import seoQuestionAnswer from "./documents/seoQuestionAnswer";
 import seoQuestionNotice from "./documents/seoQuestionNotice";
 import seoClientMessage from "./documents/seoClientMessage";
+import seoClientQuestion from "./documents/seoClientQuestion";
+import seoClientTodo from "./documents/seoClientTodo";
+import seoTodoSeen from "./documents/seoTodoSeen";
+import seoTodoDone from "./documents/seoTodoDone";
+import seoMonthlyChecklist from "./documents/seoMonthlyChecklist";
+import seoDirectoryChecklist from "./documents/seoDirectoryChecklist";
 import { servicePage } from "./documents/service-page";
 import { aiCitation } from "./blocks/ai-citation";
 import { centeredCta } from "./blocks/centered-cta";
@@ -23,6 +29,12 @@ export const schemaTypes = [
   seoQuestionAnswer,
   seoQuestionNotice,
   seoClientMessage,
+  seoClientQuestion,
+  seoClientTodo,
+  seoTodoSeen,
+  seoTodoDone,
+  seoMonthlyChecklist,
+  seoDirectoryChecklist,
   hero,
   sectionTOC,
   aiCitation,

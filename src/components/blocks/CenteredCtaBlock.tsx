@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRightIcon } from "lucide-react";
 import Container from "@/components/Container";
 import { ScrambleEyebrow } from "@/components/ui/scramble-eyebrow";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import { stickyClasses, type CenteredCtaBlock as CenteredCtaBlockData } from "@/lib/services";
 
 export default function CenteredCtaBlock({
@@ -41,7 +41,7 @@ export default function CenteredCtaBlock({
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           custom={0}
-          variants={fadeInUp}
+          variants={fadeIn}
           className="max-w-2xl lg:mx-auto text-left lg:text-center"
         >
           <ScrambleEyebrow className={eyebrowTone}>{data.eyebrow}</ScrambleEyebrow>
@@ -57,7 +57,7 @@ export default function CenteredCtaBlock({
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={fadeInUp}
+            variants={fadeIn}
             className="mt-8 inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium transition-opacity hover:opacity-90"
             style={{ color: "#f5f5f0" }}
           >

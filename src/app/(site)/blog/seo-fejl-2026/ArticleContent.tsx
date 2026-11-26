@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import ArticleLayout from "@/components/ArticleLayout";
-import { fadeInUp } from "@/lib/animations";
+import { fadeIn } from "@/lib/animations";
 import { getPostBySlug, getRelatedArticles } from "@/lib/blog-data";
 
 function Content() {
@@ -41,7 +41,7 @@ function Content() {
         whileInView="visible"
         viewport={{ once: true }}
         custom={0}
-        variants={fadeInUp}
+        variants={fadeIn}
       >
         <p className="text-lg leading-relaxed text-muted-foreground">
           SEO ændrer sig konstant, men nogle fejl er tidløse. Vi ser dem igen og
@@ -58,7 +58,7 @@ function Content() {
             whileInView="visible"
             viewport={{ once: true }}
             custom={i}
-            variants={fadeInUp}
+            variants={fadeIn}
             className="border-b border-foreground/[0.06] py-8 first:pt-0 last:border-b-0"
           >
             <div className="flex gap-6">
@@ -84,7 +84,7 @@ function Content() {
         whileInView="visible"
         viewport={{ once: true }}
         custom={2}
-        variants={fadeInUp}
+        variants={fadeIn}
         className="my-16 border-l-2 border-foreground pl-6 md:pl-8"
       >
         <p className="text-xl font-medium leading-snug tracking-tight md:text-2xl">
@@ -101,7 +101,7 @@ function Content() {
         whileInView="visible"
         viewport={{ once: true }}
         custom={3}
-        variants={fadeInUp}
+        variants={fadeIn}
       >
         <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
           Hvad nu?

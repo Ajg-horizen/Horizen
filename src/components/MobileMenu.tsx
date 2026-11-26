@@ -180,6 +180,13 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                   </div>
                 ))}
 
+                <Link
+                  href="/cases"
+                  onClick={handleLinkClick}
+                  className="flex w-full items-center py-4 text-lg font-semibold tracking-tight"
+                >
+                  Case studies
+                </Link>
               </nav>
             </div>
 

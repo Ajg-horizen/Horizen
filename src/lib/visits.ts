@@ -2,6 +2,7 @@ import { client } from '@/sanity/lib/client'
 import { fetchGa4Raw, ga4Configured, type RawVisits } from './ga4'
 import type { Ga4Period, Ga4Range, VisitsOverview } from './ga4-shared'
 import { monthKey, type TrafficMonth } from './pageStats'
+import { ga4Until } from '@/app/dashboard/seo/data'
 import { TRAFFIC_SOURCES, type TrafficSource } from './trafficSource'
 
 /**
@@ -141,17 +142,19 @@ async function getOwnMonths(): Promise<TrafficMonth[]> {
 
 export async function getVisits(now = new Date()): Promise<VisitsOverview> {
 	const own = await getOwnMonths()
-	return combineVisits(own, now, ga4Configured() ? fetchGa4Raw : null)
+	return combineVisits(own, now, ga4Configured() ? fetchGa4Raw : null, ga4Until)
 }
 
 /**
  * Syr egne måneds-dokumenter og GA-tal sammen (adskilt fra hentningen, så
  * det kan testes med eksempeltal). fetchGa = null: kun egne tal.
+ * gaCap: sidste dag, GA's tal må bruges (data.ts → ga4Until), når de er forkerte.
  */
 export async function combineVisits(
 	own: TrafficMonth[],
 	now: Date,
 	fetchGa: ((start: string, end: string) => Promise<RawVisits>) | null,
+	gaCap: string | null = null,
 ): Promise<VisitsOverview> {
 	const current = monthKey(now)
 	const today = dayKey(now)
@@ -160,7 +163,8 @@ export async function combineVisits(
 	// Dagen, tælleren startede; GA bruges kun til og med dagen før
 	const startedAt = own.map((m) => m.startedAt).filter(Boolean).sort()[0]
 	const ownSince = startedAt ? dayKey(new Date(startedAt)) : undefined
-	const gaLast = ownSince ? dayBefore(ownSince) : today
+	const gaDefault = ownSince ? dayBefore(ownSince) : today
+	const gaLast = gaCap && gaCap < gaDefault ? gaCap : gaDefault
 
 	const prev = shiftMonth(current, -1)
 	// "Alt": GA4 fra første dag, API'et kender (ejendommen har kun data fra oprettelsen)

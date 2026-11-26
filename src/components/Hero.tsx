@@ -6,6 +6,7 @@ import TextRoll from "@/components/ui/text-roll";
 import { fadeUp } from "@/lib/animations";
 import InteractiveHoverButton from "@/components/ui/interactive-hover-button";
 import Container from "@/components/Container";
+import TrustpilotBadge from "@/components/TrustpilotBadge";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -148,6 +149,17 @@ export default function Hero() {
           >
             Se vores arbejde →
           </a>
+        </motion.div>
+
+        {/* Trustpilot-bedømmelse under knapperne: tillid lige dér, hvor man beslutter sig */}
+        <motion.div
+          custom={2.3}
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+          className="mt-16 flex justify-center md:mt-20"
+        >
+          <TrustpilotBadge />
         </motion.div>
       </div>
 

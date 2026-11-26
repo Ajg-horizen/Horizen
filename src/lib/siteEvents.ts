@@ -6,8 +6,9 @@ import type { TrafficSource } from './trafficSource'
 
 /**
  * Anonyme tællere til SEO-dashboardet (Google-søgning-fanen):
- *   - henvendelser: klik på telefon/mail (og formularer, hvis projektets
- *     formular-API kalder recordLead('form'))
+ *   - henvendelser: klik på telefon/mail, gennemførte bookinger og formularer
+ *     (hvis formularens API kalder recordLead('form'))
+ *   - klik på "Book tid" og på knapper til kontaktsiden (ikke henvendelser)
  *   - besøg fra AI-tjenester (ChatGPT, Perplexity, Claude, Gemini, Copilot)
  *
  * Hver hændelse gemmes som ét lille dokument i Sanity med type/kilde, side og
@@ -22,7 +23,18 @@ import type { TrafficSource } from './trafficSource'
  * springes der stille over, så lokalt arbejde og previews ikke tæller med.
  */
 
-export const LEAD_TYPES = ['form', 'phone', 'email'] as const
+// Horizen (som Hos Dam): 'booking' = klik på "Book tid" (Cal.com-popup'en),
+// 'booked' = gennemført booking i popup'en, 'contact' = klik på en knap/et link
+// til kontaktsiden ("Start et projekt", "Kontakt" osv.). Klikkene (booking,
+// contact) vises i dashboardet, men tæller ikke som henvendelser.
+export const LEAD_TYPES = [
+	'form',
+	'phone',
+	'email',
+	'booking',
+	'booked',
+	'contact',
+] as const
 export type LeadType = (typeof LEAD_TYPES)[number]
 
 export function isLeadType(v: unknown): v is LeadType {

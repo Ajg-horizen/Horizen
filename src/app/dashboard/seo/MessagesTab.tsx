@@ -1,11 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { TAB_NAV_EVENT } from './TabLink'
 import { useRouter } from 'next/navigation'
 import {
 	MESSAGE_TEMPLATES,
 	clientMessage,
 	defaultFields,
+	isMessageTemplate,
+	type MessageDraft,
 	type MessageFields,
 	type MessageTemplate,
 } from './messageText'
@@ -79,7 +82,9 @@ export default function MessagesTab({
 	sender,
 	senderPhoto,
 	defaults,
+	recipients,
 	sent,
+	drafts = [],
 	templates = MESSAGE_TEMPLATES.map((t) => t.key),
 	endpoint = '/api/seo-message',
 	dashboardLink,
@@ -87,8 +92,22 @@ export default function MessagesTab({
 	/** Navnet på den, der er logget ind; står som afsender i mailen */
 	sender: string
 	senderPhoto?: string
-	defaults: { name: string; to: string; reviewLink: string; smsSign: string }
+	defaults: {
+		name: string
+		to: string
+		reviewLink: string
+		smsSign: string
+		/** Kundens egne standardtekster til "Anmeldelser og billeder" (valgfri) */
+		priorityText?: string
+		reviewText?: string
+		smsText?: string
+		photoText?: string
+	}
+	/** De eneste adresser, der kan sendes til (clientRecipients i data.ts) */
+	recipients: { email: string; name: string }[]
 	sent: SentMessage[]
+	/** Færdige beskeder (clientMessageDrafts); en sendt kladde vises ikke igen */
+	drafts?: MessageDraft[]
 	/** Skabeloner, der kan vælges (horizen.dk viser ikke "Anmeldelser og billeder") */
 	templates?: MessageTemplate[]
 	/** Hvor beskeden sendes hen (POST) */
@@ -98,15 +117,53 @@ export default function MessagesTab({
 }) {
 	const router = useRouter()
 	const base = {
-		name: defaults.name,
+		name:
+			defaults.name || (recipients.length === 1 ? recipients[0].name : ''),
 		reviewLink: defaults.reviewLink,
 		smsSign: defaults.smsSign,
+		priorityText: defaults.priorityText ?? '',
+		reviewText: defaults.reviewText ?? '',
+		smsText: defaults.smsText ?? '',
+		photoText: defaults.photoText ?? '',
 	}
-	// Ingen skabelon valgt på forhånd, så man ikke sender den forkerte ved en fejl
-	const [template, setTemplate] = useState<MessageTemplate | null>(null)
-	const [to, setTo] = useState(defaults.to)
+	// En kladde, hvis emne allerede er sendt, er brugt og vises ikke igen.
+	// Er der kun én tilbage, er den valgt på forhånd.
+	const readyDrafts = drafts.filter(
+		(d) => !sent.some((m) => m.subject === d.fields.heading),
+	)
+	const ready = readyDrafts.length === 1 ? readyDrafts[0] : null
+	const [draftId, setDraftId] = useState<string | null>(ready?.id ?? null)
+	// Ellers ingen skabelon valgt på forhånd, så man ikke sender den forkerte ved en fejl
+	const [template, setTemplate] = useState<MessageTemplate | null>(
+		ready?.template ?? null,
+	)
+	// Kun faste modtagere fra data.ts (clientRecipients). En kladdes adresser
+	// bruges kun, hvis de står på listen. Er der kun én, er den valgt på
+	// forhånd; ellers vælger man bevidst.
+	const allowed = recipients.map((r) => r.email)
+	const draftRecipients = (d: MessageDraft | null) => {
+		const fromDraft = (d?.to || '')
+			.split(/[,;\s]+/)
+			.filter((e) => allowed.includes(e))
+		if (fromDraft.length) return fromDraft
+		return recipients.length === 1 ? [recipients[0].email] : []
+	}
+	const [selected, setSelected] = useState<string[]>(() => draftRecipients(ready))
+	const to = selected.join(', ')
+	function toggle(email: string) {
+		const next = selected.includes(email)
+			? selected.filter((e) => e !== email)
+			: [...selected, email]
+		setSelected(next)
+		setConfirm(false)
+		// Én modtager: dens navn bruges i "Hej …", medmindre andet er skrevet
+		const only = next.length === 1 && recipients.find((r) => r.email === next[0])
+		if (only && only.name && !fields.name) set('name', only.name)
+	}
 	const [fields, setFields] = useState<MessageFields>(
-		defaultFields(templates[0], base),
+		ready
+			? { ...defaultFields(ready.template, base), ...ready.fields }
+			: defaultFields(templates[0], base),
 	)
 	const [confirm, setConfirm] = useState(false)
 	const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error'>(
@@ -133,9 +190,38 @@ export default function MessagesTab({
 
 	function pick(t: MessageTemplate) {
 		setTemplate(t)
-		setFields(defaultFields(t, { ...base, name: fields.name }))
+		setFields(defaultFields(t, { ...base, name: fields.name || base.name }))
 		setConfirm(false)
+		setDraftId(null)
 	}
+
+	// En færdig besked: dens skabelon, med felterne udfyldt på forhånd
+	function pickDraft(d: MessageDraft) {
+		setTemplate(d.template)
+		setFields({ ...defaultFields(d.template, base), ...d.fields })
+		setSelected(draftRecipients(d))
+		setConfirm(false)
+		setDraftId(d.id)
+	}
+
+	// Genvej fra fx "Nyt i dit arbejdsrum" (#b=<skabelon>): vælg skabelonen
+	// på forhånd (Andreas 16/11). Fjernes fra adressen igen, så et senere
+	// besøg på Beskeder ikke vælger den af sig selv.
+	useEffect(() => {
+		const fromHash = () => {
+			const sp = new URLSearchParams(window.location.hash.slice(1))
+			const b = sp.get('b')
+			if (!b || !isMessageTemplate(b)) return
+			pick(b)
+			sp.delete('b')
+			history.replaceState(null, '', `#${sp.toString()}`)
+		}
+		fromHash()
+		window.addEventListener(TAB_NAV_EVENT, fromHash)
+		return () => window.removeEventListener(TAB_NAV_EVENT, fromHash)
+		// pick er stabil nok her: den bruger kun setState
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	async function send() {
 		setState('sending')
@@ -162,6 +248,7 @@ export default function MessagesTab({
 			)
 			setConfirm(false)
 			setTemplate(null)
+			setDraftId(null)
 			router.refresh()
 		} catch (err) {
 			setState('error')
@@ -205,21 +292,64 @@ export default function MessagesTab({
 						: 'Vælg en skabelon for at skrive en besked.'}
 				</p>
 
+				{readyDrafts.length > 0 && (
+					<div className="border-foreground/[0.08] mt-5 border-t pt-4">
+						<p className={labelCls}>Klar til afsendelse</p>
+						<div className="mt-2 flex flex-wrap gap-2">
+							{readyDrafts.map((d) => (
+								<button
+									key={d.id}
+									type="button"
+									onClick={() => pickDraft(d)}
+									className={`inline-flex items-center gap-2 rounded-xl border border-dashed px-3.5 py-2 text-sm transition-colors ${
+										draftId === d.id
+											? 'border-foreground/40 text-foreground bg-foreground/[0.04]'
+											: 'border-foreground/[0.16] text-foreground/70 hover:text-foreground'
+									}`}
+								>
+									<span aria-hidden>✉</span>
+									{d.label}
+								</button>
+							))}
+						</div>
+						<p className="text-foreground/50 mt-2 text-xs">
+							Teksten er skrevet færdig. Vælg modtager, se mailen igennem, og send.
+						</p>
+					</div>
+				)}
+
 				{template && mail && (
 					<>
 						<div className="mt-5 grid gap-4 sm:grid-cols-2">
 							<div>
-								<label htmlFor="msg-to" className={labelCls}>
-									Til
-								</label>
-								<input
-									id="msg-to"
-									type="text"
-									value={to}
-									onChange={(e) => setTo(e.target.value)}
-									placeholder="navn@firma.dk (flere adskilt med komma; de får hver deres mail)"
-									className={input}
-								/>
+								<p className={labelCls}>Til (kun faste modtagere)</p>
+								{recipients.length ? (
+									<div className="space-y-1.5">
+										{recipients.map((r) => (
+											<label
+												key={r.email}
+												className="text-foreground flex items-center gap-2 text-sm"
+											>
+												<input
+													type="checkbox"
+													checked={selected.includes(r.email)}
+													onChange={() => toggle(r.email)}
+												/>
+												<span>
+													{r.email}
+													{r.name && (
+														<span className="text-foreground/50"> · {r.name}</span>
+													)}
+												</span>
+											</label>
+										))}
+									</div>
+								) : (
+									<p className="text-sm text-red-600">
+										Ingen faste modtagere. Tilføj kundens adresser i
+										clientRecipients i data.ts.
+									</p>
+								)}
 							</div>
 							<div>
 								<label htmlFor="msg-name" className={labelCls}>
@@ -230,7 +360,7 @@ export default function MessagesTab({
 									type="text"
 									value={fields.name}
 									onChange={(e) => set('name', e.target.value)}
-									placeholder="Fx Michael"
+									placeholder="Fx Anne"
 									maxLength={60}
 									className={input}
 								/>
@@ -259,11 +389,15 @@ export default function MessagesTab({
 								id="msg-intro"
 								value={fields.intro}
 								onChange={(e) => set('intro', e.target.value)}
-								rows={7}
+								rows={template === 'moede' ? 14 : template === 'fri' ? 16 : 7}
 								className={`${input} leading-relaxed`}
 							/>
 							<p className="text-foreground/50 mt-1 text-xs">
-								En tom linje giver et nyt afsnit.
+								En tom linje giver et nyt afsnit. **To stjerner** rundt om
+								ord gør dem fede. En linje med kun --- giver en blød
+								skillestreg.
+								{template === 'fri' &&
+									' I Fri besked giver "## " en overskrift, "> " en grøn boks, "1. " et nummereret punkt og "- " et punkt.'}
 							</p>
 						</div>
 
@@ -291,7 +425,7 @@ export default function MessagesTab({
 										type="text"
 										value={fields.smsSign}
 										onChange={(e) => set('smsSign', e.target.value)}
-										placeholder="Fx Michael, Malerfirma Seitz"
+										placeholder="Fx Anne, Firmanavn ApS"
 										className={input}
 									/>
 								</div>
@@ -301,10 +435,33 @@ export default function MessagesTab({
 										checked={fields.askPhotos}
 										onChange={(e) => set('askPhotos', e.target.checked)}
 									/>
-									Bed også om 10 billeder af kundens opgaver
+									Bed også om billeder
 								</label>
+								{(
+									[
+										['priorityText', 'Tekst i den gule boks (vises kun uden anmeldelseslink)', 5, !fields.reviewLink],
+										['reviewText', 'Tekst over SMS\'en', 3, true],
+										['smsText', 'SMS\'en (linket og hilsenen sættes på automatisk)', 3, true],
+										['photoText', 'Tekst om billeder', 6, fields.askPhotos],
+									] as const
+								)
+									.filter(([, , , show]) => show)
+									.map(([k, title, rows]) => (
+										<div key={k} className="sm:col-span-2">
+											<label htmlFor={`msg-${k}`} className={labelCls}>
+												{title}
+											</label>
+											<textarea
+												id={`msg-${k}`}
+												value={fields[k]}
+												onChange={(e) => set(k, e.target.value)}
+												rows={rows}
+												className={`${input} leading-relaxed`}
+											/>
+										</div>
+									))}
 							</div>
-						) : template === 'fri' ? (
+						) : template === 'fri' || template === 'moede' ? (
 							<div className="mt-4 grid gap-4 sm:grid-cols-2">
 								<div>
 									<label htmlFor="msg-btn" className={labelCls}>
@@ -332,6 +489,16 @@ export default function MessagesTab({
 										className={input}
 									/>
 								</div>
+								{template === 'fri' && (
+									<label className="text-foreground/70 flex items-center gap-2 text-sm sm:col-span-2">
+										<input
+											type="checkbox"
+											checked={fields.showServices}
+											onChange={(e) => set('showServices', e.target.checked)}
+										/>
+										Vis Horizens ydelser nederst (SEO, GEO, design m.m.)
+									</label>
+								)}
 							</div>
 						) : null}
 

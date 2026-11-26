@@ -15,15 +15,6 @@ export const STATUS_META: Record<
 	missing: { label: 'Mangler', dot: 'var(--st-missing-dot)', bg: 'var(--st-missing-bg)', text: 'var(--st-missing-text)', border: 'var(--st-missing-border)' },
 }
 
-export function StatusDot({ status }: { status: SeoStatus }) {
-	return (
-		<span
-			className="h-2 w-2 shrink-0 rounded-full"
-			style={{ backgroundColor: STATUS_META[status].dot }}
-		/>
-	)
-}
-
 /** Visning for mangler markeret `later` på et teknisk punkt. */
 export const LATER_META = {
 	label: 'Senere',

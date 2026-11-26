@@ -100,7 +100,7 @@ function MiniCard({
                       "flex items-center gap-3 px-4 py-3 rounded-xl text-sm transition-all cursor-pointer text-left",
                       isActive
                         ? "bg-white/[0.06] border border-white/[0.08] text-[#f5f5f0]"
-                        : "text-white/40 hover:text-white/70"
+                        : "text-white/40 hover:text-white/70",
                     )}
                   >
                     <Icon className="size-4 shrink-0" />
@@ -187,7 +187,7 @@ function MiniCard({
                         "relative flex items-center gap-1.5 px-2 py-1.5 rounded-lg text-[10px] transition-colors cursor-pointer",
                         isActive
                           ? "text-[#f5f5f0]"
-                          : "text-white/40 hover:text-white/70"
+                          : "text-white/40 hover:text-white/70",
                       )}
                     >
                       <Icon className="size-3 shrink-0 relative z-20" />
@@ -314,13 +314,13 @@ function CheckItem({ text, done = true }: { text: string; done?: boolean }) {
       <CheckCircle2Icon
         className={cn(
           "size-3 shrink-0",
-          done ? "text-emerald-500" : "text-white/50/30"
+          done ? "text-emerald-500" : "text-white/50/30",
         )}
       />
       <span
         className={cn(
           "text-[9px]",
-          done ? "text-[#f5f5f0]" : "text-white/50 line-through"
+          done ? "text-[#f5f5f0]" : "text-white/50 line-through",
         )}
       >
         {text}
@@ -407,8 +407,18 @@ const designKonverteringContent = (
     <span className="text-[9px] font-medium text-white/50 uppercase mb-1">
       Konverteringstragt
     </span>
-    <ProgressRow label="Besøg → Interesse" value="68%" pct={68} color="#e8915a" />
-    <ProgressRow label="Interesse → Kontakt" value="24%" pct={24} color="#e8915a" />
+    <ProgressRow
+      label="Besøg → Interesse"
+      value="68%"
+      pct={68}
+      color="#e8915a"
+    />
+    <ProgressRow
+      label="Interesse → Kontakt"
+      value="24%"
+      pct={24}
+      color="#e8915a"
+    />
     <ProgressRow label="Kontakt → Kunde" value="52%" pct={52} color="#00b67a" />
     <div className="mt-1 p-2 rounded-md bg-white/[0.06] border border-white/[0.08]">
       <span className="text-[8px] text-white/50">
@@ -440,16 +450,22 @@ const devTechContent = (
       Tech stack
     </span>
     <div className="flex flex-wrap gap-1">
-      {["Next.js", "React", "TypeScript", "Tailwind", "Headless CMS", "Edge CDN", "PostgreSQL"].map(
-        (tech) => (
-          <span
-            key={tech}
-            className="px-2 py-0.5 text-[8px] font-medium rounded-md border border-white/[0.08] bg-white/[0.06]"
-          >
-            {tech}
-          </span>
-        )
-      )}
+      {[
+        "Next.js",
+        "React",
+        "TypeScript",
+        "Tailwind",
+        "Headless CMS",
+        "Edge CDN",
+        "PostgreSQL",
+      ].map((tech) => (
+        <span
+          key={tech}
+          className="px-2 py-0.5 text-[8px] font-medium rounded-md border border-white/[0.08] bg-white/[0.06]"
+        >
+          {tech}
+        </span>
+      ))}
     </div>
     <div className="grid grid-cols-2 gap-1.5 mt-1">
       <Stat label="Lighthouse" value="98/100" color="#00b67a" />
@@ -520,9 +536,24 @@ const vaekstSeoContent = (
     <span className="text-[9px] font-medium text-white/50 uppercase mb-1">
       SEO ranking
     </span>
-    <ProgressRow label="Primære søgeord" value="Top 3" pct={94} color="#00b67a" />
-    <ProgressRow label="Lokal synlighed" value="Top 5" pct={88} color="#e8915a" />
-    <ProgressRow label="Domæne autoritet" value="42/100" pct={42} color="#6b8aed" />
+    <ProgressRow
+      label="Primære søgeord"
+      value="Top 3"
+      pct={94}
+      color="#00b67a"
+    />
+    <ProgressRow
+      label="Lokal synlighed"
+      value="Top 5"
+      pct={88}
+      color="#e8915a"
+    />
+    <ProgressRow
+      label="Domæne autoritet"
+      value="42/100"
+      pct={42}
+      color="#6b8aed"
+    />
     <div className="mt-1 p-2 rounded-md bg-white/[0.06] border border-white/[0.08]">
       <span className="text-[8px] text-white/50">
         Optimeret til 12+ primære søgeord
@@ -550,42 +581,96 @@ const vaekstRapportContent = (
 const cards = [
   {
     eyebrow: "Analyse & Strategi",
-    title: "Inden vi rører en pixel laver vi en grundig analyse af jeres digitale tilstedeværelse og marked.",
+    title:
+      "Inden vi rører en pixel laver vi en grundig analyse af jeres digitale tilstedeværelse og marked.",
     accentColor: "#00b67a",
     tabs: [
-      { id: "audit", label: "Audit", icon: SearchIcon, content: analyseAuditContent },
-      { id: "pain", label: "Problemer", icon: TargetIcon, content: analyseSmertepunkterContent },
-      { id: "bench", label: "Benchmark", icon: BarChart3Icon, content: analyseKonkurrentContent },
+      {
+        id: "audit",
+        label: "Audit",
+        icon: SearchIcon,
+        content: analyseAuditContent,
+      },
+      {
+        id: "pain",
+        label: "Problemer",
+        icon: TargetIcon,
+        content: analyseSmertepunkterContent,
+      },
+      {
+        id: "bench",
+        label: "Benchmark",
+        icon: BarChart3Icon,
+        content: analyseKonkurrentContent,
+      },
     ],
   },
   {
     eyebrow: "Design & UX",
-    title: "Vi designer ud fra brugeradfærd og struktureret data, ikke subjektive holdninger og intuition.",
+    title:
+      "Vi designer ud fra brugeradfærd og struktureret data, ikke subjektive holdninger og intuition.",
     accentColor: "#e8915a",
     tabs: [
-      { id: "wire", label: "Wireframes", icon: PenToolIcon, content: designWireframeContent },
-      { id: "conv", label: "Konvertering", icon: MousePointerClickIcon, content: designKonverteringContent },
-      { id: "test", label: "Brugertests", icon: EyeIcon, content: designBrugertestContent },
+      {
+        id: "wire",
+        label: "Wireframes",
+        icon: PenToolIcon,
+        content: designWireframeContent,
+      },
+      {
+        id: "conv",
+        label: "Konvertering",
+        icon: MousePointerClickIcon,
+        content: designKonverteringContent,
+      },
+      {
+        id: "test",
+        label: "Brugertests",
+        icon: EyeIcon,
+        content: designBrugertestContent,
+      },
     ],
   },
   {
     eyebrow: "Udvikling & CMS",
-    title: "UI/UX forankret i data og brugeradfærd, fordi gode interfaces gør hverdagen lettere for alle.",
+    title:
+      "UI/UX forankret i data og brugeradfærd, fordi gode interfaces gør hverdagen lettere for alle.",
     accentColor: "#6b8aed",
     tabs: [
-      { id: "tech", label: "Tech stack", icon: CodeIcon, content: devTechContent },
+      {
+        id: "tech",
+        label: "Tech stack",
+        icon: CodeIcon,
+        content: devTechContent,
+      },
       { id: "cms", label: "CMS", icon: DatabaseIcon, content: devCmsContent },
-      { id: "perf", label: "Performance", icon: GaugeIcon, content: devPerformanceContent },
+      {
+        id: "perf",
+        label: "Performance",
+        icon: GaugeIcon,
+        content: devPerformanceContent,
+      },
     ],
   },
   {
     eyebrow: "Vækst & Fremtidssikring",
-    title: "Lancering er kun begyndelsen. Vi er med dig hele vejen, fra onboarding og dataindsigt til løbende optimering.",
+    title:
+      "Lancering er kun begyndelsen. Vi er med dig hele vejen, fra onboarding og dataindsigt til løbende optimering.",
     accentColor: "#00b67a",
     tabs: [
-      { id: "analytics", label: "Analytics", icon: TrendingUpIcon, content: vaekstAnalyticsContent },
+      {
+        id: "analytics",
+        label: "Analytics",
+        icon: TrendingUpIcon,
+        content: vaekstAnalyticsContent,
+      },
       { id: "seo", label: "SEO", icon: TargetIcon, content: vaekstSeoContent },
-      { id: "rapport", label: "Rapporter", icon: FileTextIcon, content: vaekstRapportContent },
+      {
+        id: "rapport",
+        label: "Rapporter",
+        icon: FileTextIcon,
+        content: vaekstRapportContent,
+      },
     ],
   },
 ];
@@ -594,8 +679,8 @@ export default function BentoShowcase() {
   return (
     <Container as="section" size="site" className="py-24">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.7 }}
         className="mb-16"
@@ -605,9 +690,9 @@ export default function BentoShowcase() {
           Struktur er fundamentet
         </h2>
         <p className="mt-4 max-w-2xl text-base text-muted leading-relaxed">
-          I en digital branche hvor tingene går hurtigt, er det altafgørende
-          at fundamentet er baseret på struktur og forståelse. Data er guld
-          og den rigtige struktur er grundstenen til vækst på sigt.
+          I en digital branche hvor tingene går hurtigt, er det altafgørende at
+          fundamentet er baseret på struktur og forståelse. Data er guld og den
+          rigtige struktur er grundstenen til vækst på sigt.
         </p>
       </motion.div>
 
@@ -616,10 +701,10 @@ export default function BentoShowcase() {
         {cards.slice(0, 3).map((card, i) => (
           <motion.div
             key={card.eyebrow}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, delay: i * 0.1 }}
+            transition={{ duration: 0.6 }}
             className="h-full"
           >
             <MiniCard
@@ -635,10 +720,10 @@ export default function BentoShowcase() {
       {/* Bottom row — 1 wide card */}
       <motion.div
         className="mt-4"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
         viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 0.6, delay: 0.3 }}
+        transition={{ duration: 0.6 }}
       >
         <MiniCard
           eyebrow={cards[3].eyebrow}
