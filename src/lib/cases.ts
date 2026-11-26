@@ -37,11 +37,11 @@ export type CaseStudy = {
   /** Et målbart resultat fra casen, hvis der er et. */
   result?: { value: string; label: string };
   /**
-   * Én ordret sætning fra kundens anmeldelse. Enten et id i
+   * Kunden, der har anmeldt Horizen på Trustpilot. Oversigten /cases viser
+   * kun navn og foto (selve anmeldelsen står på case-siden). Enten et id i
    * src/lib/testimonials.ts eller forfatteren skrevet direkte her.
    */
   testimonial?: {
-    excerpt: string;
     id?: string;
     author?: { name: string; role?: string; company?: string; photo?: string };
   };
@@ -85,8 +85,6 @@ export const cases: CaseStudy[] = [
     team: [JOSE, LUDVIG, ANNE_SOFIE],
     testimonial: {
       id: "saxo-bettrplans",
-      excerpt:
-        "Dette var min første hjemmeside, men de formåede at guide mig trygt gennem hele processen.",
     },
   },
   {
@@ -101,6 +99,7 @@ export const cases: CaseStudy[] = [
     logo: "/Bomærker/Bomærke-OD-biler.svg",
     team: [JOSE, JOHANNE, SEBASTIAN],
     result: { value: "+312%", label: "organisk trafik" },
+    liveUrl: "https://www.od-biler.dk",
   },
   {
     slug: "ensemble-hermes",
@@ -114,9 +113,8 @@ export const cases: CaseStudy[] = [
     team: [JOSE, ANNE_SOFIE],
     testimonial: {
       id: "rebecca-hermes",
-      excerpt:
-        "Man mærker et oprigtigt ønske om at lære sine kunder at kende i dybden og præsentere dem elegant og tidssvarende.",
     },
+    liveUrl: "https://ensemblehermes.dk",
   },
   {
     slug: "tandsundhed-uden-graenser",
@@ -133,9 +131,8 @@ export const cases: CaseStudy[] = [
     result: { value: "−83%", label: "redigeringstid" },
     testimonial: {
       id: "tatiana-tandsundhed",
-      excerpt:
-        "Vores arbejde er nu meget bedre formidlet og synligt, og det gør en reel forskel.",
     },
+    liveUrl: "https://dhwb.dk",
   },
   {
     slug: "cocraft",
@@ -150,9 +147,12 @@ export const cases: CaseStudy[] = [
     logo: "/Bomærker/Co-Craft-bomærke.svg",
     result: { value: "1 måned", label: "fra idé til live platform" },
     testimonial: {
-      excerpt:
-        "Samarbejdet har været både effektivt og behageligt, og jeg kan derfor varmt anbefale José og Horizen.",
-      author: { name: "Iben Tvilsted", role: "Stifter", company: "CoCraft" },
+      author: {
+        name: "Iben Tvilsted",
+        role: "Stifter",
+        company: "CoCraft",
+        photo: "/Clients/iben-cocraft.webp",
+      },
     },
     liveUrl: "https://cocraft.dk",
   },
@@ -162,14 +162,15 @@ export const cases: CaseStudy[] = [
     subtitle: "Webdesign · Google Ads",
     summary:
       "Malerfirma Seitz havde ingen hjemmeside. Vi byggede en enkel landing page, der skaffer opgaver, og satte Google Ads op med konverteringssporing, så annoncekronerne arbejder.",
-    image: "/cases/Seitz-Case-Image-1600w.webp",
+    image: "/cases/Seitz-Michael-1280w.webp",
     srcSet:
-      "/cases/Seitz-Case-Image-800w.webp 800w, /cases/Seitz-Case-Image-1600w.webp 1600w",
+      "/cases/Seitz-Michael-800w.webp 800w, /cases/Seitz-Michael-1280w.webp 1280w",
+    imageAlt:
+      "Malermester Michael Seitz foran sin firmabil med Malerfirma Seitz' logo",
+    imagePosition: "30% 30%",
     logo: "/Bomærker/Seitz-Bomærke-hvid.svg",
     testimonial: {
       id: "michael-seitz-malerfirma",
-      excerpt:
-        "Jeg er mega tilfreds med den hjemmeside, jeg har fået lavet af Horizen.",
     },
     liveUrl: "https://malerfirma-seitz.dk",
   },
@@ -199,6 +200,7 @@ export const cases: CaseStudy[] = [
     logo: "/Bomærker/HosDam-Bomærke-hvid.svg",
     hoverVideo: "/video/HosDam-UI.mp4",
     hoverVideoBackdrop: "/video/HosDam-UI-backdrop.webp",
+    testimonial: { id: "ann-sofie-hos-dam" },
     liveUrl: "https://www.hosdam.dk",
   },
   {
@@ -219,12 +221,36 @@ export const cases: CaseStudy[] = [
       value: "1,3 sek.",
       label: "indlæsning af forsiden på mobil (før 12,8 sek.)",
     },
+    testimonial: { id: "ramin-acp" },
     liveUrl: "https://www.ac-p.dk",
   },
 ];
 
-/** De cases der vises offentligt. */
-export const visibleCases = cases.filter((c) => !c.comingSoon);
+/**
+ * Rækkefølgen på /cases (Andreas 26/11-2026). Cases, der ikke står her,
+ * kommer til sidst i den rækkefølge, de står i listen ovenfor.
+ */
+const OVERVIEW_ORDER = [
+  "miljoekontoret",
+  "acp",
+  "hos-dam",
+  "cocraft",
+  "tandsundhed-uden-graenser",
+  "ensemble-hermes",
+  "bettrplans",
+  "malerfirma-seitz",
+  "od-biler-pro",
+];
+
+const rank = (slug: string) => {
+  const i = OVERVIEW_ORDER.indexOf(slug);
+  return i === -1 ? OVERVIEW_ORDER.length : i;
+};
+
+/** De cases der vises offentligt, i oversigtens rækkefølge. */
+export const visibleCases = cases
+  .filter((c) => !c.comingSoon)
+  .sort((a, b) => rank(a.slug) - rank(b.slug));
 
 /**
  * Cases på forsiden, i visningsrækkefølge (desktop: 3 + 3 lige store kort, derefter 2 kort 7+5).

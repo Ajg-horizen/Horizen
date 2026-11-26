@@ -62,7 +62,7 @@ const socials: FooterLink[] = [
 
 export default function Footer() {
   return (
-    <Container size="site" noPadding className="px-4 pb-4 md:px-6 md:pb-6 lg:px-8">
+    <Container size="site" noPadding className="w-full px-4 pb-4 md:px-6 md:pb-6 lg:px-8">
       <footer className="rounded-2xl bg-gradient-to-b from-[#1e1e1e] via-foreground to-[#080808] text-background border border-white/[0.10] md:rounded-3xl">
         <div className="px-6 pt-24 pb-10 md:px-10 lg:px-16">
           {/* Top section */}

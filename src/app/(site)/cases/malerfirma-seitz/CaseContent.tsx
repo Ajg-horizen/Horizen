@@ -9,7 +9,11 @@ import { getTestimonial } from "@/lib/testimonials";
 const detail: CaseDetail = {
   base: getCase(cases, "malerfirma-seitz"),
   year: "2026",
-  hero: { image: "/cases/Seitz-Case-Image-1600w.webp" },
+  hero: {
+    image: "/cases/Seitz-Michael-hero-1280w.webp",
+    position: "30% 25%",
+    alt: "Malermester Michael Seitz foran sin firmabil med Malerfirma Seitz' logo",
+  },
   intro:
     "En enkel, troværdig hjemmeside til et malerfirma, der ikke havde en i forvejen. Bygget til at skaffe opgaver, sammen med Google Ads.",
   challenge: {
