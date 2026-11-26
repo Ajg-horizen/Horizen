@@ -13,6 +13,7 @@ import {
   GlobeIcon,
   LayersIcon,
   ClockIcon,
+  ArrowUpRightIcon,
 } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -129,7 +130,10 @@ export default function CaseContent() {
         <section
           ref={heroImageRef}
           className="relative h-screen w-screen overflow-hidden -mt-3 mx-[calc(50%-50vw)]"
-          style={{ boxShadow: "0 0 0 100vmax #000", clipPath: "inset(0 -100vmax)" }}
+          style={{
+            boxShadow: "0 0 0 100vmax #000",
+            clipPath: "inset(0 -100vmax)",
+          }}
         >
           <motion.img
             src={project.image}
@@ -221,7 +225,11 @@ export default function CaseContent() {
         </section>
 
         {/* Meta */}
-        <Container as="section" size="site" className="py-12 border-y border-foreground/[0.06]">
+        <Container
+          as="section"
+          size="site"
+          className="py-12 border-y border-foreground/[0.06]"
+        >
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -230,19 +238,27 @@ export default function CaseContent() {
             className="grid grid-cols-2 gap-8 md:grid-cols-4"
           >
             <div>
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Klient</p>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">
+                Klient
+              </p>
               <p className="mt-2 text-sm font-semibold">{project.client}</p>
             </div>
             <div>
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">{"År"}</p>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">
+                {"År"}
+              </p>
               <p className="mt-2 text-sm font-semibold">{project.year}</p>
             </div>
             <div>
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Kategori</p>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">
+                Kategori
+              </p>
               <p className="mt-2 text-sm font-semibold">{project.category}</p>
             </div>
             <div>
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Team</p>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">
+                Team
+              </p>
               <div className="mt-2 flex items-center gap-2">
                 {project.team.map((member) => (
                   <img
@@ -281,14 +297,14 @@ export default function CaseContent() {
               variants={fadeIn}
             >
               <p className="text-base text-muted leading-relaxed">
-                Ensemble Hermes er et samlet team, der længe havde brugt Wix. Men
-                de mødte hurtigt grænserne for, hvad Wix kunne i forhold til deres
-                behov og krav.
+                Ensemble Hermes er et samlet team, der længe havde brugt Wix.
+                Men de mødte hurtigt grænserne for, hvad Wix kunne i forhold til
+                deres behov og krav.
               </p>
               <p className="mt-4 text-base text-muted leading-relaxed">
-                Platformen kunne ikke følge med den måde, de arbejder på. Særligt
-                koncertoversigten blev tung at holde ved lige, og de følte sig
-                begrænset af, hvad løsningen tillod.
+                Platformen kunne ikke følge med den måde, de arbejder på.
+                Særligt koncertoversigten blev tung at holde ved lige, og de
+                følte sig begrænset af, hvad løsningen tillod.
               </p>
             </motion.div>
           </div>
@@ -320,8 +336,8 @@ export default function CaseContent() {
                 <p className="text-base text-muted leading-relaxed">
                   Derfor udviklede vi i fællesskab en side fra bunden, bygget
                   direkte til deres behov. Koncerterne oprettes og håndteres nu
-                  ét sted og falder automatisk på plads i oversigten, så publikum
-                  hurtigt finder det næste de kan opleve.
+                  ét sted og falder automatisk på plads i oversigten, så
+                  publikum hurtigt finder det næste de kan opleve.
                 </p>
                 <p className="mt-4 text-base text-muted leading-relaxed">
                   Brugerfladen er gjort enklere hele vejen igennem, og et
@@ -337,7 +353,10 @@ export default function CaseContent() {
         {/* Systemet */}
         <section
           className="bg-[#0f0f0f] text-[#f5f5f0]"
-          style={{ boxShadow: "0 0 0 100vmax #0f0f0f", clipPath: "inset(0 -100vmax)" }}
+          style={{
+            boxShadow: "0 0 0 100vmax #0f0f0f",
+            clipPath: "inset(0 -100vmax)",
+          }}
         >
           <Container size="site" className="py-24">
             <motion.div
@@ -406,14 +425,25 @@ export default function CaseContent() {
                 Og vi bliver ved. Løbende drift og service holder fundamentet på
                 plads, længe efter lanceringen.
               </p>
-              <a
-                href="/kontakt"
-                className="mt-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white px-8 py-3.5 text-sm font-medium transition-all duration-300 hover:bg-white/90"
-                style={{ color: "#0f0f0f" }}
-              >
-                Start et projekt
-                <ArrowRightIcon className="size-4" />
-              </a>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <a
+                  href="/kontakt"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white px-8 py-3.5 text-sm font-medium transition-all duration-300 hover:bg-white/90"
+                  style={{ color: "#0f0f0f" }}
+                >
+                  Start et projekt
+                  <ArrowRightIcon className="size-4" />
+                </a>
+                <a
+                  href="https://ensemblehermes.dk"
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-3.5 text-sm font-medium text-white transition-colors duration-300 hover:bg-white/10"
+                >
+                  Besøg sitet
+                  <ArrowUpRightIcon className="size-4" />
+                </a>
+              </div>
             </motion.div>
           </Container>
         </section>
@@ -465,7 +495,11 @@ export default function CaseContent() {
         </Container>
 
         {/* Kundecitat */}
-        <Container as="section" size="site" className="py-24 border-t border-foreground/[0.06]">
+        <Container
+          as="section"
+          size="site"
+          className="py-24 border-t border-foreground/[0.06]"
+        >
           <TestimonialBody
             testimonial={getTestimonial("rebecca-hermes")}
             align="center"
@@ -473,7 +507,11 @@ export default function CaseContent() {
         </Container>
 
         {/* Tools & Teknologier */}
-        <Container as="section" size="site" className="py-24 border-t border-foreground/[0.06]">
+        <Container
+          as="section"
+          size="site"
+          className="py-24 border-t border-foreground/[0.06]"
+        >
           <div className="grid gap-16 md:grid-cols-2">
             <motion.div
               initial="hidden"
@@ -532,7 +570,11 @@ export default function CaseContent() {
         </Container>
 
         {/* Andre cases */}
-        <Container as="section" size="site" className="py-24 border-t border-foreground/[0.06]">
+        <Container
+          as="section"
+          size="site"
+          className="py-24 border-t border-foreground/[0.06]"
+        >
           <motion.div
             initial="hidden"
             whileInView="visible"

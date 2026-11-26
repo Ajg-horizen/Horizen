@@ -156,31 +156,38 @@ function CaseRow({ c, index }: { c: CaseStudy; index: number }) {
           </div>
         )}
 
-        {t && author && (
-          <figure className="mt-8 max-w-xl border-l-2 border-foreground/15 pl-5">
-            <blockquote className="text-sm leading-relaxed text-foreground/80 md:text-base">
-              “{t.excerpt}”
-            </blockquote>
-            <figcaption className="mt-4 flex items-center gap-3">
-              {author.photo && (
-                <img
-                  src={author.photo}
-                  alt={author.name}
-                  loading="lazy"
-                  className="size-8 rounded-full object-cover"
-                />
-              )}
-              <span className="text-sm">
-                <span className="font-medium">{author.name}</span>
-                {(author.role || author.company) && (
-                  <span className="text-muted">
-                    {", "}
-                    {[author.role, author.company].filter(Boolean).join(", ")}
-                  </span>
-                )}
+        {author && (
+          <div className="mt-8 flex items-center gap-3">
+            {author.photo ? (
+              <img
+                src={author.photo}
+                alt={author.name}
+                loading="lazy"
+                className="size-10 shrink-0 rounded-full object-cover"
+              />
+            ) : (
+              <span
+                aria-hidden="true"
+                className="flex size-10 shrink-0 items-center justify-center rounded-full bg-foreground/10 text-xs font-semibold"
+              >
+                {author.name
+                  .split(" ")
+                  .map((w) => w[0])
+                  .join("")
+                  .slice(0, 2)
+                  .toUpperCase()}
               </span>
-            </figcaption>
-          </figure>
+            )}
+            <p className="text-sm leading-snug">
+              <span className="text-muted">Anbefalet af </span>
+              <span className="font-medium">{author.name}</span>
+              {(author.role || author.company) && (
+                <span className="block text-muted">
+                  {[author.role, author.company].filter(Boolean).join(", ")}
+                </span>
+              )}
+            </p>
+          </div>
         )}
 
         <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3">

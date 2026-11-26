@@ -5,7 +5,7 @@ import { caseMetadata, caseSchema, getCase } from "@/lib/case-page";
 const c = getCase(cases, "malerfirma-seitz");
 const description =
   "Malerfirma Seitz. En enkel landing page til et malerfirma uden hjemmeside, med Google Ads og konverteringssporing, der skaffer opgaver.";
-const ogImage = "/cases/Seitz-Case-Image-1600w.webp";
+const ogImage = "/cases/Seitz-Michael-1280w.webp";
 
 export const metadata = caseMetadata(c, "Malerfirma Seitz | Webdesign & Google Ads | Horizen", description, ogImage);
 
