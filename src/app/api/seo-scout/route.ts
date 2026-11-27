@@ -13,9 +13,10 @@ export const runtime = 'nodejs'
  * Kun Horizen-rollen; uden DASHBOARD_SESSION_SECRET kun åbent lokalt.
  *
  * Body (altid med month: 'ÅÅÅÅ-MM'):
- * - { action: 'log', key, decision: 'godkendt' | 'afvist' | 'afventer', hours? }
- *   Godkender eller afviser et forslag til aktivitetsloggen. Timerne sætter
- *   Andreas selv; spejderen sætter aldrig timer.
+ * - { action: 'log', key, decision: 'godkendt' | 'afvist' | 'afventer' }
+ *   Godkender eller afviser et forslag til aktivitetsloggen. Der sættes ALDRIG
+ *   timer på den enkelte post (Andreas 27/11-2026); han lægger timerne for
+ *   gennemgangen ind samlet, når han er færdig.
  * - { action: 'insight', insight }  Gemmer Andreas' egen indsigt i kundebeskeden.
  * - { action: 'message', ready: boolean }  Kladden er klar til fanen Beskeder.
  *
@@ -68,16 +69,13 @@ export async function POST(request: NextRequest) {
 			if (!KEY.test(key) || (decision !== 'godkendt' && decision !== 'afvist' && decision !== 'afventer')) {
 				return NextResponse.json({ error: 'Ukendt forslag eller beslutning' }, { status: 400 })
 			}
-			const rawHours = typeof body.hours === 'number' ? body.hours : Number(body.hours)
-			const hours = Number.isFinite(rawHours) && rawHours > 0 && rawHours <= 100 ? Math.round(rawHours * 4) / 4 : null
 			const base = `logDrafts[_key=="${key}"]`
 			const patch = writeClient.patch(_id).set({
 				[`${base}.status`]: decision,
 				[`${base}.decidedAt`]: decision === 'afventer' ? null : now,
 				[`${base}.decidedBy`]: decision === 'afventer' ? null : by,
 			})
-			if (decision === 'godkendt' && hours) patch.set({ [`${base}.hours`]: hours })
-			else patch.unset([`${base}.hours`])
+			patch.unset([`${base}.hours`])
 			await patch.commit()
 		} else if (body.action === 'insight') {
 			const insight = typeof body.insight === 'string' ? body.insight.slice(0, MAX_TEXT) : ''
