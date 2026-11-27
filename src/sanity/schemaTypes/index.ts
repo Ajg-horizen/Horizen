@@ -9,6 +9,7 @@ import seoClientTodo from "./documents/seoClientTodo";
 import seoTodoSeen from "./documents/seoTodoSeen";
 import seoTodoDone from "./documents/seoTodoDone";
 import seoMonthlyChecklist from "./documents/seoMonthlyChecklist";
+import seoScoutReport from "./documents/seoScoutReport";
 import seoDirectoryChecklist from "./documents/seoDirectoryChecklist";
 import { servicePage } from "./documents/service-page";
 import { aiCitation } from "./blocks/ai-citation";
@@ -34,6 +35,7 @@ export const schemaTypes = [
   seoTodoSeen,
   seoTodoDone,
   seoMonthlyChecklist,
+  seoScoutReport,
   seoDirectoryChecklist,
   hero,
   sectionTOC,
