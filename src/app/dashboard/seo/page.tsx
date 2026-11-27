@@ -31,7 +31,8 @@ import WorkspaceNotice from './WorkspaceNotice'
 import TodoCard, { type TodoDone, type TodoSeen } from './TodoCard'
 import FindingsTab from './FindingsTab'
 import MessagesTab, { type SentMessage } from './MessagesTab'
-import { senderProfile } from './messageText'
+import { senderProfile, type MessageDraft } from './messageText'
+import ScoutReport, { type ScoutReportData, type ScoutStep } from './ScoutReport'
 import SeoCheckStatus, { type SeoCheckRun } from './SeoCheckStatus'
 import TechniquesTab from './TechniquesTab'
 import SeoMapTab from './SeoMapTab'
@@ -323,6 +324,29 @@ async function getChecklists(): Promise<{ month: string; done: ChecklistDone[] }
 		return (rows ?? []).map((r) => ({ month: r.month, done: r.done ?? [] }))
 	} catch (err) {
 		console.error('[dashboard] Kunne ikke hente tjeklisten:', err)
+		return []
+	}
+}
+
+/**
+ * SEO-spejderens månedsrapporter (seoScoutReport, Andreas 27/11-2026); fejler
+ * blødt. Godkendte logforslag bliver til poster i aktivitetsloggen, og en
+ * kundebesked markeret "klar" bliver en kladde under Beskeder.
+ */
+async function getScoutReports(): Promise<ScoutReportData[]> {
+	try {
+		const rows = await client
+			.withConfig({ token: process.env.SANITY_API_READ_TOKEN, useCdn: false, perspective: 'raw', stega: false })
+			.fetch<ScoutReportData[]>(
+				`*[_type == "seoScoutReport" && defined(month) && !(_id in path("drafts.**"))] | order(month desc)[0...12]{
+					month, dataMonth, createdAt, summary, steps, actions, releaseId, releaseTitle, releaseCount, logDrafts, message
+				}`,
+				{},
+				{ cache: 'no-store' },
+			)
+		return rows ?? []
+	} catch (err) {
+		console.error('[dashboard] Kunne ikke hente SEO-spejderens rapporter:', err)
 		return []
 	}
 }
@@ -1700,6 +1724,28 @@ export default async function SeoOverviewPage({
 	const todosSeen = await getTodosSeen()
 	const checklistMonth = checklistMonthCph()
 	const checklists = await getChecklists()
+	const scoutReports = await getScoutReports()
+	const scoutReport = scoutReports.find((r) => r.month === checklistMonth)
+	const scoutSteps: Record<string, ScoutStep> | undefined =
+		isHorizen && scoutReport?.steps ? Object.fromEntries(scoutReport.steps.map((st) => [st.stepId, st])) : undefined
+	// Godkendte forslag fra spejderen er almindelige poster i aktivitetsloggen; timerne er Horizens egne.
+	const scoutLogEntries: ActivityEntry[] = scoutReports.flatMap((r) =>
+		(r.logDrafts ?? [])
+			.filter((l) => l.status === 'godkendt')
+			.map((l) => ({ date: l.date, title: l.title, description: l.description, hours: l.hours || undefined, kind: l.kind ?? 'seo' })),
+	)
+	// En kundebesked, Andreas har skrevet sin indsigt i og markeret klar, bliver en kladde under Beskeder.
+	const scoutDrafts: MessageDraft[] = scoutReports
+		.filter((r) => r.message?.status === 'klar' && r.message.intro)
+		.map((r) => ({
+			id: `spejder-${r.month}`,
+			label: `SEO-spejderen: ${r.message?.heading || formatMonth(r.month)}`,
+			template: 'fri',
+			fields: {
+				heading: r.message?.heading ?? '',
+				intro: [r.message?.intro, r.message?.insight].filter((t) => t?.trim()).join('\n\n'),
+			},
+		}))
 	const directoryMarks = await getDirectoryMarks()
 	const sentMessages = isHorizen ? await getSentMessages() : []
 	const [snapshots, seoCheckRun, leadRows, aiRows, searchTrend, pageHealth, visits, companies] = await Promise.all([
@@ -1745,8 +1791,14 @@ export default async function SeoOverviewPage({
 			hours: t.estimateHours,
 		}))
 	// Mærket "SEO" eller "Udvikling": listen bestemmer, medmindre posten selv siger andet.
-	const seoEntries: ActivityEntry[] = recentActivity.map((e) => ({ ...e, kind: e.kind ?? 'seo' }))
-	const devEntries: ActivityEntry[] = pastAdhocActivity.map((e) => ({ ...e, kind: e.kind ?? 'udvikling' }))
+	const seoEntries: ActivityEntry[] = [
+		...recentActivity.map((e) => ({ ...e, kind: e.kind ?? 'seo' })),
+		...scoutLogEntries.filter((e) => e.kind === 'seo'),
+	].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''))
+	const devEntries: ActivityEntry[] = [
+		...pastAdhocActivity.map((e) => ({ ...e, kind: e.kind ?? 'udvikling' })),
+		...scoutLogEntries.filter((e) => e.kind === 'udvikling'),
+	]
 	const solvedDevEntries: ActivityEntry[] = solvedTaskEntries.map((e) => ({ ...e, kind: 'udvikling' }))
 	// Ad hoc-log = statisk historik + løste opgaver (begge aftagere re-sorterer).
 	const adhocEntries: ActivityEntry[] = [
@@ -2091,6 +2143,13 @@ export default async function SeoOverviewPage({
 				title="Månedens tjekliste"
 				description="Den faste rute gennem den månedlige SEO-gennemgang. Klik på et trin for at se, hvad det dækker."
 			/>
+			{showChecklist && isHorizen && scoutReport && (
+				<ScoutReport
+					report={scoutReport}
+					monthLabel={formatMonth(checklistMonth)}
+					dataMonthLabel={scoutReport.dataMonth ? formatMonth(scoutReport.dataMonth) : undefined}
+				/>
+			)}
 			{showChecklist ? (
 				<MonthlyChecklist
 					month={checklistMonth}
@@ -2100,6 +2159,7 @@ export default async function SeoOverviewPage({
 					editable={isHorizen}
 					hours={checklistHours}
 					history={checklistHistory}
+					scoutSteps={scoutSteps}
 				/>
 			) : (
 				// Uden månedlig gennemgang: tjeklisten vises roligt og kan ikke bruges (fra TUG, Andreas 19/11-2026).
@@ -2399,7 +2459,7 @@ export default async function SeoOverviewPage({
 		clientQuestions.length || clientTodos.length
 			? `q${clientQuestions.length}-a${clientQuestions.filter((q) => q.answer || answers[questionKey(q)]).length}-t${clientTodos.length}-d${clientTodos.length - openTodos}`
 			: undefined
-	const loggedActivity = [...recentActivity, ...pastAdhocActivity]
+	const loggedActivity = [...recentActivity, ...pastAdhocActivity, ...scoutLogEntries]
 	const activityNotify = loggedActivity.length
 		? `${loggedActivity.length}-${loggedActivity.reduce((m, e) => (e.date > m ? e.date : m), '')}`
 		: undefined
@@ -2968,7 +3028,7 @@ export default async function SeoOverviewPage({
 										senderPhoto={sender.photo}
 										defaults={clientMessageDefaults}
 										recipients={clientRecipients}
-										drafts={clientMessageDrafts}
+										drafts={[...clientMessageDrafts, ...scoutDrafts]}
 										sent={sentMessages}
 									/>
 								),

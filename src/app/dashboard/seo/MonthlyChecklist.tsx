@@ -5,6 +5,7 @@ import type { ChecklistPhase } from './data'
 import { accent } from './_tokens'
 import { STATUS_META } from './statusMeta'
 import TabLink from './TabLink'
+import { SCOUT_NAME, SCOUT_STEP_LABEL, type ScoutStep } from './ScoutReport'
 
 export type ChecklistDone = { stepId: string; doneAt: string; doneBy?: string }
 export type ChecklistHistory = { month: string; done: number; total: number }
@@ -24,6 +25,7 @@ export default function MonthlyChecklist({
 	initialDone,
 	editable,
 	history,
+	scoutSteps,
 }: {
 	month: string
 	monthLabel: string
@@ -33,6 +35,8 @@ export default function MonthlyChecklist({
 	/** Ikke vist (Andreas 15/11-2026: intet tidsestimat for nu). */
 	hours?: string
 	history: ChecklistHistory[]
+	/** SEO-spejderens noter pr. trin (kun Horizen ser dem). */
+	scoutSteps?: Record<string, ScoutStep>
 }) {
 	const [done, setDone] = useState<Record<string, ChecklistDone>>(
 		Object.fromEntries(initialDone.map((d) => [d.stepId, d])),
@@ -148,7 +152,21 @@ export default function MonthlyChecklist({
 								</div>
 
 								<div className="mt-4 grid gap-4 md:grid-cols-[1.4fr_1fr]">
-									<p className="text-muted text-sm leading-relaxed">{s.description}</p>
+									<div>
+										<p className="text-muted text-sm leading-relaxed">{s.description}</p>
+										{scoutSteps?.[s.id] && (
+											<div className="bg-foreground/[0.03] mt-3 rounded-xl p-3 text-sm">
+												<span className="text-foreground/55 block text-[11px] font-medium tracking-[0.14em] uppercase">
+													{SCOUT_STEP_LABEL[scoutSteps[s.id].status]}
+												</span>
+												{scoutSteps[s.id].note && (
+													<span className="text-foreground/80 mt-1 block leading-relaxed whitespace-pre-line">
+														{scoutSteps[s.id].note}
+													</span>
+												)}
+											</div>
+										)}
+									</div>
 
 									<button
 										type="button"
@@ -181,7 +199,9 @@ export default function MonthlyChecklist({
 												{/* Ingen dato (Andreas 23/11-2026): datoen er klik-datoen, ikke den dag,
 												    arbejdet blev gjort, så den kan være misvisende. Hvornår står i aktivitetsloggen. */}
 												{d
-													? 'Trinnet er gennemgået'
+													? d.doneBy === SCOUT_NAME
+														? 'Gennemgået af SEO-spejderen'
+														: 'Trinnet er gennemgået'
 													: editable
 														? 'Markér som gennemført'
 														: 'Ikke gennemført endnu'}
