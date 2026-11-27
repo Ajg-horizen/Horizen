@@ -26,6 +26,7 @@ export default function MonthlyChecklist({
 	editable,
 	history,
 	scoutSteps,
+	scoutDate,
 }: {
 	month: string
 	monthLabel: string
@@ -41,6 +42,8 @@ export default function MonthlyChecklist({
 	 * at en agent har været inde). Uden den er visningen neutral.
 	 */
 	scoutSteps?: Record<string, ScoutStep>
+	/** Dato for spejderens gennemgang, vist ved hver note (fx "27. nov."). */
+	scoutDate?: string
 }) {
 	const [done, setDone] = useState<Record<string, ChecklistDone>>(
 		Object.fromEntries(initialDone.map((d) => [d.stepId, d])),
@@ -162,6 +165,7 @@ export default function MonthlyChecklist({
 											<div className="bg-foreground/[0.03] mt-3 rounded-xl p-3 text-sm">
 												<span className="text-foreground/55 block text-[11px] font-medium tracking-[0.14em] uppercase">
 													{SCOUT_STEP_LABEL[scoutSteps[s.id].status]}
+													{scoutDate ? ` · ${scoutDate}` : ''}
 												</span>
 												{scoutSteps[s.id].note && (
 													<span className="text-foreground/80 mt-1 block leading-relaxed whitespace-pre-line">
