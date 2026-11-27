@@ -7,6 +7,9 @@ import {
   MousePointerClickIcon,
   SearchIcon,
   ServerIcon,
+  SwatchBookIcon,
+  LayersIcon,
+  ChartSplineIcon,
 } from "lucide-react";
 import CaseStudyPage, { type CaseDetail } from "@/components/CaseStudyPage";
 import { cases } from "@/lib/cases";
@@ -27,22 +30,25 @@ const detail: CaseDetail = {
     "Et nyt site med eget designsystem til en rådgivningsvirksomhed inden for miljø og arbejdsmiljø, bygget til at bære samtaler med store bygherrer.",
   highlight: {
     eyebrow: "Under overfladen",
-    heading: "Tolv sektioner, ét tydeligt hierarki",
+    heading: "Et gennemført redesign\nmed headless CMS og dashboard",
     paragraphs: [
-      "Forsiden består af tolv sektioner: ydelser i bento-grid, referencer, arbejdsproces og et gennemtænkt CTA-hierarki. SEO-fundamentet med metadata, sitemap og robots var på plads fra dag ét.",
+      "Miljøkontoret fik en helt ny visuel identitet på nettet: farver, visuel stil, fonte og typografi, samlet i et designsystem, der holder udtrykket ensartet på alle sider. Indholdet retter de selv i et headless CMS, og i deres eget dashboard følger de synligheden og SEO-arbejdet måned for måned. Metadata, sitemap og robots var på plads fra dag ét.",
     ],
     pillars: [
       {
-        title: "Designsystem med tokens",
-        text: "Farver, afstande og typografi defineret ét sted.",
+        icon: SwatchBookIcon,
+        title: "Designsystem",
+        text: "Farver, fonte og typografi defineret ét sted.",
       },
       {
-        title: "CTA-hierarki",
-        text: "Den besøgende ved altid, hvad det næste skridt er.",
+        icon: LayersIcon,
+        title: "Headless CMS",
+        text: "Tekster, billeder og sider rettes uden at kende kode.",
       },
       {
-        title: "SEO fra dag ét",
-        text: "Metadata, sitemap og robots på plads før lancering.",
+        icon: ChartSplineIcon,
+        title: "SEO-dashboard",
+        text: "Synlighed og indsatser samlet ét sted, måned for måned.",
       },
     ],
   },
@@ -80,12 +86,11 @@ const detail: CaseDetail = {
   ],
   story: {
     eyebrow: "Udgangspunktet",
-    heading: "Fagligheden var der.",
-    headingTail: "Den blev bare ikke fundet.",
+    heading: "Et SEO-ønske, der endte\nmed et helt nyt fundament",
     paragraphs: [
-      "Miljøkontoret rådgiver bygherrer inden for pharma, biotek og offentligt byggeri, hvor troværdighed afgør alt. Michael kom til os for at få hjælp til SEO, så flere kunne finde dem i Google.",
-      "Da vi gik siden igennem, blev det tydeligt, at den gamle løsning var svær at bygge videre på. Vores anbefaling var et nyt fundament. Michael var klar: Var det den bedste vej for virksomheden, så var det den, de skulle gå.",
-      "Sammen byggede vi en ny hjemmeside fra bunden i Next.js og React med eget designsystem. Den blev fundamentet for det SEO-arbejde, der i dag løfter synligheden måned for måned. AI er et værktøj i vores proces, ikke en genvej.",
+      "Miljøkontoret kom til os for at forstå, hvorfor deres hjemmeside ikke blev fundet i Google, og for at løfte den med SEO.",
+      "Før vi starter på SEO, gennemgår vi altid hjemmesidens tekniske fundament. AI har løftet niveauet markant, og det, der var godt nok for bare et halvt år siden, er det ikke længere i dag. Gennemgangen viste, at siden ikke levede op til de krav, der stilles til hastighed, kodestruktur og teknisk SEO i 2026. Skulle vi kunne love resultater, var en ny hjemmeside den rigtige vej for både Miljøkontoret og os.",
+      "Derfor tilbød vi Miljøkontoret en helt ny hjemmeside som en del af en SEO-aftale over en fast periode. Vi startede samarbejdet i maj 2026, og synligheden er steget måned for måned. Vi er glade for, at vi tog den beslutning. Den har betydet, at Miljøkontoret fortsat er kunde hos os efter en positiv oplevelse med SEO-arbejdet og deres nye hjemmeside.",
     ],
     facts: [
       { value: "28/28", label: "sider med i Googles indeks" },
@@ -116,10 +121,9 @@ const detail: CaseDetail = {
   },
   disciplines: {
     eyebrow: "Det arbejder vi på nu",
-    heading: "Vores indsatser for Miljøkontoret.",
-    headingTail: "Efter lanceringen, måned for måned.",
+    heading: "Vores løbende arbejde for Miljøkontoret",
     intro:
-      "Siden gik live i september 2026. Siden da har vi en fast SEO-aftale med Miljøkontoret, og det her er de indsatser, vi arbejder med lige nu.",
+      "Vi startede samarbejdet i maj 2026. Siden da har vi en fast SEO-aftale med Miljøkontoret, og det her er de indsatser, vi arbejder med lige nu.",
     items: [
       {
         title: "Teknisk SEO",

@@ -66,7 +66,9 @@ function smoothPath(pts: { x: number; y: number }[]) {
     const c1y = p1.y + (p2.y - p0.y) / 6;
     const c2x = p2.x - (p3.x - p1.x) / 6;
     const c2y = p2.y - (p3.y - p1.y) / 6;
-    d += ` C${c1x},${Math.min(c1y, p1.y)} ${c2x},${c2y} ${p2.x},${p2.y}`;
+    // Kurven må aldrig dykke under det laveste af de to punkter (fx flad gammel linje før et spring).
+    const floor = Math.max(p1.y, p2.y);
+    d += ` C${c1x},${Math.min(c1y, p1.y)} ${c2x},${Math.min(c2y, floor)} ${p2.x},${p2.y}`;
   }
   return d;
 }
@@ -348,7 +350,7 @@ export function VisibilitySection({ data }: { data: Visibility }) {
             <ScrambleEyebrow className="text-xs font-medium tracking-[0.3em] text-white/40 uppercase">
               {data.eyebrow}
             </ScrambleEyebrow>
-            <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
+            <h2 className="mt-4 text-3xl font-bold tracking-tight whitespace-pre-line md:text-4xl">
               {data.heading}
             </h2>
             {data.intro && (
@@ -392,8 +394,6 @@ export function VisibilitySection({ data }: { data: Visibility }) {
 export type Disciplines = {
   eyebrow: string;
   heading: string;
-  /** Dæmpet anden halvdel af overskriften (Horizens to-delte overskrift). */
-  headingTail?: string;
   intro?: string;
   /** De månedlige indsatser. `tags` er fagtermerne, `visual` indholdet i programvinduet. */
   items: {
@@ -484,10 +484,7 @@ export function DisciplinesSection({ data }: { data: Disciplines }) {
       <motion.div {...inView} custom={0} className="max-w-3xl">
         <ScrambleEyebrow>{data.eyebrow}</ScrambleEyebrow>
         <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
-          {data.heading}{" "}
-          {data.headingTail && (
-            <span className="text-muted">{data.headingTail}</span>
-          )}
+          {data.heading}
         </h2>
         {data.intro && (
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted">
@@ -509,7 +506,6 @@ export function DisciplinesSection({ data }: { data: Disciplines }) {
 export type CaseStory = {
   eyebrow: string;
   heading: string;
-  headingTail?: string;
   /** Udfordring og løsning som almindelig prosa (to-tre korte afsnit). */
   paragraphs: string[];
   /** Store tal i en række nederst. Kun målte tal. */
@@ -522,11 +518,8 @@ export function StorySection({ data }: { data: CaseStory }) {
       <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
         <motion.div {...inView} custom={0} className="lg:col-span-6">
           <ScrambleEyebrow>{data.eyebrow}</ScrambleEyebrow>
-          <h2 className="mt-4 text-4xl leading-[1.05] font-bold tracking-tight md:text-5xl">
-            {data.heading}{" "}
-            {data.headingTail && (
-              <span className="text-muted">{data.headingTail}</span>
-            )}
+          <h2 className="mt-4 text-4xl leading-[1.05] font-bold tracking-tight whitespace-pre-line md:text-5xl">
+            {data.heading}
           </h2>
         </motion.div>
         <motion.div
