@@ -116,11 +116,14 @@ export default defineType({
 							name: 'status',
 							title: 'Status',
 							type: 'string',
-							options: { list: ['afventer', 'godkendt', 'afvist'] },
+							// godkendt = Andreas er enig, men posten er IKKE i aktivitetsloggen endnu.
+							// tilfoejet = sendt til aktivitetsloggen samlet (Andreas 27/11-2026).
+							options: { list: ['afventer', 'godkendt', 'tilfoejet', 'afvist'] },
 						}),
 						defineField({ name: 'hours', title: 'Timer (bruges ikke: aldrig timer pr. post)', type: 'number', hidden: true }),
 						defineField({ name: 'decidedAt', title: 'Besluttet', type: 'datetime' }),
 						defineField({ name: 'decidedBy', title: 'Af', type: 'string' }),
+						defineField({ name: 'postedAt', title: 'Tilføjet til aktivitetsloggen', type: 'datetime' }),
 					],
 				},
 			],

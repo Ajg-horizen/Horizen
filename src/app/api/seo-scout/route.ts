@@ -17,6 +17,9 @@ export const runtime = 'nodejs'
  *   Godkender eller afviser et forslag til aktivitetsloggen. Der sættes ALDRIG
  *   timer på den enkelte post (Andreas 27/11-2026); han lægger timerne for
  *   gennemgangen ind samlet, når han er færdig.
+ * - { action: 'post-logs' }  Sender alle godkendte logforslag til aktivitetsloggen
+ *   på én gang (status "tilfoejet", dato = i dag). "Godkend" alene poster intet
+ *   (Andreas 27/11-2026), så posterne altid står i trin-rækkefølge.
  * - { action: 'work', key, status: 'ny' | 'laest' | 'loest' }  Status på et punkt i
  *   arbejdslisten (Andreas 27/11-2026). "laest" = Claude må løse det; "loest"
  *   sætter Andreas selv. key er "a:<handling>", "s:<trin>" eller "c:<overført>".
@@ -81,6 +84,22 @@ export async function POST(request: NextRequest) {
 			})
 			patch.unset([`${base}.hours`])
 			await patch.commit()
+		} else if (body.action === 'post-logs') {
+			const doc = await writeClient.fetch<{ logDrafts?: { _key: string; status?: string }[] } | null>(
+				`*[_id == $id][0]{ logDrafts[]{ _key, status } }`,
+				{ id: _id },
+			)
+			const keys = (doc?.logDrafts ?? []).filter((l) => l.status === 'godkendt').map((l) => l._key)
+			if (!keys.length) return NextResponse.json({ error: 'Ingen godkendte poster at tilføje' }, { status: 400 })
+			const today = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Copenhagen' }).format(new Date())
+			const set: Record<string, unknown> = {}
+			for (const k of keys) {
+				set[`logDrafts[_key=="${k}"].status`] = 'tilfoejet'
+				set[`logDrafts[_key=="${k}"].date`] = today
+				set[`logDrafts[_key=="${k}"].postedAt`] = now
+			}
+			await writeClient.patch(_id).set(set).commit()
+			return NextResponse.json({ ok: true, posted: keys.length, date: today })
 		} else if (body.action === 'work') {
 			const key = typeof body.key === 'string' ? body.key : ''
 			const status = body.status
