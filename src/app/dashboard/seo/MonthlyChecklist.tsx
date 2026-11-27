@@ -35,7 +35,11 @@ export default function MonthlyChecklist({
 	/** Ikke vist (Andreas 15/11-2026: intet tidsestimat for nu). */
 	hours?: string
 	history: ChecklistHistory[]
-	/** SEO-spejderens noter pr. trin (kun Horizen ser dem). */
+	/**
+	 * SEO-spejderens noter pr. trin. Sendes KUN med i Horizens egen udgave under
+	 * Kun Horizen → Månedens gennemgang (Andreas 27/11-2026: kunden må aldrig se,
+	 * at en agent har været inde). Uden den er visningen neutral.
+	 */
 	scoutSteps?: Record<string, ScoutStep>
 }) {
 	const [done, setDone] = useState<Record<string, ChecklistDone>>(
@@ -199,7 +203,7 @@ export default function MonthlyChecklist({
 												{/* Ingen dato (Andreas 23/11-2026): datoen er klik-datoen, ikke den dag,
 												    arbejdet blev gjort, så den kan være misvisende. Hvornår står i aktivitetsloggen. */}
 												{d
-													? d.doneBy === SCOUT_NAME
+													? scoutSteps && d.doneBy === SCOUT_NAME
 														? 'Gennemgået af SEO-spejderen'
 														: 'Trinnet er gennemgået'
 													: editable

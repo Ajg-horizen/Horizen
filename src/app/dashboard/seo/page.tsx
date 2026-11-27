@@ -2136,6 +2136,40 @@ export default async function SeoOverviewPage({
 				total: ids.size,
 			}
 		})
+	// Månedens gennemgang (Andreas 27/11-2026): SEO-spejderens rapport og tjeklisten
+	// med spejderens noter. Står KUN under Kun Horizen, så kunden aldrig ser, at en
+	// agent har lavet forarbejdet. Kunden ser den neutrale tjekliste under Løbende drift.
+	const reviewTab = (
+		<div className="space-y-12">
+			<SectionHeading
+				eyebrow="Kun Horizen"
+				title="Månedens gennemgang"
+				description="SEO-spejderens forarbejde til månedens tjekliste: rapporten, forslag til aktivitetsloggen, kundebeskeden og noterne pr. trin. Kunden ser kun den neutrale tjekliste under Strategi → Løbende drift og de logposter, du godkender."
+			/>
+			{scoutReport ? (
+				<ScoutReport
+					report={scoutReport}
+					monthLabel={formatMonth(checklistMonth)}
+					dataMonthLabel={scoutReport.dataMonth ? formatMonth(scoutReport.dataMonth) : undefined}
+				/>
+			) : (
+				<p className="rounded-2xl border border-foreground/[0.08] bg-foreground/[0.03] px-5 py-4 text-sm text-foreground/70">
+					Der er ingen rapport fra SEO-spejderen for {formatMonth(checklistMonth).toLowerCase()} endnu. Den kommer den 4. i måneden om natten.
+				</p>
+			)}
+			<MonthlyChecklist
+				month={checklistMonth}
+				monthLabel={formatMonth(checklistMonth)}
+				phases={checklistPhases}
+				initialDone={checklists.find((c) => c.month === checklistMonth)?.done ?? []}
+				editable
+				hours={checklistHours}
+				history={checklistHistory}
+				scoutSteps={scoutSteps}
+			/>
+		</div>
+	)
+
 	const driftTab = (
 		<div className="space-y-12">
 			<SectionHeading
@@ -2143,13 +2177,6 @@ export default async function SeoOverviewPage({
 				title="Månedens tjekliste"
 				description="Den faste rute gennem den månedlige SEO-gennemgang. Klik på et trin for at se, hvad det dækker."
 			/>
-			{showChecklist && isHorizen && scoutReport && (
-				<ScoutReport
-					report={scoutReport}
-					monthLabel={formatMonth(checklistMonth)}
-					dataMonthLabel={scoutReport.dataMonth ? formatMonth(scoutReport.dataMonth) : undefined}
-				/>
-			)}
 			{showChecklist ? (
 				<MonthlyChecklist
 					month={checklistMonth}
@@ -2159,7 +2186,6 @@ export default async function SeoOverviewPage({
 					editable={isHorizen}
 					hours={checklistHours}
 					history={checklistHistory}
-					scoutSteps={scoutSteps}
 				/>
 			) : (
 				// Uden månedlig gennemgang: tjeklisten vises roligt og kan ikke bruges (fra TUG, Andreas 19/11-2026).
@@ -3007,6 +3033,18 @@ export default async function SeoOverviewPage({
 				...(isHorizen
 					? ([
 							{ id: 'komigang', label: 'Kom i gang', icon: 'rocket', bottom: true, content: launchTab },
+							{
+								// SEO-spejderens rapport (Andreas 27/11-2026); kunden ser det ikke
+								id: 'gennemgang',
+								label: 'Månedens gennemgang',
+								icon: 'tasks',
+								meta: scoutReport
+									? String((scoutReport.logDrafts ?? []).filter((l) => (l.status ?? 'afventer') === 'afventer').length || '') || undefined
+									: undefined,
+								metaTone: 'attention',
+								bottom: true,
+								content: reviewTab,
+							},
 							{
 								// Fund og løse ender (Andreas 15/11-2026); kunden ser det ikke
 								id: 'register',
