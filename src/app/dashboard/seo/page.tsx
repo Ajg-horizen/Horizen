@@ -1728,11 +1728,12 @@ export default async function SeoOverviewPage({
 	const scoutReport = scoutReports.find((r) => r.month === checklistMonth)
 	const scoutSteps: Record<string, ScoutStep> | undefined =
 		isHorizen && scoutReport?.steps ? Object.fromEntries(scoutReport.steps.map((st) => [st.stepId, st])) : undefined
-	// Godkendte forslag fra spejderen er almindelige poster i aktivitetsloggen; timerne er Horizens egne.
+	// Godkendte forslag fra spejderen er almindelige poster i aktivitetsloggen.
 	const scoutLogEntries: ActivityEntry[] = scoutReports.flatMap((r) =>
 		(r.logDrafts ?? [])
 			.filter((l) => l.status === 'godkendt')
-			.map((l) => ({ date: l.date, title: l.title, description: l.description, hours: l.hours || undefined, kind: l.kind ?? 'seo' })),
+			// Aldrig timer på den enkelte post (Andreas 27/11-2026).
+			.map((l) => ({ date: l.date, title: l.title, description: l.description, kind: l.kind ?? 'seo' })),
 	)
 	// En kundebesked, Andreas har skrevet sin indsigt i og markeret klar, bliver en kladde under Beskeder.
 	const scoutDrafts: MessageDraft[] = scoutReports

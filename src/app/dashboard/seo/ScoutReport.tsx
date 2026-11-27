@@ -18,7 +18,6 @@ export type ScoutLogDraft = {
 	description: string
 	kind?: 'seo' | 'udvikling'
 	status?: 'afventer' | 'godkendt' | 'afvist'
-	hours?: number
 }
 export type ScoutReportData = {
 	month: string
@@ -59,7 +58,7 @@ async function post(body: Record<string, unknown>) {
  * SEO-spejderens månedsrapport (Andreas 27/11-2026), kun for Horizen, over
  * Månedens tjekliste på Strategi → Løbende drift. Spejderen har gennemgået
  * tjeklisten den 3.; her ser Andreas resultatet, godkender forslag til
- * aktivitetsloggen (og sætter selv timer), skriver sin indsigt i
+ * aktivitetsloggen, skriver sin indsigt i
  * kundebeskeden og finder rettelserne, der ligger klar i Studio.
  */
 export default function ScoutReport({
@@ -72,7 +71,6 @@ export default function ScoutReport({
 	dataMonthLabel?: string
 }) {
 	const [logs, setLogs] = useState<ScoutLogDraft[]>(report.logDrafts ?? [])
-	const [hours, setHours] = useState<Record<string, string>>({})
 	const [insight, setInsight] = useState(report.message?.insight ?? '')
 	const [msgStatus, setMsgStatus] = useState(report.message?.status ?? 'kladde')
 	const [busy, setBusy] = useState<string | null>(null)
@@ -95,22 +93,16 @@ export default function ScoutReport({
 
 	async function decide(key: string, decision: 'godkendt' | 'afvist' | 'afventer') {
 		if (busy) return
-		const raw = hours[key]
-		const h = raw ? Number(raw.replace(',', '.')) : undefined
-		if (decision === 'godkendt' && raw && (!Number.isFinite(h) || (h as number) <= 0)) {
-			setError('Timerne skal være et tal over 0, fx 1,5. Lad feltet stå tomt for ingen timer.')
-			return
-		}
 		const before = logs
 		setBusy(key)
 		setError(null)
 		setLogs((ls) =>
 			ls.map((l) =>
-				l._key === key ? { ...l, status: decision, hours: decision === 'godkendt' && h ? Math.round(h * 4) / 4 : undefined } : l,
+				l._key === key ? { ...l, status: decision } : l,
 			),
 		)
 		try {
-			await post({ month: report.month, action: 'log', key, decision, hours: h })
+			await post({ month: report.month, action: 'log', key, decision })
 		} catch (err) {
 			setLogs(before)
 			setError(err instanceof Error ? err.message : 'Kunne ikke gemme')
@@ -227,7 +219,7 @@ export default function ScoutReport({
 				<div className={card}>
 					<span className={eyebrow}>Forslag til aktivitetsloggen</span>
 					<p className="text-muted mt-2 text-sm leading-relaxed">
-						Kunden ser kun de poster, du godkender. Timerne sætter du selv; lad feltet stå tomt, hvis posten ikke skal have timer.
+						Kunden ser kun de poster, du godkender. Der sættes aldrig timer på den enkelte post; timerne for gennemgangen lægger du selv ind samlet, når du er færdig.
 					</p>
 					<ul className="mt-4 space-y-3">
 						{logs.map((l) => {
@@ -243,20 +235,6 @@ export default function ScoutReport({
 									</p>
 									{status === 'afventer' ? (
 										<div className="mt-3 flex flex-wrap items-center gap-2">
-											<label className="text-muted flex items-center gap-2 text-sm" htmlFor={`scout-h-${l._key}`}>
-												Timer
-												<input
-													id={`scout-h-${l._key}`}
-													inputMode="decimal"
-													placeholder="fx 1,5"
-													value={hours[l._key] ?? ''}
-													onChange={(e) => {
-														setError(null)
-														setHours((h) => ({ ...h, [l._key]: e.target.value }))
-													}}
-													className="border-foreground/15 w-20 rounded-lg border bg-transparent px-2 py-1 text-sm"
-												/>
-											</label>
 											<button
 												type="button"
 												disabled={busy === l._key}
@@ -279,7 +257,7 @@ export default function ScoutReport({
 										<div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
 											<Pill color={status === 'godkendt' ? STATUS_META.done : STATUS_META.missing}>
 												{status === 'godkendt'
-													? `Godkendt${l.hours ? ` · ${String(l.hours).replace('.', ',')} t` : ' · ingen timer'}`
+													? 'Godkendt'
 													: 'Afvist'}
 											</Pill>
 											<button

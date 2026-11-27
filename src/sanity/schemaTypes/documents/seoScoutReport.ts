@@ -6,7 +6,7 @@ import { VscTelescope } from 'react-icons/vsc'
  * "seo-scout.ÅÅÅÅ-MM". Skrives af agenten SEO-spejderen den 3. i måneden, når
  * den har gennemgået Månedens tjekliste. Andreas læser den i dashboardet
  * (Strategi → Løbende drift), godkender eller afviser forslag til
- * aktivitetsloggen (han sætter selv timer), skriver sin egen indsigt i
+ * aktivitetsloggen (aldrig timer pr. post), skriver sin egen indsigt i
  * kundebeskeden og publicerer rettelserne i Studio → Releases.
  * Ændres i dashboardet via POST /api/seo-scout. Står i dashboardOnlyTypes.
  */
@@ -85,7 +85,7 @@ export default defineType({
 							type: 'string',
 							options: { list: ['afventer', 'godkendt', 'afvist'] },
 						}),
-						defineField({ name: 'hours', title: 'Timer (sat af Horizen)', type: 'number' }),
+						defineField({ name: 'hours', title: 'Timer (bruges ikke: aldrig timer pr. post)', type: 'number', hidden: true }),
 						defineField({ name: 'decidedAt', title: 'Besluttet', type: 'datetime' }),
 						defineField({ name: 'decidedBy', title: 'Af', type: 'string' }),
 					],
