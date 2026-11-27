@@ -17,7 +17,10 @@ export const runtime = 'nodejs'
  *   Godkender eller afviser et forslag til aktivitetsloggen. Der sættes ALDRIG
  *   timer på den enkelte post (Andreas 27/11-2026); han lægger timerne for
  *   gennemgangen ind samlet, når han er færdig.
- * - { action: 'insight', insight }  Gemmer Andreas' egen indsigt i kundebeskeden.
+ * - { action: 'work', key, status: 'ny' | 'laest' | 'loest' }  Status på et punkt i
+ *   arbejdslisten (Andreas 27/11-2026). "laest" = Claude må løse det; "loest"
+ *   sætter Andreas selv. key er "a:<handling>", "s:<trin>" eller "c:<overført>".
+ * - { action: 'insight', insight }  (ubrugt) Andreas' indsigt i en kundebesked.
  * - { action: 'message', ready: boolean }  Kladden er klar til fanen Beskeder.
  *
  * Gemmes i dokumentet "seo-scout.ÅÅÅÅ-MM" (type seoScoutReport), som
@@ -25,6 +28,7 @@ export const runtime = 'nodejs'
  */
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/
 const KEY = /^[A-Za-z0-9_-]{1,64}$/
+const WORK_KEY = /^[asc]:[A-Za-z0-9_-]{1,64}$/
 const MAX_TEXT = 3000
 
 export async function POST(request: NextRequest) {
@@ -77,6 +81,18 @@ export async function POST(request: NextRequest) {
 			})
 			patch.unset([`${base}.hours`])
 			await patch.commit()
+		} else if (body.action === 'work') {
+			const key = typeof body.key === 'string' ? body.key : ''
+			const status = body.status
+			if (!WORK_KEY.test(key) || (status !== 'ny' && status !== 'laest' && status !== 'loest')) {
+				return NextResponse.json({ error: 'Ukendt punkt eller status' }, { status: 400 })
+			}
+			await writeClient
+				.patch(_id)
+				.setIfMissing({ work: [] })
+				.unset([`work[_key=="${key}"]`])
+				.append('work', [{ _key: key, _type: 'scoutWork', status, at: now, by }])
+				.commit()
 		} else if (body.action === 'insight') {
 			const insight = typeof body.insight === 'string' ? body.insight.slice(0, MAX_TEXT) : ''
 			await writeClient.patch(_id).setIfMissing({ message: {} }).set({ 'message.insight': insight }).commit()

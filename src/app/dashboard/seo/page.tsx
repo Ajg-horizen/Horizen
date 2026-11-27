@@ -333,13 +333,26 @@ async function getChecklists(): Promise<{ month: string; done: ChecklistDone[] }
  * blødt. Godkendte logforslag bliver til poster i aktivitetsloggen, og en
  * kundebesked markeret "klar" bliver en kladde under Beskeder.
  */
+/** Punkter i spejderens rapport, der venter på Andreas (nye + logforslag). */
+function scoutAttention(r: ScoutReportData): number {
+	const status = new Map((r.work ?? []).map((w) => [w._key, w.status]))
+	const keys = [
+		...(r.carriedOver ?? []).map((c) => `c:${c._key}`),
+		...(r.actions ?? []).map((a) => `a:${a._key}`),
+		...(r.steps ?? []).filter((s) => s.status !== 'klaret').map((s) => `s:${s.stepId}`),
+	]
+	const unread = keys.filter((k) => (status.get(k) ?? 'ny') === 'ny').length
+	const logs = (r.logDrafts ?? []).filter((l) => (l.status ?? 'afventer') === 'afventer').length
+	return unread + logs
+}
+
 async function getScoutReports(): Promise<ScoutReportData[]> {
 	try {
 		const rows = await client
 			.withConfig({ token: process.env.SANITY_API_READ_TOKEN, useCdn: false, perspective: 'raw', stega: false })
 			.fetch<ScoutReportData[]>(
 				`*[_type == "seoScoutReport" && defined(month) && !(_id in path("drafts.**"))] | order(month desc)[0...12]{
-					month, dataMonth, createdAt, summary, steps, actions, releaseId, releaseTitle, releaseCount, logDrafts, message
+					month, dataMonth, createdAt, summary, steps, actions, carriedOver, work, releaseId, releaseTitle, releaseCount, logDrafts, message
 				}`,
 				{},
 				{ cache: 'no-store' },
@@ -2152,6 +2165,7 @@ export default async function SeoOverviewPage({
 					report={scoutReport}
 					monthLabel={formatMonth(checklistMonth)}
 					dataMonthLabel={scoutReport.dataMonth ? formatMonth(scoutReport.dataMonth) : undefined}
+					stepTitles={Object.fromEntries(checklistPhases.flatMap((p) => p.steps.map((st) => [st.id, st.title])))}
 				/>
 			) : (
 				<p className="rounded-2xl border border-foreground/[0.08] bg-foreground/[0.03] px-5 py-4 text-sm text-foreground/70">
@@ -3044,9 +3058,8 @@ export default async function SeoOverviewPage({
 								id: 'gennemgang',
 								label: 'Månedens gennemgang',
 								icon: 'tasks',
-								meta: scoutReport
-									? String((scoutReport.logDrafts ?? []).filter((l) => (l.status ?? 'afventer') === 'afventer').length || '') || undefined
-									: undefined,
+								// Antal punkter, der venter på Andreas: nye i arbejdslisten + logforslag.
+								meta: scoutReport ? String(scoutAttention(scoutReport) || '') || undefined : undefined,
 								metaTone: 'attention',
 								bottom: true,
 								content: reviewTab,

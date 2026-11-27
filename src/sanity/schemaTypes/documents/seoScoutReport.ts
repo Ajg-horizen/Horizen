@@ -58,6 +58,39 @@ export default defineType({
 				},
 			],
 		}),
+		defineField({
+			name: 'carriedOver',
+			title: 'Overført fra tidligere måneder',
+			type: 'array',
+			of: [
+				{
+					type: 'object',
+					name: 'scoutCarried',
+					fields: [
+						defineField({ name: 'title', title: 'Punkt', type: 'string' }),
+						defineField({ name: 'why', title: 'Hvorfor', type: 'text' }),
+						defineField({ name: 'fromMonth', title: 'Fra måned (ÅÅÅÅ-MM)', type: 'string' }),
+					],
+				},
+			],
+		}),
+		defineField({
+			name: 'work',
+			title: 'Andreas\' arbejdsliste (status pr. punkt)',
+			description: 'ny → laest (Claude må løse det) → loest (sat af Andreas). _key er a:<handling>, s:<trin> eller c:<overført>.',
+			type: 'array',
+			of: [
+				{
+					type: 'object',
+					name: 'scoutWork',
+					fields: [
+						defineField({ name: 'status', title: 'Status', type: 'string', options: { list: ['ny', 'laest', 'loest'] } }),
+						defineField({ name: 'at', title: 'Tidspunkt', type: 'datetime' }),
+						defineField({ name: 'by', title: 'Af', type: 'string' }),
+					],
+				},
+			],
+		}),
 		defineField({ name: 'releaseId', title: 'Release med rettelser', type: 'string' }),
 		defineField({ name: 'releaseTitle', title: 'Releasens navn', type: 'string' }),
 		defineField({ name: 'releaseCount', title: 'Antal rettelser', type: 'number' }),
