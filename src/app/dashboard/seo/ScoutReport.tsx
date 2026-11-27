@@ -67,29 +67,32 @@ type WorkItem = { key: string; kind: string; title: string; text?: string; tag?:
 
 /**
  * SEO-spejderens månedsrapport (Andreas 27/11-2026), kun under Kun Horizen →
- * Månedens gennemgang. Øverst Andreas' arbejdsliste: alt, spejderen har fundet,
- * med status Ny → Læst → Løst. "Læst" er hans grønne lys til, at Claude må løse
- * punktet i en session ("tag månedens gennemgang"); "Løst" sætter han selv, når
- * det er gjort. Intet herfra går til kunden eller til Vores opgaver. Ikke-løste
- * punkter overføres af spejderen til næste måned. Nederst forslag til
- * aktivitetsloggen (Godkend/Afvis, aldrig timer pr. post) og evt. rettelser i Studio.
+ * Månedens gennemgang. Rapporten er FORARBEJDE til Andreas' og Claudes fælles
+ * gennemgang, ikke en ny arbejdsgang: knappen "Start gennemgangen med Claude"
+ * kopierer en besked, han sætter ind i en samtale, og så tager de tjeklisten
+ * punkt for punkt som altid. Punkter, de har løst, markerer Claude som løst
+ * (work: loest), så de ikke overføres til næste måned. Intet herfra går til
+ * kunden eller til Vores opgaver. Nederst forslag til aktivitetsloggen
+ * (Godkend/Afvis, aldrig timer pr. post) og evt. rettelser i Studio.
  */
 export default function ScoutReport({
 	report,
 	monthLabel,
 	dataMonthLabel,
 	stepTitles,
+	clientName,
 }: {
 	report: ScoutReportData
 	monthLabel: string
 	dataMonthLabel?: string
 	/** Trinenes navne fra tjeklisten, nøglet på stepId. */
 	stepTitles: Record<string, string>
+	/** Kundens navn (brand.client), bruges i beskeden til Claude. */
+	clientName: string
 }) {
 	const [logs, setLogs] = useState<ScoutLogDraft[]>(report.logDrafts ?? [])
-	const [work, setWork] = useState<Record<string, WorkStatus>>(
-		Object.fromEntries((report.work ?? []).map((w) => [w._key, w.status])),
-	)
+	const work: Record<string, WorkStatus> = Object.fromEntries((report.work ?? []).map((w) => [w._key, w.status]))
+	const [copied, setCopied] = useState<string | null>(null)
 	const [busy, setBusy] = useState<string | null>(null)
 	const [error, setError] = useState<string | null>(null)
 
@@ -118,8 +121,8 @@ export default function ScoutReport({
 			})),
 	]
 	const statusOf = (k: string): WorkStatus => work[k] ?? 'ny'
-	const unread = items.filter((i) => statusOf(i.key) === 'ny').length
-	const approved = items.filter((i) => statusOf(i.key) === 'laest').length
+	const open = items.filter((i) => statusOf(i.key) !== 'loest')
+	const solved = items.length - open.length
 	const pendingLogs = logs.filter((l) => (l.status ?? 'afventer') === 'afventer').length
 	// Datoen for gennemgangen står tydeligt øverst (Andreas 27/11-2026), så det er
 	// til at se, om det er denne måneds rapport. En ny måned giver et nyt dokument.
@@ -132,19 +135,18 @@ export default function ScoutReport({
 			})
 		: null
 
-	async function setStatus(key: string, status: WorkStatus) {
-		if (busy) return
-		const before = work
-		setBusy(key)
+	// Beskeden, Andreas sætter ind i en ny samtale med Claude (Andreas 27/11-2026):
+	// så tager de gennemgangen sammen ud fra spejderens fund, som han plejer.
+	const startPrompt = `Tag månedens gennemgang for ${clientName} ud fra SEO-spejderens rapport (seo-scout.${report.month}${created ? `, lavet ${created}` : ''}). Gå tjeklisten igennem med mig punkt for punkt, og skriv mine beslutninger ind i spejderens beslutningslog bagefter.`
+
+	async function copyStart() {
 		setError(null)
-		setWork((w) => ({ ...w, [key]: status }))
 		try {
-			await post({ month: report.month, action: 'work', key, status })
-		} catch (err) {
-			setWork(before)
-			setError(err instanceof Error ? err.message : 'Kunne ikke gemme')
-		} finally {
-			setBusy(null)
+			await navigator.clipboard.writeText(startPrompt)
+			setCopied('Kopieret. Sæt den ind i en ny samtale med Claude.')
+		} catch {
+			setCopied(null)
+			setError('Kunne ikke kopiere. Markér teksten herunder og kopiér den selv.')
 		}
 	}
 
@@ -181,11 +183,24 @@ export default function ScoutReport({
 					<p className="text-foreground/80 mt-3 text-sm leading-relaxed whitespace-pre-line">{report.summary}</p>
 				)}
 				<div className="mt-4 flex flex-wrap gap-2 text-xs">
-					{unread > 0 && <Pill color={info}>{unread} at læse</Pill>}
-					{approved > 0 && <Pill color={STATUS_META.partial}>{approved} læst, klar til at blive løst</Pill>}
+					{open.length > 0 && <Pill color={info}>{open.length} fund at gennemgå</Pill>}
+					{solved > 0 && <Pill color={STATUS_META.done}>{solved} løst</Pill>}
 					{pendingLogs > 0 && <Pill color={STATUS_META.partial}>{pendingLogs} logforslag venter</Pill>}
-					{unread === 0 && approved === 0 && pendingLogs === 0 && <Pill color={STATUS_META.done}>Alt er læst og løst</Pill>}
 				</div>
+				<div className="mt-5 flex flex-wrap items-center gap-3">
+					<button
+						type="button"
+						onClick={copyStart}
+						className="rounded-full px-5 py-2 text-sm font-medium"
+						style={{ backgroundColor: info.dot, color: '#fff' }}
+					>
+						Start gennemgangen med Claude
+					</button>
+					<span className="text-muted text-sm">
+						{copied ?? 'Kopierer en besked, du sætter ind i en ny samtale. Så tager I tjeklisten sammen, som du plejer.'}
+					</span>
+				</div>
+				{error && <p className="text-muted mt-2 text-xs select-all">{startPrompt}</p>}
 				{error && (
 					<p className="mt-3 text-sm" style={{ color: STATUS_META.missing.text }}>
 						{error}
@@ -196,15 +211,15 @@ export default function ScoutReport({
 			{/* Arbejdslisten */}
 			{items.length > 0 && (
 				<div className={card}>
-					<span className={eyebrow}>Din arbejdsliste</span>
+					<span className={eyebrow}>Det fandt spejderen</span>
 					<p className="text-muted mt-2 text-sm leading-relaxed">
-						De blå punkter er nye. Tryk <strong className="text-foreground font-medium">Læst</strong>, når du er enig, så må Claude gå i gang, næste gang du siger "tag månedens gennemgang". Tryk <strong className="text-foreground font-medium">Løst</strong>, når det er gjort. Intet herfra går til kunden.
+						Udgangspunktet for jeres gennemgang. Punkter, I løser sammen, bliver markeret som løst, så de ikke kommer igen næste måned. Intet herfra går til kunden.
 					</p>
 					<ul className="mt-4 space-y-3">
 						{items.map((it) => {
 							const st = statusOf(it.key)
-							const isNew = st === 'ny'
 							const isDone = st === 'loest'
+							const isNew = !isDone
 							return (
 								<li
 									key={it.key}
@@ -222,45 +237,10 @@ export default function ScoutReport({
 											{it.kind}
 										</span>
 										{it.tag && <Pill color={STATUS_META.done}>{it.tag}</Pill>}
-										{!isNew && (
-											<Pill color={isDone ? STATUS_META.done : STATUS_META.partial}>{isDone ? 'Løst' : 'Læst · klar til at blive løst'}</Pill>
-										)}
+										{isDone && <Pill color={STATUS_META.done}>Løst</Pill>}
 									</div>
 									<p className="text-foreground mt-1.5 text-[15px] font-medium leading-snug">{it.title}</p>
 									{it.text && <p className="text-foreground/85 mt-1.5 text-sm leading-relaxed whitespace-pre-line">{it.text}</p>}
-									<div className="mt-3 flex flex-wrap items-center gap-2">
-										{isNew && (
-											<button
-												type="button"
-												disabled={busy === it.key}
-												onClick={() => setStatus(it.key, 'laest')}
-												className="rounded-full px-4 py-1.5 text-sm font-medium"
-												style={{ backgroundColor: info.dot, color: '#fff' }}
-											>
-												Læst
-											</button>
-										)}
-										{!isDone && (
-											<button
-												type="button"
-												disabled={busy === it.key}
-												onClick={() => setStatus(it.key, 'loest')}
-												className="border-foreground/15 text-foreground rounded-full border bg-white px-4 py-1.5 text-sm"
-											>
-												Løst
-											</button>
-										)}
-										{!isNew && (
-											<button
-												type="button"
-												disabled={busy === it.key}
-												onClick={() => setStatus(it.key, isDone ? 'laest' : 'ny')}
-												className="text-muted text-sm underline underline-offset-2"
-											>
-												Fortryd
-											</button>
-										)}
-									</div>
 								</li>
 							)
 						})}

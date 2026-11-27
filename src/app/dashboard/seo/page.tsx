@@ -333,7 +333,7 @@ async function getChecklists(): Promise<{ month: string; done: ChecklistDone[] }
  * blødt. Godkendte logforslag bliver til poster i aktivitetsloggen, og en
  * kundebesked markeret "klar" bliver en kladde under Beskeder.
  */
-/** Punkter i spejderens rapport, der venter på Andreas (nye + logforslag). */
+/** Punkter i spejderens rapport, der venter på Andreas (åbne fund + logforslag). */
 function scoutAttention(r: ScoutReportData): number {
 	const status = new Map((r.work ?? []).map((w) => [w._key, w.status]))
 	const keys = [
@@ -341,9 +341,10 @@ function scoutAttention(r: ScoutReportData): number {
 		...(r.actions ?? []).map((a) => `a:${a._key}`),
 		...(r.steps ?? []).filter((s) => s.status !== 'klaret').map((s) => `s:${s.stepId}`),
 	]
-	const unread = keys.filter((k) => (status.get(k) ?? 'ny') === 'ny').length
+	// Fund, der ikke er løst endnu, + logforslag, der venter.
+	const open = keys.filter((k) => status.get(k) !== 'loest').length
 	const logs = (r.logDrafts ?? []).filter((l) => (l.status ?? 'afventer') === 'afventer').length
-	return unread + logs
+	return open + logs
 }
 
 async function getScoutReports(): Promise<ScoutReportData[]> {
@@ -2166,6 +2167,7 @@ export default async function SeoOverviewPage({
 					monthLabel={formatMonth(checklistMonth)}
 					dataMonthLabel={scoutReport.dataMonth ? formatMonth(scoutReport.dataMonth) : undefined}
 					stepTitles={Object.fromEntries(checklistPhases.flatMap((p) => p.steps.map((st) => [st.id, st.title])))}
+					clientName={BRAND.client}
 				/>
 			) : (
 				<p className="rounded-2xl border border-foreground/[0.08] bg-foreground/[0.03] px-5 py-4 text-sm text-foreground/70">
