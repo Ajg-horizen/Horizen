@@ -1743,11 +1743,16 @@ export default async function SeoOverviewPage({
 	const scoutSteps: Record<string, ScoutStep> | undefined =
 		isHorizen && scoutReport?.steps ? Object.fromEntries(scoutReport.steps.map((st) => [st.stepId, st])) : undefined
 	// Godkendte forslag fra spejderen er almindelige poster i aktivitetsloggen.
+	// Kun poster, Andreas har sendt til loggen samlet ("tilfoejet"); "godkendt" alene
+	// poster intet. De står altid i trin-rækkefølge (trin 1 før trin 4), uanset hvilken
+	// rækkefølge de blev godkendt i (Andreas 27/11-2026). Aldrig timer pr. post.
+	const trinNo = (t: string) => Number(/trin\s+(\d+)/i.exec(t)?.[1] ?? 999)
 	const scoutLogEntries: ActivityEntry[] = scoutReports.flatMap((r) =>
 		(r.logDrafts ?? [])
-			.filter((l) => l.status === 'godkendt')
-			// Aldrig timer på den enkelte post (Andreas 27/11-2026).
-			.map((l) => ({ date: l.date, title: l.title, description: l.description, kind: l.kind ?? 'seo' })),
+			.filter((l) => l.status === 'tilfoejet')
+			.map((l, i) => ({ l, i }))
+			.sort((x, y) => trinNo(x.l.title) - trinNo(y.l.title) || x.i - y.i)
+			.map(({ l }) => ({ date: l.date, title: l.title, description: l.description, kind: l.kind ?? 'seo' })),
 	)
 	// En kundebesked, Andreas har skrevet sin indsigt i og markeret klar, bliver en kladde under Beskeder.
 	const scoutDrafts: MessageDraft[] = scoutReports

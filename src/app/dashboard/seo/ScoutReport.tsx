@@ -1,11 +1,16 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { accent } from './_tokens'
 import { STATUS_META } from './statusMeta'
 
 /** Navnet, agenten skriver i doneBy, når den sætter et flueben i tjeklisten. */
 export const SCOUT_NAME = 'SEO-spejderen'
+
+// Trinnummeret i en logposts titel ("Månedens gennemgang, trin 4: …"). Poster uden trin
+// kommer sidst. Samme regel som i page.tsx (en server-fil kan ikke kalde denne).
+const trinNo = (t: string) => Number(/trin\s+(\d+)/i.exec(t)?.[1] ?? 999)
 
 /** Releases i Studio (Horizens Studio har to arbejdsområder; rettelserne laves mod det live (production)). */
 const STUDIO_RELEASES = '/admin/production/releases'
@@ -17,7 +22,8 @@ export type ScoutLogDraft = {
 	title: string
 	description: string
 	kind?: 'seo' | 'udvikling'
-	status?: 'afventer' | 'godkendt' | 'afvist'
+	/** godkendt = enig, men ikke i loggen endnu; tilfoejet = sendt til loggen samlet. */
+	status?: 'afventer' | 'godkendt' | 'tilfoejet' | 'afvist'
 }
 /** Status på et punkt i Andreas' arbejdsliste (Andreas 27/11-2026). */
 export type WorkStatus = 'ny' | 'laest' | 'loest'
@@ -150,6 +156,29 @@ export default function ScoutReport({
 		}
 	}
 
+	// Alle godkendte poster sendes til aktivitetsloggen på én gang, når gennemgangen
+	// er færdig, så de står i trin-rækkefølge, uanset hvilken rækkefølge de blev
+	// godkendt i (Andreas 27/11-2026). "Godkend" alene poster intet.
+	const router = useRouter()
+	const approvedLogs = logs.filter((l) => l.status === 'godkendt').length
+	const shownLogs = [...logs].sort((a, b) => trinNo(a.title) - trinNo(b.title))
+	async function postApproved() {
+		if (busy || !approvedLogs) return
+		const before = logs
+		setBusy('post')
+		setError(null)
+		setLogs((ls) => ls.map((l) => (l.status === 'godkendt' ? { ...l, status: 'tilfoejet' } : l)))
+		try {
+			await post({ month: report.month, action: 'post-logs' })
+			router.refresh() // så posterne står i aktivitetsloggen med det samme
+		} catch (err) {
+			setLogs(before)
+			setError(err instanceof Error ? err.message : 'Kunne ikke tilføje til aktivitetsloggen')
+		} finally {
+			setBusy(null)
+		}
+	}
+
 	async function decide(key: string, decision: 'godkendt' | 'afvist' | 'afventer') {
 		if (busy) return
 		const before = logs
@@ -275,10 +304,24 @@ export default function ScoutReport({
 				<div className={card}>
 					<span className={eyebrow}>Forslag til aktivitetsloggen</span>
 					<p className="text-muted mt-2 text-sm leading-relaxed">
-						Kunden ser kun de poster, du godkender. Der sættes aldrig timer på den enkelte post; timerne for gennemgangen lægger du selv ind samlet, når du er færdig.
+						Godkend dem, du er enig i, i den rækkefølge du vil. Intet kommer i aktivitetsloggen, før du trykker <strong className="text-foreground font-medium">Tilføj til aktivitetsloggen</strong>; så kommer alle de godkendte samlet og altid i trin-rækkefølge. Kunden ser kun dem. Aldrig timer pr. post.
 					</p>
+					{approvedLogs > 0 && (
+						<div className="mt-4 flex flex-wrap items-center gap-3">
+							<button
+								type="button"
+								disabled={busy === 'post'}
+								onClick={postApproved}
+								className="rounded-full px-5 py-2 text-sm font-medium"
+								style={{ backgroundColor: STATUS_META.done.dot, color: 'var(--color-background)' }}
+							>
+								Tilføj {approvedLogs} {approvedLogs === 1 ? 'godkendt post' : 'godkendte poster'} til aktivitetsloggen
+							</button>
+							<span className="text-muted text-sm">Tryk, når I er færdige med gennemgangen.</span>
+						</div>
+					)}
 					<ul className="mt-4 space-y-3">
-						{logs.map((l) => {
+						{shownLogs.map((l) => {
 							const status = l.status ?? 'afventer'
 							const waiting = status === 'afventer'
 							return (
@@ -320,17 +363,27 @@ export default function ScoutReport({
 										</div>
 									) : (
 										<div className="mt-3 flex flex-wrap items-center gap-3 text-sm">
-											<Pill color={status === 'godkendt' ? STATUS_META.done : STATUS_META.missing}>
-												{status === 'godkendt' ? 'Godkendt' : 'Afvist'}
-											</Pill>
-											<button
-												type="button"
-												disabled={busy === l._key}
-												onClick={() => decide(l._key, 'afventer')}
-												className="text-muted underline underline-offset-2"
+											<Pill
+												color={
+													status === 'tilfoejet' ? STATUS_META.done : status === 'godkendt' ? STATUS_META.partial : STATUS_META.missing
+												}
 											>
-												Fortryd
-											</button>
+												{status === 'tilfoejet'
+													? 'Tilføjet til aktivitetsloggen'
+													: status === 'godkendt'
+														? 'Godkendt · ikke tilføjet endnu'
+														: 'Afvist'}
+											</Pill>
+											{status !== 'tilfoejet' && (
+												<button
+													type="button"
+													disabled={busy === l._key}
+													onClick={() => decide(l._key, 'afventer')}
+													className="text-muted underline underline-offset-2"
+												>
+													Fortryd
+												</button>
+											)}
 										</div>
 									)}
 								</li>
