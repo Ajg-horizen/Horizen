@@ -3,7 +3,9 @@ import { projectId } from '@/sanity/env'
 import { createClient } from '@sanity/client'
 import {
 	fetchSearchConsoleMonth,
+	fetchSearchConsolePages,
 	fetchSearchConsoleQueries,
+	fetchSearchConsoleSitemaps,
 	prevMonth,
 } from '@/lib/search-console'
 
@@ -65,6 +67,28 @@ export async function GET(request: Request) {
 			fetchSearchConsoleQueries(SC_SITE, month, 25),
 		])
 
+		// Ekstra data til SEO-spejderen (Andreas 27/11-2026): tal pr. side, flere
+		// søgninger med placering og sitemap-status. Hentes for sig, så en fejl her
+		// aldrig forhindrer, at månedens totaler bliver gemt.
+		const [pagesRes, allQueriesRes, sitemapsRes] = await Promise.allSettled([
+			fetchSearchConsolePages(SC_SITE, month, 50),
+			fetchSearchConsoleQueries(SC_SITE, month, 200),
+			fetchSearchConsoleSitemaps(SC_SITE),
+		])
+		for (const r of [pagesRes, allQueriesRes, sitemapsRes])
+			if (r.status === 'rejected') console.error('[cron/seo-snapshot] ekstra data fejlede', r.reason)
+		const extras = {
+			...(pagesRes.status === 'fulfilled'
+				? { topPages: pagesRes.value.map((p, i) => ({ _key: `p-${i}`, ...p })) }
+				: {}),
+			...(allQueriesRes.status === 'fulfilled'
+				? { allQueries: allQueriesRes.value.map((q, i) => ({ _key: `a-${i}`, ...q })) }
+				: {}),
+			...(sitemapsRes.status === 'fulfilled'
+				? { sitemaps: sitemapsRes.value.map((s, i) => ({ _key: `s-${i}`, ...s })) }
+				: {}),
+		}
+
 		const snapshot = {
 			_id: `seoSnapshot-${month}`,
 			_type: 'seoSnapshot',
@@ -73,6 +97,7 @@ export async function GET(request: Request) {
 			capturedAt: new Date().toISOString(),
 			...metrics,
 			topQueries: topQueries.map((q, i) => ({ _key: `q-${i}`, ...q })),
+			...extras,
 		}
 
 		// Måledata er fakta fra Search Console, ikke indhold, så samme tal kan
@@ -106,6 +131,7 @@ export async function GET(request: Request) {
 			month,
 			metrics,
 			topQueries: topQueries.length,
+			extras: Object.keys(extras),
 			written,
 		})
 	} catch (err) {
