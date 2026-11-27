@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ContactButton } from "@/components/ContactButton";
 import MobileMenu from "@/components/MobileMenu";
 import { MenuToggleIcon } from "@/components/ui/menu-toggle-icon";
-import { services, marketing, ai, resources } from "@/lib/nav-data";
+import { services, marketing, ai, resources, SHOW_AI_MENU } from "@/lib/nav-data";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -148,24 +148,26 @@ export default function Navbar({ alwaysVisible = false }: { alwaysVisible?: bool
                   </NavigationMenuContent>
                 </NavigationMenuItem>
 
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>AI</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid w-[260px] gap-1">
-                      {ai.map((item) => (
-                        <ListItem
-                          key={item.href}
-                          title={item.title}
-                          href={item.href}
-                          icon={item.icon}
-                          badge={item.badge}
-                        >
-                          {item.description}
-                        </ListItem>
-                      ))}
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
+                {SHOW_AI_MENU && (
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger>AI</NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <ul className="grid w-[260px] gap-1">
+                        {ai.map((item) => (
+                          <ListItem
+                            key={item.href}
+                            title={item.title}
+                            href={item.href}
+                            icon={item.icon}
+                            badge={item.badge}
+                          >
+                            {item.description}
+                          </ListItem>
+                        ))}
+                      </ul>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                )}
 
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Ressourcer</NavigationMenuTrigger>
