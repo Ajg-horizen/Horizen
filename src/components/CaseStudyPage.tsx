@@ -56,7 +56,9 @@ export type CaseDetail = {
   challenge?: TextBlock;
   solution?: TextBlock;
   /** Mørk sektion med tre søjler. */
-  highlight: TextBlock & { pillars: { title: string; text: string }[] };
+  highlight: TextBlock & {
+    pillars: { title: string; text: string; icon?: LucideIcon }[];
+  };
   deliverables: { icon: LucideIcon; title: string; text: string }[];
   /** Resultater i tal. Kun verificerede tal. */
   stats?: { value: string; label: string }[];
@@ -331,7 +333,7 @@ export default function CaseStudyPage({ detail }: { detail: CaseDetail }) {
               <ScrambleEyebrow className="text-xs font-medium tracking-[0.3em] text-white/40 uppercase">
                 {detail.highlight.eyebrow}
               </ScrambleEyebrow>
-              <h2 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
+              <h2 className="mt-4 text-3xl font-bold tracking-tight whitespace-pre-line md:text-4xl">
                 {detail.highlight.heading}
               </h2>
               {detail.highlight.paragraphs.map((p, i) => (
@@ -352,6 +354,13 @@ export default function CaseStudyPage({ detail }: { detail: CaseDetail }) {
                   variants={fadeIn}
                   className="rounded-2xl border border-white/[0.08] bg-white/[0.04] p-6"
                 >
+                  {pillar.icon && (
+                    <pillar.icon
+                      className="mb-5 h-6 w-6 text-white/70"
+                      strokeWidth={1.5}
+                      aria-hidden
+                    />
+                  )}
                   <p className="text-lg font-semibold">{pillar.title}</p>
                   <p className="mt-2 text-sm leading-relaxed text-white/50">
                     {pillar.text}

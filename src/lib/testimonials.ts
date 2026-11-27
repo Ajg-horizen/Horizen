@@ -163,14 +163,17 @@ export const caseOnlyTestimonials: Testimonial[] = [
   },
   {
     id: "ramin-acp",
-    quote: "God og hurtig service. Mega glad for min nye hjemmeside.",
+    // Let omskrevet fra Ramins Trustpilot-anmeldelse ("God og hurtig service.
+    // Mega glad for min nye hjemmeside.") efter aftale med Andreas 27/11-2026.
+    // Derfor source "direct" og ikke "trustpilot".
+    quote: "Vi er virkelig glade for vores nye løsning og for samarbejdet med Horizen.",
     rating: 5,
     author: {
       name: "Ramin Agerli",
       company: "ACP",
       website: "https://www.ac-p.dk",
     },
-    source: "trustpilot",
+    source: "direct",
   },
 ];
 

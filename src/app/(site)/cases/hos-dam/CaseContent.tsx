@@ -26,8 +26,7 @@ const detail: CaseDetail = {
     "Et nyt site til kropsterapi i Brabrand med eget designsystem, online booking og indhold, Hos Dam selv redigerer.",
   story: {
     eyebrow: "Udgangspunktet",
-    heading: "En behandling, mange ikke kender.",
-    headingTail: "Siden skulle forklare den først.",
+    heading: "En hjemmeside, der forklarer kropsterapi",
     paragraphs: [
       "Ann-Sofie Dam tilbyder kropsterapi i Brabrand: pulserende massage med statiske tryk, der løsner spændinger og smerter. Mange har aldrig hørt om behandlingen, så hjemmesiden skulle både forklare, hvad kropsterapi er, og gøre det let at booke en tid.",
       "Vi startede med farverne. Paletten blev afprøvet sammen med Ann-Sofie, før den endte som et lille designsystem i sage og mint. Forsiden fortæller historien i rækkefølge: hvad kropsterapi er, priser, hvem der står bag, spørgsmål og svar og til sidst en tydelig vej til at booke.",
@@ -60,8 +59,7 @@ const detail: CaseDetail = {
   },
   disciplines: {
     eyebrow: "Det arbejder vi på nu",
-    heading: "Vores indsatser for Hos Dam.",
-    headingTail: "Efter lanceringen, måned for måned.",
+    heading: "Vores løbende arbejde for Hos Dam",
     intro:
       "Siden gik live i oktober 2026 sammen med et fast SEO-forløb. Det her er de indsatser, vi arbejder med lige nu.",
     items: [

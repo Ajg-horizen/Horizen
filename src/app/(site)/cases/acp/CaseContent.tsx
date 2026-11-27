@@ -26,12 +26,11 @@ const detail: CaseDetail = {
     "Ny hjemmeside og fast SEO-aftale til ACP, et rengøringsfirma i Horsens. Bygget til at blive fundet af virksomheder i lokalområdet.",
   story: {
     eyebrow: "Udgangspunktet",
-    heading: "Kunderne var i Horsens.",
-    headingTail: "Siden blev bare ikke vist dér.",
+    heading: "Et ønske om at blive set\ni et hårdt konkurrencepræget marked",
     paragraphs: [
-      "ACP gør rent for kontorer, butikker, restauranter og byggepladser i Horsens og omegn. Ramin ville have, at flere virksomheder i området fandt ACP i Google. Den gamle side blev sjældent vist i søgeresultaterne, og forsiden var langsom på mobilen.",
-      "Vores forslag var et nyt fundament og en fast SEO-aftale, så hjemmesiden og arbejdet med Google hang sammen fra første dag. Ramin valgte en klar retning: Horsens først, Aarhus som næste skridt.",
-      "Den nye side gik live 4. november 2026. Alle gamle adresser sender videre til de nye sider, så intet gik tabt ved flytningen, og ACP retter selv tekster og billeder. Siden er bygget, så nye bysider kan lægges til, når ACP vil længere ud.",
+      "ACP var ikke synlige nok i de lokale søgninger i Horsens og omegn, hvor konkurrencen er hård. Flere forskellige tiltag havde ikke flyttet placeringerne i Google.",
+      "Vi startede med en teknisk gennemgang og justerede på den eksisterende hjemmeside. Gennemgangen viste, at de ønskede resultater krævede et bedre teknisk grundlag, end den nuværende løsning kunne give.",
+      "Vi anbefalede en ny tilgang med en stærkere løsning, og ACP valgte at gå den vej. Løsningen er bygget med teknisk SEO i alle led og en lokal struktur med Horsens først og Aarhus som næste skridt. Alle gamle adresser sender videre, så intet gik tabt i overgangen.",
     ],
     facts: [
       { value: "1,3 sek.", label: "forsidens indlæsning på mobil" },
@@ -40,11 +39,35 @@ const detail: CaseDetail = {
       { value: "24", label: "sider med eget søgeord og søgetal" },
     ],
   },
+  visibility: {
+    eyebrow: "Synlighed i Google",
+    heading: "Synlig i Google\nfra første måned",
+    intro:
+      "Den nye side og det løbende SEO-arbejde sammen. Den første måned med den nye side, sammenlignet med den gamle sides normale niveau.",
+    chips: [
+      { label: "Visninger i Google", value: "+2.929 %" },
+      { label: "Klik fra Google", value: "+4.833 %" },
+      { label: "Bedre placering i Google", value: "+20 %" },
+    ],
+    // Vækst i procent i forhold til den gamle sides snit pr. måned:
+    // 408 visninger og 9 klik over et halvt år (maj-november 2026)
+    // = 68 visninger og 1,5 klik pr. måned. November (4.-26.) i Search Console:
+    // 2.060 visninger, 74 klik, snitplacering 25,5 (før 32).
+    months: [
+      { label: "August", growth: 0, note: "Gammel side, snit pr. måned" },
+      { label: "September", growth: 0, note: "Gammel side, snit pr. måned" },
+      { label: "Oktober", growth: 0, note: "Gammel side, snit pr. måned" },
+      { label: "November", growth: 2929, note: "Første måned med den nye side" },
+    ],
+    launchAfter: 2,
+    launchLabel: "Ny side live",
+    note: "Kilde: Google Search Console. Visninger er, hvor ofte siden er vist i Googles søgeresultater. Udgangspunktet er den gamle sides snit pr. måned i det halve år før lanceringen. Placering er den gennemsnitlige placering for alle søgninger.",
+  },
   highlight: {
     eyebrow: "Under overfladen",
     heading: "12 af 12 krav bestået",
     paragraphs: [
-      "Vi målte de samme 12 krav til en erhvervshjemmeside før og efter (Googles PageSpeed på mobil, 1. november 2026). Forsiden indlæses nu på 1,3 sekunder, ingen af de målte sider hopper under indlæsning, og tilgængeligheden scorer 100 ud af 100.",
+      "Vi målte de samme 12 krav til en erhvervshjemmeside før og efter (Googles PageSpeed på mobil). Forsiden indlæses nu på 1,3 sekunder, ingen af de målte sider hopper under indlæsning, og tilgængeligheden scorer 100 ud af 100.",
     ],
     pillars: [
       { title: "Hurtig på mobil", text: "1,3 sekunder mod kravet på 2,5." },
@@ -57,10 +80,9 @@ const detail: CaseDetail = {
   },
   disciplines: {
     eyebrow: "Det arbejder vi på nu",
-    heading: "Vores indsatser for ACP.",
-    headingTail: "Efter lanceringen, måned for måned.",
+    heading: "Vores løbende arbejde for ACP",
     intro:
-      "Siden gik live i november 2026 sammen med en fast SEO-aftale. Det her er de indsatser, vi arbejder med lige nu.",
+      "Den nye side kører sammen med en fast SEO-aftale. Det her er de indsatser, vi arbejder med lige nu.",
     items: [
       {
         title: "Teknisk SEO",

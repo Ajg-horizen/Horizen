@@ -236,10 +236,7 @@ export default function CasesOverview() {
           >
             <ScrambleEyebrow>Udvalgte projekter</ScrambleEyebrow>
             <h1 className="mt-4 max-w-4xl text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-              Case studies.{" "}
-              <span className="text-muted">
-                Det vi har bygget, og hvad det har gjort for kunderne.
-              </span>
+              Det vi har bygget, og hvad det har gjort for kunderne
             </h1>
           </motion.header>
 
@@ -251,8 +248,7 @@ export default function CasesOverview() {
 
           <section className="flex flex-col items-start justify-between gap-8 border-t border-foreground/[0.08] py-20 md:flex-row md:items-end md:py-28">
             <h2 className="max-w-2xl text-3xl font-bold tracking-tight md:text-4xl">
-              Næste case kan være jeres.{" "}
-              <span className="text-muted">Fortæl os, hvad I står med.</span>
+              Skal jeres projekt være den næste case?
             </h2>
             <ContactButton />
           </section>
