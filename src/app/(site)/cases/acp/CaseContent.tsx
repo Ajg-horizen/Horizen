@@ -61,6 +61,8 @@ const detail: CaseDetail = {
     ],
     launchAfter: 2,
     launchLabel: "Ny side live",
+    // Gammel side før lanceringen: let bevægende omkring snittet (illustration).
+    oldTrend: [0.96, 1.05, 0.98, 1.07, 1.0, 1.05, 0.97, 1.03, 1],
     note: "Kilde: Google Search Console. Visninger er, hvor ofte siden er vist i Googles søgeresultater. Udgangspunktet er den gamle sides snit pr. måned i det halve år før lanceringen. Placering er den gennemsnitlige placering for alle søgninger.",
   },
   highlight: {
