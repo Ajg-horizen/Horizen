@@ -58,8 +58,8 @@ async function post(body: Record<string, unknown>) {
  * SEO-spejderens månedsrapport (Andreas 27/11-2026), kun for Horizen, over
  * Månedens tjekliste på Strategi → Løbende drift. Spejderen har gennemgået
  * tjeklisten den 3.; her ser Andreas resultatet, godkender forslag til
- * aktivitetsloggen, skriver sin indsigt i
- * kundebeskeden og finder rettelserne, der ligger klar i Studio.
+ * aktivitetsloggen og finder rettelserne, der ligger klar i Studio. Ingen
+ * kundebesked (Andreas 27/11-2026): kunden informeres via aktivitetsloggen.
  */
 export default function ScoutReport({
 	report,
@@ -71,23 +71,20 @@ export default function ScoutReport({
 	dataMonthLabel?: string
 }) {
 	const [logs, setLogs] = useState<ScoutLogDraft[]>(report.logDrafts ?? [])
-	const [insight, setInsight] = useState(report.message?.insight ?? '')
-	const [msgStatus, setMsgStatus] = useState(report.message?.status ?? 'kladde')
 	const [busy, setBusy] = useState<string | null>(null)
 	const [error, setError] = useState<string | null>(null)
-	const [insightError, setInsightError] = useState<string | null>(null)
-	const [saved, setSaved] = useState<string | null>(null)
 
 	const steps = report.steps ?? []
 	const count = (s: ScoutStep['status']) => steps.filter((x) => x.status === s).length
 	const pending = logs.filter((l) => (l.status ?? 'afventer') === 'afventer').length
+	// Datoen for gennemgangen står tydeligt øverst (Andreas 27/11-2026), så det er
+	// til at se, om det er denne måneds rapport. En ny måned giver et nyt dokument.
 	const created = report.createdAt
-		? new Date(report.createdAt).toLocaleString('da-DK', {
+		? new Date(report.createdAt).toLocaleDateString('da-DK', {
 				timeZone: 'Europe/Copenhagen',
 				day: 'numeric',
 				month: 'long',
-				hour: '2-digit',
-				minute: '2-digit',
+				year: 'numeric',
 			})
 		: null
 
@@ -111,44 +108,18 @@ export default function ScoutReport({
 		}
 	}
 
-	async function saveInsight(markReady: boolean) {
-		if (busy) return
-		if (markReady && !insight.trim()) {
-			setInsightError('Skriv din egen indsigt først. Beskeden skal have din stemme, før den kan sendes.')
-			return
-		}
-		setBusy('message')
-		setError(null)
-		setSaved(null)
-		try {
-			await post({ month: report.month, action: 'insight', insight })
-			if (markReady !== (msgStatus === 'klar')) {
-				await post({ month: report.month, action: 'message', ready: markReady })
-				setMsgStatus(markReady ? 'klar' : 'kladde')
-			}
-			setSaved(markReady ? 'Kladden ligger nu under Beskeder, klar til at sende.' : 'Din indsigt er gemt.')
-		} catch (err) {
-			setError(err instanceof Error ? err.message : 'Kunne ikke gemme')
-		} finally {
-			setBusy(null)
-		}
-	}
-
 	return (
 		<section aria-labelledby="scout-heading" className="space-y-4">
 			{/* Overblik */}
 			<div className={card} style={{ borderColor: accent, boxShadow: `0 0 0 1px ${accent}` }}>
 				<div className="flex flex-wrap items-baseline justify-between gap-3">
 					<span className={eyebrow}>SEO-spejderen · Rapport for {monthLabel.toLowerCase()}</span>
-					{created && (
-						<span className="text-muted text-xs">
-							Lavet {created}
-							{dataMonthLabel ? ` · tallene er fra ${dataMonthLabel.toLowerCase()}` : ''}
-						</span>
+					{dataMonthLabel && (
+						<span className="text-muted text-xs">Tallene er fra {dataMonthLabel.toLowerCase()}</span>
 					)}
 				</div>
 				<h3 id="scout-heading" className="text-foreground mt-2 text-lg font-medium tracking-[-0.01em]">
-					Gennemgangen er klar til dig
+					{created ? `Gennemgang fra ${created}` : 'Gennemgangen er klar til dig'}
 				</h3>
 				{report.summary && (
 					<p className="text-foreground/80 mt-3 text-sm leading-relaxed whitespace-pre-line">{report.summary}</p>
@@ -277,73 +248,6 @@ export default function ScoutReport({
 				</div>
 			)}
 
-			{/* Kundebeskeden */}
-			{report.message?.intro && (
-				<div className={card}>
-					<span className={eyebrow}>Kladde til kundebeskeden</span>
-					{report.message.heading && (
-						<h4 className="text-foreground mt-2 text-base font-medium">{report.message.heading}</h4>
-					)}
-					<p className="text-foreground/80 mt-2 text-sm leading-relaxed whitespace-pre-line">
-						{report.message.intro.replace(/\*\*/g, '')}
-					</p>
-					<label htmlFor="scout-insight" className="mt-5 block">
-						<span className={eyebrow}>Din indsigt</span>
-						<span className="text-muted mt-1 block text-sm">
-							Det, kun du kan sige: en vurdering, en anbefaling eller noget fra jeres seneste snak. Kommer med i beskeden.
-						</span>
-					</label>
-					<textarea
-						id="scout-insight"
-						rows={4}
-						value={insight}
-						onChange={(e) => {
-							setInsight(e.target.value)
-							setInsightError(null)
-							setSaved(null)
-						}}
-						className="border-foreground/15 mt-2 w-full rounded-xl border bg-transparent p-3 text-sm"
-						style={!insight.trim() ? { borderColor: STATUS_META.partial.dot } : undefined}
-						placeholder="Skriv din egen indsigt her"
-					/>
-					{insightError && (
-						<p className="mt-2 text-sm" style={{ color: STATUS_META.missing.text }}>
-							{insightError}
-						</p>
-					)}
-					<div className="mt-3 flex flex-wrap items-center gap-2">
-						<button
-							type="button"
-							disabled={busy === 'message'}
-							onClick={() => saveInsight(false)}
-							className="border-foreground/15 text-foreground rounded-full border px-4 py-1.5 text-sm"
-						>
-							Gem indsigt
-						</button>
-						{msgStatus === 'klar' ? (
-							<button
-								type="button"
-								disabled={busy === 'message'}
-								onClick={() => saveInsight(false)}
-								className="text-muted text-sm underline underline-offset-2"
-							>
-								Tag tilbage fra Beskeder
-							</button>
-						) : (
-							<button
-								type="button"
-								disabled={busy === 'message'}
-								onClick={() => saveInsight(true)}
-								className="rounded-full px-4 py-1.5 text-sm font-medium"
-								style={{ backgroundColor: accent, color: 'var(--color-background)' }}
-							>
-								Klar til Beskeder
-							</button>
-						)}
-						{saved && <span className="text-muted text-sm">{saved}</span>}
-					</div>
-				</div>
-			)}
 		</section>
 	)
 }

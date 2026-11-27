@@ -2145,7 +2145,7 @@ export default async function SeoOverviewPage({
 			<SectionHeading
 				eyebrow="Kun Horizen"
 				title="Månedens gennemgang"
-				description="SEO-spejderens forarbejde til månedens tjekliste: rapporten, forslag til aktivitetsloggen, kundebeskeden og noterne pr. trin. Kunden ser kun den neutrale tjekliste under Strategi → Løbende drift og de logposter, du godkender."
+				description="SEO-spejderens forarbejde til månedens tjekliste: rapporten, forslag til aktivitetsloggen og noterne pr. trin. Kunden ser kun den neutrale tjekliste under Strategi → Løbende drift og de logposter, du godkender."
 			/>
 			{scoutReport ? (
 				<ScoutReport
@@ -2167,6 +2167,11 @@ export default async function SeoOverviewPage({
 				hours={checklistHours}
 				history={checklistHistory}
 				scoutSteps={scoutSteps}
+				scoutDate={
+					scoutReport?.createdAt
+						? new Date(scoutReport.createdAt).toLocaleDateString('da-DK', { timeZone: 'Europe/Copenhagen', day: 'numeric', month: 'short' })
+						: undefined
+				}
 			/>
 		</div>
 	)
