@@ -14,8 +14,6 @@ import {
   CpuIcon,
   WorkflowIcon,
   SearchCheckIcon,
-  GraduationCapIcon,
-  PlayCircleIcon,
   NewspaperIcon,
   BookOpenIcon,
 } from "lucide-react";
@@ -138,13 +136,6 @@ export const ai: NavItem[] = [
 
 export const resources: NavItem[] = [
   {
-    title: "Kurser & Workshops",
-    description: "Lær webdesign, SEO og branding",
-    href: "/ressourcer/kurser",
-    icon: GraduationCapIcon,
-    badge: "Kommer snart",
-  },
-  {
     title: "Blog & Nyheder",
     description: "Seneste nyt og trends fra branchen",
     href: "/blog",
@@ -156,18 +147,14 @@ export const resources: NavItem[] = [
     href: "/ressourcer/designprincipper",
     icon: BookOpenIcon,
   },
-  {
-    title: "Video Tutorials",
-    description: "On-demand guides og walkthroughs",
-    href: "/ressourcer/video-tutorials",
-    icon: PlayCircleIcon,
-    badge: "Kommer snart",
-  },
 ];
+
+/** AI-menuen er slukket for nu (Andreas 27/11-2026). Sæt til true for at vise den igen. */
+export const SHOW_AI_MENU = false;
 
 export const navCategories = [
   { label: "Web & Design", items: services },
   { label: "Marketing", items: marketing },
-  { label: "AI", items: ai },
+  ...(SHOW_AI_MENU ? [{ label: "AI", items: ai }] : []),
   { label: "Ressourcer", items: resources },
 ];
