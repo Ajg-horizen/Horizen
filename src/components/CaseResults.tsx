@@ -45,6 +45,13 @@ export type Visibility = {
   }[];
   /** Index i `months`, hvor det nye site gik live (markeres med en streg). */
   launchAfter?: number;
+  /**
+   * Valgfri: den gamle sides niveau måned for måned frem til lanceringen, som
+   * faktor af snittet (1 = snit). Tegner en let bevægende gul linje og løfter
+   * det gamle niveau lidt op fra bunden, så man kan se, at der var trafik før.
+   * Sidste værdi bør være 1, så den grønne linje starter samme sted.
+   */
+  oldTrend?: number[];
   launchLabel?: string;
   note: string;
 };
@@ -89,8 +96,14 @@ function GrowthChart({ data }: { data: Visibility }) {
   const n = data.months.length;
   const max = Math.max(...data.months.map((m) => m.growth + 100));
   const x = (i: number) => L + ((R - L) * i) / (n - 1);
+  const hasTrend =
+    !!data.oldTrend?.length && data.launchAfter !== undefined && max > 100;
+  // Med oldTrend ligger det gamle niveau lidt over bunden i stedet for helt nede.
+  const LIFT = BOTTOM - 35;
   const y = (index: number) =>
-    BOTTOM - (Math.max(index, 0) / max) * (BOTTOM - TOP);
+    hasTrend
+      ? LIFT - ((index - 100) / (max - 100)) * (LIFT - TOP)
+      : BOTTOM - (Math.max(index, 0) / max) * (BOTTOM - TOP);
   const pts = data.months.map((m, i) => ({ x: x(i), y: y(m.growth + 100) }));
   const base = y(100);
   const last = pts[n - 1];
@@ -100,9 +113,32 @@ function GrowthChart({ data }: { data: Visibility }) {
     data.months.findIndex((m) => !m.estimated),
   );
   const estPts = pts.slice(0, firstMeasured + 1);
-  const measPts = pts.slice(firstMeasured);
+  // Med oldTrend tegnes tiden før lanceringen af den gule linje, og den grønne starter ved lanceringen.
+  const measPts = hasTrend
+    ? pts.slice(data.launchAfter)
+    : pts.slice(firstMeasured);
+  // oldTrend fordeles jævnt fra første måned til lanceringen (flere punkter = små bølger).
+  const oldPts = hasTrend
+    ? data.oldTrend!.map((f, i, arr) => ({
+        x: L + ((x(data.launchAfter!) - L) * i) / (arr.length - 1),
+        y: base - (f - 1) * 90,
+      }))
+    : [];
+  const oldAt = (month: number) =>
+    oldPts[Math.round((month * (oldPts.length - 1)) / data.launchAfter!)];
+  const oldLine = hasTrend
+    ? `${smoothPath(oldPts)} L${R},${oldPts[oldPts.length - 1].y}`
+    : "";
   const estLine = estPts.length > 1 ? smoothPath(estPts) : "";
-  const measLine = smoothPath(measPts);
+  // Med oldTrend: en blød kurve, der starter fladt og bøjer opad mod sidste punkt.
+  const measLine =
+    hasTrend && measPts.length === 2
+      ? (() => {
+          const [a, b] = measPts;
+          const dx = b.x - a.x;
+          return `M${a.x},${a.y} C${a.x + dx * 0.55},${a.y} ${b.x - dx * 0.18},${a.y - (a.y - b.y) * 0.55} ${b.x},${b.y}`;
+        })()
+      : smoothPath(measPts);
   const launchX =
     data.launchAfter !== undefined
       ? (x(data.launchAfter) + x(data.launchAfter + 1)) / 2
@@ -175,17 +211,28 @@ function GrowthChart({ data }: { data: Visibility }) {
             </text>
           </g>
         )}
-        {/* Den gamle løsnings normale niveau: flad, stiplet linje */}
-        <line
-          x1={L}
-          x2={R}
-          y1={base}
-          y2={base}
-          stroke={OLD}
-          strokeWidth="3"
-          strokeDasharray="10 8"
-          strokeLinecap="round"
-        />
+        {/* Den gamle løsnings niveau: stiplet linje (let bevægende med oldTrend) */}
+        {hasTrend ? (
+          <path
+            d={oldLine}
+            fill="none"
+            stroke={OLD}
+            strokeWidth="3"
+            strokeDasharray="10 8"
+            strokeLinecap="round"
+          />
+        ) : (
+          <line
+            x1={L}
+            x2={R}
+            y1={base}
+            y2={base}
+            stroke={OLD}
+            strokeWidth="3"
+            strokeDasharray="10 8"
+            strokeLinecap="round"
+          />
+        )}
         <text
           x={R}
           y={base - 14}
@@ -236,11 +283,16 @@ function GrowthChart({ data }: { data: Visibility }) {
         >
           Ny løsning {pct(data.months[n - 1].growth)}
         </text>
-        {pts.map((p, i) => {
+        {pts.map((pt, i) => {
           const m = data.months[i];
+          // Før lanceringen (med oldTrend) sidder prikken på den gule linje.
+          const onOld = hasTrend && i < data.launchAfter!;
+          const p = onOld ? oldAt(i) : pt;
           return (
             <g key={m.label}>
-              {m.estimated ? (
+              {onOld ? (
+                <circle cx={p.x} cy={p.y} r={active === i ? 7 : 5} fill={OLD} />
+              ) : m.estimated ? (
                 <circle
                   cx={p.x}
                   cy={p.y}
