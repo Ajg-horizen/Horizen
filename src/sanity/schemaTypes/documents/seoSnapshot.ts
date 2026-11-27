@@ -118,6 +118,65 @@ export default defineType({
 				},
 			],
 		}),
+		/* ── Ekstra til SEO-spejderen (Andreas 27/11-2026) ── */
+		defineField({
+			name: 'topPages',
+			title: 'Sider (Search Console)',
+			description: 'Klik, visninger og placering pr. side i måneden (op til 50).',
+			type: 'array',
+			of: [
+				{
+					type: 'object',
+					name: 'searchPage',
+					fields: [
+						{ name: 'page', title: 'Side', type: 'string' },
+						{ name: 'clicks', title: 'Klik', type: 'number' },
+						{ name: 'impressions', title: 'Visninger', type: 'number' },
+						{ name: 'ctr', title: 'CTR (%)', type: 'number' },
+						{ name: 'position', title: 'Position', type: 'number' },
+					],
+				},
+			],
+		}),
+		defineField({
+			name: 'allQueries',
+			title: 'Søgninger, udvidet (Search Console)',
+			description: 'Op til 200 søgninger med placering. Bruges af SEO-spejderen til quick wins.',
+			type: 'array',
+			of: [
+				{
+					type: 'object',
+					name: 'searchQueryExt',
+					fields: [
+						{ name: 'query', title: 'Søgning', type: 'string' },
+						{ name: 'clicks', title: 'Klik', type: 'number' },
+						{ name: 'impressions', title: 'Visninger', type: 'number' },
+						{ name: 'ctr', title: 'CTR (%)', type: 'number' },
+						{ name: 'position', title: 'Position', type: 'number' },
+					],
+				},
+			],
+		}),
+		defineField({
+			name: 'sitemaps',
+			title: 'Sitemaps (Search Console)',
+			type: 'array',
+			of: [
+				{
+					type: 'object',
+					name: 'searchSitemap',
+					fields: [
+						{ name: 'path', title: 'Sitemap', type: 'string' },
+						{ name: 'lastSubmitted', title: 'Sidst indsendt', type: 'datetime' },
+						{ name: 'lastDownloaded', title: 'Sidst læst af Google', type: 'datetime' },
+						{ name: 'errors', title: 'Fejl', type: 'number' },
+						{ name: 'warnings', title: 'Advarsler', type: 'number' },
+						{ name: 'submitted', title: 'Indsendte sider', type: 'number' },
+						{ name: 'indexed', title: 'Indekserede sider', type: 'number' },
+					],
+				},
+			],
+		}),
 	],
 	fieldsets: [
 		{
